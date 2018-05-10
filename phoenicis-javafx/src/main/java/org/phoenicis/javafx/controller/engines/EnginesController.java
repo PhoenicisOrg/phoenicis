@@ -48,6 +48,8 @@ public class EnginesController {
     private final RepositoryManager repositoryManager;
     private final EnginesManager enginesManager;
     private ThemeManager themeManager;
+    RepositoryDTO repositoryCache = null;
+    Map<String, Engine> enginesCache = new HashMap<>();
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
@@ -77,33 +79,33 @@ public class EnginesController {
             }
         });
 
-        this.enginesView.setOnInstallEngine(engineDTO -> {
-            new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
-                    this.enginesView.getContent().getScene().getWindow())
-                            .ask(() -> {
-                                this.enginesManager.getEngine(engineDTO.getId(),
-                                        engine -> engine.install(engineDTO.getSubCategory(), engineDTO.getVersion()),
-                                        e -> Platform
-                                                .runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                                // invalidate cache to show installed version correctly
-                                this.versionsCache.remove(engineDTO.getId());
-                            });
-        });
+        this.enginesView.setOnInstallEngine(engineDTO -> new ConfirmMessage(
+                tr("Install {0}", engineDTO.getVersion()),
+                tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
+                this.enginesView.getContent().getScene().getWindow())
+                        .ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> {
+                                    engine.install(engineDTO.getSubCategory(), engineDTO.getVersion());
+                                    // invalidate cache and force view update to show installed version correctly
+                                    this.versionsCache.remove(engineDTO.getId());
+                                    this.forceViewUpdate();
+                                },
+                                e -> Platform.runLater(
+                                        () -> new ErrorMessage("Error", e, this.enginesView).show()))));
 
-        this.enginesView.setOnDeleteEngine(engineDTO -> {
-            new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to delete {0}", engineDTO.getVersion()),
-                    this.enginesView.getContent().getScene().getWindow())
-                            .ask(() -> {
-                                this.enginesManager.getEngine(engineDTO.getId(),
-                                        engine -> engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion()),
-                                        e -> Platform
-                                                .runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                                // invalidate cache to show deleted version correctly
-                                this.versionsCache.remove(engineDTO.getId());
-                            });
-        });
+        this.enginesView.setOnDeleteEngine(engineDTO -> new ConfirmMessage(
+                tr("Delete {0}", engineDTO.getVersion()),
+                tr("Are you sure you want to delete {0}", engineDTO.getVersion()),
+                this.enginesView.getContent().getScene().getWindow())
+                        .ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> {
+                                    engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion());
+                                    // invalidate cache and force view update to show deleted version correctly
+                                    this.versionsCache.remove(engineDTO.getId());
+                                    this.forceViewUpdate();
+                                },
+                                e -> Platform.runLater(
+                                        () -> new ErrorMessage("Error", e, this.enginesView).show()))));
     }
 
     public EnginesView getView() {
@@ -111,7 +113,10 @@ public class EnginesController {
     }
 
     private void populateView(RepositoryDTO repositoryDTO, Map<String, Engine> engines) {
+        this.repositoryCache = repositoryDTO;
+        this.enginesCache = engines;
         Platform.runLater(() -> {
+            this.enginesView.showWait();
             List<CategoryDTO> categoryDTOS = new ArrayList<>();
             for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
                 if (typeDTO.getId().equals("engines")) {
@@ -121,6 +126,13 @@ public class EnginesController {
             setDefaultEngineIcons(categoryDTOS);
             this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS), engines);
         });
+    }
+
+    /**
+     * forces an update of the view
+     */
+    private void forceViewUpdate() {
+        this.populateView(this.repositoryCache, this.enginesCache);
     }
 
     private void setDefaultEngineIcons(List<CategoryDTO> categoryDTOS) {
