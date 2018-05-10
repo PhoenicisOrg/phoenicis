@@ -48,8 +48,8 @@ public class EnginesController {
     private final RepositoryManager repositoryManager;
     private final EnginesManager enginesManager;
     private ThemeManager themeManager;
-    RepositoryDTO repositoryCache = null;
-    Map<String, Engine> enginesCache = new HashMap<>();
+    private RepositoryDTO repositoryCache = null;
+    private Map<String, Engine> enginesCache = new HashMap<>();
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
