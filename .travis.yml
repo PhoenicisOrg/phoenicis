@@ -19,6 +19,9 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk8
+      addons:
+        apt:
+          update: true
     # build + test
     - stage: Build + test
       os: linux
