@@ -16,12 +16,17 @@ jobs:
 
     # build + test
     - stage: Build + test
-      os: linux
-      dist: trusty
-      jdk: openjdk8
-      addons:
-        apt:
-          update: true
+      sudo: required
+      services:
+        - docker
+      before_install:
+        - docker run -d --name ubuntu-16-04 -v $(pwd):/travis ubuntu:16.04 tail -f /dev/null
+      script:
+        - docker exec -t ubuntu-16-04 bash -c "cd /travis;
+          export JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\";
+          git clone https://github.com/PhoenicisOrg/phoenicis.git;
+          cd phoenicis;
+          mvn test -B"
     # build + test
     - stage: Build + test
       os: linux
