@@ -22,15 +22,16 @@ jobs:
       before_install:
         - docker run -d --name ubuntu-16-04 -v $(pwd):/travis ubuntu:16.04 tail -f /dev/null
       install:
-        - docker exec -t ubuntu-16-04 bash -c "apt-get -qq update;
-                                               apt-get install -y git;
-                                               apt-get install -y maven"
+        - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
+                                               apt install -y git;
+                                               aptt install -y maven;
+                                               aptt install -y openjdk-8-jdk"
       script:
         - docker exec -t ubuntu-16-04 bash -c "cd /travis;
-          export JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\";
-          git clone https://github.com/PhoenicisOrg/phoenicis.git;
-          cd phoenicis;
-          mvn test -B"
+                                               export JAVA_HOME=\"/usr/lib/jvm/java-8-openjdk-amd64\";
+                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
+                                               cd phoenicis;
+                                               mvn test -B"
     # build + test
     - stage: Build + test
       os: linux
