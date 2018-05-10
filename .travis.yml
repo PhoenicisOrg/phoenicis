@@ -18,7 +18,12 @@ jobs:
     - stage: Build + test
       os: linux
       dist: trusty
-      jdk: oraclejdk8
+      jdk: openjdk8
+    # build + test
+    - stage: Build + test
+      os: linux
+      dist: trusty
+      jdk: openjdk8
       addons:
         apt:
           packages: oracle-java8-installer
