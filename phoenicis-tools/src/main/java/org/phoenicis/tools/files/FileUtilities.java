@@ -38,6 +38,14 @@ public class FileUtilities extends FilesManipulator {
     @Value("${application.user.tmp}")
     private String tmpDirectory;
 
+    public String[] ls(File directory) {
+        assertInDirectory(directory);
+        File[] files = directory.listFiles();
+        return Arrays.stream(files)
+                .map(file -> file.getName())
+                .toArray(String[]::new);
+    }
+
     public void mkdir(File directoryToCreate) {
         assertInDirectory(directoryToCreate);
         directoryToCreate.mkdirs();
