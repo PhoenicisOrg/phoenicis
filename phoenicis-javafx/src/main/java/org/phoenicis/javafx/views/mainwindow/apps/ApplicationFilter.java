@@ -141,7 +141,7 @@ public class ApplicationFilter extends AbstractFilter {
     /**
      * Filter function for {@link ApplicationDTO} objects
      *
-     * @param application              The application which should checked
+     * @param application The application which should checked
      * @param ignoreFilterCategoryTest True if an optional filter category should be ignored, false otherwise
      * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */

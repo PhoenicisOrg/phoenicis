@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.common.TextWithStyle;
@@ -37,14 +38,16 @@ final class EnginePanel extends DetailsView {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private final Logger LOGGER = LoggerFactory.getLogger(EnginePanel.class);
     private final EngineDTO engineDTO;
+    private Engine engine;
 
     private Consumer<EngineDTO> onEngineInstall;
     private Consumer<EngineDTO> onEngineDelete;
 
-    public EnginePanel(EngineDTO engineDTO) {
+    public EnginePanel(EngineDTO engineDTO, Engine engine) {
         super();
 
         this.engineDTO = engineDTO;
+        this.engine = engine;
 
         this.populateContent();
     }
@@ -76,6 +79,9 @@ final class EnginePanel extends DetailsView {
                 new ErrorMessage(tr("Error while trying to install the engine"), e).show();
             }
         });
+        if (this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
+            installButton.setDisable(true);
+        }
 
         Button deleteButton = new Button(tr("Delete"));
         deleteButton.setOnMouseClicked(evt -> {
@@ -86,6 +92,9 @@ final class EnginePanel extends DetailsView {
                 new ErrorMessage(tr("Error while trying to delete the engine"), e).show();
             }
         });
+        if (!this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
+            deleteButton.setDisable(true);
+        }
 
         Region spacer = new Region();
         spacer.getStyleClass().add("engineSpacer");

@@ -58,10 +58,10 @@ public class IconsListElement<E> extends VBox {
     /**
      * Constructor
      *
-     * @param item         The item for which a IconsListElement should be created
+     * @param item The item for which a IconsListElement should be created
      * @param miniatureUri An uri to the miniature which is shown inside this IconsListElement
-     * @param title        The title which is shown inside this IconsListElement
-     * @param enabled      True if this element should be shown as enabled, false otherwise
+     * @param title The title which is shown inside this IconsListElement
+     * @param enabled True if this element should be shown as enabled, false otherwise
      */
     public IconsListElement(E item, URI miniatureUri, String title, boolean enabled) {
         super();

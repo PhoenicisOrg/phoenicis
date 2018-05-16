@@ -70,7 +70,7 @@ public class EngineSettingsManager {
             Consumer<Map<String, List<EngineSetting>>> callback, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(this.getFetchScript(repositoryDTO),
+        interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
                 output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
     }
 
@@ -79,7 +79,7 @@ public class EngineSettingsManager {
      * @param repositoryDTO repository containing the settings
      * @return Javascript
      */
-    private String getFetchScript(RepositoryDTO repositoryDTO) {
+    private String createFetchScript(RepositoryDTO repositoryDTO) {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
@@ -107,7 +107,7 @@ public class EngineSettingsManager {
             }
         }
         script.append("return settings;\n");
-        script.append("})()\n;");
+        script.append("})();\n");
 
         return script.toString();
     }

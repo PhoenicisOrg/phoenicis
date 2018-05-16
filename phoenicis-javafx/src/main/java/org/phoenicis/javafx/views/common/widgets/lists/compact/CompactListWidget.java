@@ -15,7 +15,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * A {@link ListWidget} for a compact list containing a small miniature image, a title and a set of additional information for each list entry.
+ * A {@link ListWidget} for a compact list containing a small miniature image, a title and a set of additional
+ * information for each list entry.
  *
  * @author marc
  * @since 14.05.17
@@ -34,7 +35,8 @@ public class CompactListWidget<E> extends ListView<CompactListElement<E>> implem
     /**
      * Constructor
      *
-     * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link CompactListElement}
+     * @param converter A converter function used to convert a value of input type <code>E</code> to
+     *            {@link CompactListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
     public CompactListWidget(Function<E, CompactListElement<E>> converter,

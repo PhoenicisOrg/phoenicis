@@ -43,7 +43,7 @@ public class AboutPanel extends VBox {
      * Constructor
      *
      * @param buildInformation The information of the used build of POL 5
-     * @param opener           The opener util object to be used to open websites
+     * @param opener The opener util object to be used to open websites
      */
     public AboutPanel(ApplicationBuildInformation buildInformation, Opener opener) {
         super();
@@ -116,9 +116,9 @@ public class AboutPanel extends VBox {
         /**
          * Constructor
          *
-         * @param applicationName           the name of the application
-         * @param applicationVersion        the version of the application
-         * @param applicationGitRevision    the git revision/commit used to build POL 5
+         * @param applicationName the name of the application
+         * @param applicationVersion the version of the application
+         * @param applicationGitRevision the git revision/commit used to build POL 5
          * @param applicationBuildTimestamp the timestamp when POL 5 was built
          */
         public ApplicationBuildInformation(String applicationName, String applicationVersion,

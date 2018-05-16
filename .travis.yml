@@ -21,7 +21,7 @@ jobs:
         - mkdir $HOME/travis_cache
         - echo "$TRAVIS_BUILD_ID" > $HOME/travis_cache/travis_build_id
 
-    # Check the format
+    # Check format
     - stage: Check format
       # do not use default install (runs formatter)
       install: true

@@ -43,7 +43,7 @@ public class SearchBox extends AnchorPane {
      * Constructor
      *
      * @param onSearch The onSearch callback
-     * @param onClear  The onClear callback
+     * @param onClear The onClear callback
      */
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
         super();

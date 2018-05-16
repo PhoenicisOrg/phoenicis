@@ -32,7 +32,8 @@ import java.util.Optional;
  * It encloses common functionality (e.g. the library) inside a Tab which is presented in the main menu.
  * Every MainWindowView is split into the basic components Sidebar, content and DetailsView.
  *
- * The Sidebar is shown on the left side. It shall allow a quick navigation in the categories which structure the content.
+ * The Sidebar is shown on the left side. It shall allow a quick navigation in the categories which structure the
+ * content.
  *
  * The content is the main content which presents the functionality of this particular MainWindowView.
  *

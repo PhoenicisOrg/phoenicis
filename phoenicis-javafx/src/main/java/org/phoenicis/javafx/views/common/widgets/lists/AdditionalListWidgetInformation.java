@@ -1,7 +1,8 @@
 package org.phoenicis.javafx.views.common.widgets.lists;
 
 /**
- * An additional information to be shown in a {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget}
+ * An additional information to be shown in a
+ * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget}
  * or in a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}.
  *
  * @author marc
@@ -22,7 +23,7 @@ public class AdditionalListWidgetInformation {
      * Constructor
      *
      * @param content The content of this information object. This content is then shown in the list widget
-     * @param width   The width, in percent, this information needs
+     * @param width The width, in percent, this information needs
      */
     public AdditionalListWidgetInformation(String content, int width) {
         this.content = content;

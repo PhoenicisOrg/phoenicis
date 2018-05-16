@@ -34,7 +34,8 @@ public class DetailsListWidget<E> extends ListView<DetailsListElement<E>> implem
     /**
      * Constructor
      *
-     * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link DetailsListElement}
+     * @param converter A converter function used to convert a value of input type <code>E</code> to
+     *            {@link DetailsListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
     public DetailsListWidget(Function<E, DetailsListElement<E>> converter,

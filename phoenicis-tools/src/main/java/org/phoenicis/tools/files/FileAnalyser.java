@@ -44,14 +44,14 @@ public class FileAnalyser {
      *         separator
      */
     public static String identifyLineDelimiter(String fileContent) {
-        if (fileContent.matches("(?s).*(\\r\\n).*")) { //Windows //$NON-NLS-1$
+        if (fileContent.matches("(?s).*(\\r\\n).*")) { // Windows //$NON-NLS-1$
             return "\r\n"; //$NON-NLS-1$
-        } else if (fileContent.matches("(?s).*(\\n).*")) { //Unix/Linux //$NON-NLS-1$
+        } else if (fileContent.matches("(?s).*(\\n).*")) { // Unix/Linux //$NON-NLS-1$
             return "\n"; //$NON-NLS-1$
-        } else if (fileContent.matches("(?s).*(\\r).*")) { //Legacy mac os 9. Newer OS X use \n //$NON-NLS-1$
+        } else if (fileContent.matches("(?s).*(\\r).*")) { // Legacy mac os 9. Newer OS X use \n //$NON-NLS-1$
             return "\r"; //$NON-NLS-1$
         } else {
-            return "\n"; //fallback onto '\n' if nothing matches. //$NON-NLS-1$
+            return "\n"; // fallback onto '\n' if nothing matches. //$NON-NLS-1$
         }
     }
 
