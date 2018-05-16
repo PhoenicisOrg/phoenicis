@@ -35,7 +35,7 @@ jobs:
       addons:
         apt:
           packages: oracle-java8-installer
-      before_cache: cp phoenicis-dist/target/*.deb $HOME/travis_cache/
+      # before_cache: cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       os: linux
       dist: trusty
