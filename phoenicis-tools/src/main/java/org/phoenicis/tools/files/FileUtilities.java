@@ -38,6 +38,11 @@ public class FileUtilities extends FilesManipulator {
     @Value("${application.user.tmp}")
     private String tmpDirectory;
 
+    /**
+     * lists files and directories in given directory (non-recursive)
+     * @param directory
+     * @return list of files and directories
+     */
     public String[] ls(File directory) {
         assertInDirectory(directory);
         File[] files = directory.listFiles();
@@ -46,11 +51,21 @@ public class FileUtilities extends FilesManipulator {
                 .toArray(String[]::new);
     }
 
+    /**
+     * creates a directory
+     * @param directoryToCreate
+     */
     public void mkdir(File directoryToCreate) {
         assertInDirectory(directoryToCreate);
         directoryToCreate.mkdirs();
     }
 
+    /**
+     * creates symbolic link
+     * @param destination
+     * @param target
+     * @throws IOException
+     */
     public void createSymbolicLink(File destination, File target) throws IOException {
         assertInDirectory(destination);
         assertInDirectory(target);
@@ -58,6 +73,12 @@ public class FileUtilities extends FilesManipulator {
         Files.createSymbolicLink(destination.toPath(), target.toPath());
     }
 
+    /**
+     * copies file
+     * @param source
+     * @param target
+     * @throws IOException
+     */
     public void copy(File source, File target) throws IOException {
         assertInDirectory(source);
         assertInDirectory(target);
@@ -74,7 +95,7 @@ public class FileUtilities extends FilesManipulator {
     }
 
     /**
-     * Delete a file only if it is inside Phoenicis root
+     * deletes a file only if it is inside Phoenicis root
      * @param fileToDelete fileOrDirectoryToDelete
      */
     public void remove(File fileToDelete) throws IOException {
@@ -87,12 +108,24 @@ public class FileUtilities extends FilesManipulator {
         }
     }
 
+    /**
+     * fetches content of the given file
+     * @param file
+     * @return content string
+     * @throws IOException
+     */
     public String getFileContent(File file) throws IOException {
         assertInDirectory(file);
 
         return FileUtils.readFileToString(file, "UTF-8");
     }
 
+    /**
+     * computes file size of the given file
+     * @param file
+     * @return file size
+     * @throws IOException
+     */
     public long getSize(File file) throws IOException {
         assertInDirectory(file);
 
@@ -100,12 +133,24 @@ public class FileUtilities extends FilesManipulator {
         return Files.walk(folder).filter(p -> p.toFile().isFile()).mapToLong(p -> p.toFile().length()).sum();
     }
 
+    /**
+     * writes content to file
+     * @param file
+     * @param content
+     * @throws IOException
+     */
     public void writeToFile(File file, String content) throws IOException {
         assertInDirectory(file);
 
         FileUtils.writeStringToFile(file, content, "UTF-8");
     }
 
+    /**
+     * creates temporary file
+     * @param extension
+     * @return
+     * @throws IOException
+     */
     public File createTmpFile(String extension) throws IOException {
         final File tmpDirectoryFile = new File(tmpDirectory);
         tmpDirectoryFile.mkdirs();
