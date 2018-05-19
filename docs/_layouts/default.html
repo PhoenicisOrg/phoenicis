@@ -75,7 +75,7 @@
 				<h3>{{ page.title }}</h3>
 			</div>
 			<article class="content">
-				{% include toc.html html=content %}
+				{% if page.toc %}{% include toc.html html=content %}{% endif %}
 				{{ content }}
 			</article>
 		</section>
