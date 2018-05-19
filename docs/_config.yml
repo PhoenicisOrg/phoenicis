@@ -26,14 +26,6 @@ plugins:
   - jekyll-sitemap
   - jekyll-seo-tag
   - jekyll-feed
-  - jekyll-toc
-
-# mimic GitHub Pages with --safe
-whitelist:
-  - jekyll-sitemap
-  - jekyll-seo-tag
-  - jekyll-feed
-  - jekyll-toc
 
 exclude:
   - Gemfile
