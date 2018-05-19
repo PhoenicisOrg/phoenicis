@@ -1,51 +1,79 @@
-title                    : Phoenicis Documentation
-name                     : phoenicis.org
-description              : The documentation for Phoenicis.
-repository               : PhoenicisOrg/phoenicis
+title: Phoenicis Documentation
+baseurl:
+google_analytics_key:
+show_full_navigation: true
 
-remote_theme             : mmistakes/minimal-mistakes
-minimal_mistakes_skin    : air
+# Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
+logo: /siteicon.png
+description: The documentation for Phoenicis.
+author:
+  name:
+  email:
+  twitter: # twitter username without the @ symbol
+social:
+  name: Phoenicis Documentation
+  links:
+    - https://github.com/PhoenicisOrg/phoenicis
 
-markdown                 : kramdown
-permalink                : /:categories/:title/
+# -----
+# Build
+
+timezone: Etc/UTC
+
+permalink: pretty
 
 plugins:
-  - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
+  - jekyll-seo-tag
   - jekyll-feed
-  - jemoji
-  - jekyll-remote-theme
+  - jekyll-toc
 
 # mimic GitHub Pages with --safe
 whitelist:
-  - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-gist
+  - jekyll-seo-tag
   - jekyll-feed
-  - jemoji
+  - jekyll-toc
 
-include:
-  - _pages
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - LICENCE
 
-encoding: "utf-8"
-markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-  
+collections:
+  docs:
+    title: Documentation
+    permalink: /:path/
+    output: true
+
 defaults:
-  # _pages
-  - scope:
-      path: "_pages"
-      type: pages
+  -
+    scope:
+      path: ""
     values:
-      layout: single
-      author_profile: false
-      sidebar:
-        nav: "docs"
+      layout: default
+  -
+    scope:
+      path: ""
+      type: "docs"
+    values:
+      seo:
+        type: Article
+      _comments:
+        category: Group navigation links with this field
+        order: Used to sort links in the navigation
+      _options:
+        content:
+          width: 800
+          height: 2000
+  -
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      _comments:
+        type: Marks the impact of this release
 
-author:
-  name:   Phoenicis
-  github: PhoenicisOrg
-
-# HTML Compression
-compress_html:
-  clippings: all
+types:
+  - minor
+  - major

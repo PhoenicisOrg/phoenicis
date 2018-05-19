@@ -1,11 +1,12 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "jekyll"
-gem "jekyll-remote-theme"
+gem 'jekyll', '3.7.2'
 
-gem "github-pages", group: :jekyll_plugins
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+group :jekyll_plugins do
+  gem 'jekyll-feed', '0.9.3'
+  gem 'jekyll-seo-tag', '2.4.0'
+  gem 'jekyll-sitemap', '1.2.0'
+  gem 'jekyll-toc'
+end
 
 gem "html-proofer"
