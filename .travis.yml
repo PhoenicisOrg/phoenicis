@@ -26,7 +26,8 @@ jobs:
                                                apt install -y git;
                                                apt install -y locales;
                                                apt install -y maven;
-                                               apt install -y openjdk-8-jdk"
+                                               apt install -y openjdk-8-jdk;
+                                               apt install -y xgettext"
         # fix encoding for locales, set environment correctly in next step
         - docker exec -t ubuntu-16-04 bash -c "locale-gen en_US.UTF-8"
       script:
