@@ -42,7 +42,7 @@ jobs:
                                                cd phoenicis;
                                                mvn test -B"
     - stage: Build + test
-      jdk: openjdk9
+      # jdk: openjdk9   not yet available
       sudo: required
       services:
         - docker
