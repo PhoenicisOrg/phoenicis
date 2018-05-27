@@ -41,6 +41,32 @@ jobs:
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
                                                mvn test -B"
+    - stage: Build + test
+      jdk: openjdk9
+      sudo: required
+      services:
+        - docker
+      before_install:
+        - docker run -d --name ubuntu-18-04 -v $(pwd):/travis ubuntu:18.04 tail -f /dev/null
+      install:
+        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
+                                               apt install -y git;
+                                               apt install -y locales;
+                                               apt install -y maven;
+                                               apt install -y openjdk-9-jdk;
+                                               apt install -y openjfx;
+                                               apt install -y gettext"
+        # fix encoding for locales, set environment correctly in next step
+        - docker exec -t ubuntu-18-04 bash -c "locale-gen en_US.UTF-8"
+      script:
+        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
+                                               export LANG=\"en_US.UTF-8\";
+                                               export LANGUAGE=\"en_US:en\";
+                                               export LC_ALL=\"en_US.UTF-8\";
+                                               export JAVA_HOME=\"/usr/lib/jvm/java-9-openjdk-amd64\";
+                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
+                                               cd phoenicis;
+                                               mvn test -B"
     # build + test
     - stage: Build + test
       os: linux
