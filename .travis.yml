@@ -59,6 +59,7 @@ jobs:
         # fix encoding for locales, set environment correctly in next step
         - docker exec -t ubuntu-18-04 bash -c "locale-gen en_US.UTF-8"
       script:
+        - docker exec -t ubuntu-18-04 bash -c "dpkg-query -L openjdk-9-jdk"
         - docker exec -t ubuntu-18-04 bash -c "cd /travis;
                                                export LANG=\"en_US.UTF-8\";
                                                export LANGUAGE=\"en_US:en\";
