@@ -16,6 +16,7 @@ jobs:
 
     # build + test
     - stage: Build + test
+      jdk: openjdk8
       sudo: required
       services:
         - docker
