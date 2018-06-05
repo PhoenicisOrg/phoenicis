@@ -1,5 +1,5 @@
 language: java
-sudo: false
+sudo: true # must have same "sudo" state in stages for caching
 
 # avoid double builds on pull requests
 branches:
