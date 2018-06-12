@@ -164,6 +164,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <revisionOnScmFailure>unknown</revisionOnScmFailure>
                     <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>

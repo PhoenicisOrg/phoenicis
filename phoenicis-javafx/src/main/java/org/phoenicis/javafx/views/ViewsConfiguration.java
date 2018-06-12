@@ -43,13 +43,13 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.version}")
+    @Value("${application.version}:unknown")
     private String applicationVersion;
 
-    @Value("${application.gitRevision}")
+    @Value("${application.gitRevision}:unknown")
     private String applicationGitRevision;
 
-    @Value("${application.buildTimestamp}")
+    @Value("${application.buildTimestamp}:unknown")
     private String applicationBuildTimestamp;
 
     @Value("${application.user.engines}")
