@@ -5,7 +5,8 @@ order: 1
 toc: true
 ---
 
-### Ubuntu 16.04
+## Ubuntu 16.04
+
 * Install the dependencies:
 ```
 sudo apt-get update
@@ -29,7 +30,8 @@ cd phoenicis
 mvn clean package
 ```
 
-### Arch Linux
+## Arch Linux
+
 * Install the dependencies. Set the JAVA_HOME after installing `jdk8-openjdk`, but before installing `openjfx`.
   * git
   * jdk8-openjdk
@@ -54,12 +56,14 @@ cd phoenicis
 mvn clean package
 ```
 
-### Fedora >= 26
+## Fedora >= 26
 
 * Install the dependencies:
 ```
-sudo dnf install git java-1.8.0-openjdk java-1.8.0-openjdk-openjfx maven openjfx
+sudo dnf install git maven
 ```
+
+* Install Oracle Java using the steps outlined in the [official Fedora wiki](https://fedoraproject.org/wiki/JDK_on_Fedora#Installing_Oracle_JDK_on_Fedora). Be sure to run the "update-alternatives" commands to change the default Java to Oracle's in case OpenJDK is installed. Due to Fedora's restriction on proprietary software, their OpenJFX library is missing components required for Phoenicis to run.
 
 * Clone the repository from GitHub:
 ```
@@ -72,7 +76,7 @@ cd phoenicis
 mvn clean package
 ```
 
-### TrueOS
+## TrueOS
 
 * Install the dependencies:
 ```
@@ -92,13 +96,7 @@ application.name = Phoenicis PlayOnBSD
 Note : As there is not FreeBSD wine at the moment, the linux wine package will be displayed in the engine window.
 
 ## Run
-```
-cd phoenicis/phoenicis-dist/target
-unzip phoenicis-dist.zip -d built
-./phoenicis-dist/phoenicis.sh
-```
 
-* On TrueOs, do :
 ```
 cd phoenicis/phoenicis-dist/target
 unzip phoenicis-dist.zip -d built
@@ -106,7 +104,9 @@ bash ./phoenicis-dist/phoenicis.sh
 ```
 
 ## Troubleshooting
-#### Old Java version on Arch Linux
+
+### Old Java version on Arch Linux
+
 Problem:
 ```
 Exception in thread "main" java.lang.UnsupportedClassVersionError: org/phoenicis/javafx/JavaFXApplication : Unsupported major.minor version 52.0
