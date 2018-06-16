@@ -26,7 +26,6 @@ jobs:
         - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
                                                apt install -y git;
                                                apt install -y maven;
-                                               apt install -y openjdk-8-jdk;
                                                apt install -y openjfx;
                                                apt install -y gettext"
       script:
@@ -45,7 +44,6 @@ jobs:
         - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
                                                apt install -y git;
                                                apt install -y maven;
-                                               apt install -y openjdk-9-jdk;
                                                apt install -y openjfx;
                                                apt install -y gettext"
       script:
