@@ -18,6 +18,7 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk8
+      sudo: required
       install: true
       script:
         - mv $HOME/travis_cache $HOME/travis_cache_old
@@ -78,6 +79,7 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk8
+      sudo: required
       install: true
       script:
         - ls $HOME/travis_cache/
