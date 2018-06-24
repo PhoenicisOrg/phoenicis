@@ -86,13 +86,12 @@ jobs:
         - docker run -d --name ubuntu-16-04 -v $HOME:/travis openjdk:8 tail -f /dev/null
       install: true
       script:
-        # check that cache has been filled in current build and clear the cache when finished
-        - docker exec -t ubuntu-16-04 bash -c "cd /travis;
-                                               if test \"$TRAVIS_BUILD_ID\" != `cat /travis/travis_cache/travis_build_id`; then return 1; fi
-                                               rm -f /travis/travis_cache/travis_build_id;
-                                               sudo apt install /travis/travis_cache/*.deb;
-                                               mv /travis/travis_cache /travis/travis_cache_old;
-                                               mkdir /travis/travis_cache"
+        # check that cache has been filled in current build
+        - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
+        - rm -f $HOME/travis_cache/travis_build_id
+        - docker exec -t ubuntu-16-04 bash -c "sudo apt install /travis/travis_cache/*.deb"
+        - mv $HOME/travis_cache $HOME/travis_cache_old
+        - mkdir $HOME/travis_cache # clear the cache
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
