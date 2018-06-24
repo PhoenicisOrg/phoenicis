@@ -52,8 +52,7 @@ jobs:
                                                cd phoenicis;
                                                mvn test -B"
       before_cache:
-        - docker exec -t ubuntu-16-04 bash -c "cd /travis/phoenicis;
-                                               cp phoenicis-dist/target/*.deb /travis/travis_cache/"
+        - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
     # build + test
     - stage: Build + test
       os: linux
