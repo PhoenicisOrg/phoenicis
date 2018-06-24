@@ -32,6 +32,8 @@ jobs:
 
     # build + test
     - stage: Build + test
+      os: linux
+      dist: trusty
       jdk: openjdk8
       sudo: required
       services:
