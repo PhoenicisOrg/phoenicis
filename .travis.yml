@@ -89,7 +89,7 @@ jobs:
         # check that cache has been filled in current build
         - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
         - rm -f $HOME/travis_cache/travis_build_id
-        - docker exec -t ubuntu-16-04 bash -c "sudo apt install /travis/travis_cache/*.deb"
+        - docker exec -t ubuntu-16-04 bash -c "apt install /travis/travis_cache/*.deb"
         - mv $HOME/travis_cache $HOME/travis_cache_old
         - mkdir $HOME/travis_cache # clear the cache
 
