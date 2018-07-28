@@ -7,24 +7,20 @@ toc: true
 
 ## Ubuntu 18.04 and Linux Mint 19
 
-* Add the Wine repository
+* Add the Wine repository:
 ```
 sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
 wget -nc https://dl.winehq.org/wine-builds/Release.key && sudo apt-key add Release.key
 ```
 
-* Remove exising version of wine
+* Remove exising version of Wine:
 ```
-apt-get purge wine* libwine
+sudo apt-get purge wine* libwine
 ```
 
-* Update the repository information
+* Install Wine devel packages to fix empty dialog boxes:
 ```
 sudo apt-get update
-```
-
-* Install Wine packages to fix empty dialog boxes
-```
 sudo apt-get install --install-recommends winehq-devel
 ```
 
