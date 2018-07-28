@@ -7,16 +7,6 @@ toc: true
 
 ## Ubuntu 18.04 and Linux Mint 19
 
-* Save an empty JKS file with the default 'changeit' password for Java cacerts.
-```
-sudo /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x6e\x45\xfb\x43\xdf\xa4\xd9\x92\xdd\x41\xce\xb6\xb2\x1c\x63\x30\xd7\x92' > /etc/ssl/certs/java/cacerts
-```
-
-* Re-add all the CA certs into the previously empty file.
-```
-sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
-```
-
 * Add the Wine repository
 ```
 sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
@@ -166,6 +156,18 @@ bash ./phoenicis-dist/phoenicis.sh
 ```
 
 ## Troubleshooting
+
+### Maven dependencies cannot be downloaded
+
+* Save an empty JKS file with the default 'changeit' password for Java cacerts.
+```
+sudo /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x6e\x45\xfb\x43\xdf\xa4\xd9\x92\xdd\x41\xce\xb6\xb2\x1c\x63\x30\xd7\x92' > /etc/ssl/certs/java/cacerts
+```
+
+* Re-add all the CA certs into the previously empty file.
+```
+sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
+```
 
 ### Old Java version on Arch Linux
 
