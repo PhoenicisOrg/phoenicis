@@ -23,14 +23,9 @@ apt-get purge wine* libwine
 sudo apt-get update
 ```
 
-* Install wine packages (This is needed to stop the empty dialog boxes)
+* Install Wine packages to fix empty dialog boxes
 ```
 sudo apt-get install --install-recommends winehq-devel
-```
- 
-* Install packages
-```
-sudo apt-get -y install git maven openjdk-8-jdk openjfx libxext6:i386
 ```
 
 * Install the dependencies:
