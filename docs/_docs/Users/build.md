@@ -33,6 +33,12 @@ sudo apt-get install --install-recommends winehq-devel
 sudo apt-get -y install git maven openjdk-8-jdk openjfx libxext6:i386
 ```
 
+* Install the dependencies:
+```
+sudo apt-get update
+sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
+```
+
 * Set the Java version (use Java 8 instead of Java 10):
   * OpenJDK
     * `export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"`
