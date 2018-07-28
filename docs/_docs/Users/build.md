@@ -38,52 +38,25 @@ sudo apt-get update
 sudo apt-get install --install-recommends winehq-devel
 ```
  
-
 * Install packages
 ```
 sudo apt-get -y install git maven openjdk-8-jdk openjfx libxext6:i386
 ```
 
-* Change to build directory
-```mkdir -P ~/build
-cd ~/build
-```
-
-* Grab the source
+* Set the Java version (use Java 8 instead of Java 10):
+  * OpenJDK
+    * `export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"`
+    * `sudo update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64`
+    
+* Clone the repository from GitHub:
 ```
 git clone https://github.com/PhoenicisOrg/phoenicis.git
 ```
 
-* Go in the source directory
+* Build Phoenicis:
 ```
 cd phoenicis
-```
-
-* Change the default version of java from 10 to java 8
-```
-export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"
-sudo update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64
-```
-
-* Build
-```
 mvn clean package
-```
-
-* Unzip the distribution
-```
-cd phoenicis-dist/target
-unzip phoenicis-dist.zip
-```
-
-* Clean up the existing config
-```
-rm -R ~/.Phoenicis
-```
-
-* Run! This is the only line you need from now on.
-```
-~/build/phoenicis/phoenicis-dist/target/phoenicis-dist/phoenicis.sh
 ```
 
 There is an issue with the latest steam client not downloading. See https://bugs.winehq.org/show_bug.cgi?id=45329
