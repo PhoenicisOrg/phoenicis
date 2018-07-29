@@ -158,6 +158,8 @@ sudo /usr/bin/printf '\xfe\xed\xfe\xed\x00\x00\x00\x02\x00\x00\x00\x00\xe2\x68\x
 sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
 ```
 
+If this doesn't help, you can try to delete the `.m2` directory in your home directory. This will force Maven to re-download all dependencies.
+
 ### Old Java version on Arch Linux
 
 Problem:
