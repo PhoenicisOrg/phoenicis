@@ -21,7 +21,7 @@
     <parent>
         <artifactId>phoenicis</artifactId>
         <groupId>org.phoenicis</groupId>
-        <version>5.0-SNAPSHOT</version>
+        <version>${phoenicis.version}</version>
     </parent>
     <artifactId>phoenicis-library</artifactId>
     <properties>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-scripts</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
