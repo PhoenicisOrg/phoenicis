@@ -82,7 +82,7 @@ Before you start, ensure that you are in a clean environment:
 * check that Notepad++ closes
 * right-click "Notepad++" and select "Edit"
 * check that edit form is shown in details panel
-* fill "Arguments" with "/home/<username>/.Phoenicis/shortcuts/Notepad.shortcut"
+* fill "Arguments" with "/home/\<username\>/.Phoenicis/shortcuts/Notepad.shortcut"
 * click "save"
 * run Notepad++
 * check that Notepad++ opens and shows the Notepad.shortcut file
@@ -93,7 +93,7 @@ Before you start, ensure that you are in a clean environment:
 * fill with
     * name: "Test"
     * category: "test-category"
-    * executable: "/home/<username>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Internet Explorer/iexplore.exe"
+    * executable: "/home/\<username\>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Internet Explorer/iexplore.exe"
 * click "create"
 * check that "All", "Development" and "test-category" categories are shown
 * check that "Test" shortcut is listed with default miniature
@@ -113,7 +113,7 @@ Before you start, ensure that you are in a clean environment:
 ## Library
 * open "Library" tab
 * uninstall "Test" shortcut
-* check that "Test" shorcut is not listed anymore
+* check that "Test" shortcut is not listed anymore
 
 ## Containers
 * open "Containers" tab
@@ -121,15 +121,16 @@ Before you start, ensure that you are in a clean environment:
 * check that details panel is shown
 * check that tabs exist
     * Information
-    * Display
-    * Input
-    * Wine Tools
+    * Engine Settings
+    * Engine Tools
     * Tools
-* open "Wine Tools" tab
+* open "Engine Settings" tab
+* check that all settings are shown
+* open "Engine Tools" tab
 * check that all tools open
 * open "Tools" tab
 * click "Run executable"
-* select "/home/<username>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Notepad++/notepad++.exe"
+* select "/home/\<username\>/.Phoenicis/containers/wineprefix/Notepad/drive_c/Program Files/Notepad++/notepad++.exe"
 * check that Notepad++ opens
 * close Notepad++
 * open "Information" tab
@@ -159,7 +160,7 @@ Before you start, ensure that you are in a clean environment:
 * check that default repositories are listed
 * click "add"
 * select "local repository"
-* use "/home/<userhome>/.Phoenicis/cache/git-XXXXXX"
+* use "/home/\<userhome\>/.Phoenicis/cache/git-XXXXXX"
 * click "finish"
 * check that new repository is listed
 * select new repository
