@@ -14,7 +14,8 @@ cache:
 jobs:
   include:
     # build cache
-    - stage: Build cache
+    - stage: Basics
+      name: Build cache
       os: linux
       dist: trusty
       jdk: openjdk8
@@ -26,13 +27,15 @@ jobs:
         - echo "$TRAVIS_BUILD_ID" > $HOME/travis_cache/travis_build_id
 
     # Check format
-    - stage: Check format
+    - stage: Basics
+      name: Check format
       # do not use default install (runs formatter)
       install: true
       script: mvn -Pcheck-formatted validate formatter:validate
 
     # build + test
     - stage: Build + test
+      name: Linux OpenJDK 8
       os: linux
       dist: trusty
       jdk: openjdk8
@@ -56,6 +59,7 @@ jobs:
         - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
     # build + test
     - stage: Build + test
+      name: Linux Oracle JDK 8
       os: linux
       dist: trusty
       jdk: oraclejdk8
@@ -63,6 +67,7 @@ jobs:
         apt:
           packages: oracle-java8-installer
     - stage: Build + test
+      name: Linux Oracle JDK 9
       os: linux
       dist: trusty
       jdk: oraclejdk9
@@ -70,12 +75,14 @@ jobs:
         apt:
           packages: oracle-java9-installer
     - stage: Build + test
+      name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
 
     # Install packages
     # .deb
     - stage: Install packages
+      name: Install .deb
       os: linux
       dist: trusty
       jdk: openjdk8
