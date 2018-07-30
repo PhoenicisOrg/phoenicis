@@ -59,7 +59,7 @@ jobs:
         - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
     # build + test
     - stage: Build + test
-      name: Oracle JDK 8
+      name: Linux Oracle JDK 8
       os: linux
       dist: trusty
       jdk: oraclejdk8
@@ -67,7 +67,7 @@ jobs:
         apt:
           packages: oracle-java8-installer
     - stage: Build + test
-      name: Oracle JDK 9
+      name: Linux Oracle JDK 9
       os: linux
       dist: trusty
       jdk: oraclejdk9
@@ -75,7 +75,7 @@ jobs:
         apt:
           packages: oracle-java9-installer
     - stage: Build + test
-      name: XCode 9.2
+      name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
 
