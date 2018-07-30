@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
  * Tells Phoenicis localisation module that the annotated class can be translated.
  * This requires:
  * <ul>
- *     <li>{@link TranslatableCreator} or {@link TranslatableBuilder}</li>
- *     <li>At least one getter to be annotated with {@link Translate}</li>
+ * <li>{@link TranslatableCreator} or {@link TranslatableBuilder}</li>
+ * <li>At least one getter to be annotated with {@link Translate}</li>
  * </ul>
  */
 @Retention(RetentionPolicy.RUNTIME)

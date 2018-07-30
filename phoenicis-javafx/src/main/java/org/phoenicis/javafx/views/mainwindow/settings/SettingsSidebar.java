@@ -98,9 +98,9 @@ public class SettingsSidebar extends Sidebar {
         /**
          * Constructor
          *
-         * @param panel     The corresponding panel for this settings category
+         * @param panel The corresponding panel for this settings category
          * @param iconClass The css class containing the icon for this settings category
-         * @param name      The displayed name of this settings category
+         * @param name The displayed name of this settings category
          */
         public SettingsSidebarItem(Node panel, String iconClass, String name) {
             this.panel = panel;

@@ -46,7 +46,8 @@ public class SidebarToggleButton extends ToggleButton {
 
     /**
      * This method is called whenever the {@link SidebarToggleButton} has been clicked.
-     * It is overriden to ensure that the button only fires an event ({@link javafx.event.ActionEvent} or {@link javafx.scene.input.MouseEvent})
+     * It is overriden to ensure that the button only fires an event ({@link javafx.event.ActionEvent} or
+     * {@link javafx.scene.input.MouseEvent})
      * if it is either currently not selected or it isn't part of a {@link javafx.scene.control.ToggleGroup}.
      *
      * @see ToggleButton

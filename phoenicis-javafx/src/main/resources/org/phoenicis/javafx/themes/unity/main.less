@@ -293,16 +293,22 @@
     .sidebarTitle {
         -fx-padding: 0.83em 0.83em 0.4em 0.83em;
         -fx-font-size: 1.2em;
-        -fx-fill: #3c3b37;
+
+        .text {
+            -fx-fill: #3c3b37;
+        }
     }
 
     .sidebarButton {
         -fx-border-color: transparent;
-        -fx-text-fill: @text-color;
         -fx-border-radius: 0;
         -fx-background-radius: 0;
         -fx-label-padding: 0 1.5em 0 3.03em;
         -fx-background-position: 0.83em 0.1em;
+
+        .text {
+            -fx-fill: @text-color;
+        }
 
         &:hover {
             -fx-border-color: transparent;

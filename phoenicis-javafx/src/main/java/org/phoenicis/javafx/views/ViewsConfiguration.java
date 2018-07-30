@@ -18,14 +18,11 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanelFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
-import org.phoenicis.javafx.views.mainwindow.containers.WinePrefixContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
@@ -46,13 +43,13 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.version}")
+    @Value("${application.version}:unknown")
     private String applicationVersion;
 
-    @Value("${application.gitRevision}")
+    @Value("${application.gitRevision}:unknown")
     private String applicationGitRevision;
 
-    @Value("${application.buildTimestamp}")
+    @Value("${application.buildTimestamp}:unknown")
     private String applicationBuildTimestamp;
 
     @Value("${application.user.engines}")
@@ -120,10 +117,5 @@ public class ViewsConfiguration {
     @Bean
     public ConsoleTabFactory consoleTabFactory() {
         return viewsConfigurationLibrary.consoleTabFactory();
-    }
-
-    @Bean
-    public ContainerPanelFactory<WinePrefixContainerPanel, WinePrefixContainerDTO> winePrefixContainerPanelFactory() {
-        return new ContainerPanelFactory<>(WinePrefixContainerPanel.class, WinePrefixContainerDTO.class);
     }
 }

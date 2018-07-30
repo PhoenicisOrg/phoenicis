@@ -85,17 +85,18 @@ public class ControllerConfiguration {
     public ContainersController containersController() {
         return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
-                viewsConfiguration.winePrefixContainerPanelFactory(),
-                containersConfiguration.winePrefixContainerController(),
+                containersConfiguration.containerEngineController(),
                 repositoryConfiguration.repositoryManager(),
+                enginesConfiguration.engineSettingsManager(),
                 enginesConfiguration.engineToolsManager());
     }
 
     @Bean
     public EnginesController enginesController() {
-        return new EnginesController(viewsConfiguration.viewEngines(), repositoryConfiguration.repositoryManager(),
+        return new EnginesController(viewsConfiguration.viewEngines(),
+                repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.enginesSource(),
-                scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
+                themeConfiguration.themeManager());
     }
 
     @Bean

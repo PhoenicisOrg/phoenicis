@@ -1,5 +1,5 @@
 language: java
-sudo: false
+sudo: true # must have same "sudo" state in stages for caching
 
 # avoid double builds on pull requests
 branches:
@@ -7,44 +7,100 @@ branches:
     - master
     - 5.0-alpha
 
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-      - oracle-java9-installer
+# caches for build artifacts
+cache:
+  directories:
+    - $HOME/travis_cache
 
-env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
-
-matrix:
+jobs:
   include:
-    # The normal tests
-    - jdk: oraclejdk8
+    # build cache
+    - stage: Build cache
       os: linux
       dist: trusty
-    - jdk: oraclejdk9
-      os: linux
-      dist: trusty
-    - os: osx
-      osx_image: xcode9.2
-        
-    # Check the format
-    - stage: Check format
-      jdk: oraclejdk8
-      os: linux
-      dist: trusty
-      # do not use default install (runs formatter)
+      jdk: openjdk8
+      sudo: required
       install: true
       script:
-        - mvn -Pcheck-formatted validate formatter:validate
+        - mv $HOME/travis_cache $HOME/travis_cache_old
+        - mkdir $HOME/travis_cache
+        - echo "$TRAVIS_BUILD_ID" > $HOME/travis_cache/travis_build_id
+
+    # Check format
+    - stage: Check format
+      # do not use default install (runs formatter)
+      install: true
+      script: mvn -Pcheck-formatted validate formatter:validate
+
+    # build + test
+    - stage: Build + test
+      os: linux
+      dist: trusty
+      jdk: openjdk8
+      sudo: required
+      services:
+        - docker
+      before_install:
+        - docker run -d --name ubuntu-16-04 -v $HOME:/travis openjdk:8 tail -f /dev/null
+      install:
+        - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
+                                               apt install -y git;
+                                               apt install -y maven;
+                                               apt install -y openjfx;
+                                               apt install -y gettext"
+      script:
+        - docker exec -t ubuntu-16-04 bash -c "cd /travis;
+                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
+                                               cd phoenicis;
+                                               mvn -B clean package"
+      before_cache:
+        - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
+    # build + test
+    - stage: Build + test
+      os: linux
+      dist: trusty
+      jdk: oraclejdk8
+      addons:
+        apt:
+          packages: oracle-java8-installer
+    - stage: Build + test
+      os: linux
+      dist: trusty
+      jdk: oraclejdk9
+      addons:
+        apt:
+          packages: oracle-java9-installer
+    - stage: Build + test
+      os: osx
+      osx_image: xcode9.2
+
+    # Install packages
+    # .deb
+    - stage: Install packages
+      os: linux
+      dist: trusty
+      jdk: openjdk8
+      sudo: required
+      services:
+        - docker
+      before_install:
+        - docker run -d --name ubuntu-16-04 -v $HOME:/travis ubuntu:16.04 tail -f /dev/null
+      install:
+        - docker exec -t ubuntu-16-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
+      script:
+        # check that cache has been filled in current build
+        - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
+        - rm -f $HOME/travis_cache/travis_build_id
+        - docker exec -t ubuntu-16-04 bash -c "apt install -y /travis/travis_cache/*.deb"
+        - mv $HOME/travis_cache $HOME/travis_cache_old
+        - mkdir $HOME/travis_cache # clear the cache
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
-      os: linux
+      env: NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
       language: ruby
       rvm:
-        - 2.1
+        - 2.5
       before_install: cd docs
       script:
         - bundle exec jekyll build

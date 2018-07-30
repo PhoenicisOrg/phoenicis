@@ -13,8 +13,10 @@ import java.util.function.Predicate;
 
 /**
  * A filtered observable list taking a {@link Predicate} to filter elements of a given input {@link ObservableList}.
- * This class is based on the implementation of {@link FilteredList}, included in javafx, and extends its functionality with a trigger method.
- * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as invalid,
+ * This class is based on the implementation of {@link FilteredList}, included in javafx, and extends its functionality
+ * with a trigger method.
+ * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as
+ * invalid,
  * that were previously added and now aren't, or the other way.
  *
  * @param <E> The type of the elements contained in the filtered list
@@ -33,7 +35,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
      * The provided predicate will match the elements in the source list that will be visible.
      * If the predicate is null, all elements will be matched and the list is equal to the source list.
      *
-     * @param source    the source list
+     * @param source the source list
      * @param predicate the predicate to match the elements or null to match all elements.
      */
     public PhoenicisFilteredList(@NamedArg("source") ObservableList<E> source,
@@ -121,7 +123,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     /**
      * Returns the element at the specified position in this list.
      *
-     * @param  index index of the element to return
+     * @param index index of the element to return
      * @return the element at the specified position in this list
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
@@ -142,7 +144,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     }
 
     /**
-     * Taken from: https://github.com/teamfx/openjfx-9-dev-rt/blob/master/modules/javafx.base/src/main/java/javafx/collections/transformation/FilteredList.java
+     * Taken from:
+     * https://github.com/teamfx/openjfx-9-dev-rt/blob/master/modules/javafx.base/src/main/java/javafx/collections/transformation/FilteredList.java
      *
      * @apiNote This method is required to make Phoenicis compile with Java 9
      */
@@ -306,7 +309,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     /**
      * Triggers a check of all elements inside the source list to check if they still match the predicate function.
      * Only if they are now contained inside this filtered list and were not contained previously,
-     * or the other way around, will a {@link javafx.collections.ListChangeListener.Change} event be triggered for the element.
+     * or the other way around, will a {@link javafx.collections.ListChangeListener.Change} event be triggered for the
+     * element.
      */
     public void trigger() {
         Predicate<? super E> pred = getPredicateImpl();

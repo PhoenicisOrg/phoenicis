@@ -16,120 +16,98 @@
   ~ with this program; if not, write to the Free Software Foundation, Inc.,
   ~ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
   -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>phoenicis</artifactId>
         <groupId>org.phoenicis</groupId>
         <version>5.0-alpha</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
-
     <artifactId>phoenicis-tools</artifactId>
-
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-entities</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-configuration</artifactId>
             <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-win32</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
+            <version>1.11</version>
         </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.5</version>
+            <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>jmimemagic</groupId>
             <artifactId>jmimemagic</artifactId>
             <version>0.1.2</version>
             <exclusions>
                 <exclusion>
-                    <groupId>log4j</groupId>
                     <artifactId>log4j</artifactId>
+                    <groupId>log4j</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
-            <version>1.13</version>
+            <version>1.17</version>
         </dependency>
-
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
-
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.8.8.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcpg-jdk16</artifactId>
             <version>${org.bouncycastle.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcmail-jdk16</artifactId>
             <version>${org.bouncycastle.version}</version>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.mock-server</groupId>
             <artifactId>mockserver-netty</artifactId>
-            <version>3.10.7</version>
+            <version>5.4.1</version>
             <scope>test</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>org.bouncycastle</groupId>
                     <artifactId>bcprov-jdk15on</artifactId>
+                    <groupId>org.bouncycastle</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
     </dependencies>
-
-
 </project>

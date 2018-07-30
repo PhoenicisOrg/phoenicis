@@ -28,7 +28,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * </li>
  * <li>
  * A button group containing a button for all known engine groups.
- * After pressing on one such button all engines belonging to the selected engine group are shown in the main window panel.
+ * After pressing on one such button all engines belonging to the selected engine group are shown in the main window
+ * panel.
  * </li>
  * <li>
  * A button group containing buttons to filter for installed and uninstalled engines.
@@ -71,7 +72,7 @@ public class EnginesSidebar extends Sidebar {
      * Constructor
      *
      * @param enginesVersionListWidgets The list widget to be managed by the ListWidgetChooser in the sidebar
-     * @param javaFxSettingsManager     The settings manager for the JavaFX GUI
+     * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
     public EnginesSidebar(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets, EnginesFilter filter,
             JavaFxSettingsManager javaFxSettingsManager) {
@@ -94,7 +95,8 @@ public class EnginesSidebar extends Sidebar {
     }
 
     /**
-     * This method takes an {@link ObservableList} of engine categories and binds it to the engine categories button group
+     * This method takes an {@link ObservableList} of engine categories and binds it to the engine categories button
+     * group
      *
      * @param engineCategories The list of engine categories
      */

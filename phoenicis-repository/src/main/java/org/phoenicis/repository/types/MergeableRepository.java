@@ -29,12 +29,12 @@ abstract class MergeableRepository implements Repository {
      * application source is taken.
      *
      * @param repositoriesMap A map containing a binding between the application sources and
-     *                      their repository DTO
-     * @param repositories  A list containing all application sources in the order in
-     *                      which they should be merged
+     *            their repository DTO
+     * @param repositories A list containing all application sources in the order in
+     *            which they should be merged
      * @return A list containing category dtos of the merged application
-     * sources. If no application sources were given, an empty list is
-     * returned
+     *         sources. If no application sources were given, an empty list is
+     *         returned
      */
     protected RepositoryDTO mergeRepositories(Map<Repository, RepositoryDTO> repositoriesMap,
             List<Repository> repositories) {
@@ -169,11 +169,13 @@ abstract class MergeableRepository implements Repository {
 
     /**
      * Takes two lists of {@link URI}s leading to miniature images and merges them into a single list.
-     * During the merging all duplicates are removed, while the miniatures inside <code>leftMiniatures</code> have a higher priority
+     * During the merging all duplicates are removed, while the miniatures inside <code>leftMiniatures</code> have a
+     * higher priority
      *
-     * @param leftMiniatures  The first list of miniature {@link URI}s
+     * @param leftMiniatures The first list of miniature {@link URI}s
      * @param rightMiniatures The first list of miniature {@link URI}s
-     * @return A list containing the merged miniature {@link URI}s from both <code>leftMiniatures</code> and <code>rightMiniatures</code>
+     * @return A list containing the merged miniature {@link URI}s from both <code>leftMiniatures</code> and
+     *         <code>rightMiniatures</code>
      */
     protected List<URI> mergeMiniatures(List<URI> leftMiniatures, List<URI> rightMiniatures) {
         HashMap<String, URI> mergedMiniatures = new HashMap<>();

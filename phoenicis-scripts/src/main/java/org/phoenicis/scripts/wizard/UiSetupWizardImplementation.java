@@ -140,10 +140,10 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Show a default script presentation
      *
-     * @param programName   the name of the program
+     * @param programName the name of the program
      * @param programEditor the editor of the program
      * @param applicationHomepage homepage of the application
-     * @param scriptorName  the scriptor name
+     * @param scriptorName the scriptor name
      */
     @Override
     public Void presentation(String programName, String programEditor, String applicationHomepage,
@@ -173,7 +173,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Show the content of a licence file
      *
-     * @param textToShow  a message above the licence
+     * @param textToShow a message above the licence
      * @param licenceFile the licence file to display (with 'from java.io import File')
      */
     @Override
@@ -192,7 +192,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Show the content of a licence file
      *
-     * @param textToShow      a message above the licence
+     * @param textToShow a message above the licence
      * @param licenceFilePath the path of the licence file to display
      */
     @Override
@@ -203,7 +203,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Show a custom licence message
      *
-     * @param textToShow  a message above the licence
+     * @param textToShow a message above the licence
      * @param licenceText the licence text to showRightView
      */
     @Override
@@ -225,7 +225,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Asks the user to enter a value
      *
-     * @param textToShow   a text that will be shown
+     * @param textToShow a text that will be shown
      * @param defaultValue a default value
      * @return the value the user entered
      */
@@ -238,7 +238,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * Displays a showMenuStep so that the user can make a choice
      *
      * @param textToShow a text that will be shown
-     * @param menuItems  a list containing the elements of the showMenuStep
+     * @param menuItems a list containing the elements of the showMenuStep
      * @return the value the user entered (as string)
      */
     @Override
@@ -250,7 +250,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * Displays a showMenuStep so that the user can make a choice
      *
      * @param textToShow a text that will be shown
-     * @param menuItems  a list containing the elements of the showMenuStep
+     * @param menuItems a list containing the elements of the showMenuStep
      * @param defaultValue item which is selected by default
      * @return the value the user entered (as string)
      */
@@ -273,10 +273,10 @@ public class UiSetupWizardImplementation implements SetupWizard {
     /**
      * Ask the user to choose a file
      *
-     * @param textToShow        text to show
-     * @param directory         default directory to browse in
+     * @param textToShow text to show
+     * @param directory default directory to browse in
      * @param allowedExtensions A list containing allowed extensions. All extensions will be allowed if this parameter
-     *                          is set to null
+     *            is set to null
      * @return The path of the file
      */
     @Override

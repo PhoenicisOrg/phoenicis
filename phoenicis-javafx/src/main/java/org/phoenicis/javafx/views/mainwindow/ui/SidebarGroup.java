@@ -56,7 +56,7 @@ public class SidebarGroup extends VBox {
     /**
      * Constructor
      *
-     * @param title   The title string to be used for this group. If no title string is to be set null can be used.
+     * @param title The title string to be used for this group. If no title string is to be set null can be used.
      * @param content Zero or more nodes, which make up the content of this group.
      */
     public SidebarGroup(String title, Node... content) {

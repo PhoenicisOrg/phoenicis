@@ -33,8 +33,14 @@ public class EnginesConfiguration {
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
 
     @Bean
-    public EnginesSource enginesSource() {
-        return new EnginesSource(scriptsConfiguration.scriptInterpreter(), phoenicisGlobalConfiguration.objectMapper());
+    public EnginesManager enginesSource() {
+        return new EnginesManager(scriptsConfiguration.scriptInterpreter(),
+                phoenicisGlobalConfiguration.objectMapper());
+    }
+
+    @Bean
+    public EngineSettingsManager engineSettingsManager() {
+        return new EngineSettingsManager(scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean

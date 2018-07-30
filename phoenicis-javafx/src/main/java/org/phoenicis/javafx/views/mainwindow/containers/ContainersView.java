@@ -43,9 +43,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * This view is partitioned in three sections:
  *
  * <ul>
- *     <li>A sidebar, that allows the user to filter between the container categories</li>
- *     <li>A list widget, which contains the installed containers</li>
- *     <li>An optional details view showing details about the selected container in the list widget</li>
+ * <li>A sidebar, that allows the user to filter between the container categories</li>
+ * <li>A list widget, which contains the installed containers</li>
+ * <li>An optional details view showing details about the selected container in the list widget</li>
  * </ul>
  */
 public class ContainersView extends MainWindowView<ContainersSidebar> {
@@ -65,7 +65,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
     /**
      * Constructor
      *
-     * @param themeManager          The theme manager
+     * @param themeManager The theme manager
      * @param javaFxSettingsManager The javafx settings manager
      */
     public ContainersView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {

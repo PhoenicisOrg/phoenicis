@@ -46,7 +46,7 @@ public class MultipleRepository extends MergeableRepository {
         LOGGER.info(String.format("Fetching applications for: %s", this.toString()));
 
         /*
-        * This step is needed because we need a mapping between the CategoryDTO
+         * This step is needed because we need a mapping between the CategoryDTO
          * list and its application source, to preserve the order in the
          * reduction step
          */

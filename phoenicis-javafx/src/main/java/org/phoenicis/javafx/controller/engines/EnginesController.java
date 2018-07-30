@@ -19,9 +19,9 @@
 package org.phoenicis.javafx.controller.engines;
 
 import javafx.application.Platform;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.engines.EnginesSource;
-import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.engines.Engine;
+import org.phoenicis.engines.EnginesManager;
+import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
@@ -31,8 +31,6 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -40,10 +38,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.*;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -51,45 +46,77 @@ public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final EnginesView enginesView;
     private final RepositoryManager repositoryManager;
-    private final EnginesSource enginesSource;
-    private final ScriptInterpreter scriptInterpreter;
+    private final EnginesManager enginesManager;
     private ThemeManager themeManager;
+    private RepositoryDTO repositoryCache = null;
+    private Map<String, Engine> enginesCache = new HashMap<>();
+    private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
-    public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager, EnginesSource enginesSource,
-            ScriptInterpreter scriptInterpreter,
+    public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
+            EnginesManager enginesManager,
             ThemeManager themeManager) {
         this.enginesView = enginesView;
         this.repositoryManager = repositoryManager;
-        this.enginesSource = enginesSource;
-        this.scriptInterpreter = scriptInterpreter;
+        this.enginesManager = enginesManager;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView,
+        this.repositoryManager.addCallbacks(repositoryDTO -> this.enginesManager.fetchAvailableEngines(repositoryDTO,
+                engines -> this.populateView(repositoryDTO, engines),
+                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
                 e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
-        this.enginesView.setOnInstallEngine(engineDTO -> {
-            new ConfirmMessage(tr("Install {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to install {0}?", engineDTO.getVersion())).ask(() -> {
-                        installEngine(engineDTO,
-                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                    });
+        this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
+            // TODO: better way to get engine ID
+            final String engineId = engineCategoryDTO.getName().toLowerCase();
+            // only if not chached
+            if (!this.versionsCache.containsKey(engineId)) {
+                this.enginesManager.fetchAvailableVersions(engineId,
+                        versions -> {
+                            this.versionsCache.put(engineId, versions);
+                            this.enginesView.updateVersions(engineCategoryDTO, versions);
+                        },
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+            }
         });
 
-        this.enginesView.setOnDeleteEngine(engineDTO -> {
-            new ConfirmMessage(tr("Delete {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to delete {0}", engineDTO.getVersion())).ask(() -> {
-                        deleteEngine(engineDTO,
-                                e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
-                    });
-        });
+        this.enginesView.setOnInstallEngine(engineDTO -> new ConfirmMessage(
+                tr("Install {0}", engineDTO.getVersion()),
+                tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
+                this.enginesView.getContent().getScene().getWindow())
+                        .ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> {
+                                    engine.install(engineDTO.getSubCategory(), engineDTO.getVersion());
+                                    // invalidate cache and force view update to show installed version correctly
+                                    this.versionsCache.remove(engineDTO.getId());
+                                    this.forceViewUpdate();
+                                },
+                                e -> Platform.runLater(
+                                        () -> new ErrorMessage("Error", e, this.enginesView).show()))));
+
+        this.enginesView.setOnDeleteEngine(engineDTO -> new ConfirmMessage(
+                tr("Delete {0}", engineDTO.getVersion()),
+                tr("Are you sure you want to delete {0}", engineDTO.getVersion()),
+                this.enginesView.getContent().getScene().getWindow())
+                        .ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
+                                engine -> {
+                                    engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion());
+                                    // invalidate cache and force view update to show deleted version correctly
+                                    this.versionsCache.remove(engineDTO.getId());
+                                    this.forceViewUpdate();
+                                },
+                                e -> Platform.runLater(
+                                        () -> new ErrorMessage("Error", e, this.enginesView).show()))));
     }
 
     public EnginesView getView() {
         return enginesView;
     }
 
-    private void populateView(RepositoryDTO repositoryDTO) {
+    private void populateView(RepositoryDTO repositoryDTO, Map<String, Engine> engines) {
+        this.repositoryCache = repositoryDTO;
+        this.enginesCache = engines;
         Platform.runLater(() -> {
+            this.enginesView.showWait();
             List<CategoryDTO> categoryDTOS = new ArrayList<>();
             for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
                 if (typeDTO.getId().equals("engines")) {
@@ -97,33 +124,15 @@ public class EnginesController {
                 }
             }
             setDefaultEngineIcons(categoryDTOS);
-            enginesSource.fetchAvailableEngines(categoryDTOS,
-                    versions -> Platform.runLater(() -> this.enginesView.populate(versions)));
+            this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS), engines);
         });
     }
 
-    private void installEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("install", engineDTO.getCategory(), engineDTO.getSubCategory(),
-                            engineDTO.getVersion(), engineDTO.getUserData());
-                }, errorCallback), errorCallback);
-    }
-
-    private void deleteEngine(EngineDTO engineDTO, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineDTO.getId() + "\", \"engine\", \"object\"]);",
-                ignored -> interactiveScriptSession.eval("new Wine()", output -> {
-                    final ScriptObjectMirror wine = (ScriptObjectMirror) output;
-                    wine.callMember("delete", engineDTO.getCategory(), engineDTO.getSubCategory(),
-                            engineDTO.getVersion(), engineDTO.getUserData());
-                }, errorCallback), errorCallback);
+    /**
+     * forces an update of the view
+     */
+    private void forceViewUpdate() {
+        this.populateView(this.repositoryCache, this.enginesCache);
     }
 
     private void setDefaultEngineIcons(List<CategoryDTO> categoryDTOS) {

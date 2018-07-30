@@ -1,0 +1,253 @@
+/*
+ * Copyright (C) 2015-2017 PÂRIS Quentin
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program; if not, write to the Free Software Foundation, Inc.,
+ * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ */
+
+@main-color: #f7f7f7;
+@background-color: #505050;
+@focus-color: #88ad54;
+@text-color: #212121;
+
+/*******************************************************/
+/*********************** general ***********************/
+/*******************************************************/
+.text-field {
+    -fx-focus-color: @focus-color;
+    -fx-faint-focus-color: @focus-color;
+    -fx-text-fill: @text-color;
+    -fx-text-base-color: @text-color;
+    -fx-text-inner-color: @text-color;
+}
+
+.text {
+    -fx-fill: @text-color;
+}
+
+.toggle-button {
+    -fx-text-fill: @text-color;
+
+    &:hover, &:selected, &:selected:focused {
+        -fx-background-color: #b5b5b5;
+    }
+}
+
+.combo-box:hover {
+    -fx-border-color: @focus-color;
+}
+
+.combo-box:hover .arrow-button {
+    -fx-color: @focus-color;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: @main-color, @main-color;
+}
+
+.combo-box .list-cell {
+    -fx-background: @main-color;
+    -fx-background-color: @main-color;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover {
+    -fx-background-color: @focus-color;
+}
+
+.context-menu {
+  -fx-text-fill: @text-color;
+}
+
+.menu-item:hover {
+  -fx-background-color: @focus-color;
+}
+
+.menu-item .label {
+  -fx-text-fill: @text-color;
+}
+
+.check-box:hover .box {
+    -fx-background-color: transparent;
+    -fx-border-color: @focus-color;
+}
+
+.check-box:selected .mark {
+    -fx-color: @focus-color;
+    -fx-background-color: @focus-color;
+}
+
+.list-cell:filled:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: @focus-color;
+    -fx-text-fill: @text-color;
+}
+
+.text-field, .text-area {
+    -fx-text-fill: @text-color;
+    -fx-focus-color: @focus-color;
+}
+
+.text-field:hover, .text-area:hover {
+    -fx-border-color: @focus-color;
+    -fx-text-fill: @text-color;
+}
+
+/*******************************************************/
+/************************ menu *************************/
+/*******************************************************/
+#menuPane > .tab-header-area .tab:selected {
+    -fx-border-color: @focus-color;
+}
+
+#menuPane > .tab-header-area .tab-header-background {
+    -fx-background-color: linear-gradient(#e4e4e4, #bebebe);
+}
+
+/*******************************************************/
+/*********************** sidebar ***********************/
+/*******************************************************/
+.sidebar {
+    -fx-background-color: @background-color;
+    -fx-padding: 0 0 0.83em 0;
+
+    .sidebarScrollbar {
+        -fx-background-color: @background-color;
+    }
+
+    .sidebarScrollbar > .viewport {
+        -fx-background-color: @background-color;
+    }
+
+    .sidebarScrollbar .scroll-bar:vertical .track {
+        -fx-background-color: #3c3f41;
+        -fx-background-radius: 1em;
+    }
+
+    .sidebarScrollbar .scroll-bar:vertical .thumb {
+        -fx-background-color: @background-color;
+        -fx-background-radius: 0em;
+    }
+
+    .sidebarTitle {
+        -fx-padding: 0.83em 0.83em 0.4em 0.83em;
+        -fx-font-size: 1.2em;
+
+        .text {
+            -fx-fill: white;
+        }
+    }
+
+    .sidebarButton {
+        -fx-border-color: transparent;
+        -fx-text-fill: white;
+        -fx-border-radius: 0;
+        -fx-background-radius: 0;
+        -fx-label-padding: 0 1.5em 0 3.03em;
+        -fx-background-position: 0.83em 0.1em;
+
+        .text {
+            -fx-fill: white;
+        }
+
+        &:hover {
+            -fx-border-color: transparent;
+        }
+
+        &:selected {
+            -fx-background-color: @focus-color;
+            -fx-border-color: transparent;
+            -fx-background-radius: 0;
+
+            .text {
+                -fx-fill: white;
+            }
+        }
+    }
+
+    .sidebarCheckBox {
+        -fx-translate-x: 0.83em;
+        -fx-label-padding: 0 1.5em 0 0.4em;
+
+        .text {
+            -fx-fill: white;
+        }
+    }
+
+    .searchBar {
+        -fx-border-radius: 0;
+        -fx-background-radius: 0;
+        -fx-background-color: @main-color;
+        -fx-border-color: transparent;
+        -fx-text-fill: @text-color;
+        -fx-focus-color: @focus-color;
+
+        &:focused {
+            -fx-border-color: transparent;
+            -fx-text-fill: @text-color;
+        }
+
+        &:hover {
+            -fx-border-color: @focus-color;
+            -fx-text-fill: @text-color;
+        }
+    }
+
+    .searchBox {
+        .searchCleanButton {
+            -fx-border-color: transparent;
+        }
+    }
+}
+
+/*******************************************************/
+/************************* apps ************************/
+/*******************************************************/
+.appPanelMiniaturesPane {
+    -fx-padding: 1em;
+}
+
+/*******************************************************/
+/********************** containers *********************/
+/*******************************************************/
+.containerConfigurationPane > .grid {
+    -fx-padding: 1em;
+    -fx-hgap: 1em;
+    -fx-vgap: 1em;
+    -fx-spacing: 1em;
+}
+
+/*******************************************************/
+/********************** miniature **********************/
+/*******************************************************/
+
+.listChooser {
+    -fx-translate-x: 0.83em;
+    -fx-spacing: 0.2em;
+    -fx-padding: 0;
+
+    .listIcon:selected {
+        -fx-border-radius: 0.2em;
+    }
+}
+
+/*******************************************************/
+/***************** installation wizard *****************/
+/*******************************************************/
+#presentationBackground {
+    -fx-padding: 0.8em;
+}
+
+/************************ step *************************/
+#panelForTopheader {
+    -fx-border-color: #CCCCCC;
+}

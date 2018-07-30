@@ -71,7 +71,7 @@ public class ApplicationsSidebar extends Sidebar {
     /**
      * Constructor
      *
-     * @param combinedListWidget    The list widget to be managed by the ListWidgetChooser in the sidebar
+     * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
     public ApplicationsSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,

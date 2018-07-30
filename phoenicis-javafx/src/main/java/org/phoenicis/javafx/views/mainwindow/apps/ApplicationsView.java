@@ -74,9 +74,9 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     /**
      * Constructor
      *
-     * @param themeManager          The theme manager
+     * @param themeManager The theme manager
      * @param javaFxSettingsManager The javafx settings manager
-     * @param toolsConfiguration    The tools configuration
+     * @param toolsConfiguration The tools configuration
      */
     public ApplicationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
             ToolsConfiguration toolsConfiguration) {
@@ -169,7 +169,7 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     /**
      * Displays the application details view on the right side for a given application.
      *
-     * @param application           The application, whose details should be shown
+     * @param application The application, whose details should be shown
      * @param javaFxSettingsManager The javafx settings manager
      */
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {

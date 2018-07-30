@@ -66,14 +66,16 @@ public class ListWidgetEntry<E> {
 
     /**
      * An optional list of additional information for this entry.
-     * These information are only shown inside a {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget} or a
+     * These information are only shown inside a
+     * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget} or a
      * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
      */
     private Optional<List<AdditionalListWidgetInformation>> additionalInformation;
 
     /**
      * An optional list of additional detailed information for this entry.
-     * These information are only shown inside a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+     * These information are only shown inside a
+     * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
      */
     private Optional<List<AdditionalListWidgetInformation>> detailedInformation;
 
@@ -86,12 +88,12 @@ public class ListWidgetEntry<E> {
      * Constructor.
      * This constructor assumes that the entry is enabled
      *
-     * @param item                  The item from which the entry should be created
-     * @param iconUri               An optional uri to a miniature to this entry
-     * @param defaultIconUri        An uri to a fallback miniature
-     * @param title                 The title to this entry
+     * @param item The item from which the entry should be created
+     * @param iconUri An optional uri to a miniature to this entry
+     * @param defaultIconUri An uri to a fallback miniature
+     * @param title The title to this entry
      * @param additionalInformation An optional list of additional information to this entry
-     * @param detailedInformation   An optional list of additional detailed information to this entry
+     * @param detailedInformation An optional list of additional detailed information to this entry
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation,
@@ -102,13 +104,13 @@ public class ListWidgetEntry<E> {
     /**
      * Constructor
      *
-     * @param item                  The item from which the entry should be created
-     * @param iconUri               An optional uri to a miniature to this entry
-     * @param defaultIconUri        An uri to a fallback miniature
-     * @param title                 The title to this entry
+     * @param item The item from which the entry should be created
+     * @param iconUri An optional uri to a miniature to this entry
+     * @param defaultIconUri An uri to a fallback miniature
+     * @param title The title to this entry
      * @param additionalInformation An optional list of additional information to this entry
-     * @param detailedInformation   An optional list of additional detailed information to this entry
-     * @param enabled               True if this entry is enabled
+     * @param detailedInformation An optional list of additional detailed information to this entry
+     * @param enabled True if this entry is enabled
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
             Optional<List<AdditionalListWidgetInformation>> additionalInformation,

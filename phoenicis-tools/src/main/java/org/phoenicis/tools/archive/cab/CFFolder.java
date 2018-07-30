@@ -44,7 +44,7 @@ public class CFFolder extends AbstractCabStructure {
             structureSize += inputStream.read(cCFData);
             structureSize += inputStream.read(typeCompress);
 
-            //structureSize += readVariableField(inputStream, abReserve);
+            // structureSize += readVariableField(inputStream, abReserve);
         } catch (IOException e) {
             throw new CabException("Unable to extract CFFolder", e);
         }

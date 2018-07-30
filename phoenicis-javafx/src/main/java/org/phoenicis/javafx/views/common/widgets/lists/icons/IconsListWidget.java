@@ -65,7 +65,8 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
     /**
      * Constructor
      *
-     * @param converter         A converter function used to convert a value of input type <code>E</code> to {@link IconsListElement}
+     * @param converter A converter function used to convert a value of input type <code>E</code> to
+     *            {@link IconsListElement}
      * @param setOnMouseClicked An event listener function to be called when a list element has been selected/clicked
      */
     public IconsListWidget(Function<E, IconsListElement<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {

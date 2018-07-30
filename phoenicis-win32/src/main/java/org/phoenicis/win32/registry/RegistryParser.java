@@ -19,6 +19,7 @@
 package org.phoenicis.win32.registry;
 
 import org.apache.commons.lang.StringUtils;
+import org.phoenicis.configuration.security.Safe;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,6 +31,7 @@ import java.text.ParseException;
  * Registry parser class If someone wants to improve this code, feel free to do
  * it!
  */
+@Safe
 public class RegistryParser {
     private static final char QUOTE = '"';
     private static final String PARSE_ERROR_MESSAGE = "Invalid registry file. Error found line %s";

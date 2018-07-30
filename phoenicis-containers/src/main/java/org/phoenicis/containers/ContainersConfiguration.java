@@ -19,8 +19,7 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
-import org.phoenicis.containers.wine.WinePrefixContainerController;
-import org.phoenicis.containers.wine.configurations.*;
+import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
@@ -36,13 +35,13 @@ public class ContainersConfiguration {
     private LibraryConfiguration libraryConfiguration;
 
     @Autowired
+    private EnginesConfiguration enginesConfiguration;
+
+    @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Autowired
     private ToolsConfiguration toolsConfiguration;
-
-    @Autowired
-    private Win32Configuration win32Configuration;
 
     @Autowired
     private ScriptsConfiguration scriptsConfiguration;
@@ -53,8 +52,6 @@ public class ContainersConfiguration {
     @Bean
     public ContainersManager containersManager() {
         return new GenericContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
-                winePrefixDisplayConfiguration(),
-                winePrefixInputConfiguration(),
                 libraryConfiguration.libraryManager(),
                 libraryConfiguration.shortcutManager(),
                 toolsConfiguration.fileUtilities(),
@@ -69,20 +66,7 @@ public class ContainersConfiguration {
     }
 
     @Bean
-    public WinePrefixContainerController winePrefixContainerController() {
-        return new WinePrefixContainerController(scriptsConfiguration.scriptInterpreter(),
-                win32Configuration.registryWriter());
-    }
-
-    @Bean
-    WinePrefixContainerInputConfiguration winePrefixInputConfiguration() {
-        return new RegistryWinePrefixContainerInputConfiguration(win32Configuration.registryParser(),
-                new DefaultWinePrefixContainerInputConfiguration());
-    }
-
-    @Bean
-    WinePrefixContainerDisplayConfiguration winePrefixDisplayConfiguration() {
-        return new RegistryWinePrefixContainerDisplayConfiguration(win32Configuration.registryParser(),
-                new DefaultWinePrefixContainerDisplayConfiguration());
+    public ContainerEngineController containerEngineController() {
+        return new ContainerEngineController(enginesConfiguration.enginesSource());
     }
 }

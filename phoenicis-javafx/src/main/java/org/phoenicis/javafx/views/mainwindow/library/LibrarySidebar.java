@@ -80,7 +80,7 @@ public class LibrarySidebar extends Sidebar {
     /**
      * Constructor
      *
-     * @param applicationName    The name of this application (normally "PlayOnLinux")
+     * @param applicationName The name of this application (normally "PlayOnLinux")
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
@@ -209,7 +209,7 @@ public class LibrarySidebar extends Sidebar {
         this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, /*runScript, */runConsole);
+        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, /* runScript, */runConsole);
     }
 
     public void search(String searchTerm) {
@@ -239,7 +239,8 @@ public class LibrarySidebar extends Sidebar {
     }
 
     /**
-     * This method updates the runnable, that is called when the "Create shortcut" button in the advanced tools section has been clicked.
+     * This method updates the runnable, that is called when the "Create shortcut" button in the advanced tools section
+     * has been clicked.
      *
      * @param onCreateShortcut The new runnable to be called
      */
@@ -248,7 +249,8 @@ public class LibrarySidebar extends Sidebar {
     }
 
     /**
-     * This method updates the consumer, that is called when the "Run a script" button in the advanced tools section has been clicked.
+     * This method updates the consumer, that is called when the "Run a script" button in the advanced tools section has
+     * been clicked.
      *
      * @param onScriptRun The new consumer to be called
      */
@@ -257,7 +259,8 @@ public class LibrarySidebar extends Sidebar {
     }
 
     /**
-     * This methdo updates the consumer that is called when the "PlayOnLinux console" button ins the advanced tools section has been clicked.
+     * This methdo updates the consumer that is called when the "PlayOnLinux console" button ins the advanced tools
+     * section has been clicked.
      *
      * @param onOpenConsole The new consumer to be called
      */
