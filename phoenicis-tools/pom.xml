@@ -21,7 +21,7 @@
     <parent>
         <artifactId>phoenicis</artifactId>
         <groupId>org.phoenicis</groupId>
-        <version>5.0-SNAPSHOT</version>
+        <version>${phoenicis.version}</version>
     </parent>
     <artifactId>phoenicis-tools</artifactId>
     <properties>
@@ -31,17 +31,17 @@
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-entities</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-configuration</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-win32</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>

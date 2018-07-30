@@ -21,7 +21,7 @@
     <parent>
         <artifactId>phoenicis</artifactId>
         <groupId>org.phoenicis</groupId>
-        <version>5.0-SNAPSHOT</version>
+        <version>${phoenicis.version}</version>
     </parent>
     <artifactId>phoenicis-cli</artifactId>
     <properties>
@@ -31,27 +31,27 @@
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-configuration</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-repository</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-scripts</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-library</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>
             <artifactId>phoenicis-engines</artifactId>
-            <version>${project.version}</version>
+            <version>${phoenicis.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
