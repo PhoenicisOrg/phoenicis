@@ -143,6 +143,23 @@
                     <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <vendor>PhoenicisOrg</vendor>
+                    <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <!--
