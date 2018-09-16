@@ -151,13 +151,14 @@
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>native</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
                     <vendor>PhoenicisOrg</vendor>
                     <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                    <bundler>linux.app</bundler>
                 </configuration>
             </plugin>
         </plugins>
