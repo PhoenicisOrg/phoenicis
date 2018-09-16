@@ -30,7 +30,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 public class JavaFXApplication extends Application {
 
     public static void main(String[] args) {
-        Application.launch(JavaFXApplication.class);
+        try {
+            Application.launch(JavaFXApplication.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
