@@ -79,9 +79,6 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk10
-      addons:
-        apt:
-          packages: oracle-java10-installer
     - stage: Build + test
       name: OSX XCode 9.2
       os: osx
