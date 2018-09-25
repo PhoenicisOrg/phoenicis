@@ -57,7 +57,11 @@ jobs:
                                                mvn -B clean package"
       before_cache:
         - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
-    # build + test
+    - stage: Build + test
+      name: Linux OpenJDK 9
+      os: linux
+      dist: trusty
+      jdk: openjdk9
     - stage: Build + test
       name: Linux Oracle JDK 8
       os: linux
