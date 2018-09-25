@@ -108,6 +108,15 @@
             <version>1.1.10</version>
         </dependency>
     </dependencies>
+    <pluginRepositories>
+        <pluginRepository>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <id>oss-sonatype-snapshots</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
     <build>
         <plugins>
             <plugin>
@@ -146,12 +155,12 @@
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.8.3</version>
+                <version>8.9.0-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
                         <goals>
-                            <goal>native</goal>
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
