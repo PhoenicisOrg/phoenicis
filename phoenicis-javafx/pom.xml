@@ -163,10 +163,6 @@
                     <scope>test</scope>
                     <exclusions>
                         <exclusion>
-                            <artifactId>testfx-internal-java9</artifactId>
-                            <groupId>org.testfx</groupId>
-                        </exclusion>
-                        <exclusion>
                             <artifactId>testfx-internal-java8</artifactId>
                             <groupId>org.testfx</groupId>
                         </exclusion>
@@ -174,7 +170,7 @@
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
-                    <artifactId>testfx-internal-java10</artifactId>
+                    <artifactId>testfx-internal-java9</artifactId>
                     <version>${testfx.version}</version>
                     <scope>test</scope>
                 </dependency>
@@ -230,10 +226,6 @@
                     <version>${testfx.version}</version>
                     <scope>test</scope>
                     <exclusions>
-                        <exclusion>
-                            <artifactId>testfx-internal-java10</artifactId>
-                            <groupId>org.testfx</groupId>
-                        </exclusion>
                         <exclusion>
                             <artifactId>testfx-internal-java9</artifactId>
                             <groupId>org.testfx</groupId>
