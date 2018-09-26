@@ -245,13 +245,19 @@
                         <configuration>
                             <release>11</release>
                             <compilerArgs>
-                                <arg>--add-modules=java.xml.ws.annotation</arg>
                                 <arg>--add-modules=java.activation</arg>
                             </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.glassfish.jaxb</groupId>
+                    <artifactId>jaxb-runtime</artifactId>
+                    <version>2.4.0-b180830.0438</version>
+                </dependency>
+            </dependencies>
         </profile>
         <profile>
             <id>jdk10</id>
