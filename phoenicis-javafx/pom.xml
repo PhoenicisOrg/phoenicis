@@ -184,7 +184,7 @@
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
-                    <artifactId>testfx-internal-java11</artifactId>
+                    <artifactId>testfx-core</artifactId>
                     <version>${testfx.version}</version>
                     <scope>test</scope>
                 </dependency>
