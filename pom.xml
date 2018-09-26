@@ -193,6 +193,10 @@
                 <version>3.8.0</version>
                 <configuration>
                     <release>10</release>
+                    <compilerArgs>
+                        <arg>--add-modules=java.xml.ws.annotation</arg>
+                        <arg>--add-modules=java.activation</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>
