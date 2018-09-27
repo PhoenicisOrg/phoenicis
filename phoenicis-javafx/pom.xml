@@ -146,10 +146,42 @@
         </plugins>
     </build>
     <!--
-        to allow the usage of two different monocle versions for java 8 and 9 two maven profiles are needed,
+        to allow the usage of different monocle versions for different java versions, multiple maven profiles are needed,
         see also https://github.com/TestFX/TestFX/issues/433#issuecomment-348047200 for more details
     -->
     <profiles>
+        <profile>
+            <id>jdk10</id>
+            <activation>
+                <jdk>10</jdk>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-core</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                    <exclusions>
+                        <exclusion>
+                            <artifactId>testfx-internal-java8</artifactId>
+                            <groupId>org.testfx</groupId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>testfx-internal-java9</artifactId>
+                    <version>${testfx.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>org.testfx</groupId>
+                    <artifactId>openjfx-monocle</artifactId>
+                    <version>jdk-9+181</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
         <profile>
             <id>jdk9</id>
             <activation>
