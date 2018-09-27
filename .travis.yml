@@ -67,14 +67,6 @@ jobs:
         apt:
           packages: oracle-java8-installer
     - stage: Build + test
-      name: Linux Oracle JDK 9
-      os: linux
-      dist: trusty
-      jdk: oraclejdk9
-      addons:
-        apt:
-          packages: oracle-java9-installer
-    - stage: Build + test
       name: Linux Oracle JDK 10
       os: linux
       dist: trusty
