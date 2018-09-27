@@ -171,16 +171,6 @@
                     <artifactId>testfx-core</artifactId>
                     <version>${testfx.version}</version>
                     <scope>test</scope>
-                    <exclusions>
-                        <exclusion>
-                            <artifactId>testfx-internal-java9</artifactId>
-                            <groupId>org.testfx</groupId>
-                        </exclusion>
-                        <exclusion>
-                            <artifactId>testfx-internal-java8</artifactId>
-                            <groupId>org.testfx</groupId>
-                        </exclusion>
-                    </exclusions>
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
@@ -197,27 +187,25 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>testfx-core</artifactId>
-                    <version>${testfx.version}</version>
-                    <scope>test</scope>
-                    <exclusions>
-                        <exclusion>
-                            <artifactId>testfx-internal-java8</artifactId>
-                            <groupId>org.testfx</groupId>
-                        </exclusion>
-                    </exclusions>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>11</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-web</artifactId>
+                    <version>11</version>
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
-                    <artifactId>testfx-internal-java9</artifactId>
+                    <artifactId>testfx-core</artifactId>
                     <version>${testfx.version}</version>
                     <scope>test</scope>
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
                     <artifactId>openjfx-monocle</artifactId>
-                    <version>jdk-9+181</version>
+                    <version>jdk-11+23</version>
                     <scope>test</scope>
                 </dependency>
             </dependencies>
