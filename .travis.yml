@@ -75,15 +75,20 @@ jobs:
         apt:
           packages: oracle-java9-installer
     - stage: Build + test
-      name: Linux Oracle JDK 11
+      name: Linux Oracle JDK 10
       os: linux
       dist: trusty
-      jdk: oraclejdk11
+      jdk: oraclejdk10
     - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
       dist: trusty
       jdk: openjdk11
+    - stage: Build + test
+      name: Linux Oracle JDK 11
+      os: linux
+      dist: trusty
+      jdk: oraclejdk11
     - stage: Build + test
       name: OSX XCode 9.2
       os: osx
