@@ -72,11 +72,6 @@ jobs:
       dist: trusty
       jdk: openjdk10
     - stage: Build + test
-      name: Linux Oracle JDK 10
-      os: linux
-      dist: trusty
-      jdk: oraclejdk10
-    - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
       dist: trusty
