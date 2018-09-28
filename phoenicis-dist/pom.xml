@@ -24,7 +24,7 @@
         <version>${phoenicis.version}</version>
     </parent>
     <artifactId>phoenicis-dist</artifactId>
-    <packaging>jlink</packaging>
+    <packaging>${packaging.type}</packaging>
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
     </properties>
@@ -42,25 +42,6 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jlink-plugin</artifactId>
-                <version>3.0.0-alpha-1</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jlink</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <noHeaderFiles>true</noHeaderFiles>
-                    <noManPages>true</noManPages>
-                    <pluginModulePath>lib</pluginModulePath>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -165,4 +146,24 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>jlink-packaging</id>
+            <activation>
+                <jdk>[9</jdk>
+            </activation>
+            <properties>
+                <packaging.type>jlink</packaging.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>jar-packaging</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <properties>
+                <packaging.type>jar</packaging.type>
+            </properties>
+        </profile>
+    </profiles>
 </project>
