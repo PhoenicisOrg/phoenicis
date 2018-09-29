@@ -1,0 +1,65 @@
+{
+  "app-id": "org.phoenicis.javafx",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "1.6",
+  "sdk": "org.freedesktop.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.openjdk10"
+  ],
+  "command": "phoenicis-javafx",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=x11",
+    "--share=network",
+    "--filesystem=host",
+    "--device=dri",
+    "--env=PATH=/usr/bin:/app/bin:/usr/lib/sdk/openjdk10/bin"
+  ],
+  "modules": [
+    {
+      "name": "openjdk",
+      "buildsystem": "simple",
+      "build-commands": [
+        "/usr/lib/sdk/openjdk10/install.sh"
+      ]
+    },
+    {
+      "name": "openjfx",
+      "buildsystem": "simple",
+      "build-commands": [
+        "unzip openjfx-11_linux-x64_bin-sdk.zip -d /app"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "http://download2.gluonhq.com/openjfx/11/openjfx-11_linux-x64_bin-sdk.zip",
+          "md5": "66b0a3a682fa43d57505c938d2716bff",
+          "dest-filename": "openjfx-11_linux-x64_bin-sdk.zip"
+        }
+      ]
+    },
+    {
+      "name": "javafx",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
+        "install -D phoenicis-dist-5.0-SNAPSHOT.jar /app/phoenicis/phoenicis-javafx.jar",
+        "cp -r lib /app/phoenicis",
+        "chmod 755 -R /app/phoenicis"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "../../target"
+        },
+        {
+          "type": "script",
+          "dest-filename": "phoenicis-javafx",
+          "commands": [
+            "java -cp '/app/phoenicis/lib/*':/app/phoenicis/phoenicis-dist-5.0-SNAPSHOT.jar -p /app/javafx-sdk-11/lib --add-modules javafx.controls org.phoenicis.javafx.JavaFXApplication \"$@\""
+          ]
+        }
+      ]
+    }
+  ]
+}
