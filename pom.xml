@@ -142,6 +142,9 @@
                 <configuration>
                     <noHeaderFiles>true</noHeaderFiles>
                     <noManPages>true</noManPages>
+                    <addModules>
+                        <addModule>javafx.controls</addModule>
+                    </addModules>
                 </configuration>
             </plugin>
             <plugin>
@@ -261,6 +264,25 @@
                         <version>3.8.0</version>
                         <configuration>
                             <release>11</release>
+                            <compilerArgs>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.util=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.base/com.sun.javafx.logging=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.prism=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.geom.transform=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.glass.utils=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.font=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.prism.paint=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.scenario.effect=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.text=ALL-UNNAMED</arg>
+                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -279,6 +301,25 @@
                         <version>3.8.0</version>
                         <configuration>
                             <release>10</release>
+                            <compilerArgs>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.util=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.base/com.sun.javafx.logging=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.prism=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.glass.ui=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.geom.transform=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.glass.utils=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.font=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.prism.paint=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.scenario.effect=ALL-UNNAMED</arg>
+                                <arg>--add-exports=javafx.graphics/com.sun.javafx.text=ALL-UNNAMED</arg>
+                            </compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
