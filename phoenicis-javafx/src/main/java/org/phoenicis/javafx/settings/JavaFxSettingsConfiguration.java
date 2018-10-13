@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource("classpath:javafx.properties")
+@PropertySource(value = "classpath:org/phoenicis/javafx/javafx.properties")
 @PropertySource(value = "file:${application.user.root}/javafx.properties", ignoreResourceNotFound = true)
 public class JavaFxSettingsConfiguration {
 
