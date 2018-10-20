@@ -45,7 +45,7 @@ public class GitRepository implements Repository {
     private final LocalRepository.Factory localRepositoryFactory;
 
     private final File localFolder;
-    static Semaphore mutex = new Semaphore(1);
+    private static Semaphore mutex = new Semaphore(1);
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
