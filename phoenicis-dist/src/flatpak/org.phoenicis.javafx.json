@@ -4,7 +4,7 @@
   "runtime-version": "18.08",
   "sdk": "org.freedesktop.Sdk",
   "sdk-extensions": [
-    "org.freedesktop.Sdk.Extension.openjdk10"
+    "org.freedesktop.Sdk.Extension.openjdk11"
   ],
   "command": "phoenicis-javafx",
   "finish-args": [
