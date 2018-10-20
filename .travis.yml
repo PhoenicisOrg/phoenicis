@@ -77,6 +77,14 @@ jobs:
       dist: trusty
       jdk: openjdk11
     - stage: Build + test
+      name: Linux OpenJDK 11 (Flatpak)
+      os: linux
+      dist: trusty
+      jdk: openjdk11
+      after_script:
+        - cd phoenicis-dist/src/flatpak/
+        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
+    - stage: Build + test
       name: Linux Oracle JDK 11
       os: linux
       dist: trusty
