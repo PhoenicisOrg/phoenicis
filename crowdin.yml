@@ -1,5 +1,4 @@
 commit_message: '[Crowdin] Update translations'
-
 files:
   - source: /i18n/*.pot
     translation: /i18n/%two_letters_code%.po
