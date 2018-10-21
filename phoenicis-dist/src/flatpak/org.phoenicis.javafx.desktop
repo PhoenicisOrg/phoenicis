@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Phoenicis JavaFX
+Comment=Front-end for Wine
+Exec=phoenicis-javafx %U
+StartupNotify=true
+Terminal=false
+Type=Application
+MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
+Icon=org.phoenicis.javafx
+Categories=Game
+Keywords=Phoenicis;
+

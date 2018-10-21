@@ -64,7 +64,10 @@
         "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
         "install -D phoenicis-dist-5.0-SNAPSHOT.jar /app/phoenicis/phoenicis-javafx.jar",
         "cp -r lib /app/phoenicis",
-        "chmod 755 -R /app/phoenicis"
+        "chmod 755 -R /app/phoenicis",
+        "install -Dm644 org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
+        "install -Dm644 org.phoenicis.javafx.desktop /app/share/applications/org.phoenicis.javafx.desktop",
+        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.javafx.png; done"
       ],
       "sources": [
         {
@@ -77,6 +80,42 @@
           "commands": [
             "/app/jre/bin/java -Duser.home=\"$XDG_DATA_HOME\" -cp '/app/phoenicis/lib/*':/app/phoenicis/phoenicis-dist-5.0-SNAPSHOT.jar -p /app/javafx-sdk-11/lib --add-modules javafx.controls --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED --add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED --add-exports javafx.graphics/com.sun.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom.transform=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.utils=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.font=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED --add-exports javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED --add-exports javafx.graphics/com.sun.prism.paint=ALL-UNNAMED --add-exports javafx.graphics/com.sun.scenario.effect=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED org.phoenicis.javafx.JavaFXApplication \"$@\""
           ]
+        },
+        {
+          "type": "file",
+          "path": "org.phoenicis.javafx.appdata.xml"
+        },
+        {
+          "type": "file",
+          "path": "org.phoenicis.javafx.desktop"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_16.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_22.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_24.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_32.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_48.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_64.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_256.png"
         }
       ]
     }
