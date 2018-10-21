@@ -12,7 +12,7 @@
     <p>Phoenicis ist ein Front-End für Wine.</p>
   </description>
   <categories>
-    <category>Game</category>
+    <category>Utility</category>
   </categories>
   <url type="homepage">https://phoenicis.org/</url>
   <url type="help">https://github.com/PhoenicisOrg/phoenicis/issues</url>
