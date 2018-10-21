@@ -8,5 +8,5 @@ Type=Application
 MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
 Icon=org.phoenicis.javafx
 Categories=Utility
-Keywords=Phoenicis;
+Keywords=Phoenicis;PlayOnLinux, Wine;
 
