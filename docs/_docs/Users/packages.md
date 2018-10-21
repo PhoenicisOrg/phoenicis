@@ -14,10 +14,10 @@ The built packages are located in the target folder:
 ### Flatpak
 ```
 cd phoenicis-dist/src/flatpak/
-flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
+flatpak-builder build-dir org.phoenicis.javafx.json --force-clean --user --install
 ```
 run with:
 ```
-flatpak-builder --run build-dir org.phoenicis.javafx.json phoenicis-javafx
+flatpak run org.phoenicis.javafx phoenicis-javafx
 ```
 **Hint:** If you cannot compile after building the flatpak, remove `build-dir` and `.flatpak-builder`.
