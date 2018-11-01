@@ -14,6 +14,7 @@ The built packages are located in the target folder:
 ### Flatpak
 Required extensions:
 - org.freedesktop.Platform.Compat.i386
+- org.freedesktop.Platform.GL32.nvidia-410-73
 
 ```
 cd phoenicis-dist/src/flatpak/
