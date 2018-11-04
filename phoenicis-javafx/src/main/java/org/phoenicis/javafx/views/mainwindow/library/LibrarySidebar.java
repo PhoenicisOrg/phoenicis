@@ -209,7 +209,7 @@ public class LibrarySidebar extends Sidebar {
         this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, /* runScript, */runConsole);
+        this.advancedToolsGroup = new SidebarGroup(tr("Advanced Tools"), createShortcut, /* runScript, */runConsole);
     }
 
     public void search(String searchTerm) {
