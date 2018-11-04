@@ -25,7 +25,7 @@ public class LocalisationTest {
     @Before
     public void setUp() {
         mockI18n = mock(I18n.class);
-        PowerMockito.doReturn("output").when(mockI18n).tr("input");
+        PowerMockito.doReturn("output").when(mockI18n).tr("Input");
         PowerMockito.mockStatic(I18nFactory.class);
         PowerMockito.when(I18nFactory.getI18n(any(), anyString())).thenReturn(mockI18n);
     }
@@ -33,7 +33,7 @@ public class LocalisationTest {
     @PrepareForTest({ I18nFactory.class, I18n.class })
     @Test
     public synchronized void testTrWithAString() {
-        assertEquals("output", tr("input"));
+        assertEquals("output", tr("Input"));
     }
 
     @PrepareForTest({ I18nFactory.class, I18n.class })
