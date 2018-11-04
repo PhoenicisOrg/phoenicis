@@ -78,7 +78,7 @@ public class ErrorMessage {
 
             final String exceptionText = ExceptionUtils.getFullStackTrace(exception);
 
-            final Label label = new Label(tr("The exception stacktrace was:"));
+            final Label label = new Label(tr("Stack trace:"));
 
             final TextArea textArea = new TextArea(exceptionText);
             textArea.setEditable(false);
