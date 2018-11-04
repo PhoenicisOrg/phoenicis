@@ -50,7 +50,7 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
 
         Label urlLabel = new Label(tr("Git-URL:"));
         urlLabel.setLabelFor(urlField);
-        Label branchLabel = new Label(tr("Branch:"));
+        Label branchLabel = new Label(tr("Git-Branch:"));
         branchLabel.setLabelFor(branchField);
 
         GridPane grid = new GridPane();
