@@ -107,7 +107,7 @@ public class RepositoriesPanel extends StackPane {
     }
 
     private void populateRepositoryGrid() {
-        this.title = new TextWithStyle(tr("Repositories Settings"), "title");
+        this.title = new TextWithStyle(tr("Repository Settings"), "title");
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
