@@ -80,7 +80,7 @@ public class UserInterfacePanel extends VBox {
         this.showScriptSource.setSelected(javaFxSettingsManager.isViewScriptSource());
         this.showScriptSource.setOnAction(event -> this.save());
 
-        this.showScriptDescription = new Label(tr("Select, if you want to view the source repository of the scripts"));
+        this.showScriptDescription = new Label(tr("View the scripts’ source repository"));
 
         // Scale UI
         this.scale = new Slider(8, 16, javaFxSettingsManager.getScale());
