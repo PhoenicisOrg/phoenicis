@@ -129,7 +129,7 @@ public class ApplicationsSidebar extends Sidebar {
         this.testingCheck = new SidebarCheckBox(tr("Testing"));
         this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
 
-        this.requiresPatchCheck = new SidebarCheckBox(tr("Requires patch"));
+        this.requiresPatchCheck = new SidebarCheckBox(tr("Patch Required"));
         this.requiresPatchCheck.selectedProperty().bindBidirectional(filter.containRequiresPatchApplicationsProperty());
 
         this.commercialCheck = new SidebarCheckBox(tr("Commercial"));
