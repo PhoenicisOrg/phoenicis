@@ -66,7 +66,7 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
 
     @Override
     public String getHeader() {
-        return tr("Choose the location of your git repository");
+        return tr("Choose the location of the git repository");
     }
 
     @Override
