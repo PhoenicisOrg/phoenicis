@@ -84,7 +84,7 @@ public class UserInterfacePanel extends VBox {
 
         // Scale UI
         this.scale = new Slider(8, 16, javaFxSettingsManager.getScale());
-        this.scaleDescription = new Label(tr("Scale the user interface."));
+        this.scaleDescription = new Label(tr("Scale the user interface"));
         this.scale.valueProperty().addListener((observableValue, oldValue, newValue) -> {
             this.pause.setOnFinished(event -> {
                 getScene().getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", newValue));
