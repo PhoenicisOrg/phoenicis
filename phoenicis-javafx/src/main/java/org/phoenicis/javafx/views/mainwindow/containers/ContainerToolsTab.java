@@ -59,7 +59,7 @@ public class ContainerToolsTab extends Tab {
         runExecutable.setOnMouseClicked(event -> {
             this.lockAll();
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Choose executable"));
+            fileChooser.setTitle(tr("Choose executable…"));
 
             // open in container directory if it exists
             File containerDir = new File(this.container.getPath());
