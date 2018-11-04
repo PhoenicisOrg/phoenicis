@@ -88,7 +88,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
             final FileChooser fileChooser = new FileChooser();
             if (extensions != null) {
                 fileChooser
-                        .setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Allowed files"), extensions));
+                        .setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Allowed file types"), extensions));
             }
             fileChooser.setInitialDirectory(browseDirectory);
 
