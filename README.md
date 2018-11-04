@@ -32,7 +32,7 @@ For more details (e.g. regarding dependencies) consider the [documentation](http
 To add or update scripts, please make pull requests to this repository: https://github.com/PhoenicisOrg/scripts
 
 ## Translate
-Phoenicis is localized using crowdin: https://crowdin.com/project/phoenicis
+Phoenicis is localized using Crowdin: https://crowdin.com/project/phoenicis
 
 ## Community
 * Issues or ideas: https://github.com/PhoenicisOrg/phoenicis/issues
