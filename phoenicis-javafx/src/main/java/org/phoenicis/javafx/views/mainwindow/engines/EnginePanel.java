@@ -76,7 +76,7 @@ final class EnginePanel extends DetailsView {
                 onEngineInstall.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage(tr("Error while trying to install the engine"), e).show();
+                new ErrorMessage(tr("An error occurred while installing the engine"), e).show();
             }
         });
         if (this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
@@ -89,7 +89,7 @@ final class EnginePanel extends DetailsView {
                 onEngineDelete.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage(tr("Error while trying to delete the engine"), e).show();
+                new ErrorMessage(tr("An error occurred while deleting the engine"), e).show();
             }
         });
         if (!this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
