@@ -48,7 +48,7 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
         this.urlField = new TextField();
         this.branchField = new TextField("master");
 
-        Label urlLabel = new Label(tr("Git-Url:"));
+        Label urlLabel = new Label(tr("Git-URL:"));
         urlLabel.setLabelFor(urlField);
         Label branchLabel = new Label(tr("Branch:"));
         branchLabel.setLabelFor(branchField);
