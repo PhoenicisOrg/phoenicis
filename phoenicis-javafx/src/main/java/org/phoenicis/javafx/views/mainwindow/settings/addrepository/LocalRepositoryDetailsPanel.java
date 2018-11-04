@@ -61,7 +61,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
 
     @Override
     public String getHeader() {
-        return tr("Choose the location of your local repository");
+        return tr("Choose the location of the local repository");
     }
 
     @Override
