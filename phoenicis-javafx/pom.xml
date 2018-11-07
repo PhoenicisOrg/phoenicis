@@ -107,16 +107,6 @@
             <artifactId>fuzzywuzzy</artifactId>
             <version>1.1.10</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-web</artifactId>
-            <version>11</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -167,6 +157,16 @@
             </activation>
             <dependencies>
                 <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>11</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-web</artifactId>
+                    <version>11</version>
+                </dependency>
+                <dependency>
                     <groupId>org.testfx</groupId>
                     <artifactId>testfx-core</artifactId>
                     <version>${testfx.version}</version>
@@ -186,6 +186,16 @@
                 <jdk>10</jdk>
             </activation>
             <dependencies>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-controls</artifactId>
+                    <version>11</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.openjfx</groupId>
+                    <artifactId>javafx-web</artifactId>
+                    <version>11</version>
+                </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
                     <artifactId>testfx-core</artifactId>
