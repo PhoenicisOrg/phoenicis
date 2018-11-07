@@ -54,7 +54,7 @@ jobs:
         - docker exec -t ubuntu-16-04 bash -c "cd /travis;
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
-                                               mvn -B clean package"
+                                               _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn -B clean package"
       before_cache:
         - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
     # build + test
