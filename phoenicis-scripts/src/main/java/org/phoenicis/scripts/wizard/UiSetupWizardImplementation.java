@@ -148,8 +148,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
     @Override
     public Void presentation(String programName, String programEditor, String applicationHomepage,
             String scriptorName) {
-        final String htmlToShow = "<body>" + tr("Installation Wizard for {0}", programName)
-                + ".<br><br>" + tr("Installation Script by {0}", programEditor) + "<br><br>"
+        final String htmlToShow = "<body>" + tr("Installation wizard for {0}", programName)
+                + ".<br><br>" + tr("Installation script by {0}", programEditor) + "<br><br>"
                 + tr("For more information about this program, visit:")
                 + String.format("<br><a href=\"%1$s\">%1$s</a><br><br>", applicationHomepage)
                 + tr("Installation Script by {0}", scriptorName) + "<br><br>" + "<br><br>"
