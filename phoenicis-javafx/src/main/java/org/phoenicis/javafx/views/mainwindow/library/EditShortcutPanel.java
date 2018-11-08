@@ -109,7 +109,7 @@ final class EditShortcutPanel extends DetailsView {
 
         TextField miniaturePathField = new TextField(this.editedShortcut.getMiniature().getPath());
 
-        Button openBrowser = new Button(tr("Browse …"));
+        Button openBrowser = new Button(tr("Browse ..."));
         openBrowser.setOnAction(event -> {
             FileChooser chooser = new FileChooser();
             chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Images"), "*.miniature, *.png"));
