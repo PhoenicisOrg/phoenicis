@@ -106,7 +106,7 @@ final class CreateShortcutPanel extends DetailsView {
 
         TextField miniature = new TextField();
 
-        Button openMiniatureBrowser = new Button(tr("Browse …"));
+        Button openMiniatureBrowser = new Button(tr("Browse ..."));
         openMiniatureBrowser.setOnAction(event -> {
             FileChooser chooser = new FileChooser();
 
