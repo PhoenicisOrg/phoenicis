@@ -43,7 +43,7 @@ jobs:
       services:
         - docker
       before_install:
-        - docker run -d --name ubuntu-16-04 -v $HOME:/travis openjdk@059294b524a4cef7b2f908eb0ecc8f795e909f837a45266f73baf6ec218f3708 tail -f /dev/null
+        - docker run -d --name ubuntu-16-04 -v $HOME:/travis openjdk@sha256:dfc720be416bdc7b5df39fb8b237a3bca88dcdf39ad00568f8c3cd3558ff1bc2 tail -f /dev/null
       install:
         - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
                                                apt install -y git;
