@@ -152,7 +152,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
                 + ".<br><br>" + tr("Installation script by {0}", programEditor) + "<br><br>"
                 + tr("For more information about this program, visit:")
                 + String.format("<br><a href=\"%1$s\">%1$s</a><br><br>", applicationHomepage)
-                + tr("Installation Script by {0}", scriptorName) + "<br><br>" + "<br><br>"
+                + tr("Installation script by {0}", scriptorName) + "<br><br>" + "<br><br>"
                 + tr("{0} will be installed in: {1}", programName, applicationUserRoot) + "<br><br>"
                 + tr("{0} is not responsible for anything that might happen as a result of using these scripts.",
                         applicationName)
