@@ -151,39 +151,9 @@
     -->
     <profiles>
         <profile>
-            <id>jdk11</id>
+            <id>openjfx11</id>
             <activation>
-                <jdk>11</jdk>
-            </activation>
-            <dependencies>
-                <dependency>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-controls</artifactId>
-                    <version>11</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-web</artifactId>
-                    <version>11</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>testfx-core</artifactId>
-                    <version>${testfx.version}</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.testfx</groupId>
-                    <artifactId>openjfx-monocle</artifactId>
-                    <version>jdk-11+23</version>
-                    <scope>test</scope>
-                </dependency>
-            </dependencies>
-        </profile>
-        <profile>
-            <id>jdk10</id>
-            <activation>
-                <jdk>10</jdk>
+                <jdk>[10,)</jdk>
             </activation>
             <dependencies>
                 <dependency>
