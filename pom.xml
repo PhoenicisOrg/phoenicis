@@ -51,7 +51,7 @@
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.23.0</mockito.version>
-        <spring.version>5.1.0.RELEASE</spring.version>
+        <spring.version>5.1.1.RELEASE</spring.version>
         <formatter-maven-plugin.version>2.8.0</formatter-maven-plugin.version>
     </properties>
     <dependencyManagement>
@@ -122,6 +122,14 @@
                                 </pluginExecution>
                             </pluginExecutions>
                         </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.22.1</version>
+                    <configuration>
+                        <useSystemClassLoader>false</useSystemClassLoader>
                     </configuration>
                 </plugin>
             </plugins>
