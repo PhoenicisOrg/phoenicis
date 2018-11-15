@@ -59,7 +59,7 @@ public class FailurePanel extends VBox {
     public void setFailure(String notification, Optional<Exception> reason) {
         this.failureNotification.setText(notification);
         if (reason.isPresent()) {
-            this.failureReason.setText(tr("Reason: {0}"), reason.get().getLocalizedMessage());
+            this.failureReason.setText(tr("Reason: {0}", reason.get().getLocalizedMessage()));
         } else {
             // reset
             this.failureReason.setText("");
