@@ -39,7 +39,8 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk8
-      script: _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn -B clean package
+      env: _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true
+      script: mvn -B clean package
     # build + test
     - stage: Build + test
       name: Linux Oracle JDK 8
