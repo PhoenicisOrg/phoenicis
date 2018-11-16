@@ -95,7 +95,7 @@ public class EnginesController {
 
         this.enginesView.setOnDeleteEngine(engineDTO -> new ConfirmMessage(
                 tr("Delete {0}", engineDTO.getVersion()),
-                tr("Are you sure you want to delete {0}", engineDTO.getVersion()),
+                tr("Are you sure you want to delete {0}?", engineDTO.getVersion()),
                 this.enginesView.getContent().getScene().getWindow())
                         .ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
                                 engine -> {
