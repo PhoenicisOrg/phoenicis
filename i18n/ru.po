@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-11-08 18:13\n"
+"PO-Revision-Date: 2018-11-16 17:32\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -101,12 +101,12 @@ msgstr "Удалить {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:98
 #, java-format
-msgid "Are you sure you want to delete {0}"
-msgstr "Вы уверены, что вы хотите удалить {0}"
+msgid "Are you sure you want to delete {0}?"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:81
-msgid "The exception stacktrace was:"
-msgstr "Трассировка стека исключения была:"
+msgid "Stack trace:"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Default theme"
@@ -177,8 +177,8 @@ msgid "Restore defaults (requires restart)"
 msgstr "Восстановить значения по умолчанию (требуется перезапуск)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:110
-msgid "Repositories Settings"
-msgstr "Параметры хранилищ"
+msgid "Repository Settings"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:115
 msgid "Repository:"
@@ -197,8 +197,8 @@ msgid "The value in front of each repository is its priority. The higher the pri
 msgstr "Значение напротив каждого репозитория является его приоритетом. Чем выше приоритет, тем более важными являются скрипты внутри репозитория."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
-msgid "Fetch updates for the repositories to retrieve the newest script versions"
-msgstr "Загрузить обновления для хранилищ чтобы получить последнии версии сценариев"
+msgid "Fetch updates from the repositories to retrieve latest script versions"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
@@ -213,12 +213,12 @@ msgid "Theme:"
 msgstr "Тема:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:83
-msgid "Select, if you want to view the source repository of the scripts"
-msgstr "Выберите, если вы хотите просмотреть репозиторий сценариев"
+msgid "View the scripts’ source repository"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
-msgid "Scale the user interface."
-msgstr "Масштабировать пользовательский интерфейс."
+msgid "Scale the user interface"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:52
@@ -240,24 +240,24 @@ msgid "Build Timestamp:"
 msgstr "Создание штампа времени:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
-msgid "Open directory chooser"
-msgstr "Открыть выбор директорий"
+msgid "Choose Directory ..."
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
-msgid "Choose the location of your local repository"
-msgstr "Выбрать расположение вашего локального репозитория"
+msgid "Choose the location of the local repository"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
-msgid "Git-Url:"
-msgstr "Адрес Гита:"
+msgid "Git-URL:"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
-msgid "Branch:"
-msgstr "Ветвь:"
+msgid "Git-Branch:"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
-msgid "Choose the location of your git repository"
-msgstr "Выбрать расположение вашего репозитория Гит"
+msgid "Choose the location of the git repository"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
 msgid "Local repository"
@@ -288,8 +288,8 @@ msgid "Repository type:"
 msgstr "Тип репозитория:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
-msgid "Choose the repository type"
-msgstr "Выберите тип репозитория"
+msgid "Choose repository type ..."
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:42
 msgid "Add a new Repository"
@@ -310,8 +310,8 @@ msgid "Run executable"
 msgstr "Запустить исполняемый файл"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
-msgid "Choose executable"
-msgstr "Выберите исполняемый файл"
+msgid "Choose executable ..."
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:48
@@ -356,8 +356,9 @@ msgid "Retry"
 msgstr "Повтор"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:62
-msgid "Reason: "
-msgstr "Причина: "
+#, java-format
+msgid "Reason: {0}"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:84
 msgid "Save"
@@ -371,8 +372,8 @@ msgstr "Эскиз:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:112
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:141
-msgid "Choose"
-msgstr "Выбери"
+msgid "Browse ..."
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
@@ -420,8 +421,8 @@ msgid "Run a script"
 msgstr "Запустить сценарий"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:198
-msgid "Open a script"
-msgstr "Открыть сценарий"
+msgid "Open Script ..."
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:208
 #, java-format
@@ -429,8 +430,8 @@ msgid "{0} console"
 msgstr "{0} консоль"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:212
-msgid "Advanced tools"
-msgstr "Дополнительные инструменты"
+msgid "Advanced Tools"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:81
 msgid "Library"
@@ -457,8 +458,8 @@ msgid "Testing"
 msgstr "Тестирование"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:132
-msgid "Requires patch"
-msgstr "Требуется патч"
+msgid "Patch required"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:135
 msgid "Commercial"
@@ -508,16 +509,16 @@ msgid "Not installed"
 msgstr "Не установлено"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:79
-msgid "Error while trying to install the engine"
-msgstr "Ошибка при попытке установить движок"
+msgid "An error occurred while installing the engine"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:86
 msgid "Delete"
 msgstr "Удалить"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:92
-msgid "Error while trying to delete the engine"
-msgstr "Ошибка при попытке удаления движка"
+msgid "An error occurred while deleting the engine"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
 msgid "I agree"
@@ -528,12 +529,12 @@ msgid "Question"
 msgstr "Вопрос"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
-msgid "Please click here, or drag a file to me."
-msgstr "Пожалуйста, нажмите здесь, или перетащите файл на меня."
+msgid "Click or drag-and-drop file here"
+msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:91
-msgid "Allowed files"
-msgstr "Допустимые файлы"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:92
+msgid "Allowed file types"
+msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
 msgid "Cancel"
@@ -549,27 +550,23 @@ msgid "input"
 msgstr "ввод"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
-msgid "Please wait while we are verifying the file ..."
-msgstr "Пожалуйста, подождите, пока мы проверяем файл..."
+msgid "Verifying the file ..."
+msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
-msgid "This wizard will help you install {0} on your computer"
-msgstr "Эти инструкции помогут вам установить {0} на вашем компьютере"
+msgid "Installation wizard for {0}"
+msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
-msgid "This program was created by: {0}"
-msgstr "Эта программа была создана: {0}"
+msgid "Installation script by {0}"
+msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
 msgstr "Для дополнительной информации об этой программе посетите:"
-
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
-#, java-format
-msgid "This installation program is provided by: {0}"
-msgstr "Эта программа установки предоставлена: {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
 #, java-format
