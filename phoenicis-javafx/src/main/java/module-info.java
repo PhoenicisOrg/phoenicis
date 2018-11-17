@@ -1,2 +1,2 @@
-module phoenicis.javafx {
+module org.phoenicis.javafx {
 }

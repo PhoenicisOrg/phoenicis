@@ -1,4 +1,4 @@
-module phoenicis.configuration {
+module org.phoenicis.configuration {
     exports org.phoenicis.configuration.security;
     exports org.phoenicis.configuration;
     exports org.phoenicis.configuration.localisation;

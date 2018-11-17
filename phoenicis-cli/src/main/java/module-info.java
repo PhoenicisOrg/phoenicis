@@ -1,2 +1,2 @@
-module phoenicis.cli {
+module org.phoenicis.cli {
 }

@@ -1,2 +1,2 @@
-module phoenicis.tests {
+module org.phoenicis.tests {
 }

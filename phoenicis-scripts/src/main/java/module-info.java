@@ -1,2 +1,2 @@
-module phoenicis.scripts {
+module org.phoenicis.scripts {
 }

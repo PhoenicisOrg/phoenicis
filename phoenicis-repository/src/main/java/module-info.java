@@ -1,2 +1,2 @@
-module phoenicis.repository {
+module org.phoenicis.repository {
 }

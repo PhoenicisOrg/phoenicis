@@ -1,3 +1,3 @@
-module phoenicis.entities {
+module org.phoenicis.entities {
     exports org.phoenicis.entities;
 }

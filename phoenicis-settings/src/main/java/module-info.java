@@ -1,2 +1,2 @@
-module phoenicis.settings {
+module org.phoenicis.settings {
 }

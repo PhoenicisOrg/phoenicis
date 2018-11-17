@@ -1,2 +1,2 @@
-module phoenicis.library {
+module org.phoenicis.library {
 }

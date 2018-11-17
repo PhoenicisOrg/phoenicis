@@ -1,8 +1,8 @@
-module phoenicis.tools {
-    requires phoenicis.configuration;
+module org.phoenicis.tools {
+    requires org.phoenicis.configuration;
     requires spring.beans;
     requires spring.context;
-    requires phoenicis.win32;
+    requires org.phoenicis.win32;
     requires com.fasterxml.jackson.databind;
     requires org.apache.commons.io;
     requires jmimemagic;
@@ -10,7 +10,7 @@ module phoenicis.tools {
     requires java.activation;
     requires com.google.common;
     requires org.apache.commons.compress;
-    requires phoenicis.entities;
+    requires org.phoenicis.entities;
     requires org.apache.commons.codec;
     requires commons.lang;
     requires bcpg.jdk16;

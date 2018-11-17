@@ -1,2 +1,2 @@
-module phoenicis.containers {
+module org.phoenicis.containers {
 }
