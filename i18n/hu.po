@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-11-16 17:32\n"
+"PO-Revision-Date: 2018-11-17 11:31\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -102,11 +102,11 @@ msgstr "A(z) {0} törlése"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:98
 #, java-format
 msgid "Are you sure you want to delete {0}?"
-msgstr ""
+msgstr "Biztosan szeretné a(z) {0} kitörlése?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:81
 msgid "Stack trace:"
-msgstr ""
+msgstr "Veremkiíratás:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Default theme"
@@ -118,11 +118,11 @@ msgstr "Sötét téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:15
 msgid "Breeze Dark theme"
-msgstr ""
+msgstr "Breeze sötét téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:17
 msgid "Unity theme"
-msgstr ""
+msgstr "Unity téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:19
 msgid "Mint-X theme"
@@ -178,7 +178,7 @@ msgstr "Alapértelmezések visszaállítása (újraindítást igényel)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:110
 msgid "Repository Settings"
-msgstr ""
+msgstr "Adattárolói beállítások"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:115
 msgid "Repository:"
@@ -198,7 +198,7 @@ msgstr "Az adattaroló értéke az elsőbbség. Minél magasabb az érték, ann�
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
 msgid "Fetch updates from the repositories to retrieve latest script versions"
-msgstr ""
+msgstr "Legújabb parancsfájl verziók frissítések lekérése az adattarolótól"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
