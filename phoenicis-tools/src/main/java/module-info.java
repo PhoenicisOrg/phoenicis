@@ -1,4 +1,10 @@
 module org.phoenicis.tools {
+    exports org.phoenicis.tools.files;
+    exports org.phoenicis.tools.version;
+    exports org.phoenicis.tools;
+    exports org.phoenicis.tools.config;
+    exports org.phoenicis.tools.system;
+    exports org.phoenicis.tools.system.opener;
     requires org.phoenicis.configuration;
     requires spring.beans;
     requires spring.context;
