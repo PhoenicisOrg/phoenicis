@@ -16,8 +16,17 @@ import java.util.concurrent.TimeoutException;
  */
 public class AppConfigurationInitialisationTest {
 
+    public static void setupHeadless() {
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+        System.setProperty("java.awt.headless", "true");
+    }
+
     @Test
     public void testAppConfigurationInitialisation() throws TimeoutException {
+        setupHeadless();
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
     }
