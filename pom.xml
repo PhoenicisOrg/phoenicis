@@ -52,7 +52,7 @@
         <junit.version>4.12</junit.version>
         <mockito.version>2.23.0</mockito.version>
         <spring.version>5.1.1.RELEASE</spring.version>
-        <formatter-maven-plugin.version>2.8.0</formatter-maven-plugin.version>
+        <formatter-maven-plugin.version>2.8.1</formatter-maven-plugin.version>
     </properties>
     <dependencyManagement>
         <dependencies>
