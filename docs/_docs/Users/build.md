@@ -7,33 +7,16 @@ toc: true
 
 ## Ubuntu 18.04 and Linux Mint 19
 
-* Add the Wine repository:
-```
-sudo apt-add-repository https://dl.winehq.org/wine-builds/ubuntu/
-wget -nc https://dl.winehq.org/wine-builds/Release.key && sudo apt-key add Release.key
-```
-
-* Remove exising version of Wine:
-```
-sudo apt-get purge wine* libwine
-```
-
-* Install Wine devel packages to fix empty dialog boxes:
-```
-sudo apt-get update
-sudo apt-get install --install-recommends winehq-devel
-```
-
 * Install the dependencies:
 ```
-sudo apt-get update
-sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
+sudo apt update
+sudo apt install git maven openjdk-11-jdk
 ```
 
-* Set the Java version (use Java 8 instead of Java 10):
-  * OpenJDK
-    * `export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"`
-    * `sudo update-java-alternatives --set /usr/lib/jvm/java-1.8.0-openjdk-amd64`
+* Set the Java version:
+```
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+```
     
 * Clone the repository from GitHub:
 ```
