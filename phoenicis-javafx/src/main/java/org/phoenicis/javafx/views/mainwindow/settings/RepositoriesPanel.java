@@ -107,7 +107,7 @@ public class RepositoriesPanel extends StackPane {
     }
 
     private void populateRepositoryGrid() {
-        this.title = new TextWithStyle(tr("Repositories Settings"), "title");
+        this.title = new TextWithStyle(tr("Repository Settings"), "title");
 
         this.repositoryGrid = new GridPane();
         this.repositoryGrid.getStyleClass().add("grid");
@@ -189,7 +189,7 @@ public class RepositoriesPanel extends StackPane {
         this.refreshLayout.setVgap(10);
 
         this.refreshRepositoriesLabel = new Label(
-                tr("Fetch updates for the repositories to retrieve the newest script versions"));
+                tr("Fetch updates from the repositories to retrieve latest script versions"));
         this.refreshRepositoriesLabel.setWrapText(true);
 
         this.refreshRepositoriesButton = new Button(tr("Refresh Repositories"));

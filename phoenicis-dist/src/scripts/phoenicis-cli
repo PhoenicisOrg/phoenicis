@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-CLASSPATH=/usr/local/lib/phoenicis/*:${CLASSPATH}
+CLASSPATH=/usr/share/phoenicis-playonlinux/*:${CLASSPATH}s
 
 java -classpath "$CLASSPATH" org.phoenicis.cli.PhoenicisCLI "$@"

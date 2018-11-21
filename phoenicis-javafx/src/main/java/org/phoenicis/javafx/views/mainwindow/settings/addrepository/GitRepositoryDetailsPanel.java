@@ -48,9 +48,9 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
         this.urlField = new TextField();
         this.branchField = new TextField("master");
 
-        Label urlLabel = new Label(tr("Git-Url:"));
+        Label urlLabel = new Label(tr("Git-URL:"));
         urlLabel.setLabelFor(urlField);
-        Label branchLabel = new Label(tr("Branch:"));
+        Label branchLabel = new Label(tr("Git-Branch:"));
         branchLabel.setLabelFor(branchField);
 
         GridPane grid = new GridPane();
@@ -66,7 +66,7 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
 
     @Override
     public String getHeader() {
-        return tr("Choose the location of your git repository");
+        return tr("Choose the location of the git repository");
     }
 
     @Override

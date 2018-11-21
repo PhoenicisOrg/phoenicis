@@ -1,0 +1,140 @@
+{
+  "app-id": "org.phoenicis.javafx",
+  "runtime": "org.freedesktop.Platform",
+  "runtime-version": "18.08",
+  "sdk": "org.freedesktop.Sdk",
+  "sdk-extensions": [
+    "org.freedesktop.Sdk.Extension.openjdk11"
+  ],
+  "add-build-extensions": {
+    "org.freedesktop.Platform.Compat.i386": {
+      "directory": "lib/i386-linux-gnu",
+      "version": "18.08"
+    },
+    "org.freedesktop.Platform.Compat.i386.Debug": {
+      "directory": "lib/debug/lib/i386-linux-gnu",
+      "version": "18.08",
+      "no-autodownload": true
+    },
+    "org.freedesktop.Platform.GL32": {
+      "directory": "lib/i386-linux-gnu/GL",
+      "version": "1.4",
+      "versions": "18.08;1.4",
+      "subdirectories": true,
+      "no-autodownload": true,
+      "autodelete": false,
+      "add-ld-path": "lib",
+      "merge-dirs": "vulkan/icd.d;glvnd/egl_vendor.d",
+      "download-if": "active-gl-driver",
+      "enable-if": "active-gl-driver"
+    }
+  },
+  "command": "phoenicis-javafx",
+  "finish-args": [
+    "--allow=multiarch",
+    "--share=ipc",
+    "--socket=x11",
+    "--share=network",
+    "--device=dri"
+  ],
+  "modules": [
+    {
+      "name": "setup-compat-i386",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p /app/lib/i386-linux-gnu",
+        "install -Dm644 -t /app/etc ld.so.conf"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "ld.so.conf"
+        }
+      ]
+    },
+    {
+      "name": "openjdk",
+      "buildsystem": "simple",
+      "build-commands": [
+        "/usr/lib/sdk/openjdk11/install.sh"
+      ]
+    },
+    {
+      "name": "openjfx",
+      "buildsystem": "simple",
+      "build-commands": [
+        "unzip openjfx-11_linux-x64_bin-sdk.zip -d /app"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "url": "http://download2.gluonhq.com/openjfx/11/openjfx-11_linux-x64_bin-sdk.zip",
+          "md5": "66b0a3a682fa43d57505c938d2716bff",
+          "dest-filename": "openjfx-11_linux-x64_bin-sdk.zip"
+        }
+      ]
+    },
+    {
+      "name": "javafx",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
+        "install -D phoenicis-dist-5.0-SNAPSHOT.jar /app/phoenicis/phoenicis-javafx.jar",
+        "cp -r lib /app/phoenicis",
+        "chmod 755 -R /app/phoenicis",
+        "install -Dm644 org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
+        "install -Dm644 org.phoenicis.javafx.desktop /app/share/applications/org.phoenicis.javafx.desktop",
+        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.javafx.png; done"
+      ],
+      "sources": [
+        {
+          "type": "dir",
+          "path": "../../target"
+        },
+        {
+          "type": "script",
+          "dest-filename": "phoenicis-javafx",
+          "commands": [
+            "/app/jre/bin/java -Duser.home=\"$XDG_DATA_HOME\" -cp '/app/phoenicis/lib/*':/app/phoenicis/phoenicis-dist-5.0-SNAPSHOT.jar -p /app/javafx-sdk-11/lib --add-modules javafx.controls --add-exports javafx.graphics/com.sun.javafx.sg.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.util=ALL-UNNAMED --add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED --add-exports javafx.graphics/com.sun.prism=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom.transform=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.tk=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.utils=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.font=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED --add-exports javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.scene.input=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.geom=ALL-UNNAMED --add-exports javafx.graphics/com.sun.prism.paint=ALL-UNNAMED --add-exports javafx.graphics/com.sun.scenario.effect=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.text=ALL-UNNAMED org.phoenicis.javafx.JavaFXApplication \"$@\""
+          ]
+        },
+        {
+          "type": "file",
+          "path": "org.phoenicis.javafx.appdata.xml"
+        },
+        {
+          "type": "file",
+          "path": "org.phoenicis.javafx.desktop"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_16.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_22.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_24.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_32.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_48.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_64.png"
+        },
+        {
+            "type": "file",
+            "path": "phoenicis_256.png"
+        }
+      ]
+    }
+  ]
+}
