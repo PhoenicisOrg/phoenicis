@@ -55,7 +55,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
 
     private Node dragPane() {
         final Text textLabel = new Text(textToShow);
-        final Text dragLabel = new Text(tr("Please click here, or drag a file to me."));
+        final Text dragLabel = new Text(tr("Click or drag-and-drop file here"));
         textLabel.getStyleClass().add("boldLabel");
         dragLabel.getStyleClass().addAll("normalLabel");
 
@@ -88,7 +88,8 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
             final FileChooser fileChooser = new FileChooser();
             if (extensions != null) {
                 fileChooser
-                        .setSelectedExtensionFilter(new FileChooser.ExtensionFilter(tr("Allowed files"), extensions));
+                        .setSelectedExtensionFilter(
+                                new FileChooser.ExtensionFilter(tr("Allowed file types"), extensions));
             }
             fileChooser.setInitialDirectory(browseDirectory);
 

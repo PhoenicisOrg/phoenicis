@@ -195,7 +195,7 @@ public class LibrarySidebar extends Sidebar {
         this.runScript.getStyleClass().add("scriptButton");
         this.runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Open a script"));
+            fileChooser.setTitle(tr("Open Script ..."));
 
             // TODO: use correct owner window
             final File scriptToRun = fileChooser.showOpenDialog(null);
@@ -209,7 +209,7 @@ public class LibrarySidebar extends Sidebar {
         this.runConsole.getStyleClass().add("consoleButton");
         this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new SidebarGroup(tr("Advanced tools"), createShortcut, /* runScript, */runConsole);
+        this.advancedToolsGroup = new SidebarGroup(tr("Advanced Tools"), createShortcut, /* runScript, */runConsole);
     }
 
     public void search(String searchTerm) {

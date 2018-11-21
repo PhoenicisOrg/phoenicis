@@ -66,12 +66,25 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>copy-dependencies</id>
                         <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeArtifactIds>javafx-web, javafx-media, javafx-graphics, javafx-controls, javafx-base</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-javafx</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/javafx</outputDirectory>
+                            <includeArtifactIds>javafx-web, javafx-media, javafx-graphics, javafx-controls, javafx-base</includeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
@@ -87,14 +100,23 @@
                             <goal>jdeb</goal>
                         </goals>
                         <configuration>
+                            <deb>${project.build.directory}/phoenicis-playonlinux~${version}~ubuntu18.04.deb</deb>
                             <dataSet>
+                                <data>
+                                    <src>${basedir}/src/scripts/copyright</src>
+                                    <type>file</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/doc/phoenicis-playonlinux</prefix>
+                                    </mapper>
+                                </data>
                                 <data>
                                     <src>${basedir}/src/scripts/phoenicis-javafx</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/local/bin</prefix>
-                                        <filemode>775</filemode>
+                                        <prefix>/usr/bin</prefix>
+                                        <filemode>755</filemode>
                                     </mapper>
                                 </data>
                                 <data>
@@ -110,8 +132,8 @@
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/local/bin</prefix>
-                                        <filemode>775</filemode>
+                                        <prefix>/usr/bin</prefix>
+                                        <filemode>755</filemode>
                                     </mapper>
                                 </data>
                                 <data>
@@ -127,7 +149,15 @@
                                     <type>directory</type>
                                     <mapper>
                                         <type>perm</type>
-                                        <prefix>/usr/local/lib/phoenicis</prefix>
+                                        <prefix>/usr/share/phoenicis-playonlinux</prefix>
+                                    </mapper>
+                                </data>
+                                <data>
+                                    <src>${project.build.directory}/javafx</src>
+                                    <type>directory</type>
+                                    <mapper>
+                                        <type>perm</type>
+                                        <prefix>/usr/share/phoenicis-playonlinux/javafx</prefix>
                                     </mapper>
                                 </data>
                                 <data>
