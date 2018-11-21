@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-11-16 17:32\n"
+"PO-Revision-Date: 2018-11-21 18:57\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -102,11 +102,11 @@ msgstr "{0} löschen"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:98
 #, java-format
 msgid "Are you sure you want to delete {0}?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie {0} löschen möchten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:81
 msgid "Stack trace:"
-msgstr ""
+msgstr "Stack-Trace:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Default theme"
@@ -178,7 +178,7 @@ msgstr "Zurücksetzen (erfordert Neustart)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:110
 msgid "Repository Settings"
-msgstr ""
+msgstr "Repository-Einstellungen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:115
 msgid "Repository:"
@@ -198,7 +198,7 @@ msgstr "Die Zahl vor jedem Repository gibt dessen Priorität an. Je höher die P
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
 msgid "Fetch updates from the repositories to retrieve latest script versions"
-msgstr ""
+msgstr "Repository-Updates herunterladen um die neuesten Skript Versionen zu erhalten"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
 msgid "Refresh Repositories"
@@ -214,11 +214,11 @@ msgstr "Erscheinungsbild:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:83
 msgid "View the scripts’ source repository"
-msgstr ""
+msgstr "Quellcode-Repository des Skripts anzeigen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
 msgid "Scale the user interface"
-msgstr ""
+msgstr "Benutzeroberfläche skalieren"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:52
@@ -241,7 +241,7 @@ msgstr "Zeitstempel des Builds:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
 msgid "Choose Directory ..."
-msgstr ""
+msgstr "Verzeichnis wählen ..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
 msgid "Choose the location of the local repository"
