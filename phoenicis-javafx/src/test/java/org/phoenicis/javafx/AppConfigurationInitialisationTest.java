@@ -16,6 +16,10 @@ import java.util.concurrent.TimeoutException;
  */
 public class AppConfigurationInitialisationTest {
 
+    /**
+     * ensures that the test can run in headless mode
+     * see https://stackoverflow.com/questions/27403410/headless-testing-with-javafx-and-testfx
+     */
     public static void setupHeadless() {
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
