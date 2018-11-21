@@ -107,16 +107,6 @@
             <artifactId>fuzzywuzzy</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-controls</artifactId>
-            <version>11.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-web</artifactId>
-            <version>11.0.1</version>
-        </dependency>
     </dependencies>
     <build>
         <plugins>
