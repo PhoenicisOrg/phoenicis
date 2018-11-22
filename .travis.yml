@@ -43,20 +43,20 @@ jobs:
       services:
         - docker
       before_install:
-        - docker run -d --name ubuntu-16-04 -v $HOME:/travis openjdk:8 tail -f /dev/null
+        - docker run -d --name ubuntu-18-04 -v $HOME:/travis openjdk:8 tail -f /dev/null
       install:
-        - docker exec -t ubuntu-16-04 bash -c "apt -qq update;
+        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
                                                apt install -y git;
                                                apt install -y maven;
                                                apt install -y openjfx;
                                                apt install -y gettext"
       script:
-        - docker exec -t ubuntu-16-04 bash -c "cd /travis;
+        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
-                                               _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn -B clean package"
+                                               mvn -B clean package"
       before_cache:
-        - docker exec -t ubuntu-16-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
+        - docker exec -t ubuntu-18-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
     # build + test
     - stage: Build + test
       name: Linux Oracle JDK 8
@@ -105,14 +105,14 @@ jobs:
       services:
         - docker
       before_install:
-        - docker run -d --name ubuntu-16-04 -v $HOME:/travis ubuntu:16.04 tail -f /dev/null
+        - docker run -d --name ubuntu-18-04 -v $HOME:/travis ubuntu:18.04 tail -f /dev/null
       install:
-        - docker exec -t ubuntu-16-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
+        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
       script:
         # check that cache has been filled in current build
         - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
         - rm -f $HOME/travis_cache/travis_build_id
-        - docker exec -t ubuntu-16-04 bash -c "apt install -y /travis/travis_cache/*.deb"
+        - docker exec -t ubuntu-18-04 bash -c "apt install -y /travis/travis_cache/*.deb"
         - mv $HOME/travis_cache $HOME/travis_cache_old
         - mkdir $HOME/travis_cache # clear the cache
 
