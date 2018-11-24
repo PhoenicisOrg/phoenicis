@@ -252,7 +252,6 @@
                         <version>3.8.0</version>
                         <configuration>
                             <release>11</release>
-                            <compilerArgs>--add-exports=javafx.base/com.sun.javafx.collections=org.phoenicis.javafx</compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -275,7 +274,6 @@
                         <version>3.8.0</version>
                         <configuration>
                             <release>10</release>
-                            <compilerArgs>--add-exports=javafx.base/com.sun.javafx.collections=org.phoenicis.javafx</compilerArgs>
                         </configuration>
                     </plugin>
                 </plugins>
