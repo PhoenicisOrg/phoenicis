@@ -102,7 +102,7 @@ jobs:
       name: Install .deb
       os: linux
       dist: trusty
-      jdk: openjdk8
+      jdk: openjdk10
       sudo: required
       services:
         - docker
