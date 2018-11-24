@@ -7,6 +7,9 @@ import org.phoenicis.javafx.behavior.BehaviorBase;
 import org.phoenicis.javafx.behavior.SearchBoxBehavior;
 import org.phoenicis.javafx.controler.SearchBox;
 
+/**
+ * A search box skin/view
+ */
 public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxBehavior> {
     /**
      * The search field of the search box
@@ -43,11 +46,22 @@ public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxBehavior
         getChildren().addAll(container);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return A created search box behavior object
+     */
     @Override
     public BehaviorBase<SearchBox, ?> createDefaultBehavior() {
         return new SearchBoxBehavior(getControl(), this);
     }
 
+    /**
+     * Creates a new {@link TextField} object fitted to the given container.
+     *
+     * @param container The container to which the text field is added
+     * @return The created text field
+     */
     private TextField createTextField(AnchorPane container) {
         TextField searchField = new TextField();
 
@@ -62,6 +76,11 @@ public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxBehavior
         return searchField;
     }
 
+    /**
+     * Creates a new {@link Button} object used to clear the search box
+     *
+     * @return The created clear button
+     */
     private Button createClearButton() {
         Button clearButton = new Button();
 

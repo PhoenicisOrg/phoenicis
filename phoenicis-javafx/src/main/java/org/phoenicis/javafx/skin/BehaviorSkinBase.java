@@ -4,6 +4,12 @@ import javafx.scene.control.Control;
 import javafx.scene.control.SkinBase;
 import org.phoenicis.javafx.behavior.BehaviorBase;
 
+/**
+ * A base class for a JavaFX component skin/view, which also provides separate behavior
+ *
+ * @param <C> The control/model belonging to the skin
+ * @param <B> The behavior/controller belonging to the skin
+ */
 public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase<C, ?>> extends SkinBase<C> {
     /**
      * The behavior associated to this skin
@@ -18,11 +24,16 @@ public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase
     protected BehaviorSkinBase(C control) {
         super(control);
 
+        // create the behavior
+        this.behavior = createDefaultBehavior();
+
         // initialise the view
         initialise();
 
-        // create and initialise the behavior
-        this.behavior = createDefaultBehavior();
+        if (behavior != null) {
+            // initialise the behavior
+            behavior.initialise();
+        }
     }
 
     /**
@@ -30,7 +41,9 @@ public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase
      *
      * @return The default behavior for this skin
      */
-    public abstract BehaviorBase<C, ?> createDefaultBehavior();
+    public BehaviorBase<C, ?> createDefaultBehavior() {
+        return null;
+    }
 
     /**
      * Initialises the content of this skin.
@@ -54,8 +67,10 @@ public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase
     public void dispose() {
         super.dispose();
 
-        // cleanup the behavior
-        behavior.dispose();
+        if (behavior != null) {
+            // cleanup the behavior
+            behavior.dispose();
+        }
 
         // remove reference to the behavior
         this.behavior = null;

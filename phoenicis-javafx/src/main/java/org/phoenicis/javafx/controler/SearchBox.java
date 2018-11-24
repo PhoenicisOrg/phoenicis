@@ -8,6 +8,9 @@ import org.phoenicis.javafx.skin.SearchBoxSkin;
 
 import java.util.function.Consumer;
 
+/**
+ * A search box component used to add a search term
+ */
 public class SearchBox extends Control {
     /**
      * A consumer, which is called when the search term has been modified
@@ -19,6 +22,12 @@ public class SearchBox extends Control {
      */
     private final ObjectProperty<Runnable> onClear;
 
+    /**
+     * Constructor
+     *
+     * @param onSearch callback for search input
+     * @param onClear  callback for clear input
+     */
     public SearchBox(ObjectProperty<Consumer<String>> onSearch, ObjectProperty<Runnable> onClear) {
         super();
 
@@ -26,14 +35,28 @@ public class SearchBox extends Control {
         this.onClear = onClear;
     }
 
+    /**
+     * Constructor
+     *
+     * @param onSearch callback for search input
+     * @param onClear  callback for clear input
+     */
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
         this(new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));
     }
 
+    /**
+     * Constructor
+     */
     public SearchBox() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return A created search box skin object
+     */
     protected Skin<?> createDefaultSkin() {
         return new SearchBoxSkin(this);
     }
