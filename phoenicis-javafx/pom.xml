@@ -177,6 +177,20 @@
             <activation>
                 <jdk>1.8</jdk>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <!-- workaround for surefire bug 1438 -->
+                            <additionalClasspathElements>
+                                <additionalClasspathElement>${java.home}/lib/ext/jfxrt.jar</additionalClasspathElement>
+                            </additionalClasspathElements>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.testfx</groupId>
