@@ -14,6 +14,7 @@ module org.phoenicis.javafx {
     requires spring.core;
     requires fuzzywuzzy;
     requires java.desktop;
+    requires java.sql;
     requires org.phoenicis.multithreading;
     requires spring.context;
     requires org.phoenicis.win32;
@@ -22,4 +23,5 @@ module org.phoenicis.javafx {
     requires org.phoenicis.entities;
     requires jdk.scripting.nashorn;
     requires spring.beans;
+    exports org.phoenicis.javafx;
 }

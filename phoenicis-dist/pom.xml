@@ -73,6 +73,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeArtifactIds>commons-logging, xml-apis, xmlParserAPIs, xercesImpl</excludeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
