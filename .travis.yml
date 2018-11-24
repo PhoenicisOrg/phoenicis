@@ -70,6 +70,7 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk10
+      script: mvn clean package
       before_cache:
         - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
