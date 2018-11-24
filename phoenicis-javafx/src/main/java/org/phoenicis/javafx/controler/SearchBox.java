@@ -26,7 +26,7 @@ public class SearchBox extends Control {
      * Constructor
      *
      * @param onSearch callback for search input
-     * @param onClear  callback for clear input
+     * @param onClear callback for clear input
      */
     public SearchBox(ObjectProperty<Consumer<String>> onSearch, ObjectProperty<Runnable> onClear) {
         super();
@@ -39,7 +39,7 @@ public class SearchBox extends Control {
      * Constructor
      *
      * @param onSearch callback for search input
-     * @param onClear  callback for clear input
+     * @param onClear callback for clear input
      */
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
         this(new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));

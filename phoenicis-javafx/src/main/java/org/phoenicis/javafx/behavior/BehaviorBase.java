@@ -24,7 +24,7 @@ public abstract class BehaviorBase<C extends Control, S extends SkinBase<C>> {
      * Constructor
      *
      * @param control The control associated with this behavior
-     * @param skin    The skin associated with this behavior
+     * @param skin The skin associated with this behavior
      */
     protected BehaviorBase(C control, S skin) {
         super();

@@ -16,7 +16,7 @@ public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin> {
      * Constructor
      *
      * @param control The control of the search box behavior
-     * @param skin    The skin of the search box behavior
+     * @param skin The skin of the search box behavior
      */
     public SearchBoxBehavior(SearchBox control, SearchBoxSkin skin) {
         super(control, skin);
