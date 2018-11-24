@@ -26,6 +26,7 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.settings>${project.basedir}/../settings</project.settings>
+        <openjfx.version>11.0.1</openjfx.version>
         <testfx.version>4.0.12-alpha</testfx.version>
     </properties>
     <dependencies>
@@ -150,12 +151,12 @@
                 <dependency>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-controls</artifactId>
-                    <version>11.0.1</version>
+                    <version>${openjfx.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-web</artifactId>
-                    <version>11.0.1</version>
+                    <version>${openjfx.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
