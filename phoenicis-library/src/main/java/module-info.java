@@ -11,4 +11,5 @@ module org.phoenicis.library {
     requires org.apache.commons.io;
     requires org.phoenicis.multithreading;
     requires jdk.scripting.nashorn;
+    opens org.phoenicis.library;
 }

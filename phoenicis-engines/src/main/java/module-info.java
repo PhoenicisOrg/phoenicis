@@ -10,4 +10,5 @@ module org.phoenicis.engines {
     requires commons.lang;
     requires jackson.annotations;
     requires org.phoenicis.tools;
+    opens org.phoenicis.engines;
 }

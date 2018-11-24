@@ -5,4 +5,5 @@ module org.phoenicis.multithreading {
     requires slf4j.api;
     requires spring.context;
     requires java.annotation;
+    opens org.phoenicis.multithreading;
 }

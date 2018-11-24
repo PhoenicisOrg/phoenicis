@@ -12,4 +12,6 @@ module org.phoenicis.scripts {
     requires org.apache.commons.io;
     requires java.scripting;
     requires jdk.scripting.nashorn;
+    opens org.phoenicis.scripts;
+    opens org.phoenicis.scripts.wizard;
 }

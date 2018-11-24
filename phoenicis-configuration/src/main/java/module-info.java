@@ -9,4 +9,5 @@ module org.phoenicis.configuration {
     requires spring.context;
     requires com.fasterxml.jackson.databind;
     requires spring.core;
+    opens org.phoenicis.configuration;
 }

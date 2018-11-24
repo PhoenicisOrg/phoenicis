@@ -22,4 +22,7 @@ module org.phoenicis.tools {
     requires bcpg.jdk16;
     requires bcprov.jdk16;
     requires com.fasterxml.jackson.core;
+    opens org.phoenicis.tools;
+    opens org.phoenicis.tools.files;
+    opens org.phoenicis.tools.system;
 }

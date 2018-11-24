@@ -16,4 +16,5 @@ module org.phoenicis.repository {
     requires spring.beans;
     requires spring.context;
     requires org.phoenicis.multithreading;
+    opens org.phoenicis.repository;
 }

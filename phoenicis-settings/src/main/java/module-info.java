@@ -4,4 +4,5 @@ module org.phoenicis.settings {
     requires spring.context;
     requires org.phoenicis.repository;
     requires spring.core;
+    opens org.phoenicis.settings;
 }

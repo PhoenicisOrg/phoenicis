@@ -24,4 +24,17 @@ module org.phoenicis.javafx {
     requires jdk.scripting.nashorn;
     requires spring.beans;
     exports org.phoenicis.javafx;
+    opens org.phoenicis.javafx;
+    opens org.phoenicis.javafx.views.common;
+    opens org.phoenicis.javafx.controller;
+    opens org.phoenicis.javafx.views.mainwindow.apps;
+    opens org.phoenicis.javafx.views.mainwindow.console;
+    opens org.phoenicis.javafx.views.mainwindow.containers;
+    opens org.phoenicis.javafx.views.mainwindow.engines;
+    opens org.phoenicis.javafx.views.mainwindow.installations;
+    opens org.phoenicis.javafx.views.mainwindow.library;
+    opens org.phoenicis.javafx.views.mainwindow.settings;
+    opens org.phoenicis.javafx.settings;
+    opens org.phoenicis.javafx.views;
+    opens org.phoenicis.javafx.views.scriptui;
 }
