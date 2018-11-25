@@ -43,7 +43,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
     private void populate() {
         this.pathField = new TextField();
 
-        this.openBrowser = new Button(tr("Open directory chooser"));
+        this.openBrowser = new Button(tr("Choose Directory ..."));
         openBrowser.setOnAction(event -> {
             DirectoryChooser chooser = new DirectoryChooser();
 
@@ -61,7 +61,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
 
     @Override
     public String getHeader() {
-        return tr("Choose the location of your local repository");
+        return tr("Choose the location of the local repository");
     }
 
     @Override

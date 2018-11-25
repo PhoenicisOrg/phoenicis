@@ -1,7 +1,5 @@
 package org.phoenicis.javafx.views.common.lists;
 
-import com.sun.javafx.collections.NonIterableChange;
-import com.sun.javafx.collections.SortHelper;
 import javafx.beans.NamedArg;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ObjectPropertyBase;
@@ -13,21 +11,19 @@ import java.util.function.Predicate;
 
 /**
  * A filtered observable list taking a {@link Predicate} to filter elements of a given input {@link ObservableList}.
- * This class is based on the implementation of {@link FilteredList}, included in javafx, and extends its functionality
- * with a trigger method.
+ * This class is based on the implementation of {@link javafx.collections.transformation.FilteredList},
+ * included in javafx, and extends its functionality with a trigger method.
  * This trigger method can be used to recheck the all elements included in the source list to only marks the elements as
- * invalid,
- * that were previously added and now aren't, or the other way.
+ * invalid, that were previously added and now aren't, or the other way.
  *
  * @param <E> The type of the elements contained in the filtered list
  * @author Marc Arndt
- * @see FilteredList
+ * @see javafx.collections.transformation.FilteredList
  */
 public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> {
     private int[] filtered;
     private int size;
 
-    private SortHelper helper;
     private static final Predicate ALWAYS_TRUE = t -> true;
 
     /**
@@ -153,13 +149,6 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
         return Arrays.binarySearch(filtered, 0, size, index);
     }
 
-    private SortHelper getSortHelper() {
-        if (helper == null) {
-            helper = new SortHelper();
-        }
-        return helper;
-    }
-
     private int findPosition(int p) {
         if (filtered.length == 0) {
             return 0;
@@ -198,7 +187,7 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
                 filtered[i] = c.getPermutation(filtered[i]);
             }
 
-            int[] perm = getSortHelper().sort(filtered, from, to);
+            int[] perm = sort(filtered, from, to);
             nextPermutation(from, to, perm);
         }
     }
@@ -287,10 +276,8 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
     @SuppressWarnings("unchecked")
     private void refilter() {
         ensureSize(getSource().size());
-        List<E> removed = null;
-        if (hasListeners()) {
-            removed = new ArrayList<>(this);
-        }
+
+        List<E> removed = hasListeners() ? new ArrayList<>(this) : null;
         size = 0;
         int i = 0;
         Predicate<? super E> pred = getPredicateImpl();
@@ -301,8 +288,50 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
             }
             ++i;
         }
+
         if (hasListeners()) {
-            fireChange(new NonIterableChange.GenericAddRemoveChange<>(0, size, removed, this));
+            /*
+             * based on the listener from:
+             * https://github.com/javafxports/openjdk-jfx/blob/master/modules/javafx.base/src/main/java/com/sun/javafx/
+             * collections/NonIterableChange.java
+             */
+            fireChange(new ListChangeListener.Change<E>(this) {
+                private boolean invalid = true;
+
+                @Override
+                public boolean next() {
+                    if (invalid) {
+                        invalid = false;
+                        return true;
+                    }
+                    return false;
+                }
+
+                @Override
+                public void reset() {
+                    invalid = true;
+                }
+
+                @Override
+                public int getFrom() {
+                    return 0;
+                }
+
+                @Override
+                public int getTo() {
+                    return size;
+                }
+
+                @Override
+                public List<E> getRemoved() {
+                    return removed;
+                }
+
+                @Override
+                protected int[] getPermutation() {
+                    return new int[0];
+                }
+            });
         }
     }
 
@@ -351,4 +380,19 @@ public class PhoenicisFilteredList<E> extends PhoenicisTransformationList<E, E> 
         endChange();
     }
 
+    /**
+     * Sorts the elements located in the given array in the given range.
+     * This method is based on the initial implementation in SortHelper:
+     * https://github.com/javafxports/openjdk-jfx/blob/master/modules/javafx.base/src/main/java/com/sun/javafx/collections/SortHelper.java
+     *
+     * @param array The array to be sorted
+     * @param fromIndex The start index of the elements to be sorted
+     * @param toIndex The end index of the elements to be sorted
+     * @return The new elements in the sorted range
+     */
+    private int[] sort(int[] array, int fromIndex, int toIndex) {
+        Arrays.sort(array, fromIndex, toIndex);
+
+        return Arrays.copyOfRange(array, fromIndex, toIndex);
+    }
 }

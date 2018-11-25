@@ -55,11 +55,22 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk10
+      script: mvn clean package
+      before_cache:
+        - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
       dist: trusty
       jdk: openjdk11
+    - stage: Build + test
+      name: Linux OpenJDK 11 (Flatpak)
+      os: linux
+      dist: trusty
+      jdk: openjdk11
+      after_script:
+        - cd phoenicis-dist/src/flatpak/
+        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
     - stage: Build + test
       name: Linux Oracle JDK 11
       os: linux
@@ -76,19 +87,19 @@ jobs:
       name: Install .deb
       os: linux
       dist: trusty
-      jdk: openjdk8
+      jdk: openjdk10
       sudo: required
       services:
         - docker
       before_install:
-        - docker run -d --name ubuntu-16-04 -v $HOME:/travis ubuntu:16.04 tail -f /dev/null
+        - docker run -d --name ubuntu-18-04 -v $HOME:/travis ubuntu:18.04 tail -f /dev/null
       install:
-        - docker exec -t ubuntu-16-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
+        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
       script:
         # check that cache has been filled in current build
         - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
         - rm -f $HOME/travis_cache/travis_build_id
-        - docker exec -t ubuntu-16-04 bash -c "apt install -y /travis/travis_cache/*.deb"
+        - docker exec -t ubuntu-18-04 bash -c "apt install -y /travis/travis_cache/*.deb"
         - mv $HOME/travis_cache $HOME/travis_cache_old
         - mkdir $HOME/travis_cache # clear the cache
 
