@@ -6,8 +6,15 @@ module org.phoenicis.tools {
     exports org.phoenicis.tools.system.opener;
     exports org.phoenicis.tools.version;
     opens org.phoenicis.tools;
+    opens org.phoenicis.tools.archive;
+    opens org.phoenicis.tools.checksum;
+    opens org.phoenicis.tools.config;
     opens org.phoenicis.tools.files;
+    opens org.phoenicis.tools.gpg;
+    opens org.phoenicis.tools.http;
     opens org.phoenicis.tools.system;
+    opens org.phoenicis.tools.version;
+    opens org.phoenicis.tools.win32;
     requires bcpg.jdk16;
     requires bcprov.jdk16;
     requires java.activation;

@@ -2,6 +2,7 @@ module org.phoenicis.engines {
     exports org.phoenicis.engines;
     exports org.phoenicis.engines.dto;
     opens org.phoenicis.engines;
+    opens org.phoenicis.engines.dto;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
     requires commons.lang;

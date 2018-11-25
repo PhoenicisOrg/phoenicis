@@ -2,9 +2,16 @@ module org.phoenicis.javafx {
     exports org.phoenicis.javafx;
     opens org.phoenicis.javafx;
     opens org.phoenicis.javafx.controller;
+    opens org.phoenicis.javafx.controller.apps;
+    opens org.phoenicis.javafx.controller.containers;
+    opens org.phoenicis.javafx.controller.engines;
+    opens org.phoenicis.javafx.controller.installations;
+    opens org.phoenicis.javafx.controller.library;
+    opens org.phoenicis.javafx.controller.settings;
     opens org.phoenicis.javafx.settings;
     opens org.phoenicis.javafx.views;
     opens org.phoenicis.javafx.views.common;
+    opens org.phoenicis.javafx.views.common.widgets.lists;
     opens org.phoenicis.javafx.views.mainwindow.apps;
     opens org.phoenicis.javafx.views.mainwindow.console;
     opens org.phoenicis.javafx.views.mainwindow.containers;
