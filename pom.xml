@@ -48,6 +48,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <surefire.version>3.0.0-M1</surefire.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.23.4</mockito.version>
@@ -127,10 +128,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.0.0-M1</version>
-                    <configuration>
-                        <forkCount>0</forkCount>
-                    </configuration>
+                    <version>${surefire.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -254,6 +252,14 @@
                             <release>11</release>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <forkCount>0</forkCount>
+                        </configuration>
+                    </plugin>
                 </plugins>
             </build>
             <properties>
@@ -274,6 +280,14 @@
                         <version>3.8.0</version>
                         <configuration>
                             <release>10</release>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <forkCount>0</forkCount>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -300,6 +314,14 @@
                             <excludes>
                                 <exclude>module-info.java</exclude>
                             </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${surefire.version}</version>
+                        <configuration>
+                            <useSystemClassLoader>false</useSystemClassLoader>
                         </configuration>
                     </plugin>
                 </plugins>
