@@ -25,6 +25,6 @@
     </parent>
     <artifactId>phoenicis-entities</artifactId>
     <properties>
-        <project.settings>${project.basedir}/../settings</project.settings>
+        <project.root>${project.basedir}/../</project.root>
     </properties>
 </project>
