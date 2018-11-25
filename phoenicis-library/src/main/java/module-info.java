@@ -1,15 +1,15 @@
 module org.phoenicis.library {
     exports org.phoenicis.library;
     exports org.phoenicis.library.dto;
-    requires org.phoenicis.configuration;
-    requires spring.beans;
-    requires spring.context;
-    requires org.phoenicis.scripts;
+    opens org.phoenicis.library;
     requires com.fasterxml.jackson.databind;
     requires commons.lang;
-    requires slf4j.api;
-    requires org.apache.commons.io;
-    requires org.phoenicis.multithreading;
     requires jdk.scripting.nashorn;
-    opens org.phoenicis.library;
+    requires org.apache.commons.io;
+    requires org.phoenicis.configuration;
+    requires org.phoenicis.multithreading;
+    requires org.phoenicis.scripts;
+    requires slf4j.api;
+    requires spring.beans;
+    requires spring.context;
 }

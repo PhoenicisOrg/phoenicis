@@ -1,9 +1,9 @@
 module org.phoenicis.win32 {
     exports org.phoenicis.win32;
     exports org.phoenicis.win32.pe;
-    requires spring.context;
+    opens org.phoenicis.win32;
     requires commons.lang;
     requires org.apache.commons.io;
     requires org.phoenicis.configuration;
-    opens org.phoenicis.win32;
+    requires spring.context;
 }

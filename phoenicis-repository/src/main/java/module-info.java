@@ -3,18 +3,18 @@ module org.phoenicis.repository {
     exports org.phoenicis.repository.dto;
     exports org.phoenicis.repository.location;
     exports org.phoenicis.repository.types;
-    requires commons.lang;
-    requires org.eclipse.jgit;
-    requires slf4j.api;
-    requires org.phoenicis.tools;
-    requires jackson.annotations;
+    opens org.phoenicis.repository;
     requires com.fasterxml.jackson.databind;
+    requires commons.lang;
+    requires jackson.annotations;
+    requires org.apache.commons.compress;
+    requires org.eclipse.jgit;
     requires org.phoenicis.configuration;
     requires org.phoenicis.entities;
-    requires spring.core;
-    requires org.apache.commons.compress;
+    requires org.phoenicis.multithreading;
+    requires org.phoenicis.tools;
+    requires slf4j.api;
     requires spring.beans;
     requires spring.context;
-    requires org.phoenicis.multithreading;
-    opens org.phoenicis.repository;
+    requires spring.core;
 }
