@@ -112,7 +112,7 @@
                 <configuration>
                     <poDirectory>${project.basedir}/../i18n</poDirectory>
                     <sourceDirectory>${project.basedir}/../</sourceDirectory>
-                    <targetBundle>Messages</targetBundle>
+                    <targetBundle>org.phoenicis.configuration.localisation.Messages</targetBundle>
                     <outputFormat>properties</outputFormat>
                 </configuration>
             </plugin>
