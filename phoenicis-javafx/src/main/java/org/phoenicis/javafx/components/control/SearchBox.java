@@ -1,8 +1,8 @@
-package org.phoenicis.javafx.controler;
+package org.phoenicis.javafx.components.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.phoenicis.javafx.skin.SearchBoxSkin;
+import org.phoenicis.javafx.components.skin.SearchBoxSkin;
 
 import java.util.function.Consumer;
 

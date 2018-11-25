@@ -1,10 +1,10 @@
-package org.phoenicis.javafx.skin;
+package org.phoenicis.javafx.components.skin;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import org.phoenicis.javafx.behavior.SearchBoxBehavior;
-import org.phoenicis.javafx.controler.SearchBox;
+import org.phoenicis.javafx.components.behavior.SearchBoxBehavior;
+import org.phoenicis.javafx.components.control.SearchBox;
 
 /**
  * A search box skin/view

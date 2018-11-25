@@ -1,9 +1,9 @@
-package org.phoenicis.javafx.behavior;
+package org.phoenicis.javafx.components.behavior;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.phoenicis.javafx.controler.SearchBox;
-import org.phoenicis.javafx.skin.SearchBoxSkin;
+import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.skin.SearchBoxSkin;
 
 import java.util.Optional;
 import java.util.function.Consumer;

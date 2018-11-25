@@ -1,8 +1,8 @@
-package org.phoenicis.javafx.controler;
+package org.phoenicis.javafx.components.control;
 
 import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
-import org.phoenicis.javafx.skin.SkinBase;
+import org.phoenicis.javafx.components.skin.SkinBase;
 
 /**
  * A base class for a JavaFX component control/model

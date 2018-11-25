@@ -1,7 +1,7 @@
-package org.phoenicis.javafx.behavior;
+package org.phoenicis.javafx.components.behavior;
 
-import org.phoenicis.javafx.controler.ControlBase;
-import org.phoenicis.javafx.skin.BehaviorSkinBase;
+import org.phoenicis.javafx.components.control.ControlBase;
+import org.phoenicis.javafx.components.skin.BehaviorSkinBase;
 
 /**
  * A base class for a JavaFX component behavior/controller
