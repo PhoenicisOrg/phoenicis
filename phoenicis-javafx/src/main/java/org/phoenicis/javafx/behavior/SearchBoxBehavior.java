@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 /**
  * A search box behavior/controller
  */
-public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin> {
+public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
     /**
      * Constructor
      *

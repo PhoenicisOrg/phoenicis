@@ -6,10 +6,12 @@ import org.phoenicis.javafx.controler.ControlBase;
 /**
  * A base class for a JavaFX component skin/view, which also provides separate behavior
  *
- * @param <C> The control/model belonging to the skin
- * @param <B> The behavior/controller belonging to the skin
+ * @param <C> The control/model class belonging to the skin
+ * @param <S> The skin/model class itself
+ * @param <B> The behavior/controller class belonging to the skin
  */
-public abstract class BehaviorSkinBase<C extends ControlBase<?>, B extends BehaviorBase<C, ?>> extends SkinBase<C> {
+public abstract class BehaviorSkinBase<C extends ControlBase<C, S>, S extends BehaviorSkinBase<C, S, B>, B extends BehaviorBase<C, S, B>>
+        extends SkinBase<C, S> {
     /**
      * The behavior associated to this skin
      */
@@ -32,9 +34,7 @@ public abstract class BehaviorSkinBase<C extends ControlBase<?>, B extends Behav
      *
      * @return The default behavior for this skin
      */
-    public B createBehavior() {
-        return null;
-    }
+    public abstract B createBehavior();
 
     /**
      * {@inheritDoc}

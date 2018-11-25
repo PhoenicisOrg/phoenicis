@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * A search box component used to add a search term
  */
-public class SearchBox extends ControlBase<SearchBoxSkin> {
+public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     /**
      * A consumer, which is called when the search term has been modified
      */

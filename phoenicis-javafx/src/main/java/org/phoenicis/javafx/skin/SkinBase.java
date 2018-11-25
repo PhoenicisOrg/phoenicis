@@ -5,9 +5,11 @@ import org.phoenicis.javafx.controler.ControlBase;
 /**
  * A base class for a JavaFX component skin/view
  *
- * @param <C> The control/model belonging to the skin
+ * @param <C> The control/model class belonging to the skin
+ * @param <S> The skin/view class itself
  */
-public abstract class SkinBase<C extends ControlBase<?>> extends javafx.scene.control.SkinBase<C> {
+public abstract class SkinBase<C extends ControlBase<C, S>, S extends SkinBase<C, S>>
+        extends javafx.scene.control.SkinBase<C> {
     /**
      * Constructor for all SkinBase instances.
      *

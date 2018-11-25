@@ -9,7 +9,7 @@ import org.phoenicis.javafx.controler.SearchBox;
 /**
  * A search box skin/view
  */
-public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxBehavior> {
+public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
     /**
      * The search field of the search box
      */
