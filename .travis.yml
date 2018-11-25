@@ -43,7 +43,7 @@ jobs:
       services:
         - docker
       before_install:
-        - docker run -d --name ubuntu-18-04 -v $HOME:/travis openjdk:8 tail -f /dev/null
+        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
       install:
         - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
                                                apt install -y git;
@@ -55,8 +55,7 @@ jobs:
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
                                                _JAVA_OPTIONS=-Djdk.net.URLClassPath.disableClassPathURLCheck=true mvn -B clean package"
-      before_cache:
-        - docker exec -t ubuntu-18-04 bash -c "cp /travis/phoenicis/phoenicis-dist/target/*.deb /travis/travis_cache/"
+
     # build + test
     - stage: Build + test
       name: Linux Oracle JDK 8
@@ -71,6 +70,9 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk10
+      script: mvn clean package
+      before_cache:
+        - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
@@ -100,7 +102,7 @@ jobs:
       name: Install .deb
       os: linux
       dist: trusty
-      jdk: openjdk8
+      jdk: openjdk10
       sudo: required
       services:
         - docker
