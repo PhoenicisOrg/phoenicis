@@ -1,8 +1,7 @@
 package org.phoenicis.javafx.skin;
 
-import javafx.scene.control.Control;
-import javafx.scene.control.SkinBase;
 import org.phoenicis.javafx.behavior.BehaviorBase;
+import org.phoenicis.javafx.controler.ControlBase;
 
 /**
  * A base class for a JavaFX component skin/view, which also provides separate behavior
@@ -10,14 +9,14 @@ import org.phoenicis.javafx.behavior.BehaviorBase;
  * @param <C> The control/model belonging to the skin
  * @param <B> The behavior/controller belonging to the skin
  */
-public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase<C, ?>> extends SkinBase<C> {
+public abstract class BehaviorSkinBase<C extends ControlBase<?>, B extends BehaviorBase<C, ?>> extends SkinBase<C> {
     /**
      * The behavior associated to this skin
      */
-    private BehaviorBase<C, ?> behavior;
+    private B behavior;
 
     /**
-     * Constructor for all SkinBase instances.
+     * Constructor for all BehaviorSkinBase instances.
      *
      * @param control The control for which this Skin should attach to.
      */
@@ -25,15 +24,7 @@ public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase
         super(control);
 
         // create the behavior
-        this.behavior = createDefaultBehavior();
-
-        // initialise the view
-        initialise();
-
-        if (behavior != null) {
-            // initialise the behavior
-            behavior.initialise();
-        }
+        this.behavior = createBehavior();
     }
 
     /**
@@ -41,23 +32,8 @@ public abstract class BehaviorSkinBase<C extends Control, B extends BehaviorBase
      *
      * @return The default behavior for this skin
      */
-    public BehaviorBase<C, ?> createDefaultBehavior() {
+    public B createBehavior() {
         return null;
-    }
-
-    /**
-     * Initialises the content of this skin.
-     * This method is performed before the behavior is created and initialised
-     */
-    public abstract void initialise();
-
-    /**
-     * Gets the control to which this skin is applied
-     *
-     * @return The control to which this skin is applied
-     */
-    public C getControl() {
-        return getSkinnable();
     }
 
     /**

@@ -2,8 +2,6 @@ package org.phoenicis.javafx.controler;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.Control;
-import javafx.scene.control.Skin;
 import org.phoenicis.javafx.skin.SearchBoxSkin;
 
 import java.util.function.Consumer;
@@ -11,7 +9,7 @@ import java.util.function.Consumer;
 /**
  * A search box component used to add a search term
  */
-public class SearchBox extends Control {
+public class SearchBox extends ControlBase<SearchBoxSkin> {
     /**
      * A consumer, which is called when the search term has been modified
      */
@@ -57,7 +55,8 @@ public class SearchBox extends Control {
      *
      * @return A created search box skin object
      */
-    protected Skin<?> createDefaultSkin() {
+    @Override
+    public SearchBoxSkin createSkin() {
         return new SearchBoxSkin(this);
     }
 

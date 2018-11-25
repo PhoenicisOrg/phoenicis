@@ -1,7 +1,7 @@
 package org.phoenicis.javafx.behavior;
 
-import javafx.scene.control.Control;
-import javafx.scene.control.SkinBase;
+import org.phoenicis.javafx.controler.ControlBase;
+import org.phoenicis.javafx.skin.SkinBase;
 
 /**
  * A base class for a JavaFX component behavior/controller
@@ -9,7 +9,7 @@ import javafx.scene.control.SkinBase;
  * @param <C> The control/model class of the behavior
  * @param <S> The skin/view class of the behavior
  */
-public abstract class BehaviorBase<C extends Control, S extends SkinBase<C>> {
+public abstract class BehaviorBase<C extends ControlBase<S>, S extends SkinBase<C>> {
     /**
      * The control associated with this behavior
      */
@@ -31,6 +31,9 @@ public abstract class BehaviorBase<C extends Control, S extends SkinBase<C>> {
 
         this.control = control;
         this.skin = skin;
+
+        // initialise the behavior
+        initialise();
     }
 
     /**

@@ -3,7 +3,6 @@ package org.phoenicis.javafx.skin;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import org.phoenicis.javafx.behavior.BehaviorBase;
 import org.phoenicis.javafx.behavior.SearchBoxBehavior;
 import org.phoenicis.javafx.controler.SearchBox;
 
@@ -52,7 +51,7 @@ public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxBehavior
      * @return A created search box behavior object
      */
     @Override
-    public BehaviorBase<SearchBox, ?> createDefaultBehavior() {
+    public SearchBoxBehavior createBehavior() {
         return new SearchBoxBehavior(getControl(), this);
     }
 
