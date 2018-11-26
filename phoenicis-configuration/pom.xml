@@ -47,6 +47,12 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>27.0.1-jre</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>jsr305</artifactId>
+                    <groupId>com.google.code.findbugs</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -106,7 +112,7 @@
                 <configuration>
                     <poDirectory>${project.basedir}/../i18n</poDirectory>
                     <sourceDirectory>${project.basedir}/../</sourceDirectory>
-                    <targetBundle>org.phoenicis.Messages</targetBundle>
+                    <targetBundle>org.phoenicis.configuration.localisation.Messages</targetBundle>
                     <outputFormat>properties</outputFormat>
                 </configuration>
             </plugin>
