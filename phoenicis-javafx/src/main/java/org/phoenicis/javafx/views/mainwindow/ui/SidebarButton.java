@@ -18,8 +18,6 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 
 public class SidebarButton extends Button {
@@ -29,8 +27,6 @@ public class SidebarButton extends Button {
         super(name);
         this.name = name;
         this.getStyleClass().add("sidebarButton");
-        this.setAlignment(Pos.CENTER_LEFT);
-        this.setPadding(new Insets(2));
     }
 
     public String getName() {

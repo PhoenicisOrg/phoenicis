@@ -24,6 +24,5 @@ public class SidebarTitle extends Label {
     public SidebarTitle(String defaultValue) {
         super(defaultValue);
         this.getStyleClass().add("sidebarTitle");
-        this.setWrapText(true);
     }
 }

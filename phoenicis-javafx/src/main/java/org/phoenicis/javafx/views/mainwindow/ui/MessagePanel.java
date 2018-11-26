@@ -28,7 +28,6 @@ public class MessagePanel extends VBox {
         this.getStyleClass().add("rightPane");
 
         this.setSpacing(10);
-        this.setAlignment(Pos.CENTER);
 
         Label failureNotificationLbl = new Label();
         failureNotificationLbl.setText(message);

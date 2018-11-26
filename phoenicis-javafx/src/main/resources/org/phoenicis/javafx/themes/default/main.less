@@ -101,11 +101,16 @@
 .sidebar {
   -fx-background-color: @background-color;
   -fx-padding: 1em;
+  -fx-pref-height: 0;
 
   .sidebarScrollbar {
     -fx-border-width: 0;
     -fx-background-color: @background-color;
     -fx-padding: 0.8em 0 0.8em 0;
+    -fx-fit-to-height: true;
+    -fx-fit-to-width: true;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: as-needed;
   }
 
   .sidebarScrollbar > .viewport {
@@ -152,6 +157,7 @@
     -fx-font-size: 1.1em;
     -fx-alignment: baseline-left;
     -fx-translate-y: -0.1em;
+    -fx-wrap-text: true;
   }
 
   .sidebarButton {
@@ -164,7 +170,8 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: left;
     -fx-max-width: Infinity;
-
+    -fx-alignment: center-left;
+    -fx-padding: 2px;
 
     &:hover, &:selected {
       -fx-background-color: #D3D3D3;
@@ -191,6 +198,7 @@
   -fx-border-style: none;
   -fx-focus-traversable: false;
   -fx-background-color: transparent;
+  -fx-alignment: center;
 
 }
 
@@ -230,11 +238,11 @@
 /*********************** library ***********************/
 /*******************************************************/
 .shortcutButton {
-    -fx-background-color:transparent;
-    -fx-label-padding: 2.5em 0 0 0;
-    -fx-background-size: 3em;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: top;
+  -fx-background-color: transparent;
+  -fx-label-padding: 2.5em 0 0 0;
+  -fx-background-size: 3em;
+  -fx-background-repeat: no-repeat;
+  -fx-background-position: top;
 }
 
 /*******************************************************/
@@ -294,15 +302,15 @@
 /********************** miniature **********************/
 /*******************************************************/
 .listWidget {
-    .list-cell {
-        &:hover {
-          -fx-background-color: @hover-color;
-        }
-
-        &:selected {
-          -fx-background-color: @focus-color;
-        }
+  .list-cell {
+    &:hover {
+      -fx-background-color: @hover-color;
     }
+
+    &:selected {
+      -fx-background-color: @focus-color;
+    }
+  }
 }
 
 .iconListWidget {
@@ -564,23 +572,22 @@
 /*********************** settings **********************/
 /*******************************************************/
 
-
 /*************** repository type selection *************/
 #repositoryTypeSelection {
-    -fx-alignment: center left;
-    -fx-spacing: 1em;
+  -fx-alignment: center left;
+  -fx-spacing: 1em;
 }
 
 /***************** add local repository ****************/
 #addLocalRepository {
-    -fx-alignment: center left;
-    -fx-spacing: 1em;
+  -fx-alignment: center left;
+  -fx-spacing: 1em;
 }
 
 /*************** add classpath repository **************/
 #addClasspathRepository {
-    -fx-alignment: center left;
-    -fx-spacing: 1em;
+  -fx-alignment: center left;
+  -fx-spacing: 1em;
 }
 
 /*******************************************************/
