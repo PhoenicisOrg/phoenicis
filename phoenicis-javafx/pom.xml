@@ -26,6 +26,7 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.root>${project.basedir}/../</project.root>
+        <openjfx.version>11.0.1</openjfx.version>
         <testfx.version>4.0.12-alpha</testfx.version>
     </properties>
     <dependencies>
@@ -111,15 +112,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.1</version>
-                <configuration>
-                    <argLine>-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw
-                        -Dprism.text=t2k</argLine>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>biz.gabrys.maven.plugins</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
                 <version>1.2.1</version>
@@ -169,12 +161,12 @@
                 <dependency>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-controls</artifactId>
-                    <version>11.0.1</version>
+                    <version>${openjfx.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.openjfx</groupId>
                     <artifactId>javafx-web</artifactId>
-                    <version>11.0.1</version>
+                    <version>${openjfx.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.testfx</groupId>
@@ -195,6 +187,20 @@
             <activation>
                 <jdk>1.8</jdk>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <!-- workaround for surefire bug 1438 -->
+                            <additionalClasspathElements>
+                                <additionalClasspathElement>${java.home}/lib/ext/jfxrt.jar</additionalClasspathElement>
+                            </additionalClasspathElements>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
             <dependencies>
                 <dependency>
                     <groupId>org.testfx</groupId>
