@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-11-16 17:32\n"
+"PO-Revision-Date: 2018-11-26 19:02\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -102,11 +102,11 @@ msgstr "Удалить {0}"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:98
 #, java-format
 msgid "Are you sure you want to delete {0}?"
-msgstr ""
+msgstr "Вы уверены, что вы хотите удалить {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/ErrorMessage.java:81
 msgid "Stack trace:"
-msgstr ""
+msgstr "Трассировка стека:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Default theme"
