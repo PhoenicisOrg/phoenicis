@@ -5,22 +5,22 @@ order: 1
 toc: true
 ---
 
-## Ubuntu 18.04 and Linux Mint 19
+## Ubuntu 18.04/18.10 and Linux Mint 19
 
 * Install the dependencies:
 ```
 sudo apt update
 sudo apt install git maven openjdk-11-jdk
 ```
-
-* Set the Java version:
-```
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-```
     
 * Clone the repository from GitHub:
 ```
 git clone https://github.com/PhoenicisOrg/phoenicis.git
+```
+
+* Set the Java version:
+```
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ```
 
 * Build Phoenicis:
@@ -123,8 +123,10 @@ Note : As there is not FreeBSD wine at the moment, the linux wine package will b
 
 ```
 cd phoenicis/phoenicis-dist/target
-unzip phoenicis-dist.zip -d built
-bash ./phoenicis-dist/phoenicis.sh
+unzip phoenicis-dist.zip
+cp phoenicis-dist/phoenicis.sh .                        # for Java 10+
+cp phoenicis-dist/phoenicis-java8.sh ./phoenicis.sh     # for Java 8
+./phoenicis.sh
 ```
 
 ## Troubleshooting
