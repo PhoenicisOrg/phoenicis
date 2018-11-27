@@ -200,11 +200,10 @@
   -fx-background-color: transparent;
   -fx-alignment: center;
 
-}
-
-.rightPane > .viewport {
-  -fx-background-color: #FFFFFF;
-  -fx-border-width: 0;
+  & > .viewport {
+    -fx-background-color: #FFFFFF;
+    -fx-border-width: 0;
+  }
 }
 
 .retryButton {
@@ -273,11 +272,11 @@
   -fx-focus-traversable: false;
   -fx-background-color: transparent;
   -fx-min-height: 12em;
-}
 
-.appPanelMiniaturesPaneWrapper > .viewport {
-  -fx-background-color: #FAFAFA;
-  -fx-border-width: 0;
+  & > .viewport {
+    -fx-background-color: #FAFAFA;
+    -fx-border-width: 0;
+  }
 }
 
 /********************** description ********************/
@@ -385,10 +384,10 @@
       -fx-text-alignment: center;
     }
   }
-}
 
-.iconListWidget > .viewport {
-  -fx-background-color: transparent;
+  & > .viewport {
+    -fx-background-color: transparent;
+  }
 }
 
 .compactListWidget {
