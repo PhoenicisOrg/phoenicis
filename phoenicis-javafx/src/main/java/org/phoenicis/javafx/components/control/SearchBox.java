@@ -23,8 +23,8 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     /**
      * Constructor
      *
-     * @param onSearch callback for search input
-     * @param onClear callback for clear input
+     * @param onSearch Callback for search input
+     * @param onClear Callback for clear input
      */
     public SearchBox(ObjectProperty<Consumer<String>> onSearch, ObjectProperty<Runnable> onClear) {
         super();
@@ -36,8 +36,8 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     /**
      * Constructor
      *
-     * @param onSearch callback for search input
-     * @param onClear callback for clear input
+     * @param onSearch Callback for search input
+     * @param onClear Callback for clear input
      */
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
         this(new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));

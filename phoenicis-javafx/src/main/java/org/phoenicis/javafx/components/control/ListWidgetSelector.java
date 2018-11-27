@@ -7,11 +7,27 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 
 import java.util.function.Consumer;
 
+/**
+ * A selector component to select one of multiple list widgets to display
+ */
 public class ListWidgetSelector extends ControlBase<ListWidgetSelector, ListWidgetSelectorSkin> {
+    /**
+     * The consumer to be called when a different list widget has been selected.
+     * The consumer is then called with the type of the selected list widget
+     */
     private final ObjectProperty<Consumer<ListWidgetType>> onSelect;
 
+    /**
+     * The type of the selected list widget
+     */
     private final ObjectProperty<ListWidgetType> selected;
 
+    /**
+     * Constructor
+     *
+     * @param onSelect The consumer to be called when a different list widget has been selected
+     * @param selected The type of the selected list widget
+     */
     public ListWidgetSelector(ObjectProperty<Consumer<ListWidgetType>> onSelect,
             ObjectProperty<ListWidgetType> selected) {
         super();
@@ -20,14 +36,28 @@ public class ListWidgetSelector extends ControlBase<ListWidgetSelector, ListWidg
         this.selected = selected;
     }
 
+    /**
+     * Constructor
+     *
+     * @param onSelect The consumer to be called when a different list widget has been selected
+     * @param selected The type of the selected list widget
+     */
     public ListWidgetSelector(Consumer<ListWidgetType> onSelect, ListWidgetType selected) {
         this(new SimpleObjectProperty<>(onSelect), new SimpleObjectProperty<>(selected));
     }
 
+    /**
+     * Constructor
+     *
+     * @param onSelect The consumer to be called when a different list widget has been selected
+     */
     public ListWidgetSelector(Consumer<ListWidgetType> onSelect) {
         this(new SimpleObjectProperty<>(onSelect), new SimpleObjectProperty<>());
     }
 
+    /**
+     * Constructor
+     */
     public ListWidgetSelector() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }

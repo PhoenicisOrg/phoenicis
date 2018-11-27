@@ -9,6 +9,9 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+/**
+ * The behavior for the {@link ListWidgetSelector} component
+ */
 public class ListWidgetSelectorBehavior
         extends BehaviorBase<ListWidgetSelector, ListWidgetSelectorSkin, ListWidgetSelectorBehavior> {
     /**
@@ -21,8 +24,12 @@ public class ListWidgetSelectorBehavior
         super(control, skin);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
+        // set the behavior for the icons list toggle button
         getSkin().getIconsListButton().addEventFilter(ActionEvent.ANY, this::eventFilter);
         getSkin().getIconsListButton()
                 .setOnAction(event -> {
@@ -30,6 +37,7 @@ public class ListWidgetSelectorBehavior
                     getOnSelect().ifPresent(consumer -> consumer.accept(ListWidgetType.ICONS_LIST));
                 });
 
+        // set the behavior for the compact list toggle button
         getSkin().getCompactListButton().addEventFilter(ActionEvent.ANY, this::eventFilter);
         getSkin().getCompactListButton()
                 .setOnAction(event -> {
@@ -37,6 +45,7 @@ public class ListWidgetSelectorBehavior
                     getOnSelect().ifPresent(consumer -> consumer.accept(ListWidgetType.COMPACT_LIST));
                 });
 
+        // set the behavior for the details list toggle button
         getSkin().getDetailsListButton().addEventFilter(ActionEvent.ANY, this::eventFilter);
         getSkin().getDetailsListButton()
                 .setOnAction(event -> {
@@ -65,6 +74,11 @@ public class ListWidgetSelectorBehavior
         }
     }
 
+    /**
+     * Gets the consumer method which is called when a list widget toggle button has been clicked
+     *
+     * @return The consumer method which is called when a list widget toggle button has been clicked
+     */
     private Optional<Consumer<ListWidgetType>> getOnSelect() {
         return Optional.ofNullable(getControl().getOnSelect());
     }
