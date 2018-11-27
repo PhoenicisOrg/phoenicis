@@ -37,7 +37,6 @@ public class FailurePanel extends VBox {
         this.getStyleClass().add("rightPane");
 
         this.setSpacing(10);
-        this.setAlignment(Pos.CENTER);
 
         this.failureNotification = new Label();
         this.failureNotification.setTextAlignment(TextAlignment.CENTER);

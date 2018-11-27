@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -127,7 +126,6 @@ public class ContainersSidebar extends Sidebar {
      */
     private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
         this.listWidgetChooser = new ListWidgetChooser<>(availableContainers);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getContainersListType());
         this.listWidgetChooser.setOnChoose(type -> {
             this.javaFxSettingsManager.setContainersListType(type);

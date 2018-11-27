@@ -26,6 +26,5 @@ public abstract class Sidebar extends BorderPane {
         super();
 
         this.getStyleClass().add("sidebar");
-        this.setPrefHeight(0);
     }
 }

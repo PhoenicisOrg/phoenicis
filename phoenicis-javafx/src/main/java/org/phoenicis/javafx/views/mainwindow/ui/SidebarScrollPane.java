@@ -24,10 +24,6 @@ public class SidebarScrollPane extends ScrollPane {
         this.setContent(content);
 
         this.getStyleClass().add("sidebarScrollbar");
-        this.setFitToHeight(true);
-        this.setFitToWidth(true);
-        this.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        this.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
     }
 
     public void setAll(Node... nodes) {
