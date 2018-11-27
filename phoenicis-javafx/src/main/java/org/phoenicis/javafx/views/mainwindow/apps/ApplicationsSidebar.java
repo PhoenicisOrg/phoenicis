@@ -3,9 +3,9 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
@@ -63,7 +63,7 @@ public class ApplicationsSidebar extends Sidebar {
     private CheckBox operatingSystemCheck;
 
     // widget to switch between the different list widgets in the center view
-    private ListWidgetChooser<ApplicationDTO> listWidgetChooser;
+    private ListWidgetSelector listWidgetChooser;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
@@ -151,10 +151,11 @@ public class ApplicationsSidebar extends Sidebar {
      * @param combinedListWidget The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
-        this.listWidgetChooser = new ListWidgetChooser<>(combinedListWidget);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getAppsListType());
-        this.listWidgetChooser.setOnChoose(type -> {
+        this.listWidgetChooser = new ListWidgetSelector();
+        this.listWidgetChooser.setSelected(this.javaFxSettingsManager.getAppsListType());
+        this.listWidgetChooser.setOnSelect(type -> {
+            combinedListWidget.showList(type);
+
             this.javaFxSettingsManager.setAppsListType(type);
             this.javaFxSettingsManager.save();
         });
