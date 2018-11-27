@@ -219,9 +219,16 @@
   -fx-padding: 0.5em;
   -fx-spacing: 0.5em;
 
+  .descriptionTitle {
+    -fx-alignment: center-left;
+    -fx-wrap-text: true;
+  }
+
   .closeIcon {
     -fx-pref-width: 1.5em;
     -fx-pref-height: 1.5em;
+
+    -fx-alignment: center-right;
 
     -fx-border-width: 0;
     -fx-border-style: none;
@@ -320,6 +327,7 @@
   -fx-border-width: 0;
   -fx-border-style: none;
   -fx-padding: 0.5em;
+  -fx-hbar-policy: never;
 
   .iconListElement {
     -fx-pref-width: 12em;
@@ -409,6 +417,7 @@
 
     .information {
       -fx-max-height: @cellHeight;
+      -fx-wrap-text: true;
     }
   }
 }
@@ -422,6 +431,7 @@
 
     .information {
       -fx-max-height: 3em;
+      -fx-wrap-text: true;
     }
   }
 }
