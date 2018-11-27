@@ -65,7 +65,7 @@ public class LibrarySidebar extends Sidebar {
     private SidebarButton runConsole;
 
     // widget to switch between the different list widgets in the center view
-    private ListWidgetSelector listWidgetChooser;
+    private ListWidgetSelector listWidgetSelector;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
@@ -103,7 +103,7 @@ public class LibrarySidebar extends Sidebar {
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
-        this.setBottom(listWidgetChooser);
+        this.setBottom(listWidgetSelector);
     }
 
     /**
@@ -145,9 +145,9 @@ public class LibrarySidebar extends Sidebar {
      * @param availableShortcuts The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
-        this.listWidgetChooser = new ListWidgetSelector();
-        this.listWidgetChooser.setSelected(this.javaFxSettingsManager.getLibraryListType());
-        this.listWidgetChooser.setOnSelect(type -> {
+        this.listWidgetSelector = new ListWidgetSelector();
+        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getLibraryListType());
+        this.listWidgetSelector.setOnSelect(type -> {
             availableShortcuts.showList(type);
 
             this.javaFxSettingsManager.setLibraryListType(type);

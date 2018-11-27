@@ -6,12 +6,16 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleButton;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleGroup;
 
 import java.util.function.Consumer;
 
@@ -49,7 +53,7 @@ public class ContainersSidebar extends Sidebar {
     private SidebarToggleGroup<ContainerCategoryDTO> categoryView;
 
     // widget to switch between the different list widgets in the center view
-    private ListWidgetChooser<ContainerDTO> listWidgetChooser;
+    private ListWidgetSelector listWidgetSelector;
 
     // consumer called when a container is selected
     private Runnable onAllCategorySelection;
@@ -79,7 +83,7 @@ public class ContainersSidebar extends Sidebar {
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
-        this.setBottom(listWidgetChooser);
+        this.setBottom(listWidgetSelector);
     }
 
     /**
@@ -125,9 +129,11 @@ public class ContainersSidebar extends Sidebar {
      * @param availableContainers The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
-        this.listWidgetChooser = new ListWidgetChooser<>(availableContainers);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getContainersListType());
-        this.listWidgetChooser.setOnChoose(type -> {
+        this.listWidgetSelector = new ListWidgetSelector();
+        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getContainersListType());
+        this.listWidgetSelector.setOnSelect(type -> {
+            availableContainers.showList(type);
+
             this.javaFxSettingsManager.setContainersListType(type);
             this.javaFxSettingsManager.save();
         });

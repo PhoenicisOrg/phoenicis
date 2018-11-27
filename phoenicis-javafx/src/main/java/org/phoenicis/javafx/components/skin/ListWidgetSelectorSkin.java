@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.components.skin;
 
-import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
@@ -25,10 +24,6 @@ public class ListWidgetSelectorSkin
 
     @Override
     public void initialise() {
-        HBox container = new HBox();
-        container.getStyleClass().add("listChooser");
-        container.setAlignment(Pos.BOTTOM_LEFT);
-
         ToggleGroup toggleGroup = new ToggleGroup();
 
         this.iconsListButton = new ToggleButton();
@@ -43,7 +38,8 @@ public class ListWidgetSelectorSkin
         this.detailsListButton.setToggleGroup(toggleGroup);
         this.detailsListButton.getStyleClass().addAll("listIcon", "detailsList");
 
-        container.getChildren().setAll(iconsListButton, compactListButton, detailsListButton);
+        HBox container = new HBox(iconsListButton, compactListButton, detailsListButton);
+        container.getStyleClass().add("listChooser");
 
         getChildren().addAll(container);
     }
