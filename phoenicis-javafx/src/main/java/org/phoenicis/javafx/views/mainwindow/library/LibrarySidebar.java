@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.library;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.components.control.SearchBox;
@@ -146,7 +145,6 @@ public class LibrarySidebar extends Sidebar {
      */
     private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
         this.listWidgetChooser = new ListWidgetChooser<>(availableShortcuts);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getLibraryListType());
         this.listWidgetChooser.setOnChoose(type -> {
             this.javaFxSettingsManager.setLibraryListType(type);

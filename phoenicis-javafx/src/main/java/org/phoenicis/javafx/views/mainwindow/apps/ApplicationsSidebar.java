@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.control.SearchBox;
@@ -152,7 +151,6 @@ public class ApplicationsSidebar extends Sidebar {
      */
     private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
         this.listWidgetChooser = new ListWidgetChooser<>(combinedListWidget);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getAppsListType());
         this.listWidgetChooser.setOnChoose(type -> {
             this.javaFxSettingsManager.setAppsListType(type);

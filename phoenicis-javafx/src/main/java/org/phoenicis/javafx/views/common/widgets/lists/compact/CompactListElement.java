@@ -57,7 +57,6 @@ public class CompactListElement<E> extends GridPane {
         this.icon.setStyle(String.format("-fx-background-image: url(\"%s\");", miniatureUri.toString()));
 
         this.titleLabel = new Label(title);
-        this.titleLabel.setWrapText(true);
         this.titleLabel.getStyleClass().add("information");
 
         List<ColumnConstraints> constraints = new ArrayList<>();
@@ -71,7 +70,6 @@ public class CompactListElement<E> extends GridPane {
             constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 
             Label informationLabel = new Label(information.getContent());
-            informationLabel.setWrapText(true);
             informationLabel.getStyleClass().add("information");
 
             this.add(informationLabel, this.getChildren().size(), 0);

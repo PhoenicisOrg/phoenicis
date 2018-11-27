@@ -40,8 +40,6 @@ public class SidebarToggleButton extends ToggleButton {
         super(name);
         this.name = name;
         this.getStyleClass().add("sidebarButton");
-        this.setAlignment(Pos.CENTER_LEFT);
-        this.setPadding(new Insets(2));
     }
 
     /**

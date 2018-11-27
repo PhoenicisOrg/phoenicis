@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -122,7 +121,6 @@ public class InstallationsSidebar extends Sidebar {
      */
     private void populateListWidgetChooser(CombinedListWidget<InstallationDTO> activeInstallations) {
         this.listWidgetChooser = new ListWidgetChooser<>(activeInstallations);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
         this.listWidgetChooser.choose(this.javaFxSettingsManager.getInstallationsListType());
         this.listWidgetChooser.setOnChoose(type -> {
             this.javaFxSettingsManager.setInstallationsListType(type);
