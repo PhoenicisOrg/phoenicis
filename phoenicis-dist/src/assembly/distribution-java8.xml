@@ -27,7 +27,7 @@
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<files>
 		<file>
-			<source>${basedir}/src/scripts/phoenicis.sh</source>
+			<source>${basedir}/src/scripts/phoenicis-java8.sh</source>
 			<destName>phoenicis.sh</destName>
 			<outputDirectory></outputDirectory>
 		</file>
@@ -40,12 +40,6 @@
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
-			<excludes>
-				<exclude>commons-logging:commons-logging:*</exclude>
-				<exclude>xml-apis:xml-apis:*</exclude>
-				<exclude>xml-apis:xmlParserAPIs:*</exclude>
-				<exclude>xerces:xercesImpl:*</exclude>
-			</excludes>
 		</dependencySet>
 	</dependencySets>
 	<moduleSets>
