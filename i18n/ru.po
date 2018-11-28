@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: 2018-11-28 16:51\n"
+"PO-Revision-Date: 2018-11-28 16:52\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -257,7 +257,7 @@ msgstr "Ветвь-гита:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
 msgid "Choose the location of the git repository"
-msgstr ""
+msgstr "Выберите местоположение гит репозитория"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
 msgid "Local repository"
@@ -289,7 +289,7 @@ msgstr "Тип репозитория:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
 msgid "Choose repository type ..."
-msgstr ""
+msgstr "Выберите тип репозитория ..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:42
 msgid "Add a new Repository"
@@ -311,7 +311,7 @@ msgstr "Запустить исполняемый файл"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable ..."
-msgstr ""
+msgstr "Выберите исполняемый файл ..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:48
