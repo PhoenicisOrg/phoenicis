@@ -79,9 +79,23 @@ jobs:
       dist: trusty
       jdk: openjdk11
       sudo: required
-      after_script:
-        - cd phoenicis-dist/target/
-        - sudo apt install -y ./*.deb
+      services:
+        - docker
+      before_install:
+        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
+      install:
+        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
+                                               apt install -y git;
+                                               apt install -y maven;
+                                               apt install -y openjfx;
+                                               apt install -y gettext"
+      script:
+        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
+                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
+                                               cd phoenicis;
+                                               mvn -B clean package;
+                                               cd phoenicis-dist/target/;
+                                               sudo apt install -y ./*.deb"
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
