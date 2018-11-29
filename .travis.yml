@@ -81,7 +81,7 @@ jobs:
       sudo: required
       after_script:
         - cd phoenicis-dist/target/
-        - sudo apt install -y *.deb
+        - sudo apt install -y ./*.deb
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
