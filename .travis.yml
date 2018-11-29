@@ -84,7 +84,8 @@ jobs:
       before_install:
         - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
       install:
-        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
+        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386;
+                                               apt -qq update;
                                                apt install -y git;
                                                apt install -y maven;
                                                apt install -y openjfx;
