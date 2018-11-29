@@ -55,14 +55,6 @@ jobs:
       dist: trusty
       jdk: openjdk11
     - stage: Build + test
-      name: Linux OpenJDK 11 (Flatpak)
-      os: linux
-      dist: trusty
-      jdk: openjdk11
-      after_script:
-        - cd phoenicis-dist/src/flatpak/
-        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
-    - stage: Build + test
       name: Linux Oracle JDK 11
       os: linux
       dist: trusty
@@ -71,6 +63,25 @@ jobs:
       name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
+     
+    # Build + test packages
+    - stage: Packages
+      name: Flatpak
+      os: linux
+      dist: trusty
+      jdk: openjdk11
+      after_script:
+        - cd phoenicis-dist/src/flatpak/
+        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
+    - stage: Packages
+      name: deb
+      os: linux
+      dist: trusty
+      jdk: openjdk11
+      sudo: required
+      after_script:
+        - cd phoenicis-dist/target/
+        - apt install -y *.deb
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
