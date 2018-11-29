@@ -123,9 +123,8 @@ Note : As there is not FreeBSD wine at the moment, the linux wine package will b
 
 ```
 cd phoenicis/phoenicis-dist/target
-unzip phoenicis-dist.zip
-cp phoenicis-dist/phoenicis.sh .                        # for Java 10+
-cp phoenicis-dist/phoenicis-java8.sh ./phoenicis.sh     # for Java 8
+unzip phoenicis.zip
+cd phoenicis
 ./phoenicis.sh
 ```
 
