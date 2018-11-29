@@ -1,31 +1,12 @@
 language: java
-sudo: true # must have same "sudo" state in stages for caching
 
 # avoid double builds on pull requests
 branches:
   only:
     master
 
-# caches for build artifacts
-cache:
-  directories:
-    - $HOME/travis_cache
-
 jobs:
   include:
-    # build cache
-    - stage: Basics
-      name: Build cache
-      os: linux
-      dist: trusty
-      jdk: openjdk8
-      sudo: required
-      install: true
-      script:
-        - mv $HOME/travis_cache $HOME/travis_cache_old
-        - mkdir $HOME/travis_cache
-        - echo "$TRAVIS_BUILD_ID" > $HOME/travis_cache/travis_build_id
-
     # Check format
     - stage: Basics
       name: Check format
@@ -62,17 +43,12 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk8
-      addons:
-        apt:
-          packages: oracle-java8-installer
     - stage: Build + test
       name: Linux OpenJDK 10
       os: linux
       dist: trusty
       jdk: openjdk10
       script: mvn clean package
-      before_cache:
-        - cp phoenicis-dist/target/*.deb $HOME/travis_cache/
     - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
@@ -95,28 +71,6 @@ jobs:
       name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
-
-    # Install packages
-    # .deb
-    - stage: Install packages
-      name: Install .deb
-      os: linux
-      dist: trusty
-      jdk: openjdk10
-      sudo: required
-      services:
-        - docker
-      before_install:
-        - docker run -d --name ubuntu-18-04 -v $HOME:/travis ubuntu:18.04 tail -f /dev/null
-      install:
-        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386 && apt -qq update"
-      script:
-        # check that cache has been filled in current build
-        - if test "$TRAVIS_BUILD_ID" != `cat $HOME/travis_cache/travis_build_id`; then travis_terminate 1; fi
-        - rm -f $HOME/travis_cache/travis_build_id
-        - docker exec -t ubuntu-18-04 bash -c "apt install -y /travis/travis_cache/*.deb"
-        - mv $HOME/travis_cache $HOME/travis_cache_old
-        - mkdir $HOME/travis_cache # clear the cache
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
