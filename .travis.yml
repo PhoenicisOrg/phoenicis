@@ -1,5 +1,4 @@
 language: java
-sudo: true # must have same "sudo" state in stages for caching
 
 # avoid double builds on pull requests
 branches:
@@ -44,9 +43,6 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk8
-      addons:
-        apt:
-          packages: oracle-java8-installer
     - stage: Build + test
       name: Linux OpenJDK 10
       os: linux
