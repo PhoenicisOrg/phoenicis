@@ -18,30 +18,23 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.containers.ContainersConfiguration;
-import org.phoenicis.engines.EnginesConfiguration;
-import org.phoenicis.javafx.controller.ControllerConfiguration;
-import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
-import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
-import org.phoenicis.javafx.views.scriptui.JavaFxUiConfiguration;
-import org.phoenicis.library.LibraryConfiguration;
-import org.phoenicis.scripts.ScriptsConfiguration;
+import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
+import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.settings.SettingsConfiguration;
+import org.phoenicis.tools.ToolsConfiguration;
+import org.phoenicis.win32.Win32Configuration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({ AppConfigurationNoUi.class,
-        ControllerConfiguration.class,
-        ScriptsConfiguration.class,
-        ThemeConfiguration.class,
-        ViewsConfiguration.class,
-        EnginesConfiguration.class,
-        LibraryConfiguration.class,
-        JavaFxSettingsConfiguration.class,
-        JavaFxUiConfiguration.class,
-        ContainersConfiguration.class
+@Import({ PhoenicisGlobalConfiguration.class,
+        RepositoryConfiguration.class,
+        SettingsConfiguration.class,
+        MultithreadingConfiguration.class,
+        ToolsConfiguration.class,
+        Win32Configuration.class
 })
-class AppConfiguration {
+class AppConfigurationNoUi {
 
 }
