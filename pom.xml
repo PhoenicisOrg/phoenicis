@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.phoenicis</groupId>
     <artifactId>phoenicis</artifactId>
-    <version>${phoenicis.version}</version>
+    <version>5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>phoenicis-javafx</module>
@@ -43,8 +43,9 @@
         <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
     </scm>
     <properties>
-        <phoenicis.version>5.0-SNAPSHOT</phoenicis.version>
-        <project.settings>${project.basedir}/settings</project.settings>
+        <phoenicis.version>${project.version}</phoenicis.version>
+        <project.root>${project.basedir}</project.root>
+        <project.settings>${project.root}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
         <slf4j.version>1.7.25</slf4j.version>
@@ -225,7 +226,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <file>i18n/keys.pot</file>
+                    <file>${project.root}/i18n/keys.pot</file>
                     <replacements>
                         <replacement>
                             <token>"POT-Creation-Date: \d{4}-\d{2}-\d{2} \d{2}:\d{2}\+\d{4}\\n"</token>
