@@ -53,7 +53,8 @@ public class ListWidgetSelectorBehavior
                     getOnSelect().ifPresent(consumer -> consumer.accept(ListWidgetType.DETAILS_LIST));
                 });
 
-        // ensure that if at startup a selected type is set select it
+        // perform the initial list widget selection based on the given input property, which normally represents the
+        // user settings
         Optional.ofNullable(getControl().getSelected())
                 .ifPresent(selected -> getSkin().getListButton(selected).fire());
 
@@ -63,7 +64,7 @@ public class ListWidgetSelectorBehavior
     }
 
     /**
-     * An event filter to prevent the unselectation of all buttons
+     * An event filter to prevent the deselection of all buttons
      *
      * @param event The input event to be filtered
      */
