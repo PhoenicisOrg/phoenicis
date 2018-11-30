@@ -96,7 +96,8 @@ jobs:
                                                cd phoenicis;
                                                mvn -B clean package;
                                                cd phoenicis-dist/target/;
-                                               apt install -y ./*.deb"
+                                               dpkg -R -i ./;
+                                               apt install -f"
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
