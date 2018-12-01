@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx;
 
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -37,7 +36,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Duration;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.repository.RepositoryManager;
@@ -47,7 +45,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -59,7 +56,6 @@ public class JavaFXApplication extends Application {
     private Pane splashLayout;
     private ProgressBar loadProgress;
     private Label progressText;
-    private Stage mainStage;
 
     public static void main(String[] args) {
         try {
@@ -113,9 +109,9 @@ public class JavaFXApplication extends Application {
                 for (int i = 0; i < requiredFonts.size(); i++) {
                     Font.loadFont(getClass().getResource(requiredFonts.get(i)).toExternalForm(), 12);
                     updateMessage(tr("Loading font {0} of {1} ...", i + 1, requiredFonts.size()));
-                    LOGGER.debug(String.format("Loading font {0} ...", requiredFonts.get(i)));
+                    LOGGER.debug(String.format("Loading font %s ...", requiredFonts.get(i)));
                 }
-                updateProgress(1, numLoadSteps);
+                updateProgress(loadStep, numLoadSteps);
                 updateMessage(tr("All fonts loaded"));
                 LOGGER.debug("All fonts loaded");
 
@@ -127,7 +123,7 @@ public class JavaFXApplication extends Application {
                         AppConfigurationNoUi.class);
                 RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
                 repositoryManager.forceSynchronousUpdate();
-                updateProgress(2, numLoadSteps);
+                updateProgress(loadStep, numLoadSteps);
                 updateMessage(tr("Repository loaded"));
                 LOGGER.debug("Repository loaded");
 
@@ -151,8 +147,7 @@ public class JavaFXApplication extends Application {
 
                 initCompletionHandler.complete();
             } else if (newState == Worker.State.CANCELLED || newState == Worker.State.FAILED) {
-                LOGGER.error("Loading failed");
-                System.exit(1);
+                throw new RuntimeException("Loading failed");
             }
         });
 
@@ -167,7 +162,7 @@ public class JavaFXApplication extends Application {
     }
 
     private void showMainStage() {
-        mainStage = new Stage(StageStyle.DECORATED);
+        Stage mainStage = new Stage(StageStyle.DECORATED);
         mainStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
         mainStage.setTitle("Phoenicis");
 
