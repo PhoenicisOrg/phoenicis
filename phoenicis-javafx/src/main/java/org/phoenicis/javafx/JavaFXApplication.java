@@ -147,7 +147,7 @@ public class JavaFXApplication extends Application {
 
                 initCompletionHandler.complete();
             } else if (newState == Worker.State.CANCELLED || newState == Worker.State.FAILED) {
-                throw new RuntimeException("Loading failed");
+                throw new LoadingException("Loading failed");
             }
         });
 
