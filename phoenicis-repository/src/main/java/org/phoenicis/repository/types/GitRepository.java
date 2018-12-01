@@ -65,9 +65,7 @@ public class GitRepository implements Repository {
         return new File(cacheDirectoryPath + "/git" + hashcode);
     }
 
-    @Override
-    public RepositoryDTO fetchInstallableApplications() {
-        RepositoryDTO result = null;
+    private void cloneOrUpdate() throws RepositoryException {
         try {
             mutex.acquire();
             try {
@@ -110,9 +108,6 @@ public class GitRepository implements Repository {
 
                         gitRepository.pull().call();
                     }
-
-                    result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
-                            .fetchInstallableApplications();
                 } catch (RepositoryNotFoundException | GitAPIException e) {
                     throw new RepositoryException(
                             String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
@@ -130,7 +125,18 @@ public class GitRepository implements Repository {
         } catch (InterruptedException e) {
             throw new RepositoryException("InterruptedException occurred", e);
         }
+    }
 
+    @Override
+    public RepositoryDTO fetchInstallableApplications() {
+        RepositoryDTO result = null;
+        try {
+            this.cloneOrUpdate();
+            result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
+                    .fetchInstallableApplications();
+        } catch (RepositoryException e) {
+            throw new RepositoryException("Could not clone or update git repository", e);
+        }
         return result;
     }
 
