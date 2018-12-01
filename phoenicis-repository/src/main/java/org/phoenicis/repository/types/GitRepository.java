@@ -29,8 +29,7 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.util.concurrent.Semaphore;
 
@@ -45,6 +44,9 @@ public class GitRepository implements Repository {
     private final LocalRepository.Factory localRepositoryFactory;
 
     private final File localFolder;
+    // lock file to avoid concurrent access to the git clone
+    private final File lockFile;
+
     private static Semaphore mutex = new Semaphore(1);
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
@@ -57,6 +59,7 @@ public class GitRepository implements Repository {
         this.localRepositoryFactory = localRepositoryFactory;
 
         this.localFolder = createRepositoryLocation(cacheDirectoryPath);
+        this.lockFile = new File(this.localFolder.getAbsolutePath() + "_lock");
     }
 
     private File createRepositoryLocation(String cacheDirectoryPath) {
@@ -71,59 +74,89 @@ public class GitRepository implements Repository {
             try {
                 LOGGER.info("Begin fetching process of " + this);
 
-                boolean folderExists = this.localFolder.exists();
+                boolean lockFileExists = this.lockFile.exists();
 
-                // check that the repository folder exists
-                if (!folderExists) {
-                    LOGGER.info("Creating local folder for " + this);
+                // check that the repository lock file exists
+                if (!lockFileExists) {
+                    LOGGER.info("Creating lock file for " + this);
 
-                    if (!this.localFolder.mkdirs()) {
-                        throw new RepositoryException("Couldn't create local folder for " + this);
+                    try {
+                        this.lockFile.getParentFile().mkdirs();
+                        this.lockFile.createNewFile();
+                    } catch (IOException e) {
+                        throw new RepositoryException("Couldn't create lock file " + this.lockFile.getAbsolutePath());
                     }
                 }
-                Git gitRepository = null;
+                FileOutputStream lockFileStream = new FileOutputStream(lockFile, true);
 
                 try {
-                    /*
-                     * if the repository folder previously didn't exist, clone the
-                     * repository now and checkout the correct branch
-                     */
-                    if (!folderExists) {
-                        LOGGER.info("Cloning " + this);
-
-                        gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
-                                .setDirectory(this.localFolder)
-                                .setBranch(this.branch).call();
-                    }
-                    /*
-                     * otherwise open the folder and pull the newest updates from the
-                     * repository
-                     */
-                    else {
-                        LOGGER.info("Opening " + this);
-
-                        gitRepository = Git.open(localFolder);
-
-                        LOGGER.info("Pulling new commits from " + this);
-
-                        gitRepository.pull().call();
-                    }
-                } catch (RepositoryNotFoundException | GitAPIException e) {
-                    throw new RepositoryException(
-                            String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
-                } catch (IOException e) {
-                    throw new RepositoryException("An unknown error occurred", e);
+                    java.nio.channels.FileLock lock = lockFileStream.getChannel().lock();
+                    cloneOrUpdateWithLock(lock);
                 } finally {
-                    // close repository to free resources
-                    if (gitRepository != null) {
-                        gitRepository.close();
-                    }
+                    lockFileStream.close();
                 }
+            } catch (IOException e) {
+                throw new RepositoryException("An unknown error occurred", e);
             } finally {
                 mutex.release();
             }
         } catch (InterruptedException e) {
             throw new RepositoryException("InterruptedException occurred", e);
+        }
+    }
+
+    private void cloneOrUpdateWithLock(java.nio.channels.FileLock lock) throws RepositoryException, IOException {
+        try {
+            boolean folderExists = this.localFolder.exists();
+
+            // check that the repository folder exists
+            if (!folderExists) {
+                LOGGER.info("Creating local folder for " + this);
+
+                if (!this.localFolder.mkdirs()) {
+                    throw new RepositoryException("Couldn't create local folder for " + this);
+                }
+            }
+            Git gitRepository = null;
+
+            try {
+                /*
+                 * if the repository folder previously didn't exist, clone the
+                 * repository now and checkout the correct branch
+                 */
+                if (!folderExists) {
+                    LOGGER.info("Cloning " + this);
+
+                    gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
+                            .setDirectory(this.localFolder)
+                            .setBranch(this.branch).call();
+                }
+                /*
+                 * otherwise open the folder and pull the newest updates from the
+                 * repository
+                 */
+                else {
+                    LOGGER.info("Opening " + this);
+
+                    gitRepository = Git.open(localFolder);
+
+                    LOGGER.info("Pulling new commits from " + this);
+
+                    gitRepository.pull().call();
+                }
+            } catch (RepositoryNotFoundException | GitAPIException e) {
+                throw new RepositoryException(
+                        String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
+            } catch (IOException e) {
+                throw new RepositoryException("An unknown error occurred", e);
+            } finally {
+                // close repository to free resources
+                if (gitRepository != null) {
+                    gitRepository.close();
+                }
+            }
+        } finally {
+            lock.release();
         }
     }
 
