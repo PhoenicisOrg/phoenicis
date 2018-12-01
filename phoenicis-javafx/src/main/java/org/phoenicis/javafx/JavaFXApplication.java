@@ -20,8 +20,6 @@ package org.phoenicis.javafx;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
 import javafx.geometry.Pos;
@@ -43,12 +41,19 @@ import javafx.util.Duration;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.repository.RepositoryManager;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class JavaFXApplication extends Application {
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
+
     private double splashWidth;
     private double splashHeight;
     private Pane splashLayout;
@@ -89,40 +94,76 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(final Stage initStage) {
 
-        final Task<ObservableList<String>> friendTask = new Task<ObservableList<String>>() {
+        final Task<Void> loadTask = new Task<Void>() {
             @Override
-            protected ObservableList<String> call() {
-                ObservableList<String> loadedItems = FXCollections.observableArrayList();
-                ObservableList<String> requiredFonts = FXCollections.observableArrayList(
+            protected Void call() {
+                final int numLoadSteps = 2;
+                int loadStep = 0;
+
+                // load fonts
+                loadStep++;
+                List<String> requiredFonts = Arrays.asList(
                         "views/common/mavenpro/MavenPro-Medium.ttf",
                         "views/common/roboto/Roboto-Medium.ttf",
                         "views/common/roboto/Roboto-Light.ttf",
                         "views/common/roboto/Roboto-Bold.ttf");
-                // number of load steps after the fonts have been loaded
-                final int numAdditionalLoadSteps = 1;
 
                 updateMessage(tr("Loading fonts ..."));
+                LOGGER.debug("Loading fonts ...");
                 for (int i = 0; i < requiredFonts.size(); i++) {
                     Font.loadFont(getClass().getResource(requiredFonts.get(i)).toExternalForm(), 12);
-                    updateProgress(i + 1, requiredFonts.size() + numAdditionalLoadSteps);
-                    loadedItems.add(requiredFonts.get(i));
                     updateMessage(tr("Loading font {0} of {1} ...", i + 1, requiredFonts.size()));
+                    LOGGER.debug(String.format("Loading font {0} ...", requiredFonts.get(i)));
                 }
+                updateProgress(1, numLoadSteps);
                 updateMessage(tr("All fonts loaded"));
+                LOGGER.debug("All fonts loaded");
 
+                // load repository
+                loadStep++;
                 updateMessage(tr("Loading repository ..."));
+                LOGGER.debug("Loading repository ...");
                 ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
                         AppConfigurationNoUi.class);
                 RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
                 repositoryManager.forceSynchronousUpdate();
-                updateProgress(requiredFonts.size() + 1, requiredFonts.size() + numAdditionalLoadSteps);
-                loadedItems.add("Repository");
-                return loadedItems;
+                updateProgress(2, numLoadSteps);
+                updateMessage(tr("Repository loaded"));
+                LOGGER.debug("Repository loaded");
+
+                return null;
             }
         };
 
-        showSplash(initStage, friendTask, this::showMainStage);
-        new Thread(friendTask).start();
+        showSplash(initStage, loadTask, this::showMainStage);
+        new Thread(loadTask).start();
+    }
+
+    private void showSplash(final Stage initStage, Task<?> task, InitCompletionHandler initCompletionHandler) {
+        progressText.textProperty().bind(task.messageProperty());
+        loadProgress.progressProperty().bind(task.progressProperty());
+        task.stateProperty().addListener((observableValue, oldState, newState) -> {
+            if (newState == Worker.State.SUCCEEDED) {
+                loadProgress.progressProperty().unbind();
+                loadProgress.setProgress(1);
+                initStage.toFront();
+                initStage.close();
+
+                initCompletionHandler.complete();
+            } else if (newState == Worker.State.CANCELLED || newState == Worker.State.FAILED) {
+                LOGGER.error("Loading failed");
+                System.exit(1);
+            }
+        });
+
+        final Scene splashScene = new Scene(splashLayout, Color.TRANSPARENT);
+        final Rectangle2D bounds = Screen.getPrimary().getBounds();
+        initStage.setScene(splashScene);
+        initStage.setX(bounds.getMinX() + bounds.getWidth() / 2 - splashWidth / 2);
+        initStage.setY(bounds.getMinY() + bounds.getHeight() / 2 - splashHeight / 2);
+        initStage.initStyle(StageStyle.TRANSPARENT);
+        initStage.setAlwaysOnTop(true);
+        initStage.show();
     }
 
     private void showMainStage() {
@@ -140,34 +181,6 @@ public class JavaFXApplication extends Application {
             applicationContext.close();
         });
         mainStage.toFront();
-    }
-
-    private void showSplash(final Stage initStage, Task<?> task, InitCompletionHandler initCompletionHandler) {
-        progressText.textProperty().bind(task.messageProperty());
-        loadProgress.progressProperty().bind(task.progressProperty());
-        task.stateProperty().addListener((observableValue, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
-                loadProgress.progressProperty().unbind();
-                loadProgress.setProgress(1);
-                initStage.toFront();
-                FadeTransition fadeSplash = new FadeTransition(Duration.seconds(1.2), splashLayout);
-                fadeSplash.setFromValue(1.0);
-                fadeSplash.setToValue(0.0);
-                fadeSplash.setOnFinished(actionEvent -> initStage.hide());
-                fadeSplash.play();
-
-                initCompletionHandler.complete();
-            } // todo add code to gracefully handle other task states.
-        });
-
-        final Scene splashScene = new Scene(splashLayout, Color.TRANSPARENT);
-        final Rectangle2D bounds = Screen.getPrimary().getBounds();
-        initStage.setScene(splashScene);
-        initStage.setX(bounds.getMinX() + bounds.getWidth() / 2 - splashWidth / 2);
-        initStage.setY(bounds.getMinY() + bounds.getHeight() / 2 - splashHeight / 2);
-        initStage.initStyle(StageStyle.TRANSPARENT);
-        initStage.setAlwaysOnTop(true);
-        initStage.show();
     }
 
     public interface InitCompletionHandler {
