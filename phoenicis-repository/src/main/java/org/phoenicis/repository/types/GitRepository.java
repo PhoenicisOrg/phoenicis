@@ -29,9 +29,10 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.Semaphore;
 
 public class GitRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
@@ -47,7 +48,7 @@ public class GitRepository implements Repository {
     // lock file to avoid concurrent access to the git clone
     private final File lockFile;
 
-    private static Semaphore mutex = new Semaphore(1);
+    private static Object mutex = 0;
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
@@ -69,8 +70,7 @@ public class GitRepository implements Repository {
     }
 
     private void cloneOrUpdate() throws RepositoryException {
-        try {
-            mutex.acquire();
+        synchronized (mutex) {
             try {
                 LOGGER.info("Begin fetching process of " + this);
 
@@ -97,17 +97,13 @@ public class GitRepository implements Repository {
                 }
             } catch (IOException e) {
                 throw new RepositoryException("An unknown error occurred", e);
-            } finally {
-                mutex.release();
             }
-        } catch (InterruptedException e) {
-            throw new RepositoryException("InterruptedException occurred", e);
         }
     }
 
     private void cloneOrUpdateWithLock(java.nio.channels.FileLock lock) throws RepositoryException, IOException {
         try {
-            boolean folderExists = this.localFolder.exists();
+            final boolean folderExists = this.localFolder.exists();
 
             // check that the repository folder exists
             if (!folderExists) {
