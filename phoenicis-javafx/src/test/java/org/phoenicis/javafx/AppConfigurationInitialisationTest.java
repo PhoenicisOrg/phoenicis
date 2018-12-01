@@ -9,6 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.TimeoutException;
 
+import static org.junit.Assert.fail;
+
 /**
  * A test for to check that the JavaFX application can be correctly started
  *
@@ -38,11 +40,17 @@ public class AppConfigurationInitialisationTest {
     }
 
     @Test
-    public void testAppConfigurationInitialisation() throws TimeoutException, IOException {
-        setupApplicationRoot();
-        setupHeadless();
-        FxToolkit.registerPrimaryStage();
-        FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
+    public void testAppConfigurationInitialisation() {
+        try {
+            setupApplicationRoot();
+            setupHeadless();
+            FxToolkit.registerPrimaryStage();
+            FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
+        } catch (TimeoutException | IOException e) {
+            e.printStackTrace();
+            fail();
+        }
+
     }
 
 }
