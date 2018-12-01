@@ -20,7 +20,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * Created by marc on 27.05.17.
  */
-public class ContainerInformationTab extends Tab {
+class ContainerInformationTab extends Tab {
     private static final String CAPTION_TITLE_CSS_CLASS = "captionTitle";
     private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
     private static final String TITLE_CSS_CLASS = "title";
@@ -28,8 +28,9 @@ public class ContainerInformationTab extends Tab {
     private final WinePrefixContainerDTO container;
 
     private Consumer<ContainerDTO> onDeletePrefix;
+    private Consumer<ContainerDTO> onOpenFileBrowser;
 
-    public ContainerInformationTab(WinePrefixContainerDTO container) {
+    ContainerInformationTab(WinePrefixContainerDTO container) {
         super(tr("Information"));
 
         this.container = container;
@@ -110,11 +111,23 @@ public class ContainerInformationTab extends Tab {
         Button deleteButton = new Button(tr("Delete container"));
         deleteButton.setOnMouseClicked(event -> this.onDeletePrefix.accept(container));
 
-        informationPane.getChildren().addAll(informationContentPane, spacer, /* changeEngineComboBox, */ deleteButton);
+        Region buttonSpacer = new Region();
+        buttonSpacer.setPrefHeight(20);
+        VBox.setVgrow(buttonSpacer, Priority.NEVER);
+
+        Button openFileBrowserButton = new Button(tr("Open in file browser"));
+        openFileBrowserButton.setOnMouseClicked(event -> this.onOpenFileBrowser.accept(container));
+
+        informationPane.getChildren().addAll(informationContentPane, spacer, /* changeEngineComboBox, */ deleteButton,
+                buttonSpacer, openFileBrowserButton);
         this.setContent(informationPane);
     }
 
-    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
+    void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.onDeletePrefix = onDeletePrefix;
+    }
+
+    void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {
+        this.onOpenFileBrowser = onOpenFileBrowser;
     }
 }

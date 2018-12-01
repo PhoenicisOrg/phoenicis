@@ -34,6 +34,9 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +100,26 @@ public class ContainersController {
                                                                 .show()));
                                         loadContainers();
                                     }));
+
+            panel.setOnOpenFileBrower(container -> {
+                try {
+                    File containerDir = new File(container.getPath());
+                    EventQueue.invokeLater(() -> {
+                        try {
+                            Desktop.getDesktop().open(containerDir);
+                        } catch (IOException e) {
+                            Platform.runLater(
+                                    () -> new ErrorMessage(
+                                            tr("Cannot open container {0} in file browser", container.getPath()),
+                                            e, this.containersView).show());
+                        }
+                    });
+                } catch (IllegalArgumentException e) {
+                    Platform.runLater(
+                            () -> new ErrorMessage(tr("Cannot open container {0} in file browser", container.getPath()),
+                                    e, this.containersView).show());
+                }
+            });
 
             panel.setOnClose(containersView::closeDetailsView);
 
