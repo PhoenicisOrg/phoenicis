@@ -49,12 +49,12 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class JavaFXApplication extends Application {
+    private double splashWidth;
+    private double splashHeight;
     private Pane splashLayout;
     private ProgressBar loadProgress;
     private Label progressText;
     private Stage mainStage;
-    private static final int SPLASH_WIDTH = 1000;
-    private static final int SPLASH_HEIGHT = 600;
 
     public static void main(String[] args) {
         try {
@@ -66,9 +66,12 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void init() {
-        ImageView splash = new ImageView(new Image(getClass().getResourceAsStream("views/common/splash.png")));
+        final Image splashImage = new Image(getClass().getResourceAsStream("views/common/splash.png"));
+        splashWidth = splashImage.getWidth();
+        splashHeight = splashImage.getHeight();
+        final ImageView splash = new ImageView(splashImage);
         loadProgress = new ProgressBar();
-        loadProgress.setPrefWidth(SPLASH_WIDTH);
+        loadProgress.setPrefWidth(splashWidth);
         progressText = new Label(tr("Loading ..."));
         progressText.setFont(new Font(12));
         splashLayout = new VBox();
@@ -130,7 +133,7 @@ public class JavaFXApplication extends Application {
             applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
             applicationContext.close();
         });
-
+        mainStage.toFront();
     }
 
     private void showSplash(final Stage initStage, Task<?> task, InitCompletionHandler initCompletionHandler) {
@@ -151,11 +154,11 @@ public class JavaFXApplication extends Application {
             } // todo add code to gracefully handle other task states.
         });
 
-        Scene splashScene = new Scene(splashLayout, Color.TRANSPARENT);
+        final Scene splashScene = new Scene(splashLayout, Color.TRANSPARENT);
         final Rectangle2D bounds = Screen.getPrimary().getBounds();
         initStage.setScene(splashScene);
-        initStage.setX(bounds.getMinX() + bounds.getWidth() / 2 - SPLASH_WIDTH / 2);
-        initStage.setY(bounds.getMinY() + bounds.getHeight() / 2 - SPLASH_HEIGHT / 2);
+        initStage.setX(bounds.getMinX() + bounds.getWidth() / 2 - splashWidth / 2);
+        initStage.setY(bounds.getMinY() + bounds.getHeight() / 2 - splashHeight / 2);
         initStage.initStyle(StageStyle.TRANSPARENT);
         initStage.setAlwaysOnTop(true);
         initStage.show();
