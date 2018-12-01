@@ -108,7 +108,7 @@ public class JavaFXApplication extends Application {
                 ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
                         AppConfigurationNoUi.class);
                 RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
-                repositoryManager.triggerRepositoryChange();
+                repositoryManager.forceSynchronousUpdate();
                 updateProgress(requiredFonts.size() + 1, requiredFonts.size() + numAdditionalLoadSteps);
                 loadedItems.add("Repository");
                 return loadedItems;

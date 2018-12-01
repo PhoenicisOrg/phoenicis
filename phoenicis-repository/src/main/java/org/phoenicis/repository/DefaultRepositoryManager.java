@@ -129,6 +129,11 @@ public class DefaultRepositoryManager implements RepositoryManager {
         }
     }
 
+    @Override
+    public void forceSynchronousUpdate() {
+        this.cachedRepository.fetchInstallableApplications();
+    }
+
     private class CallbackPair {
         private Consumer<RepositoryDTO> onRepositoryChange;
 
