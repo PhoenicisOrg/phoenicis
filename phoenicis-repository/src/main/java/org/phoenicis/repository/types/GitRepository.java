@@ -66,7 +66,7 @@ public class GitRepository implements Repository {
     }
 
     @Override
-    public synchronized RepositoryDTO fetchInstallableApplications() {
+    public RepositoryDTO fetchInstallableApplications() {
         RepositoryDTO result = null;
         try {
             mutex.acquire();
