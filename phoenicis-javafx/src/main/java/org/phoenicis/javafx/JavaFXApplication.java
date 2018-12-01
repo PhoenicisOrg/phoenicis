@@ -67,9 +67,15 @@ public class JavaFXApplication extends Application {
     @Override
     public void init() {
         final Image splashImage = new Image(getClass().getResourceAsStream("views/common/splash.png"));
-        splashWidth = splashImage.getWidth();
-        splashHeight = splashImage.getHeight();
+
+        // use a reasonable splash screen size on all resolutions
+        final double splashImageAspectRatio = splashImage.getWidth() / splashImage.getHeight();
+        splashWidth = Screen.getPrimary().getBounds().getWidth() / 3;
+        splashHeight = splashWidth * (1 / splashImageAspectRatio);
+
         final ImageView splash = new ImageView(splashImage);
+        splash.setFitWidth(splashWidth);
+        splash.setFitHeight(splashHeight);
         loadProgress = new ProgressBar();
         loadProgress.setPrefWidth(splashWidth);
         progressText = new Label(tr("Loading ..."));
