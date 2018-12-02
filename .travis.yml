@@ -87,7 +87,7 @@ jobs:
       os: osx
       osx_image: xcode9.3
       after_script:
-	    - mvn clean install
+        - mvn clean install
         - cd phoenicis-dist/target/
         - mvn jfx:native
 
