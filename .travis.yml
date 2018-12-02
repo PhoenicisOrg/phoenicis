@@ -82,6 +82,14 @@ jobs:
       after_script:
         - cd phoenicis-dist/target/
         - apt install -y *.deb
+    - stage: Packages
+      name: dmg
+      os: osx
+      osx_image: xcode9.3
+      after_script:
+	    - mvn clean install
+        - cd phoenicis-dist/target/
+        - mvn jfx:native
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
