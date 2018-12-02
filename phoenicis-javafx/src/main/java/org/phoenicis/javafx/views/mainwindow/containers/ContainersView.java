@@ -113,8 +113,6 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
 
-            this.sidebar.selectAllCategories();
-
             this.closeDetailsView();
             this.setCenter(availableContainers);
         });

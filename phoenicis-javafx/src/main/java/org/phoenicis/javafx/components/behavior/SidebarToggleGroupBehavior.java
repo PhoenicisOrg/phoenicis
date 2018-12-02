@@ -1,6 +1,6 @@
 package org.phoenicis.javafx.components.behavior;
 
-import javafx.collections.ListChangeListener.Change;
+import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
@@ -30,17 +30,21 @@ public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C
      */
     @Override
     public void initialise() {
+        // ensure that the first toggle button is selected at initialization
+        selectFirstToggleButton();
+
+        // ensure that one toggle button is always selected.
+        getSkin().getAdhocToggleButtons().addListener((Observable invalidation) -> selectFirstToggleButton());
+    }
+
+    /**
+     * Select the first toggle button if at least one toggle button exists
+     */
+    private void selectFirstToggleButton() {
         final ObservableList<ToggleButton> adhocToggleButtons = getSkin().getAdhocToggleButtons();
 
-        // ensure that one ToggleButton is always selected.
-        adhocToggleButtons.addListener((Change<? extends ToggleButton> change) -> {
-            // the adhoc toggle buttons contain no selected button
-            if (adhocToggleButtons.stream().noneMatch(ToggleButton::isSelected)) {
-                if (adhocToggleButtons.size() > 0) {
-                    // to solve this automatically select the first button
-                    adhocToggleButtons.get(0).fire();
-                }
-            }
-        });
+        if (!adhocToggleButtons.isEmpty() && adhocToggleButtons.stream().noneMatch(ToggleButton::isSelected)) {
+            adhocToggleButtons.get(0).fire();
+        }
     }
 }

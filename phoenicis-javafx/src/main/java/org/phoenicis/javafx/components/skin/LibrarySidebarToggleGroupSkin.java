@@ -1,25 +1,25 @@
 package org.phoenicis.javafx.components.skin;
 
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.control.ApplicationSidebarToggleGroup;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsSidebar;
-import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.javafx.components.control.LibrarySidebarToggleGroup;
+import org.phoenicis.javafx.views.mainwindow.library.LibrarySidebar;
+import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link ApplicationsSidebar}
+ * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link LibrarySidebar}
  */
-public class ApplicationSidebarToggleGroupSkin extends
-        SidebarToggleGroupSkinBase<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> {
+public class LibrarySidebarToggleGroupSkin extends
+        SidebarToggleGroupSkinBase<ShortcutCategoryDTO, LibrarySidebarToggleGroup, LibrarySidebarToggleGroupSkin> {
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    public ApplicationSidebarToggleGroupSkin(ApplicationSidebarToggleGroup control) {
+    public LibrarySidebarToggleGroupSkin(LibrarySidebarToggleGroup control) {
         super(control);
     }
 
@@ -32,7 +32,7 @@ public class ApplicationSidebarToggleGroupSkin extends
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
-        allCategoryButton.setOnAction(event -> getControl().getOnAllCategorySelection().run());
+        allCategoryButton.setOnMouseClicked(event -> getControl().getOnAllCategorySelection().run());
 
         return Optional.of(allCategoryButton);
     }
@@ -41,11 +41,11 @@ public class ApplicationSidebarToggleGroupSkin extends
      * {@inheritDoc}
      */
     @Override
-    protected ToggleButton convertToToggleButton(CategoryDTO category) {
+    protected ToggleButton convertToToggleButton(ShortcutCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
-        categoryButton.setOnAction(event -> getControl().getOnCategorySelection().accept(category));
+        categoryButton.setOnMouseClicked(event -> getControl().getOnCategorySelection().accept(category));
 
         return categoryButton;
     }

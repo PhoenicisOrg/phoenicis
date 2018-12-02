@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.components.skin;
 
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -81,13 +80,6 @@ public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroup
         ToggleGroup toggleGroup = new ToggleGroup();
         Bindings.bindContent(toggleGroup.getToggles(), adhocToggleButtons);
 
-        // always select the first toggle button when a change in the toggle buttons is detected
-        adhocToggleButtons.addListener((Observable invalidation) -> {
-            if (!adhocToggleButtons.isEmpty()) {
-                adhocToggleButtons.get(0).fire();
-            }
-        });
-
         /*
          * Workaround for https://github.com/PhoenicisOrg/phoenicis/issues/1516
          * Normally
@@ -111,7 +103,7 @@ public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroup
      *
      * @return The created toggle button or {@link Optional#empty()} if no all toggle button is required
      */
-    abstract Optional<ToggleButton> createAllButton();
+    protected abstract Optional<ToggleButton> createAllButton();
 
     /**
      * Creates a toggle button for the given element
@@ -119,7 +111,7 @@ public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroup
      * @param element The element for which a toggle button should be created
      * @return The created toggle button
      */
-    abstract ToggleButton convertToToggleButton(E element);
+    protected abstract ToggleButton convertToToggleButton(E element);
 
     /**
      * Gets the {@link ObservableList} containing all shown {@link ToggleButton} objects in this skin

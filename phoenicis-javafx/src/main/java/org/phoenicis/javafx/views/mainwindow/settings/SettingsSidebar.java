@@ -3,10 +3,8 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.SettingsSidebarToggleGroup;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleGroup;
 
 import java.util.function.Consumer;
 
@@ -21,7 +19,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class SettingsSidebar extends Sidebar {
     // the toggle button group containing the buttons used to navigate to the different setting panels
-    private SidebarToggleGroup<SettingsSidebarItem> settingsItems;
+    private SettingsSidebarToggleGroup settingsItems;
 
     // consumer called when a settings toggle button has been clicked
     private Consumer<Node> onSelectSettingsItem;
@@ -41,22 +39,9 @@ public class SettingsSidebar extends Sidebar {
      * This method populates the toggle button group containing a toggle button for each settings panel
      */
     private void populate() {
-        this.settingsItems = SidebarToggleGroup.create(tr("Settings"), this::createSettingsToggleButton);
-    }
+        this.settingsItems = new SettingsSidebarToggleGroup(tr("Settings"));
 
-    /**
-     * This method creates a toggle button for a given settings panel.
-     *
-     * @param item The settings panel together with its displayed name and icon css class
-     * @return The created toggle button
-     */
-    private ToggleButton createSettingsToggleButton(SettingsSidebarItem item) {
-        ToggleButton toggleButton = new SidebarToggleButton(item.getName());
-
-        toggleButton.getStyleClass().add(item.getIconClass());
-        toggleButton.setOnAction(event -> onSelectSettingsItem.accept(item.getPanel()));
-
-        return toggleButton;
+        this.settingsItems.setOnSelectSettingsItem(item -> onSelectSettingsItem.accept(item));
     }
 
     /**
@@ -66,13 +51,6 @@ public class SettingsSidebar extends Sidebar {
      */
     public void bindSettingsItems(ObservableList<SettingsSidebarItem> items) {
         Bindings.bindContent(this.settingsItems.getElements(), items);
-    }
-
-    /**
-     * This method selects the first settings category
-     */
-    public void selectFirstSettingsCategory() {
-        this.settingsItems.select(0);
     }
 
     /**

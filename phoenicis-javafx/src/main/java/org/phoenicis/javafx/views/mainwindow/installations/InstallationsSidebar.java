@@ -3,7 +3,7 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.InstallationsSidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -12,7 +12,9 @@ import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import java.util.function.Consumer;
 
@@ -47,7 +49,7 @@ public class InstallationsSidebar extends Sidebar {
     private PhoenicisFilteredList<InstallationCategoryDTO> filteredinstallationCategories;
 
     // the toggleable categories
-    private SidebarToggleGroup<InstallationCategoryDTO> categoryView;
+    private InstallationsSidebarToggleGroup categoryView;
 
     // widget to switch between the different list widgets in the center view
     private ListWidgetSelector listWidgetSelector;
@@ -83,13 +85,6 @@ public class InstallationsSidebar extends Sidebar {
     }
 
     /**
-     * This method selects the "All" application category
-     */
-    public void selectAllCategories() {
-        this.categoryView.selectAll();
-    }
-
-    /**
      * This method binds the given category list <code>categories</code> to the categories toggle group.
      *
      * @param categories The to be bound category list
@@ -110,8 +105,11 @@ public class InstallationsSidebar extends Sidebar {
         this.filteredinstallationCategories = new PhoenicisFilteredList<>(this.installationCategories, filter::filter);
         this.filter.addOnFilterChanged(filteredinstallationCategories::trigger);
 
-        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
-                this::createCategoryToggleButton);
+        this.categoryView = new InstallationsSidebarToggleGroup(tr("Categories"));
+
+        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
+        this.categoryView.setOnCategorySelection(category -> onCategorySelection.accept(category));
+
         Bindings.bindContent(categoryView.getElements(), filteredinstallationCategories);
     }
 
@@ -129,36 +127,6 @@ public class InstallationsSidebar extends Sidebar {
             this.javaFxSettingsManager.setInstallationsListType(type);
             this.javaFxSettingsManager.save();
         });
-    }
-
-    /**
-     * This method is responsible for creating the "All" categories toggle button.
-     *
-     * @return The newly created "All" categories toggle button
-     */
-    private ToggleButton createAllCategoriesToggleButton() {
-        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
-
-        allCategoryButton.setSelected(true);
-        allCategoryButton.setId("allButton");
-        allCategoryButton.setOnMouseClicked(event -> onAllCategorySelection.run());
-
-        return allCategoryButton;
-    }
-
-    /**
-     * This method is responsible for creating a toggle button for a given category.
-     *
-     * @param category The category for which a toggle button should be created
-     * @return The newly created toggle button
-     */
-    private ToggleButton createCategoryToggleButton(InstallationCategoryDTO category) {
-        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
-
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
-        categoryButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
-
-        return categoryButton;
     }
 
     public void search(String searchTerm) {
