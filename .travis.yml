@@ -63,7 +63,7 @@ jobs:
       name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
-     
+
     # Build + test packages
     - stage: Packages
       name: Flatpak
@@ -79,9 +79,6 @@ jobs:
       dist: trusty
       jdk: openjdk11
       sudo: required
-      after_script:
-        - cd phoenicis-dist/target/
-        - apt install -y *.deb
       services:
         - docker
       before_install:
