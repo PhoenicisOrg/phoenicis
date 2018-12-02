@@ -1,18 +1,19 @@
 package org.phoenicis.javafx.components.skin;
 
 import javafx.beans.binding.Bindings;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.views.common.lists.AdhocList;
 
-public class SidebarGroupSkin extends SkinBase<SidebarGroup, SidebarGroupSkin> {
+public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, SidebarGroupSkin<E>> {
     /**
      * Constructor
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
-    public SidebarGroupSkin(SidebarGroup control) {
+    public SidebarGroupSkin(SidebarGroup<E> control) {
         super(control);
     }
 

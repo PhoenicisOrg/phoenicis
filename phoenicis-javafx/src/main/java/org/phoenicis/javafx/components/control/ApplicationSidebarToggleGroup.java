@@ -1,8 +1,7 @@
 package org.phoenicis.javafx.components.control;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleObjectProperty;
 import org.phoenicis.javafx.components.skin.ApplicationSidebarToggleGroupSkin;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -10,19 +9,20 @@ import java.util.function.Consumer;
 
 public class ApplicationSidebarToggleGroup
         extends SidebarToggleGroupBase<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> {
-    private ObjectProperty<Runnable> onAllCategorySelection;
+    private final ObjectProperty<Runnable> onAllCategorySelection;
 
-    private ObjectProperty<Consumer<CategoryDTO>> onCategorySelection;
-
-    public ApplicationSidebarToggleGroup(StringProperty title, ObservableList<CategoryDTO> elements,
-            ObjectProperty<SidebarToggleButtonSelection> selected) {
-        super(title, elements, selected);
-    }
+    private final ObjectProperty<Consumer<CategoryDTO>> onCategorySelection;
 
     public ApplicationSidebarToggleGroup(String title) {
         super(title);
+
+        this.onAllCategorySelection = new SimpleObjectProperty<>();
+        this.onCategorySelection = new SimpleObjectProperty<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ApplicationSidebarToggleGroupSkin createSkin() {
         return new ApplicationSidebarToggleGroupSkin(this);

@@ -146,7 +146,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         Platform.runLater(() -> {
             this.categories.setAll(filteredCategories);
             this.filter.clearAll();
-            this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
             this.setCenter(availableApps);

@@ -1,12 +1,15 @@
 package org.phoenicis.javafx.components.skin;
 
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Label;
+import javafx.scene.Node;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.behavior.SidebarToggleGroupBehavior;
+import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.views.common.lists.AdhocList;
 import org.phoenicis.javafx.views.common.lists.MappedList;
@@ -16,70 +19,74 @@ import java.util.Optional;
 public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
         extends BehaviorSkinBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
     /**
-     * An {@link ObservableList} containing both the <code>allButton</code>, if it's available, and the
-     * {@link ToggleButton}s inside <code>mappedToggleButtons</code>
+     * An {@link ObservableList} containing both the "all" toggle button, if it's available, and the mapped toggle
+     * buttons
      */
     private ObservableList<ToggleButton> adhocToggleButtons;
 
     /**
-     * Constructor for all BehaviorSkinBase instances.
+     * Constructor
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
-    public SidebarToggleGroupSkinBase(C control) {
+    protected SidebarToggleGroupSkinBase(C control) {
         super(control);
     }
 
+    protected static ToggleButton createSidebarToggleButton(String text) {
+        ToggleButton toggleButton = new ToggleButton(text);
+
+        toggleButton.getStyleClass().add("sidebarButton");
+
+        return toggleButton;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
-        ToggleGroup toggleGroup = new ToggleGroup();
-
-        ToggleButton allToggleButton = createAllButton().orElse(null);
-
         ObservableList<ToggleButton> mappedToggleButtons = new MappedList<>(getControl().getElements(),
                 this::convertToToggleButton);
 
+        ToggleButton allToggleButton = createAllButton().orElse(null);
         if (allToggleButton != null) {
             adhocToggleButtons = new AdhocList<>(mappedToggleButtons, allToggleButton);
         } else {
             adhocToggleButtons = new AdhocList<>(mappedToggleButtons);
         }
 
-        Bindings.bindContent(toggleGroup.getToggles(), this.adhocToggleButtons);
+        ToggleGroup toggleGroup = new ToggleGroup();
+        Bindings.bindContent(toggleGroup.getToggles(), adhocToggleButtons);
 
-        getControl().selectedProperty().addListener(invalidated -> {
-            SidebarToggleGroupBase.SidebarToggleButtonSelection selected = getControl().getSelected();
-
-            if (selected.isAllButton()) {
-                int elementIndex = selected.getIndex();
-
-                adhocToggleButtons.get(elementIndex).fire();
+        // always select the first toggle button when a change in the toggle buttons is detected
+        adhocToggleButtons.addListener((Observable invalidation) -> {
+            if (!adhocToggleButtons.isEmpty()) {
+                adhocToggleButtons.get(0).fire();
             }
         });
 
+        /*
+         * Workaround for https://github.com/PhoenicisOrg/phoenicis/issues/1516
+         * Normally
+         * `SidebarGroup<ToggleButton> sidebarGroup = new SidebarGroup<>(getControl().titleProperty(),
+         * adhocToggleButtons);`
+         * should work
+         */
         VBox container = new VBox();
         container.getStyleClass().add("sidebarInside");
 
-        Bindings.bindContent(container.getChildren(),
-                new AdhocList<>(adhocToggleButtons, createTitleLabel()));
+        Bindings.bindContent(container.getChildren(), adhocToggleButtons);
 
-        getChildren().addAll(container);
+        SidebarGroup<Node> sidebarGroup = new SidebarGroup<>(getControl().titleProperty(),
+                FXCollections.singletonObservableList(container));
+
+        getChildren().addAll(sidebarGroup);
     }
-
-    abstract ToggleButton convertToToggleButton(E element);
 
     abstract Optional<ToggleButton> createAllButton();
 
-    private Label createTitleLabel() {
-        Label title = new Label();
-        title.getStyleClass().add("sidebarTitle");
-
-        title.textProperty().bind(getControl().titleProperty());
-        // only make the title label visible if the property has been set
-        title.visibleProperty().bind(Bindings.isNotNull(getControl().titleProperty()));
-
-        return title;
-    }
+    abstract ToggleButton convertToToggleButton(E element);
 
     public ObservableList<ToggleButton> getAdhocToggleButtons() {
         return adhocToggleButtons;

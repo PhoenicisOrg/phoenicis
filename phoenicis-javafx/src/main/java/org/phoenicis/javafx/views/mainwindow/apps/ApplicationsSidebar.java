@@ -57,7 +57,7 @@ public class ApplicationsSidebar extends Sidebar {
     private ApplicationSidebarToggleGroup categoryView;
 
     // the group containing the application filters (testing, noCdNeeded and commercial)
-    private SidebarGroup filterGroup;
+    private SidebarGroup<CheckBox> filterGroup;
 
     private CheckBox testingCheck;
     private CheckBox requiresPatchCheck;
@@ -97,13 +97,6 @@ public class ApplicationsSidebar extends Sidebar {
     }
 
     /**
-     * This method selects the "All" application category
-     */
-    public void selectAllCategories() {
-        this.categoryView.selectAll();
-    }
-
-    /**
      * This method binds the given category list <code>categories</code> to the categories toggle group.
      *
      * @param categories The to be bound category list
@@ -124,10 +117,10 @@ public class ApplicationsSidebar extends Sidebar {
 
         this.categoryView = new ApplicationSidebarToggleGroup(tr("Categories"));
 
-        categoryView.setOnAllCategorySelection(onAllCategorySelection);
-        categoryView.setOnCategorySelection(onCategorySelection);
+        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
+        this.categoryView.setOnCategorySelection(categoryDTO -> onCategorySelection.accept(categoryDTO));
 
-        Bindings.bindContent(categoryView.getElements(), filteredCategories);
+        Bindings.bindContent(this.categoryView.getElements(), filteredCategories);
     }
 
     private void populateFilters() {
@@ -145,9 +138,9 @@ public class ApplicationsSidebar extends Sidebar {
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new SidebarGroup("Filters");
-        this.filterGroup.getComponents().addAll(testingCheck, requiresPatchCheck, commercialCheck,
-                operatingSystemCheck);
+        this.filterGroup = new SidebarGroup<>("Filters");
+        this.filterGroup.getComponents()
+                .addAll(testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
     }
 
     /**

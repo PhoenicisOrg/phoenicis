@@ -22,7 +22,7 @@ public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C
     public void initialise() {
         final ObservableList<ToggleButton> adhocToggleButtons = getSkin().getAdhocToggleButtons();
 
-        // Ensure that one ToggleButton is always selected.
+        // ensure that one ToggleButton is always selected.
         adhocToggleButtons.addListener((Change<? extends ToggleButton> change) -> {
             // the adhoc toggle buttons contain no selected button
             if (adhocToggleButtons.stream().noneMatch(ToggleButton::isSelected)) {

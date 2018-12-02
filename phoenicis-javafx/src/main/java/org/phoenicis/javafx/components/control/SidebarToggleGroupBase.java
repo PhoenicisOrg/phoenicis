@@ -1,14 +1,10 @@
 package org.phoenicis.javafx.components.control;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
 
 public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
@@ -21,19 +17,15 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      */
     private final ObservableList<E> elements;
 
-    private final ObjectProperty<SidebarToggleButtonSelection> selected;
-
-    public SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
-            ObjectProperty<SidebarToggleButtonSelection> selected) {
+    public SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements) {
         super();
 
         this.title = title;
         this.elements = elements;
-        this.selected = selected;
     }
 
     public SidebarToggleGroupBase(String title) {
-        this(new SimpleStringProperty(title), FXCollections.observableArrayList(), new SimpleObjectProperty<>());
+        this(new SimpleStringProperty(title), FXCollections.observableArrayList());
     }
 
     public String getTitle() {
@@ -50,77 +42,5 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
 
     public ObservableList<E> getElements() {
         return elements;
-    }
-
-    public SidebarToggleButtonSelection getSelected() {
-        return selected.get();
-    }
-
-    public ObjectProperty<SidebarToggleButtonSelection> selectedProperty() {
-        return selected;
-    }
-
-    public void selectAll() {
-        selected.set(new SidebarToggleButtonSelection(null, 0, true));
-    }
-
-    public void selectElement(E element) {
-        selected.set(new SidebarToggleButtonSelection(element, elements.indexOf(element), false));
-    }
-
-    public void selectFirstElement() {
-        selectElement(elements.get(0));
-    }
-
-    public class SidebarToggleButtonSelection {
-        private final E selectedElement;
-
-        private final int index;
-
-        private final boolean allButton;
-
-        public SidebarToggleButtonSelection(E selectedElement, int index, boolean allButton) {
-            this.selectedElement = selectedElement;
-            this.index = index;
-            this.allButton = allButton;
-        }
-
-        public E getSelectedElement() {
-            return selectedElement;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public boolean isAllButton() {
-            return allButton;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o)
-                return true;
-
-            if (o == null || getClass() != o.getClass())
-                return false;
-
-            SidebarToggleButtonSelection that = (SidebarToggleButtonSelection) o;
-
-            return new EqualsBuilder()
-                    .append(selectedElement, that.selectedElement)
-                    .append(index, that.index)
-                    .append(allButton, that.allButton)
-                    .isEquals();
-        }
-
-        @Override
-        public int hashCode() {
-            return new HashCodeBuilder(17, 37)
-                    .append(selectedElement)
-                    .append(index)
-                    .append(allButton)
-                    .toHashCode();
-        }
     }
 }

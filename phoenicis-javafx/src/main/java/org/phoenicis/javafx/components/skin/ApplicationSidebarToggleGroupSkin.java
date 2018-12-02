@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.skin;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.behavior.SidebarToggleGroupBehavior;
 import org.phoenicis.javafx.components.control.ApplicationSidebarToggleGroup;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleButton;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Optional;
@@ -28,7 +27,7 @@ public class ApplicationSidebarToggleGroupSkin extends
 
     @Override
     public Optional<ToggleButton> createAllButton() {
-        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
+        final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
         allCategoryButton.setSelected(true);
         allCategoryButton.setId("allButton");
@@ -39,7 +38,7 @@ public class ApplicationSidebarToggleGroupSkin extends
 
     @Override
     public ToggleButton convertToToggleButton(CategoryDTO category) {
-        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
+        final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
         categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
         categoryButton.setOnAction(event -> getControl().getOnCategorySelection().accept(category));
