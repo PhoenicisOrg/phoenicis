@@ -1,5 +1,6 @@
 package org.phoenicis.javafx;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.testfx.api.FxToolkit;
@@ -19,9 +20,10 @@ import static org.junit.Assert.fail;
 public class AppConfigurationInitialisationTest {
 
     /**
-     * run the test in a temporary application root environment
+     * runs the test in a temporary application root environment
      */
-    private static void setupApplicationRoot() throws IOException {
+    @BeforeClass
+    public static void setupApplicationRoot() throws IOException {
         Path tempDir = Files.createTempDirectory(AppConfigurationInitialisationTest.class.getName());
         tempDir.toFile().deleteOnExit();
         System.setProperty("application.user.root", tempDir.toString());
@@ -31,7 +33,8 @@ public class AppConfigurationInitialisationTest {
      * ensures that the test can run in headless mode
      * see https://stackoverflow.com/questions/27403410/headless-testing-with-javafx-and-testfx
      */
-    private static void setupHeadless() {
+    @BeforeClass
+    public static void setupHeadless() {
         System.setProperty("testfx.robot", "glass");
         System.setProperty("testfx.headless", "true");
         System.setProperty("prism.order", "sw");
@@ -42,11 +45,9 @@ public class AppConfigurationInitialisationTest {
     @Test
     public void testAppConfigurationInitialisation() {
         try {
-            setupApplicationRoot();
-            setupHeadless();
             FxToolkit.registerPrimaryStage();
             FxToolkit.setupFixture(() -> new AnnotationConfigApplicationContext(AppConfiguration.class));
-        } catch (TimeoutException | IOException e) {
+        } catch (TimeoutException e) {
             e.printStackTrace();
             fail();
         }
