@@ -7,16 +7,32 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
 
+/**
+ * A base toggle group component to be used inside sidebars
+ *
+ * @param <E> The element class
+ * @param <C> The concrete component class
+ * @param <S> The concrete skin class
+ */
 public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
         extends ControlBase<C, S> {
+    /**
+     * The title of the {@link SidebarToggleGroupBase}
+     */
     private final StringProperty title;
 
     /**
-     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in this
-     * SidebarToggleGroupBase
+     * An {@link ObservableList} containing all objects for which a {@link ToggleButton} is to be shown in the
+     * {@link SidebarToggleGroupBase}
      */
     private final ObservableList<E> elements;
 
+    /**
+     * Constructor
+     *
+     * @param title The title of the sidebar toggle group
+     * @param elements The elements to be shown inside the sidebar toggle group
+     */
     public SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements) {
         super();
 
@@ -24,6 +40,11 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
         this.elements = elements;
     }
 
+    /**
+     * Constructor
+     *
+     * @param title The title of the sidebar toggle group
+     */
     public SidebarToggleGroupBase(String title) {
         this(new SimpleStringProperty(title), FXCollections.observableArrayList());
     }

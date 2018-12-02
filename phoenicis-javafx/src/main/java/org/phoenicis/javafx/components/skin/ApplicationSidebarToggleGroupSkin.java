@@ -1,30 +1,31 @@
 package org.phoenicis.javafx.components.skin;
 
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.behavior.SidebarToggleGroupBehavior;
 import org.phoenicis.javafx.components.control.ApplicationSidebarToggleGroup;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsSidebar;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link ApplicationsSidebar}
+ */
 public class ApplicationSidebarToggleGroupSkin extends
         SidebarToggleGroupSkinBase<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> {
     /**
-     * Constructor for all BehaviorSkinBase instances.
+     * Constructor
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
     public ApplicationSidebarToggleGroupSkin(ApplicationSidebarToggleGroup control) {
         super(control);
     }
 
-    @Override
-    public SidebarToggleGroupBehavior<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> createBehavior() {
-        return new SidebarToggleGroupBehavior<>(getControl(), this);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Optional<ToggleButton> createAllButton() {
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
@@ -36,6 +37,9 @@ public class ApplicationSidebarToggleGroupSkin extends
         return Optional.of(allCategoryButton);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ToggleButton convertToToggleButton(CategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());

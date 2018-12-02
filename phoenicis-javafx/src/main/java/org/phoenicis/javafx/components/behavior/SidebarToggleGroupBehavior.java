@@ -6,6 +6,13 @@ import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
 
+/**
+ * The behavior for all sidebar toggle groups, represented by the {@link SidebarToggleGroupBase} component class
+ *
+ * @param <E> The element class
+ * @param <C> The concrete component class
+ * @param <S> The concrete skin class
+ */
 public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
         extends BehaviorBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
     /**
@@ -18,6 +25,9 @@ public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C
         super(control, skin);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final ObservableList<ToggleButton> adhocToggleButtons = getSkin().getAdhocToggleButtons();

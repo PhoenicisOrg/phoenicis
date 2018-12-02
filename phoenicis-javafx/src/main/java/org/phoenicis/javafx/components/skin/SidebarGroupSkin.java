@@ -7,6 +7,11 @@ import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.views.common.lists.AdhocList;
 
+/**
+ * A skin for the {@link SidebarGroup} component
+ *
+ * @param <E> The element type
+ */
 public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, SidebarGroupSkin<E>> {
     /**
      * Constructor
@@ -31,6 +36,11 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
         getChildren().addAll(container);
     }
 
+    /**
+     * Creates a new {@link Label} object containing the title of the sidebar group
+     *
+     * @return The created label
+     */
     private Label createTitleLabel() {
         Label title = new Label();
         title.getStyleClass().add("sidebarTitle");
