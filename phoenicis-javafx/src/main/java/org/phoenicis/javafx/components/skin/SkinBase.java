@@ -11,9 +11,9 @@ import org.phoenicis.javafx.components.control.ControlBase;
 public abstract class SkinBase<C extends ControlBase<C, S>, S extends SkinBase<C, S>>
         extends javafx.scene.control.SkinBase<C> {
     /**
-     * Constructor for all SkinBase instances.
+     * Constructor for all SkinBase instances
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
     protected SkinBase(C control) {
         super(control);

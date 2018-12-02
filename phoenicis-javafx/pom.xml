@@ -21,11 +21,11 @@
     <parent>
         <groupId>org.phoenicis</groupId>
         <artifactId>phoenicis</artifactId>
-        <version>${phoenicis.version}</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
-        <project.settings>${project.basedir}/../settings</project.settings>
+        <project.root>${project.basedir}/../</project.root>
         <openjfx.version>11.0.1</openjfx.version>
         <testfx.version>4.0.12-alpha</testfx.version>
     </properties>
@@ -132,6 +132,16 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
+                    <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <appName>Phoenicis PlayOnMac</appName>
+                    <vendor>Phoenicis</vendor>
                     <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
                 </configuration>
             </plugin>

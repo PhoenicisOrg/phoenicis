@@ -7,7 +7,7 @@ import org.phoenicis.javafx.components.behavior.SearchBoxBehavior;
 import org.phoenicis.javafx.components.control.SearchBox;
 
 /**
- * A search box skin/view
+ * The skin for the {@link SearchBox} component
  */
 public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
     /**
@@ -21,9 +21,9 @@ public class SearchBoxSkin extends BehaviorSkinBase<SearchBox, SearchBoxSkin, Se
     private Button clearButton;
 
     /**
-     * Constructor for all SkinBase instances.
+     * Constructor
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
     public SearchBoxSkin(SearchBox control) {
         super(control);

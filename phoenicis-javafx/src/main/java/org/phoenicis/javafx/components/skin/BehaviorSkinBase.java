@@ -18,9 +18,9 @@ public abstract class BehaviorSkinBase<C extends ControlBase<C, S>, S extends Be
     private B behavior;
 
     /**
-     * Constructor for all BehaviorSkinBase instances.
+     * Constructor for all BehaviorSkinBase instances
      *
-     * @param control The control for which this Skin should attach to.
+     * @param control The control belonging to the skin
      */
     protected BehaviorSkinBase(C control) {
         super(control);
