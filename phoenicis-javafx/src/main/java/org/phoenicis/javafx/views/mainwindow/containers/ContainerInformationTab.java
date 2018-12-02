@@ -123,11 +123,11 @@ class ContainerInformationTab extends Tab {
         this.setContent(informationPane);
     }
 
-    void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
+    protected void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.onDeletePrefix = onDeletePrefix;
     }
 
-    void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {
+    protected void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {
         this.onOpenFileBrowser = onOpenFileBrowser;
     }
 }
