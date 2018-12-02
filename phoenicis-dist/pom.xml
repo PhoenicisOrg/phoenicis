@@ -42,27 +42,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.1.0</version>
-                <executions>
-                    <execution>
-                        <id>distribution</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <finalName>${project.name}</finalName>
-                            <descriptors>
-                                <descriptor>src/assembly/distribution.xml</descriptor>
-                            </descriptors>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
@@ -100,7 +79,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/src/scripts/phoenicis-javafx</src>
+                                    <src>${basedir}/src/deb/scripts/phoenicis-javafx</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -109,7 +88,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/src/scripts/phoenicis-javafx.desktop</src>
+                                    <src>${basedir}/src/deb/scripts/phoenicis-javafx.desktop</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -117,7 +96,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/src/scripts/phoenicis-cli</src>
+                                    <src>${basedir}/src/deb/scripts/phoenicis-cli</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -126,7 +105,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/src/scripts/phoenicis-cli.desktop</src>
+                                    <src>${basedir}/src/deb/scripts/phoenicis-cli.desktop</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -142,7 +121,7 @@
                                     </mapper>
                                 </data>
                                 <data>
-                                    <src>${basedir}/../phoenicis-javafx/src/main/resources/org/phoenicis/javafx/views/common/phoenicis.png</src>
+                                    <src>${project.basedir}/../phoenicis-javafx/src/main/resources/org/phoenicis/javafx/views/common/phoenicis.png</src>
                                     <type>file</type>
                                     <mapper>
                                         <type>perm</type>
@@ -156,4 +135,68 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>jdk10+</id>
+            <activation>
+                <jdk>[10,)</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>distribution</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <finalName>phoenicis</finalName>
+                                    <descriptors>
+                                        <descriptor>src/assembly/distribution.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>1.8</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <id>distribution</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <finalName>phoenicis</finalName>
+                                    <descriptors>
+                                        <descriptor>src/assembly/distribution-java8.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

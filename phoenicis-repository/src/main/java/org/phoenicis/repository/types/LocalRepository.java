@@ -318,7 +318,7 @@ public class LocalRepository implements Repository {
                 if (iconFile.exists()) {
                     scriptDTOBuilder.withIcon(iconFile.toURI());
                 } else {
-                    LOGGER.debug("Icon not found");
+                    LOGGER.debug("Icon not found: " + iconFile.getAbsolutePath());
                 }
 
                 results.add(scriptDTOBuilder.build());

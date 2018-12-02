@@ -31,6 +31,5 @@ public class WaitPanel extends HBox {
         this.getStyleClass().add("rightPane");
 
         this.getChildren().add(progressIndicator);
-        this.setAlignment(Pos.CENTER);
     }
 }

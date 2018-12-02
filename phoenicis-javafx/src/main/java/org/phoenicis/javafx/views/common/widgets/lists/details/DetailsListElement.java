@@ -48,7 +48,6 @@ public class DetailsListElement<E> extends GridPane {
         this.getStyleClass().add("detailsListElement");
 
         this.titleLabel = new Label(title);
-        this.titleLabel.setWrapText(true);
         this.titleLabel.getStyleClass().add("information");
 
         List<ColumnConstraints> constraints = new ArrayList<>();
@@ -70,7 +69,6 @@ public class DetailsListElement<E> extends GridPane {
             constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
 
             Label informationLabel = new Label(information.getContent());
-            informationLabel.setWrapText(true);
             informationLabel.getStyleClass().add("information");
 
             this.add(informationLabel, this.getChildren().size(), 0);

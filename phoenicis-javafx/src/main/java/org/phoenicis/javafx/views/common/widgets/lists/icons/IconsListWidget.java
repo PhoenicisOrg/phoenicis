@@ -102,7 +102,6 @@ public final class IconsListWidget<E> extends ScrollPane implements ListWidget<E
 
         this.setCache(true);
         this.setCacheHint(CacheHint.QUALITY);
-        this.setHbarPolicy(ScrollBarPolicy.NEVER);
     }
 
     @Override

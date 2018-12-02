@@ -3,8 +3,9 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
@@ -49,7 +50,7 @@ public class InstallationsSidebar extends Sidebar {
     private SidebarToggleGroup<InstallationCategoryDTO> categoryView;
 
     // widget to switch between the different list widgets in the center view
-    private ListWidgetChooser<InstallationDTO> listWidgetChooser;
+    private ListWidgetSelector listWidgetSelector;
 
     // consumers called after a category selection has been made
     private Runnable onAllCategorySelection;
@@ -78,7 +79,7 @@ public class InstallationsSidebar extends Sidebar {
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
-        this.setBottom(listWidgetChooser);
+        this.setBottom(listWidgetSelector);
     }
 
     /**
@@ -120,10 +121,11 @@ public class InstallationsSidebar extends Sidebar {
      * @param activeInstallations The managed CombinedListWidget
      */
     private void populateListWidgetChooser(CombinedListWidget<InstallationDTO> activeInstallations) {
-        this.listWidgetChooser = new ListWidgetChooser<>(activeInstallations);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getInstallationsListType());
-        this.listWidgetChooser.setOnChoose(type -> {
+        this.listWidgetSelector = new ListWidgetSelector();
+        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getInstallationsListType());
+        this.listWidgetSelector.setOnSelect(type -> {
+            activeInstallations.showList(type);
+
             this.javaFxSettingsManager.setInstallationsListType(type);
             this.javaFxSettingsManager.save();
         });
