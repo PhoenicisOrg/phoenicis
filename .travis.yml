@@ -88,7 +88,6 @@ jobs:
                                                apt -qq update;
                                                apt install -y git;
                                                apt install -y maven;
-                                               apt install -y openjfx;
                                                apt install -y gettext"
       script:
         - docker exec -t ubuntu-18-04 bash -c "cd /travis;
