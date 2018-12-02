@@ -7,14 +7,14 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.behavior.SidebarToggleGroupBehavior;
-import org.phoenicis.javafx.components.control.SidebarToggleGroup;
+import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.views.common.lists.AdhocList;
 import org.phoenicis.javafx.views.common.lists.MappedList;
 
 import java.util.Optional;
 
-public abstract class SidebarToggleGroupSkin<E>
-        extends BehaviorSkinBase<SidebarToggleGroup<E>, SidebarToggleGroupSkin<E>, SidebarToggleGroupBehavior<E>> {
+public abstract class SidebarToggleGroupSkinBase<E>
+        extends BehaviorSkinBase<SidebarToggleGroupBase<E>, SidebarToggleGroupSkinBase<E>, SidebarToggleGroupBehavior<E>> {
     /**
      * An {@link ObservableList} containing both the <code>allButton</code>, if it's available, and the
      * {@link ToggleButton}s inside <code>mappedToggleButtons</code>
@@ -26,8 +26,13 @@ public abstract class SidebarToggleGroupSkin<E>
      *
      * @param control The control for which this Skin should attach to.
      */
-    public SidebarToggleGroupSkin(SidebarToggleGroup<E> control) {
+    public SidebarToggleGroupSkinBase(SidebarToggleGroupBase<E> control) {
         super(control);
+    }
+
+    @Override
+    public SidebarToggleGroupBehavior<E> createBehavior() {
+        return new SidebarToggleGroupBehavior<>(getControl(), this);
     }
 
     @Override
@@ -48,7 +53,7 @@ public abstract class SidebarToggleGroupSkin<E>
         Bindings.bindContent(toggleGroup.getToggles(), this.adhocToggleButtons);
 
         getControl().selectedProperty().addListener(invalidated -> {
-            SidebarToggleGroup.SidebarToggleButtonSelection selected = getControl().getSelected();
+            SidebarToggleGroupBase.SidebarToggleButtonSelection selected = getControl().getSelected();
 
             if (selected.isAllButton()) {
                 int elementIndex = selected.getIndex();
