@@ -17,6 +17,10 @@ The following steps must be executed to release a new version of Phoenicis:
     * Set release version in .deb control files
 * [Test]({{ site.baseurl }}{% link _docs/Developers/test-plan.md %})
 * Create GitHub release from the release branches for phoenicis and scripts
+    * attach .zip
+    * attach .deb
+    * attach .dmg
+    * attach .flatpak (see [single-file bundle](http://docs.flatpak.org/en/latest/single-file-bundles.html))
 * Announce release on phoenicis.org
     * Showcase new features
     * List major changes/fixed bugs
