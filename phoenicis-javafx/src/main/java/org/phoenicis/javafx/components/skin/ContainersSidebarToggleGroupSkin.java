@@ -10,10 +10,10 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link ContainersSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link ContainersSidebar}
  */
 public class ContainersSidebarToggleGroupSkin extends
-        SidebarToggleGroupSkinBase<ContainerCategoryDTO, ContainersSidebarToggleGroup, ContainersSidebarToggleGroupSkin> {
+        SidebarToggleGroupBaseSkin<ContainerCategoryDTO, ContainersSidebarToggleGroup, ContainersSidebarToggleGroupSkin> {
     /**
      * Constructor
      *

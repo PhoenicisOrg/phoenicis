@@ -8,10 +8,10 @@ import org.phoenicis.javafx.views.mainwindow.engines.EnginesSidebar;
 import java.util.Optional;
 
 /**
- * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link EnginesSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link EnginesSidebar}
  */
 public class EnginesSidebarToggleGroupSkin extends
-        SidebarToggleGroupSkinBase<EngineCategoryDTO, EnginesSidebarToggleGroup, EnginesSidebarToggleGroupSkin> {
+        SidebarToggleGroupBaseSkin<EngineCategoryDTO, EnginesSidebarToggleGroup, EnginesSidebarToggleGroupSkin> {
     /**
      * Constructor
      *

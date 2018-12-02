@@ -22,7 +22,7 @@ import java.util.Optional;
  * @param <C> The concrete component class
  * @param <S> The concrete skin class
  */
-public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
+public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupBaseSkin<E, C, S>>
         extends BehaviorSkinBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
     /**
      * An {@link ObservableList} containing both the "all" toggle button, if it's available, and the mapped toggle
@@ -35,7 +35,7 @@ public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroup
      *
      * @param control The control belonging to the skin
      */
-    protected SidebarToggleGroupSkinBase(C control) {
+    protected SidebarToggleGroupBaseSkin(C control) {
         super(control);
     }
 

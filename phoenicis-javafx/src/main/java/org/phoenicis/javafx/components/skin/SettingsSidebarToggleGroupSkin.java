@@ -8,10 +8,10 @@ import org.phoenicis.javafx.views.mainwindow.settings.SettingsSidebar.SettingsSi
 import java.util.Optional;
 
 /**
- * A {@link SidebarToggleGroupSkinBase} implementation class used inside the {@link SettingsSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link SettingsSidebar}
  */
 public class SettingsSidebarToggleGroupSkin extends
-        SidebarToggleGroupSkinBase<SettingsSidebarItem, SettingsSidebarToggleGroup, SettingsSidebarToggleGroupSkin> {
+        SidebarToggleGroupBaseSkin<SettingsSidebarItem, SettingsSidebarToggleGroup, SettingsSidebarToggleGroupSkin> {
     /**
      * Constructor
      *

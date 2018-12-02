@@ -5,7 +5,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
+import org.phoenicis.javafx.components.skin.SidebarToggleGroupBaseSkin;
 
 /**
  * A base toggle group component to be used inside sidebars
@@ -14,7 +14,7 @@ import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
  * @param <C> The concrete component class
  * @param <S> The concrete skin class
  */
-public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
+public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupBaseSkin<E, C, S>>
         extends ControlBase<C, S> {
     /**
      * The title of the {@link SidebarToggleGroupBase}
