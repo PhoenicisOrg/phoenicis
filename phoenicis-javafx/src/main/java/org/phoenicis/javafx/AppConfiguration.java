@@ -25,19 +25,15 @@ import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.scriptui.JavaFxUiConfiguration;
-import org.phoenicis.library.LibraryConfiguration;
-import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({ AppConfigurationNoUi.class,
         ControllerConfiguration.class,
-        ScriptsConfiguration.class,
         ThemeConfiguration.class,
         ViewsConfiguration.class,
         EnginesConfiguration.class,
-        LibraryConfiguration.class,
         JavaFxSettingsConfiguration.class,
         JavaFxUiConfiguration.class,
         ContainersConfiguration.class

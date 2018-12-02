@@ -19,8 +19,12 @@
 package org.phoenicis.javafx;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
+import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.scripts.ScriptsConfiguration;
+import org.phoenicis.scripts.ui.UiConfiguration;
+import org.phoenicis.scripts.wizard.WizardConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.win32.Win32Configuration;
@@ -31,9 +35,13 @@ import org.springframework.context.annotation.Import;
 @Import({ PhoenicisGlobalConfiguration.class,
         RepositoryConfiguration.class,
         SettingsConfiguration.class,
+        LibraryConfiguration.class,
         MultithreadingConfiguration.class,
+        ScriptsConfiguration.class,
         ToolsConfiguration.class,
-        Win32Configuration.class
+        UiConfiguration.class,
+        Win32Configuration.class,
+        WizardConfiguration.class
 })
 class AppConfigurationNoUi {
 

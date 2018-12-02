@@ -37,8 +37,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.phoenicis.javafx.controller.MainController;
+import org.phoenicis.library.LibraryManager;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
-import org.phoenicis.repository.RepositoryManager;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -93,7 +93,7 @@ public class JavaFXApplication extends Application {
         final Task<Void> loadTask = new Task<Void>() {
             @Override
             protected Void call() {
-                final int numLoadSteps = 1;
+                final int numLoadSteps = 2;
                 int loadStep = 0;
 
                 // load fonts
@@ -114,6 +114,18 @@ public class JavaFXApplication extends Application {
                 updateProgress(loadStep, numLoadSteps);
                 updateMessage(tr("All fonts loaded"));
                 LOGGER.debug("All fonts loaded");
+
+                // load library
+                loadStep++;
+                updateMessage(tr("Loading library ..."));
+                LOGGER.debug("Loading library ...");
+                ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+                        AppConfigurationNoUi.class);
+                LibraryManager libraryManager = applicationContext.getBean(LibraryManager.class);
+                libraryManager.fetchShortcuts();
+                updateProgress(loadStep, numLoadSteps);
+                updateMessage(tr("Library loaded"));
+                LOGGER.debug("Library loaded");
 
                 return null;
             }
