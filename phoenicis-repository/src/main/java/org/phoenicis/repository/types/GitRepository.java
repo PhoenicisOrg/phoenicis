@@ -70,7 +70,7 @@ public class GitRepository implements Repository {
         return new File(cacheDirectoryPath + "/git" + hashcode);
     }
 
-    private void cloneOrUpdate() throws RepositoryException {
+    private void cloneOrUpdateWithLock() throws RepositoryException {
         synchronized (mutex) {
             try {
                 LOGGER.info("Begin fetching process of " + this);
@@ -89,8 +89,8 @@ public class GitRepository implements Repository {
                     }
                 }
                 try (FileOutputStream lockFileStream = new FileOutputStream(lockFile, true)) {
-                    try (FileLock lock = lockFileStream.getChannel().lock()) {
-                        cloneOrUpdateWithLock(lock);
+                    try (FileLock ignored = lockFileStream.getChannel().lock()) {
+                        cloneOrUpdate();
                     }
                 }
             } catch (IOException e) {
@@ -99,7 +99,7 @@ public class GitRepository implements Repository {
         }
     }
 
-    private void cloneOrUpdateWithLock(java.nio.channels.FileLock lock) throws RepositoryException, IOException {
+    private void cloneOrUpdate() throws RepositoryException {
         final boolean folderExists = this.localFolder.exists();
 
         // check that the repository folder exists
@@ -152,9 +152,9 @@ public class GitRepository implements Repository {
 
     @Override
     public RepositoryDTO fetchInstallableApplications() {
-        RepositoryDTO result = null;
+        RepositoryDTO result;
         try {
-            this.cloneOrUpdate();
+            this.cloneOrUpdateWithLock();
             result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
         } catch (RepositoryException e) {
