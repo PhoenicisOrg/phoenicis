@@ -63,7 +63,7 @@ jobs:
       name: OSX XCode 9.2
       os: osx
       osx_image: xcode9.2
-     
+
     # Build + test packages
     - stage: Packages
       name: Flatpak
@@ -97,6 +97,14 @@ jobs:
                                                cd phoenicis-dist/target/;
                                                dpkg -R -i ./;
                                                apt install -fy"
+    - stage: Packages
+      name: dmg
+      os: osx
+      osx_image: xcode9.3
+      after_script:
+        - mvn clean install
+        - cd phoenicis-dist/target/
+        - mvn jfx:native
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
