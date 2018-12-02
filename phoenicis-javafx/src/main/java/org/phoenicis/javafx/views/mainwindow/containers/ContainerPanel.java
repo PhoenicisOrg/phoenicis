@@ -62,4 +62,8 @@ public class ContainerPanel extends DetailsView {
     public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
         this.informationTab.setOnDeletePrefix(onDeletePrefix);
     }
+
+    public void setOnOpenFileBrower(Consumer<ContainerDTO> onOpenFileBrowser) {
+        this.informationTab.setOnOpenFileBrowser(onOpenFileBrowser);
+    }
 }
