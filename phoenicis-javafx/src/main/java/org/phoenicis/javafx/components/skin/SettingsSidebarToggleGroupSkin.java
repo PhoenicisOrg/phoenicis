@@ -34,7 +34,7 @@ public class SettingsSidebarToggleGroupSkin extends
      */
     @Override
     protected ToggleButton convertToToggleButton(SettingsSidebarItem item) {
-        ToggleButton toggleButton = createSidebarToggleButton(item.getName());
+        final ToggleButton toggleButton = createSidebarToggleButton(item.getName());
 
         toggleButton.getStyleClass().add(item.getIconClass());
         toggleButton.setOnAction(event -> getControl().getOnSelectSettingsItem().accept(item.getPanel()));

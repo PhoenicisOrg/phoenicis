@@ -47,7 +47,7 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
      * @return The created toggle button
      */
     protected static ToggleButton createSidebarToggleButton(String text) {
-        ToggleButton toggleButton = new ToggleButton(text);
+        final ToggleButton toggleButton = new ToggleButton(text);
 
         toggleButton.getStyleClass().add("sidebarButton");
 
