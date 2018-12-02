@@ -19,6 +19,8 @@
 package org.phoenicis.javafx;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
+import org.phoenicis.containers.ContainersConfiguration;
+import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
@@ -33,10 +35,12 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({ PhoenicisGlobalConfiguration.class,
-        RepositoryConfiguration.class,
-        SettingsConfiguration.class,
+        ContainersConfiguration.class,
+        EnginesConfiguration.class,
         LibraryConfiguration.class,
         MultithreadingConfiguration.class,
+        RepositoryConfiguration.class,
+        SettingsConfiguration.class,
         ScriptsConfiguration.class,
         ToolsConfiguration.class,
         UiConfiguration.class,

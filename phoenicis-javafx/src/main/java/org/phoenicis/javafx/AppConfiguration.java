@@ -18,8 +18,6 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.containers.ContainersConfiguration;
-import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
@@ -33,10 +31,8 @@ import org.springframework.context.annotation.Import;
         ControllerConfiguration.class,
         ThemeConfiguration.class,
         ViewsConfiguration.class,
-        EnginesConfiguration.class,
         JavaFxSettingsConfiguration.class,
-        JavaFxUiConfiguration.class,
-        ContainersConfiguration.class
+        JavaFxUiConfiguration.class
 })
 class AppConfiguration {
 
