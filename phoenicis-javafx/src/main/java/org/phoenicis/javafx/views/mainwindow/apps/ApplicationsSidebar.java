@@ -5,8 +5,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.ApplicationSidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
@@ -52,7 +54,7 @@ public class ApplicationsSidebar extends Sidebar {
     private PhoenicisFilteredList<CategoryDTO> filteredCategories;
 
     // the toggleable categories
-    private SidebarToggleGroup<CategoryDTO> categoryView;
+    private ApplicationSidebarToggleGroup categoryView;
 
     // the group containing the application filters (testing, noCdNeeded and commercial)
     private SidebarGroup filterGroup;
@@ -120,8 +122,10 @@ public class ApplicationsSidebar extends Sidebar {
         this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
         this.filter.addOnFilterChanged(filteredCategories::trigger);
 
-        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
-                this::createCategoryToggleButton);
+        this.categoryView = new ApplicationSidebarToggleGroup(tr("Categories"));
+
+        categoryView.setOnAllCategorySelection(onAllCategorySelection);
+        categoryView.setOnCategorySelection(onCategorySelection);
 
         Bindings.bindContent(categoryView.getElements(), filteredCategories);
     }
@@ -141,7 +145,8 @@ public class ApplicationsSidebar extends Sidebar {
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new SidebarGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
+        this.filterGroup = new SidebarGroup("Filters");
+        this.filterGroup.getComponents().addAll(testingCheck, requiresPatchCheck, commercialCheck,
                 operatingSystemCheck);
     }
 

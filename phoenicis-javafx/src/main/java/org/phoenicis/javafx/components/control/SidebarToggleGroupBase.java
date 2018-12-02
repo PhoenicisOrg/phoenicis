@@ -11,7 +11,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
 
-public abstract class SidebarToggleGroupBase<E> extends ControlBase<SidebarToggleGroupBase<E>, SidebarToggleGroupSkinBase<E>> {
+public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
+        extends ControlBase<C, S> {
     private final StringProperty title;
 
     /**
@@ -23,7 +24,7 @@ public abstract class SidebarToggleGroupBase<E> extends ControlBase<SidebarToggl
     private final ObjectProperty<SidebarToggleButtonSelection> selected;
 
     public SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
-                                  ObjectProperty<SidebarToggleButtonSelection> selected) {
+            ObjectProperty<SidebarToggleButtonSelection> selected) {
         super();
 
         this.title = title;

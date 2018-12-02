@@ -13,8 +13,8 @@ import org.phoenicis.javafx.views.common.lists.MappedList;
 
 import java.util.Optional;
 
-public abstract class SidebarToggleGroupSkinBase<E>
-        extends BehaviorSkinBase<SidebarToggleGroupBase<E>, SidebarToggleGroupSkinBase<E>, SidebarToggleGroupBehavior<E>> {
+public abstract class SidebarToggleGroupSkinBase<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
+        extends BehaviorSkinBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
     /**
      * An {@link ObservableList} containing both the <code>allButton</code>, if it's available, and the
      * {@link ToggleButton}s inside <code>mappedToggleButtons</code>
@@ -26,13 +26,8 @@ public abstract class SidebarToggleGroupSkinBase<E>
      *
      * @param control The control for which this Skin should attach to.
      */
-    public SidebarToggleGroupSkinBase(SidebarToggleGroupBase<E> control) {
+    public SidebarToggleGroupSkinBase(C control) {
         super(control);
-    }
-
-    @Override
-    public SidebarToggleGroupBehavior<E> createBehavior() {
-        return new SidebarToggleGroupBehavior<>(getControl(), this);
     }
 
     @Override

@@ -6,15 +6,15 @@ import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.components.skin.SidebarToggleGroupSkinBase;
 
-public class SidebarToggleGroupBehavior<E>
-        extends BehaviorBase<SidebarToggleGroupBase<E>, SidebarToggleGroupSkinBase<E>, SidebarToggleGroupBehavior<E>> {
+public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupSkinBase<E, C, S>>
+        extends BehaviorBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
     /**
      * Constructor
      *
      * @param control The control associated with this behavior
      * @param skin The skin associated with this behavior
      */
-    public SidebarToggleGroupBehavior(SidebarToggleGroupBase<E> control, SidebarToggleGroupSkinBase<E> skin) {
+    public SidebarToggleGroupBehavior(C control, S skin) {
         super(control, skin);
     }
 
