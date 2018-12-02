@@ -3,11 +3,11 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
@@ -62,7 +62,7 @@ public class EnginesSidebar extends Sidebar {
     private CheckBox notInstalledCheck;
 
     // widget to switch between the different list widgets in the center view
-    private ListWidgetChooser<EngineVersionDTO> listWidgetChooser;
+    private ListWidgetSelector listWidgetSelector;
 
     // consumer called when a category has been selected
     private Consumer<EngineCategoryDTO> onCategorySelection;
@@ -92,7 +92,7 @@ public class EnginesSidebar extends Sidebar {
 
         this.setTop(searchBar);
         this.setCenter(centerContent);
-        this.setBottom(listWidgetChooser);
+        this.setBottom(listWidgetSelector);
     }
 
     /**
@@ -145,10 +145,11 @@ public class EnginesSidebar extends Sidebar {
      * @param enginesVersionListWidgets The managed CombinedListWidgets
      */
     private void populateListWidgetChooser(List<CombinedListWidget<EngineVersionDTO>> enginesVersionListWidgets) {
-        this.listWidgetChooser = new ListWidgetChooser<>(enginesVersionListWidgets);
-        this.listWidgetChooser.setAlignment(Pos.BOTTOM_LEFT);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getEnginesListType());
-        this.listWidgetChooser.setOnChoose(type -> {
+        this.listWidgetSelector = new ListWidgetSelector();
+        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getEnginesListType());
+        this.listWidgetSelector.setOnSelect(type -> {
+            enginesVersionListWidgets.forEach(widget -> widget.showList(type));
+
             this.javaFxSettingsManager.setEnginesListType(type);
             this.javaFxSettingsManager.save();
         });

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
- * A search box behavior/controller
+ * The behavior for the {@link SearchBox} component
  */
 public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
     /**
