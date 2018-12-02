@@ -93,7 +93,7 @@ public class JavaFXApplication extends Application {
         final Task<Void> loadTask = new Task<Void>() {
             @Override
             protected Void call() {
-                final int numLoadSteps = 2;
+                final int numLoadSteps = 1;
                 int loadStep = 0;
 
                 // load fonts
@@ -114,18 +114,6 @@ public class JavaFXApplication extends Application {
                 updateProgress(loadStep, numLoadSteps);
                 updateMessage(tr("All fonts loaded"));
                 LOGGER.debug("All fonts loaded");
-
-                // load repository
-                loadStep++;
-                updateMessage(tr("Loading repository ..."));
-                LOGGER.debug("Loading repository ...");
-                ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
-                        AppConfigurationNoUi.class);
-                RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
-                repositoryManager.forceSynchronousUpdate();
-                updateProgress(loadStep, numLoadSteps);
-                updateMessage(tr("Repository loaded"));
-                LOGGER.debug("Repository loaded");
 
                 return null;
             }
