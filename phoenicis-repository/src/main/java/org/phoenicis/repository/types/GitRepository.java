@@ -33,6 +33,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
+import java.nio.channels.FileLock;
 
 public class GitRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
@@ -48,7 +49,7 @@ public class GitRepository implements Repository {
     // lock file to avoid concurrent access to the git clone
     private final File lockFile;
 
-    private static Object mutex = 0;
+    private static final Object mutex = new Object();
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
@@ -60,7 +61,7 @@ public class GitRepository implements Repository {
         this.localRepositoryFactory = localRepositoryFactory;
 
         this.localFolder = createRepositoryLocation(cacheDirectoryPath);
-        this.lockFile = new File(this.localFolder.getAbsolutePath() + "_lock");
+        this.lockFile = new File(this.localFolder.getAbsolutePath() + ".lock");
     }
 
     private File createRepositoryLocation(String cacheDirectoryPath) {
@@ -87,13 +88,10 @@ public class GitRepository implements Repository {
                         throw new RepositoryException("Couldn't create lock file " + this.lockFile.getAbsolutePath());
                     }
                 }
-                FileOutputStream lockFileStream = new FileOutputStream(lockFile, true);
-
-                try {
-                    java.nio.channels.FileLock lock = lockFileStream.getChannel().lock();
-                    cloneOrUpdateWithLock(lock);
-                } finally {
-                    lockFileStream.close();
+                try (FileOutputStream lockFileStream = new FileOutputStream(lockFile, true)) {
+                    try (FileLock lock = lockFileStream.getChannel().lock()) {
+                        cloneOrUpdateWithLock(lock);
+                    }
                 }
             } catch (IOException e) {
                 throw new RepositoryException("An unknown error occurred", e);
@@ -176,7 +174,7 @@ public class GitRepository implements Repository {
 
             LOGGER.info("Deleted " + this);
         } catch (IOException e) {
-            LOGGER.error(String.format("Couldn't delete " + this), e);
+            LOGGER.error("Couldn't delete " + this, e);
         }
     }
 
