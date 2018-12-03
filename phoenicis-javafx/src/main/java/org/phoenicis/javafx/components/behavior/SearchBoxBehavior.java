@@ -28,19 +28,23 @@ public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, Se
     @Override
     public void initialise() {
         // add an input listener to the text field
-        getSearchField().textProperty()
-                .addListener(
-                        event -> getOnClear().ifPresent(onSearch -> getOnSearch().accept(getSearchField().getText())));
+        getSearchField().textProperty().addListener(event -> {
+            final String searchTerm = getSearchField().getText();
+
+            getControl().setSearchTerm(searchTerm);
+            getOnSearch().ifPresent(onSearch -> onSearch.accept(searchTerm));
+        });
 
         // add a mouse click listener to the clear button
         getClearButton().setOnMouseClicked(event -> {
             getSearchField().clear();
+            getControl().searchTermProperty().set("");
             getOnClear().ifPresent(Runnable::run);
         });
     }
 
-    private Consumer<String> getOnSearch() {
-        return getControl().getOnSearch();
+    private Optional<Consumer<String>> getOnSearch() {
+        return Optional.ofNullable(getControl().getOnSearch());
     }
 
     private Optional<Runnable> getOnClear() {

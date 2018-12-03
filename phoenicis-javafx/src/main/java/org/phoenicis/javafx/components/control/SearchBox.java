@@ -2,6 +2,8 @@ package org.phoenicis.javafx.components.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.phoenicis.javafx.components.skin.SearchBoxSkin;
 
 import java.util.function.Consumer;
@@ -10,6 +12,11 @@ import java.util.function.Consumer;
  * A search box component used to add a search term
  */
 public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
+    /**
+     * The submitted search term
+     */
+    private final StringProperty searchTerm;
+
     /**
      * A consumer, which is called when the search term has been modified
      */
@@ -23,12 +30,15 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     /**
      * Constructor
      *
+     * @param searchTerm The submitted search term
      * @param onSearch Callback for search input
      * @param onClear Callback for clear input
      */
-    public SearchBox(ObjectProperty<Consumer<String>> onSearch, ObjectProperty<Runnable> onClear) {
+    public SearchBox(StringProperty searchTerm, ObjectProperty<Consumer<String>> onSearch,
+            ObjectProperty<Runnable> onClear) {
         super();
 
+        this.searchTerm = searchTerm;
         this.onSearch = onSearch;
         this.onClear = onClear;
     }
@@ -40,14 +50,14 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
      * @param onClear Callback for clear input
      */
     public SearchBox(Consumer<String> onSearch, Runnable onClear) {
-        this(new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));
+        this(new SimpleStringProperty(""), new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));
     }
 
     /**
      * Constructor
      */
     public SearchBox() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+        this(new SimpleStringProperty(""), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
     /**
@@ -58,6 +68,18 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     @Override
     public SearchBoxSkin createSkin() {
         return new SearchBoxSkin(this);
+    }
+
+    public String getSearchTerm() {
+        return searchTerm.get();
+    }
+
+    public StringProperty searchTermProperty() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm.set(searchTerm);
     }
 
     public ObjectProperty<Consumer<String>> onSearchProperty() {

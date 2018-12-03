@@ -31,7 +31,10 @@ public class ContainersSidebarToggleGroupSkin extends
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
         allCategoryButton.getStyleClass().add("containerButton");
-        allCategoryButton.setOnMouseClicked(event -> getControl().getOnAllCategorySelection().run());
+        allCategoryButton.setOnMouseClicked(event -> {
+            getControl().setSelectedElement(null);
+            getControl().getOnAllCategorySelection().run();
+        });
 
         return Optional.of(allCategoryButton);
     }
@@ -44,7 +47,10 @@ public class ContainersSidebarToggleGroupSkin extends
         final ToggleButton containerButton = createSidebarToggleButton(category.getName());
 
         containerButton.getStyleClass().add("containerButton");
-        containerButton.setOnMouseClicked(event -> getControl().getOnCategorySelection().accept(category));
+        containerButton.setOnMouseClicked(event -> {
+            getControl().setSelectedElement(category);
+            getControl().getOnCategorySelection().accept(category);
+        });
 
         return containerButton;
     }
