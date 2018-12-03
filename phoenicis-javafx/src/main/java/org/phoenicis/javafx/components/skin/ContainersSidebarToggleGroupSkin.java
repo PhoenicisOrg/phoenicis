@@ -30,7 +30,6 @@ public class ContainersSidebarToggleGroupSkin extends
     protected Optional<ToggleButton> createAllButton() {
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
-        allCategoryButton.setSelected(true);
         allCategoryButton.getStyleClass().add("containerButton");
         allCategoryButton.setOnMouseClicked(event -> getControl().getOnAllCategorySelection().run());
 
