@@ -4,14 +4,18 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.control.ApplicationSidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -52,10 +56,10 @@ public class ApplicationsSidebar extends Sidebar {
     private PhoenicisFilteredList<CategoryDTO> filteredCategories;
 
     // the toggleable categories
-    private SidebarToggleGroup<CategoryDTO> categoryView;
+    private ApplicationSidebarToggleGroup categoryView;
 
     // the group containing the application filters (testing, noCdNeeded and commercial)
-    private SidebarGroup filterGroup;
+    private SidebarGroup<CheckBox> filterGroup;
 
     private CheckBox testingCheck;
     private CheckBox requiresPatchCheck;
@@ -95,13 +99,6 @@ public class ApplicationsSidebar extends Sidebar {
     }
 
     /**
-     * This method selects the "All" application category
-     */
-    public void selectAllCategories() {
-        this.categoryView.selectAll();
-    }
-
-    /**
      * This method binds the given category list <code>categories</code> to the categories toggle group.
      *
      * @param categories The to be bound category list
@@ -120,10 +117,12 @@ public class ApplicationsSidebar extends Sidebar {
         this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
         this.filter.addOnFilterChanged(filteredCategories::trigger);
 
-        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
-                this::createCategoryToggleButton);
+        this.categoryView = new ApplicationSidebarToggleGroup(tr("Categories"));
 
-        Bindings.bindContent(categoryView.getElements(), filteredCategories);
+        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
+        this.categoryView.setOnCategorySelection(categoryDTO -> onCategorySelection.accept(categoryDTO));
+
+        Bindings.bindContent(this.categoryView.getElements(), filteredCategories);
     }
 
     private void populateFilters() {
@@ -141,8 +140,9 @@ public class ApplicationsSidebar extends Sidebar {
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new SidebarGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
-                operatingSystemCheck);
+        this.filterGroup = new SidebarGroup<>(tr("Filters"));
+        this.filterGroup.getComponents()
+                .addAll(testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
     }
 
     /**
@@ -159,36 +159,6 @@ public class ApplicationsSidebar extends Sidebar {
             this.javaFxSettingsManager.setAppsListType(type);
             this.javaFxSettingsManager.save();
         });
-    }
-
-    /**
-     * This method is responsible for creating the "All" categories toggle button.
-     *
-     * @return The newly created "All" categories toggle button
-     */
-    private ToggleButton createAllCategoriesToggleButton() {
-        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
-
-        allCategoryButton.setSelected(true);
-        allCategoryButton.setId("allButton");
-        allCategoryButton.setOnAction(event -> onAllCategorySelection.run());
-
-        return allCategoryButton;
-    }
-
-    /**
-     * This method is responsible for creating a toggle button for a given category.
-     *
-     * @param category The category for which a toggle button should be created
-     * @return The newly created toggle button
-     */
-    private ToggleButton createCategoryToggleButton(CategoryDTO category) {
-        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
-
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
-        categoryButton.setOnAction(event -> onCategorySelection.accept(category));
-
-        return categoryButton;
     }
 
     /**

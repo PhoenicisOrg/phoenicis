@@ -64,8 +64,6 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         this.sidebar.bindSettingsItems(this.settingsItems);
 
-        this.sidebar.selectFirstSettingsCategory();
-
         this.setSidebar(this.sidebar);
     }
 

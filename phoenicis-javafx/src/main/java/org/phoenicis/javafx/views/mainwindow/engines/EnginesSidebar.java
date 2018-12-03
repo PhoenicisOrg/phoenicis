@@ -4,16 +4,20 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.components.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
 import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
+import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -53,10 +57,10 @@ public class EnginesSidebar extends Sidebar {
     private PhoenicisFilteredList<EngineCategoryDTO> filteredEngineCategories;
 
     // the button group containing a button for all engine categories
-    private SidebarToggleGroup<EngineCategoryDTO> categoryView;
+    private EnginesSidebarToggleGroup categoryView;
 
     // the button group containing a button to filter the engines for installed and uninstalled engines
-    private SidebarGroup installationFilterGroup;
+    private SidebarGroup<CheckBox> installationFilterGroup;
 
     private CheckBox installedCheck;
     private CheckBox notInstalledCheck;
@@ -120,7 +124,10 @@ public class EnginesSidebar extends Sidebar {
         this.filteredEngineCategories = new PhoenicisFilteredList<>(engineCategories, filter::filter);
         this.filter.addOnFilterChanged(filteredEngineCategories::trigger);
 
-        this.categoryView = SidebarToggleGroup.create(tr("Engines"), this::createCategoryToggleButton);
+        this.categoryView = new EnginesSidebarToggleGroup(tr("Engines"));
+
+        this.categoryView.setOnCategorySelection(category -> onCategorySelection.accept(category));
+
         Bindings.bindContent(categoryView.getElements(), filteredEngineCategories);
     }
 
@@ -136,7 +143,8 @@ public class EnginesSidebar extends Sidebar {
         this.notInstalledCheck.selectedProperty().bindBidirectional(filter.showNotInstalledProperty());
         this.notInstalledCheck.setSelected(true);
 
-        this.installationFilterGroup = new SidebarGroup(installedCheck, notInstalledCheck);
+        this.installationFilterGroup = new SidebarGroup<>();
+        this.installationFilterGroup.getComponents().addAll(installedCheck, notInstalledCheck);
     }
 
     /**
@@ -156,21 +164,6 @@ public class EnginesSidebar extends Sidebar {
     }
 
     /**
-     * This method creates a new toggle button for a given engine category.
-     *
-     * @param category The engine category, for which a new toggle button should be created
-     * @return The created toggle button
-     */
-    private ToggleButton createCategoryToggleButton(EngineCategoryDTO category) {
-        ToggleButton categoryButton = new SidebarToggleButton(category.getName());
-
-        categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
-        categoryButton.setOnAction(event -> onCategorySelection.accept(category));
-
-        return categoryButton;
-    }
-
-    /**
      * Filters the engines and engine categories for a given keyword
      *
      * @param searchTerm The keyword to search for
@@ -184,16 +177,6 @@ public class EnginesSidebar extends Sidebar {
      */
     public void clearSearch() {
         this.filter.clearSearchTerm();
-    }
-
-    /**
-     * This method selects the button belonging to the first engine category in the engine category button group.
-     * If no engine category exists, this method will throw an {@link IllegalArgumentException}.
-     *
-     * @throws IllegalArgumentException
-     */
-    public void selectFirstEngineCategory() {
-        this.categoryView.select(0);
     }
 
     /**
