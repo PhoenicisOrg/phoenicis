@@ -140,7 +140,7 @@ public class ApplicationsSidebar extends Sidebar {
         this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
         this.operatingSystemCheck.setSelected(false);
 
-        this.filterGroup = new SidebarGroup<>("Filters");
+        this.filterGroup = new SidebarGroup<>(tr("Filters"));
         this.filterGroup.getComponents()
                 .addAll(testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
     }
