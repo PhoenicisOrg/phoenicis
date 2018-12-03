@@ -45,6 +45,10 @@ public class ConfirmMessage {
                 .forEach(node -> ((Label) node).setMinHeight(Region.USE_PREF_SIZE));
     }
 
+    public void setResizable(boolean resizable) {
+        alert.setResizable(resizable);
+    }
+
     public void ask(Runnable yesCallback) {
         ask(yesCallback, () -> {
         });
