@@ -20,6 +20,14 @@ module org.phoenicis.javafx {
     opens org.phoenicis.javafx.views.mainwindow.library;
     opens org.phoenicis.javafx.views.mainwindow.settings;
     opens org.phoenicis.javafx.views.scriptui;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.apps;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.containers;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.engines;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.general;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.installations;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.library;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.settings;
     requires com.fasterxml.jackson.databind;
     requires commons.lang;
     requires fuzzywuzzy;
