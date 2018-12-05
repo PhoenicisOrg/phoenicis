@@ -144,7 +144,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     private void showInstallationDetails(InstallationDTO installationDTO) {
         this.installationsPanel.setOnClose(this::closeDetailsView);
         this.installationsPanel.setInstallationDTO(installationDTO);
-        this.installationsPanel.setMaxWidth(600);
+        this.installationsPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(2.5));
         this.showDetailsView(this.installationsPanel);
     }
 
