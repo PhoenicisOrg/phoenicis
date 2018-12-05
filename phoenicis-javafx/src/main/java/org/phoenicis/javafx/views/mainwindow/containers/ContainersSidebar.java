@@ -3,9 +3,9 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.components.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -14,8 +14,6 @@ import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleButton;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarToggleGroup;
 
 import java.util.function.Consumer;
 
@@ -50,7 +48,7 @@ public class ContainersSidebar extends Sidebar {
     private PhoenicisFilteredList<ContainerCategoryDTO> filteredContainerCategories;
 
     // a button group containing a button for each installed container
-    private SidebarToggleGroup<ContainerCategoryDTO> categoryView;
+    private ContainersSidebarToggleGroup categoryView;
 
     // widget to switch between the different list widgets in the center view
     private ListWidgetSelector listWidgetSelector;
@@ -87,13 +85,6 @@ public class ContainersSidebar extends Sidebar {
     }
 
     /**
-     * This method selects the "All" application category
-     */
-    public void selectAllCategories() {
-        this.categoryView.selectAll();
-    }
-
-    /**
      * This method takes an {@link ObservableList} of container categories and binds it to the container categories
      * button group
      *
@@ -118,8 +109,11 @@ public class ContainersSidebar extends Sidebar {
         this.filteredContainerCategories = new PhoenicisFilteredList<>(this.containerCategories, filter::filter);
         this.filter.addOnFilterChanged(filteredContainerCategories::trigger);
 
-        this.categoryView = SidebarToggleGroup.create(tr("Containers"), this::createAllCategoriesToggleButton,
-                this::createContainerToggleButton);
+        this.categoryView = new ContainersSidebarToggleGroup(tr("Containers"));
+
+        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
+        this.categoryView.setOnCategorySelection(container -> onCategorySelection.accept(container));
+
         Bindings.bindContent(categoryView.getElements(), filteredContainerCategories);
     }
 
@@ -137,36 +131,6 @@ public class ContainersSidebar extends Sidebar {
             this.javaFxSettingsManager.setContainersListType(type);
             this.javaFxSettingsManager.save();
         });
-    }
-
-    /**
-     * This method is responsible for creating the "All" categories toggle button.
-     *
-     * @return The newly created "All" categories toggle button
-     */
-    private ToggleButton createAllCategoriesToggleButton() {
-        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
-
-        allCategoryButton.setSelected(true);
-        allCategoryButton.getStyleClass().add("containerButton");
-        allCategoryButton.setOnMouseClicked(event -> onAllCategorySelection.run());
-
-        return allCategoryButton;
-    }
-
-    /**
-     * This method creates a new toggle button for a given container.
-     *
-     * @param category The container for which a toggle button should be created
-     * @return The created toggle button
-     */
-    private ToggleButton createContainerToggleButton(ContainerCategoryDTO category) {
-        SidebarToggleButton containerButton = new SidebarToggleButton(category.getName());
-
-        containerButton.getStyleClass().add("containerButton");
-        containerButton.setOnMouseClicked(event -> onCategorySelection.accept(category));
-
-        return containerButton;
     }
 
     /**

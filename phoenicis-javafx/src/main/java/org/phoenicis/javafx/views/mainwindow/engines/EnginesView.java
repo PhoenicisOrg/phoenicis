@@ -176,10 +176,6 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         Platform.runLater(() -> {
             this.engineCategories.setAll(engineCategoryDTOS);
 
-            if (!engineCategoryDTOS.isEmpty()) {
-                this.sidebar.selectFirstEngineCategory();
-            }
-
             this.closeDetailsView();
             this.setCenter(availableEngines);
         });

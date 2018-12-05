@@ -9,8 +9,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * Created by marc on 23.05.17.
  */
 public class Themes {
-    public static final Theme DEFAULT = new ClasspathTheme(tr("Default theme"), "default",
-            "/org/phoenicis/javafx/themes/default/");
+    public static final Theme STANDARD = new ClasspathTheme(tr("Standard theme"), "standard",
+            "/org/phoenicis/javafx/themes/standard/");
     public static final Theme DARK = new ClasspathTheme(tr("Dark theme"), "dark", "/org/phoenicis/javafx/themes/dark/");
     public static final Theme BREEZE_DARK = new ClasspathTheme(tr("Breeze Dark theme"), "breezeDark",
             "/org/phoenicis/javafx/themes/breezeDark/");
@@ -20,7 +20,7 @@ public class Themes {
             "/org/phoenicis/javafx/themes/mint-x/");
 
     public static Theme[] all() {
-        return new Theme[] { DEFAULT, DARK, BREEZE_DARK, UNITY, MINT_X };
+        return new Theme[] { STANDARD, DARK, BREEZE_DARK, UNITY, MINT_X };
     }
 
     public static Optional<Theme> fromShortName(String shortName) {

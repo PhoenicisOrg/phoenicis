@@ -13,6 +13,7 @@ module org.phoenicis.tools {
     opens org.phoenicis.tools.gpg;
     opens org.phoenicis.tools.http;
     opens org.phoenicis.tools.system;
+    opens org.phoenicis.tools.system.terminal;
     opens org.phoenicis.tools.version;
     opens org.phoenicis.tools.win32;
     requires bcpg.jdk16;

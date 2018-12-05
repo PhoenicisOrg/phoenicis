@@ -131,7 +131,6 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
             this.filter.clear();
-            this.sidebar.selectAllCategories();
 
             this.closeDetailsView();
             this.setCenter(this.activeInstallations);
