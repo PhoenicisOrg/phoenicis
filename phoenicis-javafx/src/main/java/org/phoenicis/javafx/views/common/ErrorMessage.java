@@ -68,6 +68,7 @@ public class ErrorMessage {
      */
     public ErrorMessage(String message, Exception exception, Window owner) {
         this.alert = new Alert(Alert.AlertType.ERROR);
+        this.alert.setResizable(true);
         this.alert.setTitle(tr("Error"));
         this.alert.setHeaderText(message);
 
