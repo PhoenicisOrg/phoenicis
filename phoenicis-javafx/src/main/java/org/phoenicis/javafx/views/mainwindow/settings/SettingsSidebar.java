@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.views.mainwindow.settings;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import org.phoenicis.javafx.components.control.SettingsSidebarToggleGroup;
@@ -18,6 +17,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 23.04.17
  */
 public class SettingsSidebar extends Sidebar {
+    private final ObservableList<SettingsSidebarItem> items;
+
     // the toggle button group containing the buttons used to navigate to the different setting panels
     private SettingsSidebarToggleGroup settingsItems;
 
@@ -27,8 +28,10 @@ public class SettingsSidebar extends Sidebar {
     /**
      * Constructor
      */
-    public SettingsSidebar() {
+    public SettingsSidebar(ObservableList<SettingsSidebarItem> items) {
         super();
+
+        this.items = items;
 
         this.populate();
 
@@ -39,18 +42,10 @@ public class SettingsSidebar extends Sidebar {
      * This method populates the toggle button group containing a toggle button for each settings panel
      */
     private void populate() {
-        this.settingsItems = new SettingsSidebarToggleGroup(tr("Settings"));
+        this.settingsItems = new SettingsSidebarToggleGroup(tr("Settings"), items);
 
-        this.settingsItems.setOnSelectSettingsItem(item -> onSelectSettingsItem.accept(item));
-    }
-
-    /**
-     * This method binds the given settings panels to the toggle button group inside this sidebar
-     *
-     * @param items The settings toggle buttons
-     */
-    public void bindSettingsItems(ObservableList<SettingsSidebarItem> items) {
-        Bindings.bindContent(this.settingsItems.getElements(), items);
+        settingsItems.selectedElementProperty().addListener(invalidation -> settingsItems.getSelectedElement()
+                .ifPresent(settingsItem -> onSelectSettingsItem.accept(settingsItem.getPanel())));
     }
 
     /**
@@ -60,6 +55,9 @@ public class SettingsSidebar extends Sidebar {
      */
     public void setOnSelectSettingsItem(Consumer<Node> onSelectSettingsItem) {
         this.onSelectSettingsItem = onSelectSettingsItem;
+
+        settingsItems.getSelectedElement()
+                .ifPresent(settingsItem -> onSelectSettingsItem.accept(settingsItem.getPanel()));
     }
 
     /**

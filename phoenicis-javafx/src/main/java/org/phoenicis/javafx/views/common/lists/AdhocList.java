@@ -30,6 +30,8 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         super(source);
 
         this.others = others;
+
+        fireChange(new InitialisationChange<>(0, size(), this));
     }
 
     @Override

@@ -1,12 +1,10 @@
 package org.phoenicis.javafx.components.skin;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.behavior.SidebarToggleGroupBehavior;
 import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.components.control.SidebarToggleGroupBase;
@@ -24,19 +22,18 @@ import java.util.Optional;
  */
 public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroupBase<E, C, S>, S extends SidebarToggleGroupBaseSkin<E, C, S>>
         extends BehaviorSkinBase<C, S, SidebarToggleGroupBehavior<E, C, S>> {
-    /**
-     * An {@link ObservableList} containing both the "all" toggle button, if it's available, and the mapped toggle
-     * buttons
-     */
-    private ObservableList<ToggleButton> adhocToggleButtons;
+
+    private final ToggleGroup toggleGroup;
 
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    protected SidebarToggleGroupBaseSkin(C control) {
+    SidebarToggleGroupBaseSkin(C control) {
         super(control);
+
+        this.toggleGroup = new ToggleGroup();
     }
 
     /**
@@ -51,7 +48,21 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
 
         toggleButton.getStyleClass().add("sidebarButton");
 
+        toggleButton.addEventFilter(ActionEvent.ANY, SidebarToggleGroupBaseSkin::eventFilter);
+
         return toggleButton;
+    }
+
+    /**
+     * An event filter to prevent the deselection of all buttons
+     *
+     * @param event The input event to be filtered
+     */
+    private static void eventFilter(ActionEvent event) {
+        ToggleButton source = (ToggleButton) event.getSource();
+        if (source.getToggleGroup() == null || !source.isSelected()) {
+            source.fire();
+        }
     }
 
     /**
@@ -67,33 +78,18 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
      */
     @Override
     public void initialise() {
-        ObservableList<ToggleButton> mappedToggleButtons = new MappedList<>(getControl().getElements(),
+        final ObservableList<ToggleButton> mappedToggleButtons = new MappedList<>(getControl().getElements(),
                 this::convertToToggleButton);
 
         ToggleButton allToggleButton = createAllButton().orElse(null);
-        if (allToggleButton != null) {
-            adhocToggleButtons = new AdhocList<>(mappedToggleButtons, allToggleButton);
-        } else {
-            adhocToggleButtons = new AdhocList<>(mappedToggleButtons);
-        }
 
-        ToggleGroup toggleGroup = new ToggleGroup();
+        final ObservableList<ToggleButton> adhocToggleButtons = allToggleButton != null
+                ? new AdhocList<>(mappedToggleButtons, allToggleButton)
+                : new AdhocList<>(mappedToggleButtons);
+
         Bindings.bindContent(toggleGroup.getToggles(), adhocToggleButtons);
 
-        /*
-         * Workaround for https://github.com/PhoenicisOrg/phoenicis/issues/1516
-         * Normally
-         * `SidebarGroup<ToggleButton> sidebarGroup = new SidebarGroup<>(getControl().titleProperty(),
-         * adhocToggleButtons);`
-         * should work
-         */
-        VBox container = new VBox();
-        container.getStyleClass().add("sidebarInside");
-
-        Bindings.bindContent(container.getChildren(), adhocToggleButtons);
-
-        SidebarGroup<Node> sidebarGroup = new SidebarGroup<>(getControl().titleProperty(),
-                FXCollections.singletonObservableList(container));
+        SidebarGroup<ToggleButton> sidebarGroup = new SidebarGroup<>(getControl().titleProperty(), adhocToggleButtons);
 
         getChildren().addAll(sidebarGroup);
     }
@@ -113,12 +109,7 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
      */
     protected abstract ToggleButton convertToToggleButton(E element);
 
-    /**
-     * Gets the {@link ObservableList} containing all shown {@link ToggleButton} objects in this skin
-     *
-     * @return An {@link ObservableList} containing all shown {@link ToggleButton} objects in this skin
-     */
-    public ObservableList<ToggleButton> getAdhocToggleButtons() {
-        return adhocToggleButtons;
+    public ToggleGroup getToggleGroup() {
+        return toggleGroup;
     }
 }

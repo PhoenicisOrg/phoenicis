@@ -27,14 +27,11 @@ public abstract class BehaviorBase<C extends ControlBase<C, S>, S extends Behavi
      * @param control The control associated with this behavior
      * @param skin The skin associated with this behavior
      */
-    protected BehaviorBase(C control, S skin) {
+    BehaviorBase(C control, S skin) {
         super();
 
         this.control = control;
         this.skin = skin;
-
-        // initialise the behavior
-        initialise();
     }
 
     /**

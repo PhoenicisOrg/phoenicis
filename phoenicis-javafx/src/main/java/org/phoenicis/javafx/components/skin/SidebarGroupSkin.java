@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.components.skin;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
@@ -13,6 +14,8 @@ import org.phoenicis.javafx.views.common.lists.AdhocList;
  * @param <E> The element type
  */
 public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, SidebarGroupSkin<E>> {
+    private final ObservableList<? extends Node> content;
+
     /**
      * Constructor
      *
@@ -20,6 +23,8 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
      */
     public SidebarGroupSkin(SidebarGroup<E> control) {
         super(control);
+
+        this.content = new AdhocList<>(getControl().getComponents(), createTitleLabel());
     }
 
     /**
@@ -30,8 +35,7 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
         VBox container = new VBox();
         container.getStyleClass().add("sidebarInside");
 
-        Bindings.bindContent(container.getChildren(),
-                new AdhocList<>(getControl().getComponents(), createTitleLabel()));
+        Bindings.bindContent(container.getChildren(), content);
 
         getChildren().addAll(container);
     }

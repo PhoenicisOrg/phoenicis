@@ -24,6 +24,14 @@ public abstract class ControlBase<C extends ControlBase<C, S>, S extends SkinBas
      */
     @Override
     public Skin<?> createDefaultSkin() {
-        return createSkin();
+        S skin = createSkin();
+
+        // initialise the skin
+        skin.initialise();
+
+        // create and initialise the behavior of the skin (if it exists)
+        skin.createDefaultBehavior();
+
+        return skin;
     }
 }

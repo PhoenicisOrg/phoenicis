@@ -21,6 +21,8 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
 
         this.expander = expander;
         this.expandedValues = source.stream().map(expander).collect(Collectors.toList());
+
+        fireChange(new InitialisationChange<>(0, expandedValues.size(), this));
     }
 
     @Override

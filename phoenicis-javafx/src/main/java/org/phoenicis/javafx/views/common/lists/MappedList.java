@@ -22,6 +22,8 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
 
         this.mappedValues = source.stream().map(mapper).collect(Collectors.toList());
         this.mapper = mapper;
+
+        fireChange(new InitialisationChange<>(0, size(), this));
     }
 
     @Override
@@ -40,6 +42,9 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
      * @apiNote This method is required to make Phoenicis compile with Java 9
      */
     public int getViewIndex(int index) {
+        if (index >= size()) {
+            throw new IndexOutOfBoundsException();
+        }
         return index;
     }
 
@@ -53,15 +58,16 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
 
     @Override
     public int size() {
-        return mappedValues.size();
+        return getSource().size();
     }
 
+    @Override
     protected void permute(Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
 
         if (to > from) {
-            List<E> clone = new ArrayList<E>(mappedValues);
+            List<E> clone = new ArrayList<>(mappedValues);
             int[] perm = IntStream.range(0, size()).toArray();
 
             for (int i = from; i < to; ++i) {
@@ -73,6 +79,7 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    @Override
     protected void update(Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
@@ -86,6 +93,7 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    @Override
     protected void addRemove(Change<? extends F> c) {
         int from = c.getFrom();
 

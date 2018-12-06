@@ -43,7 +43,8 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      * @param elements The elements to be shown inside the sidebar toggle group
      * @param selectedElement The selected element or null if no/all elements has been selected
      */
-    public SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements, ObjectProperty<E> selectedElement) {
+    private SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
+            ObjectProperty<E> selectedElement) {
         super();
 
         this.title = title;
@@ -55,8 +56,18 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      * Constructor
      *
      * @param title The title of the sidebar toggle group
+     * @param elements The elements to be shown inside the sidebar toggle group
      */
-    public SidebarToggleGroupBase(String title) {
+    SidebarToggleGroupBase(String title, ObservableList<E> elements) {
+        this(new SimpleStringProperty(title), elements, new SimpleObjectProperty<>());
+    }
+
+    /**
+     * Constructor
+     *
+     * @param title The title of the sidebar toggle group
+     */
+    SidebarToggleGroupBase(String title) {
         this(new SimpleStringProperty(title), FXCollections.observableArrayList(), new SimpleObjectProperty<>());
     }
 

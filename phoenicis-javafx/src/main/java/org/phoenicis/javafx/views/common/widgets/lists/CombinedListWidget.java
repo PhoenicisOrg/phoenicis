@@ -28,6 +28,10 @@ import java.util.function.Function;
  * @since 15.05.17
  */
 public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
+    private final Function<E, ListWidgetEntry<E>> converter;
+
+    private final BiConsumer<E, MouseEvent> setOnMouseClicked;
+
     /**
      * A set of all currently selected items/entries
      */
@@ -54,34 +58,54 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
      *            {@link ListWidgetEntry} for it
      * @param setOnMouseClicked An event listener function to be called when an entry has been selected/clicked
      */
-    public CombinedListWidget(Function<E, ListWidgetEntry<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
+    public CombinedListWidget(ObservableList<E> items, Function<E, ListWidgetEntry<E>> converter,
+            BiConsumer<E, MouseEvent> setOnMouseClicked) {
         super();
 
-        this.setPrefHeight(0);
-        this.setPrefWidth(0);
+        this.items = items;
+        this.converter = converter;
+        this.setOnMouseClicked = setOnMouseClicked;
 
         this.selectedItems = new HashSet<>();
-        this.items = FXCollections.observableArrayList();
+
+        initialise();
+    }
+
+    /**
+     * Constructor
+     *
+     * @param converter A converter function, that takes an object of type <code>E</code> and returns a
+     *            {@link ListWidgetEntry} for it
+     * @param setOnMouseClicked An event listener function to be called when an entry has been selected/clicked
+     */
+    public CombinedListWidget(Function<E, ListWidgetEntry<E>> converter, BiConsumer<E, MouseEvent> setOnMouseClicked) {
+        this(FXCollections.observableArrayList(), converter, setOnMouseClicked);
+    }
+
+    private void initialise() {
+        setPrefHeight(0);
+        setPrefWidth(0);
 
         BiConsumer<E, MouseEvent> proxy = (element, event) -> {
-            this.deselectAll();
+            deselectAll();
             setOnMouseClicked.accept(element, event);
-            this.select(element);
+            select(element);
         };
 
         this.iconsList = new IconsListWidget<>(item -> IconsListElement.create(converter.apply(item)), proxy);
         this.compactList = new CompactListWidget<>(item -> CompactListElement.create(converter.apply(item)), proxy);
         this.detailsList = new DetailsListWidget<>(item -> DetailsListElement.create(converter.apply(item)), proxy);
 
-        this.iconsList.bind(items);
-        this.compactList.bind(items);
-        this.detailsList.bind(items);
+        iconsList.bind(items);
+        compactList.bind(items);
+        detailsList.bind(items);
 
-        this.showList(ListWidgetType.ICONS_LIST);
+        showList(ListWidgetType.ICONS_LIST);
     }
 
     /**
      * Shows the list of the given <code>type</code>
+     *
      * @param type The type of list to be shown in this list widget
      */
     public void showList(ListWidgetType type) {
@@ -110,29 +134,29 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
      * Updates/refreshes the selection of the the currently visible {@link ListWidget}
      */
     private void updateSelection() {
-        this.currentList.deselectAll();
-        this.selectedItems.forEach(currentList::select);
+        currentList.deselectAll();
+        selectedItems.forEach(currentList::select);
     }
 
     @Override
     public void bind(ObservableList<E> list) {
-        Bindings.bindContent(this.items, list);
+        Bindings.bindContent(items, list);
     }
 
     @Override
     public void deselectAll() {
-        this.selectedItems.clear();
-        this.updateSelection();
+        selectedItems.clear();
+        updateSelection();
     }
 
     @Override
     public void select(E item) {
-        this.selectedItems.add(item);
-        this.updateSelection();
+        selectedItems.add(item);
+        updateSelection();
     }
 
     @Override
     public Collection<E> getSelectedItems() {
-        return this.selectedItems;
+        return selectedItems;
     }
 }

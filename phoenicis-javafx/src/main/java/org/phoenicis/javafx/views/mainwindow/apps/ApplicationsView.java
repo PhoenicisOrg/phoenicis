@@ -19,6 +19,8 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,7 +32,6 @@ import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.lists.ExpandedList;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -57,19 +58,14 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * </ul>
  */
 public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
-
     private final ApplicationFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
+
+    private final ObservableList<CategoryDTO> categories;
+
     private final CombinedListWidget<ApplicationDTO> availableApps;
 
     private Consumer<ScriptDTO> onSelectScript;
-
-    private ObservableList<CategoryDTO> categories;
-    private FilteredList<CategoryDTO> installableCategories;
-    private SortedList<CategoryDTO> sortedCategories;
-
-    private ObservableList<ApplicationDTO> applications;
-    private SortedList<ApplicationDTO> sortedApplications;
-    private PhoenicisFilteredList<ApplicationDTO> filteredApplications;
 
     /**
      * Constructor
@@ -82,8 +78,9 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
             ToolsConfiguration toolsConfiguration) {
         super(tr("Apps"), themeManager);
 
-        this.availableApps = new CombinedListWidget<ApplicationDTO>(ListWidgetEntry::create,
-                (element, event) -> showAppDetails(element, javaFxSettingsManager));
+        this.javaFxSettingsManager = javaFxSettingsManager;
+
+        this.categories = FXCollections.observableArrayList();
 
         this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 (filterText, application) -> {
@@ -95,43 +92,49 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                     }
                 });
 
-        /*
-         * initialize the category lists by:
-         * 1. filtering by installer categories
-         * 2. sorting the remaining categories by their name
-         */
-        this.categories = FXCollections.observableArrayList();
-        this.installableCategories = this.categories
-                .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS);
-        this.sortedCategories = this.installableCategories.sorted(Comparator.comparing(CategoryDTO::getName));
+        filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
 
+        this.availableApps = createCombinedListWidget();
+
+        setSidebar(createApplicationsSidebar(availableApps));
+    }
+
+    private CombinedListWidget<ApplicationDTO> createCombinedListWidget() {
         /*
          * initialising the application lists by:
          * 1. sorting the applications by their name
          * 2. filtering them
          */
-        this.applications = new ExpandedList<>(this.installableCategories, CategoryDTO::getApplications);
-        this.sortedApplications = this.applications.sorted(Comparator.comparing(ApplicationDTO::getName));
-        this.filteredApplications = new PhoenicisFilteredList<>(this.sortedApplications, filter::filter);
-        filter.addOnFilterChanged(filteredApplications::trigger);
+        final FilteredList<ApplicationDTO> filteredApplications = new ExpandedList<>(
+                categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
+                CategoryDTO::getApplications)
+                        .sorted(Comparator.comparing(ApplicationDTO::getName))
+                        .filtered(filter::filter);
 
-        this.sidebar = new ApplicationsSidebar(availableApps, filter, javaFxSettingsManager);
+        filteredApplications.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter,
+                        filter.filterTextProperty(), filter.filterCategoryProperty(),
+                        filter.containAllOSCompatibleApplicationsProperty(),
+                        filter.containCommercialApplicationsProperty(),
+                        filter.containRequiresPatchApplicationsProperty(),
+                        filter.containTestingApplicationsProperty()));
 
-        // create the bindings between the visual components and the observable lists
-        this.sidebar.bindCategories(this.sortedCategories);
-        this.availableApps.bind(this.filteredApplications);
+        return new CombinedListWidget<>(filteredApplications, ListWidgetEntry::create,
+                (element, event) -> showAppDetails(element, javaFxSettingsManager));
+    }
 
-        // set the category selection consumers
-        this.sidebar.setOnCategorySelection(category -> {
-            filter.setFilterCategory(category);
-            this.closeDetailsView();
-        });
-        this.sidebar.setOnAllCategorySelection(() -> {
-            filter.setFilterCategory(null);
-            this.closeDetailsView();
-        });
+    private ApplicationsSidebar createApplicationsSidebar(CombinedListWidget<ApplicationDTO> availableApps) {
+        /*
+         * initialize the category lists by:
+         * 1. filtering by installer categories
+         * 2. sorting the remaining categories by their name
+         */
+        final SortedList<CategoryDTO> sortedCategories = categories
+                .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
+                .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        this.setSidebar(this.sidebar);
+        return new ApplicationsSidebar(filter, javaFxSettingsManager, sortedCategories,
+                availableApps);
     }
 
     /**
@@ -145,10 +148,9 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
         Platform.runLater(() -> {
             this.categories.setAll(filteredCategories);
-            this.filter.clearAll();
 
-            this.closeDetailsView();
-            this.setCenter(availableApps);
+            setCenter(availableApps);
+            closeDetailsView();
         });
     }
 
@@ -174,11 +176,13 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
         final ApplicationPanel applicationPanel = new ApplicationPanel(application, filter, themeManager,
                 javaFxSettingsManager);
+
         applicationPanel.setOnScriptInstall(this::installScript);
         applicationPanel.setOnClose(this::closeDetailsView);
         applicationPanel.setMaxWidth(400);
         applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        this.showDetailsView(applicationPanel);
+
+        showDetailsView(applicationPanel);
     }
 
     /**
