@@ -36,7 +36,6 @@ import org.phoenicis.javafx.views.common.lists.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
-
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
