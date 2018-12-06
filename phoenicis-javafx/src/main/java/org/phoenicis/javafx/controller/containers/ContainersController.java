@@ -105,7 +105,7 @@ public class ContainersController {
                         });
                     });
 
-            panel.setOnOpenFileBrower(container -> {
+            panel.setOnOpenFileBrowser(container -> {
                 try {
                     File containerDir = new File(container.getPath());
                     EventQueue.invokeLater(() -> {
@@ -126,6 +126,7 @@ public class ContainersController {
             });
 
             panel.setOnClose(containersView::closeDetailsView);
+            panel.prefWidthProperty().bind(this.containersView.getTabPane().widthProperty().divide(3));
 
             Platform.runLater(() -> containersView.showDetailsView(panel));
             // });

@@ -24,7 +24,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TabPane;
-import java.util.Map;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
@@ -40,6 +39,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -201,10 +201,11 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
      * @param engineDTO
      */
     private void showEngineDetails(EngineDTO engineDTO, Engine engine) {
-        currentEnginePanel = new EnginePanel(engineDTO, engine);
-        currentEnginePanel.setOnClose(this::closeDetailsView);
-        currentEnginePanel.setOnEngineInstall(this::installEngine);
-        currentEnginePanel.setOnEngineDelete(this::deleteEngine);
+        this.currentEnginePanel = new EnginePanel(engineDTO, engine);
+        this.currentEnginePanel.setOnClose(this::closeDetailsView);
+        this.currentEnginePanel.setOnEngineInstall(this::installEngine);
+        this.currentEnginePanel.setOnEngineDelete(this::deleteEngine);
+        this.currentEnginePanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
 
         this.showDetailsView(currentEnginePanel);
     }

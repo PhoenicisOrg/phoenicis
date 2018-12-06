@@ -176,7 +176,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                 javaFxSettingsManager);
         applicationPanel.setOnScriptInstall(this::installScript);
         applicationPanel.setOnClose(this::closeDetailsView);
-        applicationPanel.setMaxWidth(400);
         applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(applicationPanel);
     }
