@@ -19,159 +19,157 @@
 package org.phoenicis.javafx.views.mainwindow.installations;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.lists.ExpandedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
+import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
  * The "Installations" tab shows the currently active installations.
- *
+ * <p>
  * This includes applications as well as engines.
  */
 public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     private final InstallationsFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
-    private InstallationsPanel installationsPanel;
+    private final ObservableList<InstallationCategoryDTO> categories;
 
     private CombinedListWidget<InstallationDTO> activeInstallations;
 
-    private ObservableList<InstallationCategoryDTO> categories;
-    private SortedList<InstallationCategoryDTO> sortedCategories;
-
-    private ObservableList<InstallationDTO> installations;
-    private PhoenicisFilteredList<InstallationDTO> filteredInstallations;
-    private SortedList<InstallationDTO> sortedInstallations;
-
-    private Runnable onInstallationAdded = () -> {
-    };
-
-    private Consumer<InstallationDTO> onInstallationSelected = installation -> {
-    };
+    private Runnable onInstallationAdded;
 
     /**
      * constructor
+     *
      * @param themeManager
      * @param javaFxSettingsManager
      */
     public InstallationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Installations"), themeManager);
+
+        this.javaFxSettingsManager = javaFxSettingsManager;
+        this.filter = new InstallationsFilter();
+        this.categories = FXCollections.observableArrayList();
+
         this.getStyleClass().add("mainWindowScene");
 
-        this.activeInstallations = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
+        final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
+                categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
+                InstallationCategoryDTO::getInstallations)
+                        .filtered(filter::filter);
 
-            this.activeInstallations.deselectAll();
-            this.activeInstallations.select(selectedItem);
-            this.onInstallationSelected.accept(selectedItem);
-            showInstallationDetails(selectedItem);
+        filteredInstallations.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter,
+                        filter.searchTermProperty(), filter.selectedInstallationCategoryProperty()));
+
+        final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
+                .sorted(Comparator.comparing(InstallationDTO::getName));
+
+        this.activeInstallations = new CombinedListWidget<>(sortedInstallations, ListWidgetEntry::create,
+                (selectedItem, event) -> {
+                    activeInstallations.deselectAll();
+                    activeInstallations.select(selectedItem);
+
+                    showInstallationDetails(selectedItem);
+
+                    event.consume();
+                });
+
+        // This looks strange to me
+        activeInstallations.setOnMouseClicked(event -> {
+            activeInstallations.deselectAll();
 
             event.consume();
         });
 
-        // initialize the category lists
-        this.categories = FXCollections.observableArrayList();
-        this.sortedCategories = this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName));
+        filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        this.filter = new InstallationsFilter();
+        setSidebar(createInstallationsSidebar());
+        setCenter(activeInstallations);
+    }
 
-        // initialising the installations lists
-        this.installations = new ExpandedList<>(this.sortedCategories, InstallationCategoryDTO::getInstallations);
-        this.filteredInstallations = new PhoenicisFilteredList<>(this.installations, filter::filter);
-        this.filter.addOnFilterChanged(filteredInstallations::trigger);
+    private InstallationsSidebar createInstallationsSidebar() {
+        final SortedList<InstallationCategoryDTO> sortedCategories = categories
+                .sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
-        this.sortedInstallations = this.filteredInstallations.sorted(Comparator.comparing(InstallationDTO::getName));
-
-        this.activeInstallations.setOnMouseClicked(event -> {
-            this.activeInstallations.deselectAll();
-            this.onInstallationSelected.accept(null);
-            event.consume();
-        });
-
-        this.sidebar = new InstallationsSidebar(activeInstallations, filter, javaFxSettingsManager);
-        this.sidebar.bindCategories(this.sortedCategories);
-
-        // set the category selection consumers
-        this.sidebar.setOnCategorySelection(category -> {
-            filter.setSelectedInstallationCategory(category);
-            this.closeDetailsView();
-        });
-        this.sidebar.setOnAllCategorySelection(() -> {
-            filter.setSelectedInstallationCategory(null);
-            this.closeDetailsView();
-        });
-
-        this.setSidebar(this.sidebar);
-
-        this.activeInstallations.bind(this.sortedInstallations);
-
-        this.setCenter(this.activeInstallations);
-
-        this.installationsPanel = new InstallationsPanel();
+        return new InstallationsSidebar(filter, javaFxSettingsManager, sortedCategories, activeInstallations);
     }
 
     /**
      * shows the given installations
+     *
      * @param categories
      */
     private void populate(List<InstallationCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
-            this.filter.clear();
 
-            this.closeDetailsView();
-            this.setCenter(this.activeInstallations);
+            closeDetailsView();
+            setCenter(activeInstallations);
         });
     }
 
     /**
      * shows details of the given installation
+     *
      * @param installationDTO
      */
     private void showInstallationDetails(InstallationDTO installationDTO) {
-        this.installationsPanel.setOnClose(this::closeDetailsView);
-        this.installationsPanel.setInstallationDTO(installationDTO);
-        this.installationsPanel.setMaxWidth(600);
-        this.showDetailsView(this.installationsPanel);
+        final InstallationsPanel installationsPanel = new InstallationsPanel();
+
+        installationsPanel.setOnClose(this::closeDetailsView);
+        installationsPanel.setInstallationDTO(installationDTO);
+        installationsPanel.setMaxWidth(600);
+
+        showDetailsView(installationsPanel);
     }
 
     /**
      * adds new installation
+     *
      * @param installationDTO new installation
      */
     public void addInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
+        populate(new InstallationsUtils().addInstallationToList(categories, installationDTO));
+
         Platform.runLater(() -> {
-            this.activeInstallations.deselectAll();
-            this.activeInstallations.select(installationDTO);
-            this.showInstallationDetails(installationDTO);
+            activeInstallations.deselectAll();
+            activeInstallations.select(installationDTO);
+
+            showInstallationDetails(installationDTO);
         });
-        this.onInstallationAdded.run();
+
+        onInstallationAdded.run();
     }
 
     /**
      * removes installation (if it exists)
+     *
      * @param installationDTO installation to be removed
      */
     public void removeInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().removeInstallationFromList(this.categories, installationDTO));
+        populate(new InstallationsUtils().removeInstallationFromList(categories, installationDTO));
     }
 
     /**
      * sets Runnable which is executed whenever a new installation is added
+     *
      * @param onInstallationAdded
      */
     public void setOnInstallationAdded(Runnable onInstallationAdded) {

@@ -31,7 +31,7 @@ public class ApplicationSidebarToggleGroupSkin extends
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
         allCategoryButton.setId("allButton");
-        allCategoryButton.setOnAction(event -> getControl().setSelectedElement(null));
+        allCategoryButton.setOnAction(event -> getControl().setNothingSelected());
 
         return Optional.of(allCategoryButton);
     }

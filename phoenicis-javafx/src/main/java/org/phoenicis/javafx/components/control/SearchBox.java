@@ -4,9 +4,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.util.Duration;
 import org.phoenicis.javafx.components.skin.SearchBoxSkin;
-
-import java.util.function.Consumer;
 
 /**
  * A search box component used to add a search term
@@ -18,46 +17,28 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
     private final StringProperty searchTerm;
 
     /**
-     * A consumer, which is called when the search term has been modified
+     * The delay between a change to the search term and its adoption to the model
      */
-    private final ObjectProperty<Consumer<String>> onSearch;
-
-    /**
-     * A consumer, which is called when the clear button has been pressed
-     */
-    private final ObjectProperty<Runnable> onClear;
+    private final ObjectProperty<Duration> delay;
 
     /**
      * Constructor
      *
      * @param searchTerm The submitted search term
-     * @param onSearch Callback for search input
-     * @param onClear Callback for clear input
+     * @param delay The delay between a change to the search term and its adoption to the model
      */
-    public SearchBox(StringProperty searchTerm, ObjectProperty<Consumer<String>> onSearch,
-            ObjectProperty<Runnable> onClear) {
+    public SearchBox(StringProperty searchTerm, ObjectProperty<Duration> delay) {
         super();
 
         this.searchTerm = searchTerm;
-        this.onSearch = onSearch;
-        this.onClear = onClear;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param onSearch Callback for search input
-     * @param onClear Callback for clear input
-     */
-    public SearchBox(Consumer<String> onSearch, Runnable onClear) {
-        this(new SimpleStringProperty(""), new SimpleObjectProperty<>(onSearch), new SimpleObjectProperty<>(onClear));
+        this.delay = delay;
     }
 
     /**
      * Constructor
      */
     public SearchBox() {
-        this(new SimpleStringProperty(""), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+        this(new SimpleStringProperty(""), new SimpleObjectProperty<>(Duration.seconds(0.5)));
     }
 
     /**
@@ -82,27 +63,15 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
         this.searchTerm.set(searchTerm);
     }
 
-    public ObjectProperty<Consumer<String>> onSearchProperty() {
-        return onSearch;
+    public Duration getDelay() {
+        return delay.get();
     }
 
-    public Consumer<String> getOnSearch() {
-        return onSearch.get();
+    public ObjectProperty<Duration> delayProperty() {
+        return delay;
     }
 
-    public void setOnSearch(Consumer<String> onSearch) {
-        this.onSearch.set(onSearch);
-    }
-
-    public ObjectProperty<Runnable> onClearProperty() {
-        return onClear;
-    }
-
-    public Runnable getOnClear() {
-        return onClear.get();
-    }
-
-    public void setOnClear(Runnable onClear) {
-        this.onClear.set(onClear);
+    public void setDelay(Duration delay) {
+        this.delay.set(delay);
     }
 }

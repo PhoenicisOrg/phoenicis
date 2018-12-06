@@ -1,16 +1,14 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.components.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.components.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.components.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarButton;
@@ -47,40 +45,15 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class LibrarySidebar extends Sidebar {
     // the name of this application
     private final String applicationName;
-
     private final LibraryFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
-    // the search bar used for filtering
-    private SearchBox searchBar;
-
-    // container for the center content of this sidebar
-    private SidebarScrollPane centerContent;
-
-    private ObservableList<ShortcutCategoryDTO> shortcutCategories;
-    private PhoenicisFilteredList<ShortcutCategoryDTO> filteredShortcutCategories;
-
-    // the toggleable categories
-    private LibrarySidebarToggleGroup categoryView;
-
-    // the advanced tools group, containing the run script and run console buttons
-    private SidebarGroup<SidebarButton> advancedToolsGroup;
-
-    private SidebarButton runScript;
-    private SidebarButton runConsole;
-
-    // widget to switch between the different list widgets in the center view
-    private ListWidgetSelector listWidgetSelector;
-
-    // consumers called after a category selection has been made
-    private Runnable onAllCategorySelection;
-    private Consumer<ShortcutCategoryDTO> onCategorySelection;
+    private final ObservableList<ShortcutCategoryDTO> shortcutCategories;
 
     // consumers called when a script should be run or a console be opened
     private Runnable onCreateShortcut;
     private Consumer<File> onScriptRun;
     private Runnable onOpenConsole;
-
-    private final JavaFxSettingsManager javaFxSettingsManager;
 
     /**
      * Constructor
@@ -89,54 +62,50 @@ public class LibrarySidebar extends Sidebar {
      * @param availableShortcuts The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public LibrarySidebar(String applicationName, CombinedListWidget<ShortcutDTO> availableShortcuts,
-            LibraryFilter filter,
-            JavaFxSettingsManager javaFxSettingsManager) {
+    public LibrarySidebar(String applicationName, LibraryFilter filter, JavaFxSettingsManager javaFxSettingsManager,
+            ObservableList<ShortcutCategoryDTO> shortcutCategories,
+            CombinedListWidget<ShortcutDTO> availableShortcuts) {
         super();
 
         this.applicationName = applicationName;
         this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
+        this.shortcutCategories = shortcutCategories;
 
-        this.populateSearchBar();
-        this.populateCategories();
-        this.populateAdvancedTools();
-        this.populateListWidgetChooser(availableShortcuts);
+        SearchBox searchBox = createSearchBox();
+        LibrarySidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
+        SidebarGroup<SidebarButton> advancedToolsGroup = createAdvancedToolsGroup();
+        ListWidgetSelector listWidgetSelector = createListWidgetSelector(availableShortcuts);
 
-        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(), this.advancedToolsGroup);
-
-        this.setTop(searchBar);
-        this.setCenter(centerContent);
-        this.setBottom(listWidgetSelector);
-    }
-
-    /**
-     * This method binds the given category list <code>categories</code> to the categories toggle group.
-     *
-     * @param categories The to be bound category list
-     */
-    public void bindCategories(ObservableList<ShortcutCategoryDTO> categories) {
-        Bindings.bindContent(shortcutCategories, categories);
+        setTop(searchBox);
+        setCenter(new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer(), advancedToolsGroup));
+        setBottom(listWidgetSelector);
     }
 
     /**
      * This method populates the searchbar
      */
-    private void populateSearchBar() {
-        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
+    private SearchBox createSearchBox() {
+        SearchBox searchBox = new SearchBox();
+
+        filter.searchTermProperty().bind(searchBox.searchTermProperty());
+
+        return searchBox;
     }
 
-    private void populateCategories() {
-        this.shortcutCategories = FXCollections.observableArrayList();
-        this.filteredShortcutCategories = new PhoenicisFilteredList<>(this.shortcutCategories, filter::filter);
-        this.filter.addOnFilterChanged(filteredShortcutCategories::trigger);
+    private LibrarySidebarToggleGroup createSidebarToggleGroup() {
+        final FilteredList<ShortcutCategoryDTO> filteredShortcutCategories = shortcutCategories
+                .filtered(filter::filter);
 
-        this.categoryView = new LibrarySidebarToggleGroup(tr("Categories"));
+        filteredShortcutCategories.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter, filter.searchTermProperty()));
 
-        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
-        this.categoryView.setOnCategorySelection(category -> onCategorySelection.accept(category));
+        final LibrarySidebarToggleGroup categoryView = new LibrarySidebarToggleGroup(tr("Categories"),
+                filteredShortcutCategories);
 
-        Bindings.bindContent(categoryView.getElements(), filteredShortcutCategories);
+        filter.selectedShortcutCategoryProperty().bind(categoryView.selectedElementProperty());
+
+        return categoryView;
     }
 
     /**
@@ -144,28 +113,31 @@ public class LibrarySidebar extends Sidebar {
      *
      * @param availableShortcuts The managed CombinedListWidget
      */
-    private void populateListWidgetChooser(CombinedListWidget<ShortcutDTO> availableShortcuts) {
-        this.listWidgetSelector = new ListWidgetSelector();
-        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getLibraryListType());
-        this.listWidgetSelector.setOnSelect(type -> {
+    private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ShortcutDTO> availableShortcuts) {
+        ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getLibraryListType());
+        listWidgetSelector.setOnSelect(type -> {
             availableShortcuts.showList(type);
 
-            this.javaFxSettingsManager.setLibraryListType(type);
-            this.javaFxSettingsManager.save();
+            javaFxSettingsManager.setLibraryListType(type);
+            javaFxSettingsManager.save();
         });
+
+        return listWidgetSelector;
     }
 
     /**
      * This method populates the advanced tools button group.
      */
-    private void populateAdvancedTools() {
-        SidebarButton createShortcut = new SidebarButton(tr("Create shortcut"));
+    private SidebarGroup<SidebarButton> createAdvancedToolsGroup() {
+        final SidebarButton createShortcut = new SidebarButton(tr("Create shortcut"));
         createShortcut.getStyleClass().add("openTerminal");
         createShortcut.setOnMouseClicked(event -> onCreateShortcut.run());
 
-        this.runScript = new SidebarButton(tr("Run a script"));
-        this.runScript.getStyleClass().add("scriptButton");
-        this.runScript.setOnMouseClicked(event -> {
+        final SidebarButton runScript = new SidebarButton(tr("Run a script"));
+        runScript.getStyleClass().add("scriptButton");
+        runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("Open Script ..."));
 
@@ -177,38 +149,14 @@ public class LibrarySidebar extends Sidebar {
             }
         });
 
-        this.runConsole = new SidebarButton(tr("{0} console", applicationName));
-        this.runConsole.getStyleClass().add("consoleButton");
-        this.runConsole.setOnMouseClicked(event -> onOpenConsole.run());
+        final SidebarButton runConsole = new SidebarButton(tr("{0} console", applicationName));
+        runConsole.getStyleClass().add("consoleButton");
+        runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        this.advancedToolsGroup = new SidebarGroup<>(tr("Advanced Tools"));
-        this.advancedToolsGroup.getComponents().addAll(createShortcut, /* runScript, */runConsole);
-    }
+        SidebarGroup<SidebarButton> advancedToolsGroup = new SidebarGroup<>(tr("Advanced Tools"));
+        advancedToolsGroup.getComponents().addAll(createShortcut, /* runScript, */runConsole);
 
-    public void search(String searchTerm) {
-        this.filter.setSearchTerm(searchTerm);
-    }
-
-    public void clearSearch() {
-        this.filter.clearSearchTerm();
-    }
-
-    /**
-     * This method sets the consumer, that is called after a category has been selected
-     *
-     * @param onAllCategorySelection The new consumer to be used
-     */
-    public void setOnAllCategorySelection(Runnable onAllCategorySelection) {
-        this.onAllCategorySelection = onAllCategorySelection;
-    }
-
-    /**
-     * This method sets the consumer, that is called after the "All" categories toggle button has been selected
-     *
-     * @param onCategorySelection The new consumer to be used
-     */
-    public void setOnCategorySelection(Consumer<ShortcutCategoryDTO> onCategorySelection) {
-        this.onCategorySelection = onCategorySelection;
+        return advancedToolsGroup;
     }
 
     /**

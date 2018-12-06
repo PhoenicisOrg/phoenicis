@@ -32,7 +32,7 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
     private final ObservableList<E> elements;
 
     /**
-     * The selected element or null if no/all elements has been selected
+     * The selected element or null if no/all elements have been selected
      */
     private final ObjectProperty<E> selectedElement;
 
@@ -41,7 +41,7 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      *
      * @param title The title of the sidebar toggle group
      * @param elements The elements to be shown inside the sidebar toggle group
-     * @param selectedElement The selected element or null if no/all elements has been selected
+     * @param selectedElement The selected element or null if no/all elements have been selected
      */
     private SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
             ObjectProperty<E> selectedElement) {
@@ -97,5 +97,9 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
 
     public void setSelectedElement(E selectedElement) {
         this.selectedElement.set(selectedElement);
+    }
+
+    public void setNothingSelected() {
+        this.selectedElement.set(null);
     }
 }
