@@ -370,7 +370,16 @@
 /*********************** library ***********************/
 /*******************************************************/
 .shortcutButton {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+
+  &:hover {
     -fx-border-color: transparent;
+  }
+
+  &:pressed {
+    -fx-border-color: @focus-color;
+  }
 }
 
 /*******************************************************/

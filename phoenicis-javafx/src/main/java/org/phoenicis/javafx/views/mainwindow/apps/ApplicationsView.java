@@ -179,7 +179,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
         applicationPanel.setOnScriptInstall(this::installScript);
         applicationPanel.setOnClose(this::closeDetailsView);
-        applicationPanel.setMaxWidth(400);
         applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
 
         showDetailsView(applicationPanel);

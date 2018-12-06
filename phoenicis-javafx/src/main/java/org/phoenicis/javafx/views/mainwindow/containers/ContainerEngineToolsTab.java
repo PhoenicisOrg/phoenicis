@@ -3,6 +3,7 @@ package org.phoenicis.javafx.views.mainwindow.containers;
 import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -71,7 +72,15 @@ public class ContainerEngineToolsTab extends Tab {
 
         toolsPane.getChildren().add(toolsContentPane);
 
-        this.setContent(toolsPane);
+        final ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // the TilePane adjusts the number of columns
+                                                                    // already
+        toolsContentPane.prefWidthProperty().bind(scrollPane.widthProperty());
+        toolsContentPane.prefHeightProperty().bind(scrollPane.heightProperty());
+        scrollPane.setBackground(toolsContentPane.getBackground());
+        scrollPane.setContent(toolsPane);
+
+        this.setContent(scrollPane);
     }
 
     public void unlockAll() {

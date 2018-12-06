@@ -36,6 +36,7 @@ import org.phoenicis.javafx.views.common.lists.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
+
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -204,6 +205,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         currentEnginePanel.setOnClose(this::closeDetailsView);
         currentEnginePanel.setOnEngineInstall(this::installEngine);
         currentEnginePanel.setOnEngineDelete(this::deleteEngine);
+        currentEnginePanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
 
         showDetailsView(currentEnginePanel);
     }
