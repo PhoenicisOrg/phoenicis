@@ -24,7 +24,9 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
     public SidebarGroupSkin(SidebarGroup<E> control) {
         super(control);
 
-        this.content = new AdhocList<>(getControl().getComponents(), createTitleLabel());
+        this.content = getControl().getTitle() != null
+                ? new AdhocList<>(getControl().getComponents(), createTitleLabel())
+                : getControl().getComponents();
     }
 
     /**
@@ -50,8 +52,6 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
         title.getStyleClass().add("sidebarTitle");
 
         title.textProperty().bind(getControl().titleProperty());
-        // only make the title label visible if the property has been set
-        title.visibleProperty().bind(Bindings.isNotNull(getControl().titleProperty()));
 
         return title;
     }
