@@ -18,9 +18,11 @@
 
 package org.phoenicis.javafx.controller.engines;
 
+import com.google.common.collect.ImmutableMap;
 import javafx.application.Platform;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.EnginesManager;
+import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
@@ -30,7 +32,6 @@ import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.TypeDTO;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -39,6 +40,8 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -53,16 +56,20 @@ public class EnginesController {
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
-            EnginesManager enginesManager,
-            ThemeManager themeManager) {
+            EnginesManager enginesManager, ThemeManager themeManager) {
         this.enginesView = enginesView;
         this.repositoryManager = repositoryManager;
         this.enginesManager = enginesManager;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(repositoryDTO -> this.enginesManager.fetchAvailableEngines(repositoryDTO,
-                engines -> this.populateView(repositoryDTO, engines),
-                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
+        this.repositoryManager.addCallbacks(
+                repositoryDTO -> {
+                    enginesManager.fetchAvailableEngines(
+                            repositoryDTO,
+                            engines -> populateView(repositoryDTO, engines),
+                            e -> Platform.runLater(
+                                    () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
+                },
                 e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
@@ -121,17 +128,57 @@ public class EnginesController {
     private void populateView(RepositoryDTO repositoryDTO, Map<String, Engine> engines) {
         this.repositoryCache = repositoryDTO;
         this.enginesCache = engines;
+
         Platform.runLater(() -> {
-            this.enginesView.showWait();
-            List<CategoryDTO> categoryDTOS = new ArrayList<>();
-            for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
-                if (typeDTO.getId().equals("engines")) {
-                    categoryDTOS = typeDTO.getCategories();
-                }
-            }
+            enginesView.showWait();
+
+            final List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().stream()
+                    .filter(type -> type.getId().equals("engines"))
+                    .flatMap(type -> type.getCategories().stream())
+                    .collect(Collectors.toList());
+
             setDefaultEngineIcons(categoryDTOS);
-            this.enginesView.populate(this.enginesManager.getAvailableEngines(categoryDTOS), engines);
+
+            final Queue<EngineCategoryDTO> engineCategories = new ArrayDeque<>(
+                    enginesManager.getAvailableEngines(categoryDTOS));
+
+            fetchEngineSubcategories(engineCategories, ImmutableMap.of(), subcategoryMap -> {
+                final List<EngineCategoryDTO> categories = subcategoryMap.entrySet().stream()
+                        .map(entry -> new EngineCategoryDTO.Builder(entry.getKey())
+                                .withSubCategories(entry.getValue())
+                                .build())
+                        .collect(Collectors.toList());
+
+                enginesView.populate(categories, engines);
+            });
         });
+    }
+
+    private void fetchEngineSubcategories(Queue<EngineCategoryDTO> engineCategories,
+            Map<EngineCategoryDTO, List<EngineSubCategoryDTO>> result,
+            Consumer<Map<EngineCategoryDTO, List<EngineSubCategoryDTO>>> callback) {
+        final Queue<EngineCategoryDTO> queue = new ArrayDeque<>(engineCategories);
+
+        if (queue.isEmpty()) {
+            // recursion anchor
+            callback.accept(result);
+        } else {
+            final EngineCategoryDTO engineCategory = queue.poll();
+            final String engineId = engineCategory.getName().toLowerCase();
+
+            enginesManager.fetchAvailableVersions(
+                    engineId,
+                    versions -> {
+                        // recursively process the remaining engine categories
+                        fetchEngineSubcategories(queue,
+                                ImmutableMap.<EngineCategoryDTO, List<EngineSubCategoryDTO>> builder()
+                                        .putAll(result)
+                                        .put(engineCategory, versions)
+                                        .build(),
+                                callback);
+                    },
+                    e -> Platform.runLater(() -> new ErrorMessage("Error", e, enginesView).show()));
+        }
     }
 
     /**
@@ -161,6 +208,7 @@ public class EnginesController {
             tempFile.deleteOnExit();
             Files.write(temp, css.getBytes());
             String defaultEngineIconsCss = temp.toUri().toString();
+
             themeManager.setDefaultEngineIconsCss(defaultEngineIconsCss);
         } catch (IOException e) {
             LOGGER.warn("Could not set default engine icons.", e);

@@ -138,21 +138,12 @@ public class EnginesFilter extends AbstractFilter {
      * @return True if the given engine category fulfills the filter, false otherwise
      */
     public boolean filter(EngineCategoryDTO engineCategory) {
-        return Optional.ofNullable(searchTerm.getValueSafe()).map(
-                searchTerm -> engineCategory.getSubCategories().stream().anyMatch(engineSubCategory -> engineSubCategory
-                        .getPackages().stream().anyMatch(version -> version.getVersion().contains(searchTerm))))
+        return Optional.ofNullable(searchTerm.getValueSafe())
+                .map(searchTerm -> engineCategory.getSubCategories().stream()
+                        .anyMatch(engineSubCategory -> engineSubCategory.getPackages().stream()
+                                .anyMatch(version -> version.getVersion().toLowerCase()
+                                        .contains(searchTerm.toLowerCase()))))
                 .orElse(true);
-    }
-
-    /**
-     * Checks whether a given engine sub category tab is empty or not
-     *
-     * @param engineSubCategoryTab The engine sub category tab
-     * @return True if the given engine sub category tab is not empty, false otherwise
-     */
-    private boolean isNotEmpty(EngineSubCategoryTab engineSubCategoryTab) {
-        return engineSubCategoryTab.getEngineSubCategory().getPackages().stream()
-                .anyMatch(engineSubCategoryTab.getFilterPredicate());
     }
 
     /**
@@ -162,10 +153,12 @@ public class EnginesFilter extends AbstractFilter {
      * @return True if the given engine sub category tab fulfills the filter, false otherwise
      */
     public boolean filter(EngineSubCategoryTab engineSubCategoryTab) {
-        return isNotEmpty(engineSubCategoryTab) &&
-                Optional.ofNullable(selectedEngineCategory.getValue())
-                        .map(selectedEngineCategory -> selectedEngineCategory
-                                .equals(engineSubCategoryTab.getEngineCategory()))
-                        .orElse(true);
+        final boolean tabNotEmpty = engineSubCategoryTab.notEmpty();
+
+        final boolean selectedEngineCategoryConstraint = Optional.ofNullable(selectedEngineCategory.getValue())
+                .map(selectedEngineCategory -> selectedEngineCategory.equals(engineSubCategoryTab.getEngineCategory()))
+                .orElse(true);
+
+        return tabNotEmpty && selectedEngineCategoryConstraint;
     }
 }

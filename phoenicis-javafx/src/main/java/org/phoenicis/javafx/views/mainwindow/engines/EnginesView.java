@@ -82,7 +82,9 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
         this.availableEngines = createEngineVersion();
 
-        setSidebar(createEnginesSidebar());
+        final MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> mappedListWidgets = createListWidgets();
+
+        setSidebar(createEnginesSidebar(mappedListWidgets));
     }
 
     /**
@@ -121,7 +123,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         return availableEngines;
     }
 
-    private EnginesSidebar createEnginesSidebar() {
+    private MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> createListWidgets() {
         // initialize the engines sub category tabs
         final ExpandedList<EngineSubCategoryTab, EngineCategoryDTO> engineSubCategoryTabs = new ExpandedList<>(
                 engineCategories,
@@ -153,9 +155,13 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
                         filter.showInstalledProperty(),
                         filter.showNotInstalledProperty()));
 
-        final MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> mappedListWidgets = new MappedList<>(
-                filteredEngineSubTabs, EngineSubCategoryTab::getEngineVersionsView);
+        Bindings.bindContent(availableEngines.getTabs(), filteredEngineSubTabs);
 
+        return new MappedList<>(filteredEngineSubTabs, EngineSubCategoryTab::getEngineVersionsView);
+    }
+
+    private EnginesSidebar createEnginesSidebar(
+            MappedList<CombinedListWidget<EngineVersionDTO>, EngineSubCategoryTab> mappedListWidgets) {
         return new EnginesSidebar(filter, javaFxSettingsManager, engineCategories, mappedListWidgets);
     }
 
