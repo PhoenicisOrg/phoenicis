@@ -80,14 +80,18 @@ cd phoenicis
 mvn clean package
 ```
 
-## Fedora >= 26
+## Fedora >= 29
 
 * Install the dependencies:
 ```
-sudo dnf install git maven
+sudo dnf install git maven java-11-openjdk-devel
 ```
 
-* Install Oracle Java using the steps outlined in the [official Fedora wiki](https://fedoraproject.org/wiki/JDK_on_Fedora#Installing_Oracle_JDK_on_Fedora). Be sure to run the "update-alternatives" commands to change the default Java to Oracle's in case OpenJDK is installed. Due to Fedora's restriction on proprietary software, their OpenJFX library is missing components required for Phoenicis to run.
+* Set the Java version
+```
+export JAVA_HOME="/usr/lib/jvm/java-11-openjdk"
+sudo update-alternatives --config java
+```
 
 * Clone the repository from GitHub:
 ```
