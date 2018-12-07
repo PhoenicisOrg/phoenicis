@@ -19,7 +19,6 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
