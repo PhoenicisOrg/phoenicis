@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
     private final Function<? super F, ? extends E> mapper;
 
-    private List<E> mappedValues;
+    private final List<E> mappedValues;
 
     public MappedList(ObservableList<? extends F> source, Function<? super F, ? extends E> mapper) {
         super(source);

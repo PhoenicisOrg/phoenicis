@@ -17,7 +17,7 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
     /**
      * An array containing a number of objects that are prepended to the {@link ObservableList} <code>source</code>
      */
-    private E[] others;
+    private final E[] others;
 
     /**
      * Constructor
@@ -64,6 +64,7 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         return others.length + getSource().size();
     }
 
+    @Override
     protected void permute(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
@@ -79,6 +80,7 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         }
     }
 
+    @Override
     protected void update(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
         int to = c.getTo();
@@ -90,6 +92,7 @@ public class AdhocList<E> extends PhoenicisTransformationList<E, E> {
         }
     }
 
+    @Override
     protected void addRemove(ListChangeListener.Change<? extends E> c) {
         int from = c.getFrom();
 

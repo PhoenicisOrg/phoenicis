@@ -22,7 +22,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         this.expander = expander;
         this.expandedValues = source.stream().map(expander).collect(Collectors.toList());
 
-        fireChange(new InitialisationChange<>(0, expandedValues.size(), this));
+        fireChange(new InitialisationChange<>(0, size(), this));
     }
 
     @Override
@@ -104,6 +104,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         return position;
     }
 
+    @Override
     protected void permute(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
@@ -131,6 +132,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    @Override
     protected void update(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
         int to = c.getTo();
@@ -170,6 +172,7 @@ public class ExpandedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    @Override
     protected void addRemove(ListChangeListener.Change<? extends F> c) {
         int from = c.getFrom();
 

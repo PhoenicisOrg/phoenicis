@@ -6,6 +6,13 @@ import javafx.collections.ObservableList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A {@link ListChangeListener.Change} implementation, which is to be fired when an observable list has been
+ * initialised.
+ * The fired Change event tells all listeners that the list has been freshly populated.
+ *
+ * @param <E> The type of object inside the {@link ObservableList}
+ */
 public class InitialisationChange<E> extends ListChangeListener.Change<E> {
     private final int from;
     private final int to;
