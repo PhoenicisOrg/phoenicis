@@ -48,6 +48,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class EnginesController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final EnginesView enginesView;
+    private final RepositoryManager repositoryManager;
     private final EnginesManager enginesManager;
 
     private ThemeManager themeManager;
@@ -60,65 +61,66 @@ public class EnginesController {
         super();
 
         this.enginesView = enginesView;
+        this.repositoryManager = repositoryManager;
         this.enginesManager = enginesManager;
         this.themeManager = themeManager;
 
-        repositoryManager.addCallbacks(
+        this.repositoryManager.addCallbacks(
                 repositoryDTO -> {
-                    enginesManager.fetchAvailableEngines(
+                    this.enginesManager.fetchAvailableEngines(
                             repositoryDTO,
-                            engines -> populateView(repositoryDTO, engines),
+                            engines -> this.populateView(repositoryDTO, engines),
                             e -> Platform.runLater(
                                     () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
                 },
                 e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
-        enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
+        this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
             // TODO: better way to get engine ID
             final String engineId = engineCategoryDTO.getName().toLowerCase();
             // only if not chached
-            if (!versionsCache.containsKey(engineId)) {
-                enginesManager.fetchAvailableVersions(engineId,
+            if (!this.versionsCache.containsKey(engineId)) {
+                this.enginesManager.fetchAvailableVersions(engineId,
                         versions -> {
-                            versionsCache.put(engineId, versions);
-                            enginesView.updateVersions(engineCategoryDTO, versions);
+                            this.versionsCache.put(engineId, versions);
+                            this.enginesView.updateVersions(engineCategoryDTO, versions);
                         },
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, enginesView).show()));
+                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
             }
         });
 
-        enginesView.setOnInstallEngine(engineDTO -> {
+        this.enginesView.setOnInstallEngine(engineDTO -> {
             ConfirmMessage confirmMessage = new ConfirmMessage(
                     tr("Install {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
-                    enginesView.getContent().getScene().getWindow());
+                    this.enginesView.getContent().getScene().getWindow());
             confirmMessage.setResizable(true);
-            confirmMessage.ask(() -> enginesManager.getEngine(engineDTO.getId(),
+            confirmMessage.ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
                     engine -> {
                         engine.install(engineDTO.getSubCategory(), engineDTO.getVersion());
                         // invalidate cache and force view update to show installed version correctly
-                        versionsCache.remove(engineDTO.getId());
-                        forceViewUpdate();
+                        this.versionsCache.remove(engineDTO.getId());
+                        this.forceViewUpdate();
                     },
                     e -> Platform.runLater(
-                            () -> new ErrorMessage("Error", e, enginesView).show())));
+                            () -> new ErrorMessage("Error", e, this.enginesView).show())));
         });
 
-        enginesView.setOnDeleteEngine(engineDTO -> {
+        this.enginesView.setOnDeleteEngine(engineDTO -> {
             ConfirmMessage confirmMessage = new ConfirmMessage(
                     tr("Delete {0}", engineDTO.getVersion()),
                     tr("Are you sure you want to delete {0}?", engineDTO.getVersion()),
-                    enginesView.getContent().getScene().getWindow());
+                    this.enginesView.getContent().getScene().getWindow());
             confirmMessage.setResizable(true);
-            confirmMessage.ask(() -> enginesManager.getEngine(engineDTO.getId(),
+            confirmMessage.ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
                     engine -> {
                         engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion());
                         // invalidate cache and force view update to show deleted version correctly
-                        versionsCache.remove(engineDTO.getId());
-                        forceViewUpdate();
+                        this.versionsCache.remove(engineDTO.getId());
+                        this.forceViewUpdate();
                     },
                     e -> Platform.runLater(
-                            () -> new ErrorMessage("Error", e, enginesView).show())));
+                            () -> new ErrorMessage("Error", e, this.enginesView).show())));
         });
     }
 
@@ -199,7 +201,7 @@ public class EnginesController {
      * Forces an update of the view
      */
     private void forceViewUpdate() {
-        populateView(repositoryCache, enginesCache);
+        this.populateView(this.repositoryCache, this.enginesCache);
     }
 
     /**
