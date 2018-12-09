@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.components.skin;
 
+import org.phoenicis.javafx.components.behavior.BehaviorBase;
 import org.phoenicis.javafx.components.control.ControlBase;
 
 /**
@@ -15,11 +16,8 @@ public abstract class SkinBase<C extends ControlBase<C, S>, S extends SkinBase<C
      *
      * @param control The control belonging to the skin
      */
-    protected SkinBase(C control) {
+    SkinBase(C control) {
         super(control);
-
-        // initialise the skin
-        initialise();
     }
 
     /**
@@ -27,6 +25,16 @@ public abstract class SkinBase<C extends ControlBase<C, S>, S extends SkinBase<C
      * This method is performed before the behavior is created and initialised
      */
     public abstract void initialise();
+
+    /**
+     * Creates the default behavior belonging to this {@link S}.
+     * If the skin has no behavior null is returned
+     *
+     * @return The default behavior belonging to this skin
+     */
+    public BehaviorBase<C, ?, ?> createDefaultBehavior() {
+        return null;
+    }
 
     /**
      * Gets the control to which this skin is applied
