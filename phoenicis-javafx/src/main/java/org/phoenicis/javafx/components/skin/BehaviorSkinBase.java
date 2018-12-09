@@ -22,7 +22,7 @@ public abstract class BehaviorSkinBase<C extends ControlBase<C, S>, S extends Be
      *
      * @param control The control belonging to the skin
      */
-    protected BehaviorSkinBase(C control) {
+    BehaviorSkinBase(C control) {
         super(control);
     }
 
@@ -38,8 +38,10 @@ public abstract class BehaviorSkinBase<C extends ControlBase<C, S>, S extends Be
      */
     @Override
     public BehaviorBase<C, ?, ?> createDefaultBehavior() {
+        // create the behavior
         this.behavior = createBehavior();
 
+        // initialise the behavior
         behavior.initialise();
 
         return behavior;
