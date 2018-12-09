@@ -161,9 +161,11 @@ public class EnginesFilter extends AbstractFilter {
      * @return True if the given engine category fulfills the filter, false otherwise
      */
     public boolean filter(EngineCategoryDTO engineCategory) {
-        return searchTerm.map(
-                searchTerm -> engineCategory.getSubCategories().stream().anyMatch(engineSubCategory -> engineSubCategory
-                        .getPackages().stream().anyMatch(version -> version.getVersion().contains(searchTerm))))
+        return searchTerm
+                .map(searchTerm -> engineCategory.getSubCategories().stream()
+                        .anyMatch(engineSubCategory -> engineSubCategory.getPackages().stream()
+                                .anyMatch(version -> version.getVersion().toLowerCase()
+                                        .contains(searchTerm.toLowerCase()))))
                 .orElse(true);
     }
 
