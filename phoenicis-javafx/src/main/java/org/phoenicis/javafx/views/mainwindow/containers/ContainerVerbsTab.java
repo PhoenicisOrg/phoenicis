@@ -30,7 +30,7 @@ public class ContainerVerbsTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public ContainerVerbsTab(ContainerDTO container, VerbsManager verbsManager,
-            ApplicationDTO engineTools) {
+            ApplicationDTO verbs) {
         super(tr("Verbs"));
 
         this.container = container;
@@ -38,7 +38,7 @@ public class ContainerVerbsTab extends Tab {
 
         this.setClosable(false);
 
-        this.populate(engineTools);
+        this.populate(verbs);
     }
 
     private void populate(ApplicationDTO verbs) {
