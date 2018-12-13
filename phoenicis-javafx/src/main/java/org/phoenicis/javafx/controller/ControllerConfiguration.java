@@ -88,6 +88,7 @@ public class ControllerConfiguration {
                 containersConfiguration.containerEngineController(),
                 repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.engineSettingsManager(),
+                enginesConfiguration.verbsManager(),
                 enginesConfiguration.engineToolsManager());
     }
 

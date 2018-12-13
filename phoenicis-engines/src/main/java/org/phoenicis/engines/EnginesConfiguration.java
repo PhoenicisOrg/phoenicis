@@ -44,6 +44,11 @@ public class EnginesConfiguration {
     }
 
     @Bean
+    public VerbsManager verbsManager() {
+        return new VerbsManager(scriptsConfiguration.scriptInterpreter());
+    }
+
+    @Bean
     public EngineToolsManager engineToolsManager() {
         return new EngineToolsManager(scriptsConfiguration.scriptInterpreter());
     }

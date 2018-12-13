@@ -24,6 +24,7 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
@@ -35,8 +36,10 @@ public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
 
     public ContainerPanel(WinePrefixContainerDTO containerEntity,
+            VerbsManager verbsManager,
             EngineToolsManager engineToolsManager,
             Optional<List<EngineSetting>> engineSettings,
+            Optional<ApplicationDTO> verbs,
             Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
         TabPane tabPane = new TabPane();
@@ -49,6 +52,11 @@ public class ContainerPanel extends DetailsView {
             ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
                     engineSettings.get());
             tabPane.getTabs().add(settingsTab);
+        }
+        if (verbs.isPresent()) {
+            ContainerVerbsTab verbsTab = new ContainerVerbsTab(containerEntity, verbsManager,
+                    verbs.get());
+            tabPane.getTabs().add(verbsTab);
         }
         if (engineTools.isPresent()) {
             ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,

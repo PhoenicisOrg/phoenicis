@@ -19,13 +19,14 @@
 package org.phoenicis.javafx.controller.containers;
 
 import javafx.application.Platform;
+import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
@@ -49,7 +50,9 @@ public class ContainersController {
     private final ContainersManager containersManager;
     private EngineSettingsManager engineSettingsManager;
     private final EngineToolsManager engineToolsManager;
+    private final VerbsManager verbsManager;
     private Map<String, List<EngineSetting>> engineSettings; // engine settings per engine
+    private Map<String, ApplicationDTO> verbs; // Verbs per engine
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
@@ -57,16 +60,23 @@ public class ContainersController {
             ContainerEngineController containerEngineController,
             RepositoryManager repositoryManager,
             EngineSettingsManager engineSettingsManager,
+            VerbsManager verbsManager,
             EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
+        this.verbsManager = verbsManager;
         this.engineToolsManager = engineToolsManager;
 
         this.engineSettings = new HashMap<>();
         repositoryManager.addCallbacks(this::updateEngineSettings,
                 e -> Platform.runLater(
                         () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
+
+        this.verbs = new HashMap<>();
+        repositoryManager.addCallbacks(this::updateVerbs,
+                e -> Platform
+                        .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
 
         this.engineTools = new HashMap<>();
         repositoryManager.addCallbacks(this::updateEngineTools,
@@ -84,8 +94,10 @@ public class ContainersController {
             final String engineId = containerDTO.getEngine().toLowerCase();
             final ContainerPanel panel = new ContainerPanel(
                     (WinePrefixContainerDTO) containerDTO,
+                    verbsManager,
                     engineToolsManager,
                     Optional.ofNullable(engineSettings.get(engineId)),
+                    Optional.ofNullable(verbs.get(engineId)),
                     Optional.ofNullable(engineTools.get(engineId)),
                     containerEngineController);
 
@@ -149,6 +161,11 @@ public class ContainersController {
                 engineSettings -> Platform.runLater(() -> this.engineSettings = engineSettings),
                 e -> Platform
                         .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
+    }
+
+    private void updateVerbs(RepositoryDTO repositoryDTO) {
+        this.verbsManager.fetchAvailableVerbs(repositoryDTO,
+                verbs -> Platform.runLater(() -> this.verbs = verbs));
     }
 
     private void updateEngineTools(RepositoryDTO repositoryDTO) {
