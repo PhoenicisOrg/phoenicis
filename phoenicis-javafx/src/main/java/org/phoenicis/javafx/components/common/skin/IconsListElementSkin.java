@@ -33,7 +33,7 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
      */
     @Override
     public void initialise() {
-        final Label title = createTitle();
+        final Label title = createLabel();
         final Region miniature = createMiniature();
 
         final VBox container = new VBox(miniature, title);
@@ -59,7 +59,7 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
      *
      * @return A label with the title of the list element
      */
-    private Label createTitle() {
+    private Label createLabel() {
         final Label label = new Label();
 
         label.getStyleClass().add("iconListMiniatureLabel");
@@ -102,10 +102,10 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
      */
     private void updateEnabled(final Region miniature) {
         if (!getControl().isEnabled()) {
-            final ColorAdjust grayscale = new ColorAdjust();
-            grayscale.setSaturation(-1);
+            final ColorAdjust grayScale = new ColorAdjust();
+            grayScale.setSaturation(-1);
 
-            miniature.setEffect(grayscale);
+            miniature.setEffect(grayScale);
         } else {
             miniature.setEffect(null);
         }
