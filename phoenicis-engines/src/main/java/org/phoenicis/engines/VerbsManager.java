@@ -61,7 +61,7 @@ public class VerbsManager {
                 "include([\"engines\", \"" + engineId + "\", \"verbs\", \"" + verbId + "\"]);",
                 ignored -> interactiveScriptSession.eval("new Verb()", output -> {
                     final Verb verbObject = (Verb) output;
-                    verbObject.install(container, "");
+                    verbObject.install(container);
                     doneCallback.run();
                 }, errorCallback), errorCallback);
     }
