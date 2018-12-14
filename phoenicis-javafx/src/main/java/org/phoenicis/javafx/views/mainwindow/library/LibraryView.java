@@ -33,7 +33,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
+import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;

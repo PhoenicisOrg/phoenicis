@@ -1,7 +1,8 @@
-package org.phoenicis.javafx.views.common.lists;
+package org.phoenicis.javafx.collections;
 
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import org.phoenicis.javafx.collections.change.InitialisationChange;
 
 import java.util.ArrayList;
 import java.util.List;

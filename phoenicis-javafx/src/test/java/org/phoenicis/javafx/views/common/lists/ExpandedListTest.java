@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.junit.Test;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
+import org.phoenicis.javafx.collections.ExpandedList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

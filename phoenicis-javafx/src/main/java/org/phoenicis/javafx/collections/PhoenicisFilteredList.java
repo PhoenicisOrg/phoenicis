@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.lists;
+package org.phoenicis.javafx.collections;
 
 import javafx.beans.NamedArg;
 import javafx.beans.property.ObjectProperty;

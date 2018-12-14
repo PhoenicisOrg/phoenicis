@@ -25,7 +25,7 @@ import javafx.scene.CacheHint;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import org.phoenicis.javafx.views.common.lists.MappedList;
+import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidget;
 
 import java.util.Collection;

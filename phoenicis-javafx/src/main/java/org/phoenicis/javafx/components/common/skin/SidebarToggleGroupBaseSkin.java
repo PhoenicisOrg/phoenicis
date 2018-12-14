@@ -8,8 +8,8 @@ import javafx.scene.control.ToggleGroup;
 import org.phoenicis.javafx.components.common.behavior.SidebarToggleGroupBehavior;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
-import org.phoenicis.javafx.views.common.lists.AdhocList;
-import org.phoenicis.javafx.views.common.lists.MappedList;
+import org.phoenicis.javafx.collections.AdhocList;
+import org.phoenicis.javafx.collections.MappedList;
 
 import java.util.Optional;
 

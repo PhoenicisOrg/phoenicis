@@ -6,7 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
-import org.phoenicis.javafx.views.common.lists.AdhocList;
+import org.phoenicis.javafx.collections.AdhocList;
 
 /**
  * A skin for the {@link SidebarGroup} component
