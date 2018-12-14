@@ -82,7 +82,7 @@ public class CompactListElement<E> extends GridPane {
 
     public static <T> CompactListElement<T> create(ListWidgetEntry<T> item) {
         return new CompactListElement<>(item.getItem(), item.getIconUri(), item.getTitle(),
-                item.getAdditionalInformation());
+                Optional.ofNullable(item.getAdditionalInformation()));
     }
 
     /**

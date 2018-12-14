@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,14 +71,14 @@ public class ListWidgetEntry<E> {
      * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget} or a
      * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
      */
-    private Optional<List<AdditionalListWidgetInformation>> additionalInformation;
+    private List<AdditionalListWidgetInformation> additionalInformation;
 
     /**
      * An optional list of additional detailed information for this entry.
      * These information are only shown inside a
      * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
      */
-    private Optional<List<AdditionalListWidgetInformation>> detailedInformation;
+    private List<AdditionalListWidgetInformation> detailedInformation;
 
     /**
      * True if this entry is enabled
@@ -96,8 +97,8 @@ public class ListWidgetEntry<E> {
      * @param detailedInformation An optional list of additional detailed information to this entry
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            Optional<List<AdditionalListWidgetInformation>> additionalInformation,
-            Optional<List<AdditionalListWidgetInformation>> detailedInformation) {
+            List<AdditionalListWidgetInformation> additionalInformation,
+            List<AdditionalListWidgetInformation> detailedInformation) {
         this(item, iconUri, defaultIconUri, title, additionalInformation, detailedInformation, true);
     }
 
@@ -113,8 +114,8 @@ public class ListWidgetEntry<E> {
      * @param enabled True if this entry is enabled
      */
     public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            Optional<List<AdditionalListWidgetInformation>> additionalInformation,
-            Optional<List<AdditionalListWidgetInformation>> detailedInformation, boolean enabled) {
+            List<AdditionalListWidgetInformation> additionalInformation,
+            List<AdditionalListWidgetInformation> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
@@ -131,7 +132,7 @@ public class ListWidgetEntry<E> {
 
     public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
         return new ListWidgetEntry<>(application, application.getMainMiniature(), DEFAULT_MINIATURE,
-                application.getName(), Optional.empty(), Optional.empty());
+                application.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
     public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
@@ -157,22 +158,22 @@ public class ListWidgetEntry<E> {
         final Optional<URI> shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
 
         return new ListWidgetEntry<>(container, shortcutMiniature, CONTAINER_MINIATURE,
-                container.getName(), Optional.empty(), Optional.empty());
+                container.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
     public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
         return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
-                DEFAULT_MINIATURE, shortcut.getInfo().getName(), Optional.empty(), Optional.empty());
+                DEFAULT_MINIATURE, shortcut.getInfo().getName(), Collections.emptyList(), Collections.emptyList());
     }
 
     public static ListWidgetEntry<InstallationDTO> create(InstallationDTO installation) {
         return new ListWidgetEntry<>(installation, Optional.ofNullable(installation.getMiniature()),
-                DEFAULT_MINIATURE, installation.getName(), Optional.empty(), Optional.empty());
+                DEFAULT_MINIATURE, installation.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
     public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
         return new ListWidgetEntry<>(engineVersion, Optional.empty(), WINE_MINIATURE,
-                engineVersion.getVersion(), Optional.empty(), Optional.empty(), installed);
+                engineVersion.getVersion(), Collections.emptyList(), Collections.emptyList(), installed);
     }
 
     /**
@@ -207,7 +208,7 @@ public class ListWidgetEntry<E> {
      *
      * @return The additional information for this entry
      */
-    public Optional<List<AdditionalListWidgetInformation>> getAdditionalInformation() {
+    public List<AdditionalListWidgetInformation> getAdditionalInformation() {
         return this.additionalInformation;
     }
 
@@ -216,7 +217,7 @@ public class ListWidgetEntry<E> {
      *
      * @return The additional detailed information for this entry
      */
-    public Optional<List<AdditionalListWidgetInformation>> getDetailedInformation() {
+    public List<AdditionalListWidgetInformation> getDetailedInformation() {
         return this.detailedInformation;
     }
 
@@ -231,6 +232,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * create a miniature by composing segments of miniatures
+     *
      * @param miniatures
      * @return created miniature
      */
@@ -261,6 +263,7 @@ public class ListWidgetEntry<E> {
 
     /**
      * saves bufferedImage to a temporary file
+     *
      * @param bufferedImage
      * @param name
      * @return URI to the saved file
