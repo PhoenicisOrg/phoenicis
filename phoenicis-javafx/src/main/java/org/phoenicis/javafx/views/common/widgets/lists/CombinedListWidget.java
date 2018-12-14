@@ -7,11 +7,11 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.components.common.control.IconsListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListElement;
 import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListWidget;
 
 import java.util.Collection;
@@ -92,7 +92,7 @@ public class CombinedListWidget<E> extends VBox implements ListWidget<E> {
             select(element);
         };
 
-        this.iconsList = new IconsListWidget<>(item -> IconsListElement.create(converter.apply(item)), proxy);
+        this.iconsList = new IconsListWidget<>(item -> new IconsListElement<>(converter.apply(item)), proxy);
         this.compactList = new CompactListWidget<>(item -> CompactListElement.create(converter.apply(item)), proxy);
         this.detailsList = new DetailsListWidget<>(item -> DetailsListElement.create(converter.apply(item)), proxy);
 
