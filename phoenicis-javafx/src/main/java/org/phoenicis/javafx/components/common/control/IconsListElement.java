@@ -8,7 +8,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListWidget;
 import java.net.URI;
 
 /**
- * A list element component shown inside a {@link IconsListWidget}
+ * A list element component shown inside an {@link IconsListWidget}
  *
  * @param <E> The concrete type of the element shown in this list element
  */
@@ -19,7 +19,7 @@ public class IconsListElement<E> extends ControlBase<IconsListElement<E>, IconsL
     private final ObjectProperty<E> item;
 
     /**
-     * The {@link URI} leading to an image of the miniature of the item
+     * The {@link URI} leading to the miniature image of the item
      */
     private final ObjectProperty<URI> miniatureUri;
 
@@ -29,7 +29,7 @@ public class IconsListElement<E> extends ControlBase<IconsListElement<E>, IconsL
     private final StringProperty title;
 
     /**
-     * The enables status of the item.
+     * The enabled status of the item.
      * For engines this is true if the engine has been installed
      */
     private final BooleanProperty enabled;
