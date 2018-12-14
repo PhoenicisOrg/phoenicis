@@ -20,12 +20,12 @@ import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * tab to install Verbs for a given container
+ */
 public class ContainerVerbsTab extends Tab {
-    private static final String CONFIGURATION_PANE_CSS_CLASS = "containerConfigurationPane";
-    private static final String TITLE_CSS_CLASS = "title";
-
     private final ContainerDTO container;
-    private VerbsManager verbsManager;
+    private final VerbsManager verbsManager;
 
     private final List<Node> lockableElements = new ArrayList<>();
 
@@ -43,9 +43,9 @@ public class ContainerVerbsTab extends Tab {
 
     private void populate(ApplicationDTO verbs) {
         final VBox verbsPane = new VBox();
-        final Text title = new TextWithStyle(tr("Verbs"), TITLE_CSS_CLASS);
+        final Text title = new TextWithStyle(tr("Verbs"), "title");
 
-        verbsPane.getStyleClass().add(CONFIGURATION_PANE_CSS_CLASS);
+        verbsPane.getStyleClass().add("containerConfigurationPane");
         verbsPane.getChildren().add(title);
 
         final TilePane verbsContentPane = new TilePane();
