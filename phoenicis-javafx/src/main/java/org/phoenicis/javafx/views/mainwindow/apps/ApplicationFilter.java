@@ -22,8 +22,9 @@ public class ApplicationFilter extends AbstractFilter {
 
     private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
 
-    private Optional<String> filterText;
-    private Optional<CategoryDTO> filterCategory;
+    private StringProperty filterText;
+
+    private ObjectProperty<CategoryDTO> filterCategory;
 
     private BooleanProperty containCommercialApplications;
 
@@ -45,46 +46,21 @@ public class ApplicationFilter extends AbstractFilter {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.filterTextMatcher = filterTextMatcher;
 
-        this.filterText = Optional.empty();
-        this.filterCategory = Optional.empty();
+        this.filterText = new SimpleStringProperty("");
+        this.filterCategory = new SimpleObjectProperty<>();
 
         this.containCommercialApplications = new SimpleBooleanProperty();
-        this.containCommercialApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
-        this.containRequiresPatchApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containTestingApplications = new SimpleBooleanProperty();
-        this.containTestingApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
-        this.containAllOSCompatibleApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
     }
 
-    /**
-     * Sets the filter text inside the filter and triggers a filter update
-     *
-     * @param filterText The new entered filter text
-     */
-    public void setFilterText(String filterText) {
-        this.filterText = Optional.ofNullable(filterText);
-
-        this.triggerFilterChanged();
+    public StringProperty filterTextProperty() {
+        return this.filterText;
     }
 
-    /**
-     * Sets the selected category inside the filter and triggers a filter update
-     *
-     * @param category The new selected category, or null if no/all category has been selected
-     */
-    public void setFilterCategory(CategoryDTO category) {
-        this.filterCategory = Optional.ofNullable(category);
-
-        this.triggerFilterChanged();
+    public ObjectProperty<CategoryDTO> filterCategoryProperty() {
+        return this.filterCategory;
     }
 
     public BooleanProperty containCommercialApplicationsProperty() {
@@ -99,19 +75,8 @@ public class ApplicationFilter extends AbstractFilter {
         return this.containTestingApplications;
     }
 
-    public BooleanProperty containAllOSCompatibleApplications() {
+    public BooleanProperty containAllOSCompatibleApplicationsProperty() {
         return this.containAllOSCompatibleApplications;
-    }
-
-    /**
-     * Clears the <code>filterText</code> and the <code>filterCategory</code>.
-     * Afterwards a filter update gets triggered
-     */
-    public void clearAll() {
-        this.filterText = Optional.empty();
-        this.filterCategory = Optional.empty();
-
-        this.triggerFilterChanged();
     }
 
     /**
@@ -124,7 +89,8 @@ public class ApplicationFilter extends AbstractFilter {
         /*
          * A category can be shown, if it contains at least one visible application
          */
-        return category.getApplications().stream().anyMatch(application -> filter(application, true));
+        return category.getApplications().stream().anyMatch(
+                application -> filter(application, true));
     }
 
     /**
@@ -153,9 +119,11 @@ public class ApplicationFilter extends AbstractFilter {
          * - its text matches the filter text
          */
         return (ignoreFilterCategoryTest
-                || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
-                && application.getScripts().stream().anyMatch(script -> filter(script))
-                && filterText.map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
+                || Optional.ofNullable(filterCategory.getValue())
+                        .map(category -> category.getApplications().contains(application)).orElse(true))
+                && application.getScripts().stream().anyMatch(this::filter)
+                && Optional.ofNullable(filterText.getValue())
+                        .map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
     }
 
     /**

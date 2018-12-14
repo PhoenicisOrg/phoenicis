@@ -1,17 +1,20 @@
 package org.phoenicis.javafx.components.behavior;
 
+import javafx.animation.PauseTransition;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.phoenicis.javafx.components.control.SearchBox;
 import org.phoenicis.javafx.components.skin.SearchBoxSkin;
 
-import java.util.Optional;
-import java.util.function.Consumer;
-
 /**
  * The behavior for the {@link SearchBox} component
  */
 public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
+    /**
+     * Functionality used to delay the search execution for a certain amount of time
+     */
+    private final PauseTransition pause;
+
     /**
      * Constructor
      *
@@ -20,6 +23,8 @@ public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, Se
      */
     public SearchBoxBehavior(SearchBox control, SearchBoxSkin skin) {
         super(control, skin);
+
+        this.pause = new PauseTransition();
     }
 
     /**
@@ -27,24 +32,26 @@ public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, Se
      */
     @Override
     public void initialise() {
+        pause.durationProperty().bind(getControl().delayProperty());
+
         // add an input listener to the text field
-        getSearchField().textProperty()
-                .addListener(
-                        event -> getOnClear().ifPresent(onSearch -> getOnSearch().accept(getSearchField().getText())));
+        getSearchField().textProperty().addListener(event -> {
+            pause.setOnFinished(pauseEvent -> {
+                final String searchTerm = getSearchField().getText().toLowerCase();
+
+                getControl().setSearchTerm(searchTerm);
+            });
+
+            // delay the adoption of the new search term
+            pause.playFromStart();
+        });
 
         // add a mouse click listener to the clear button
         getClearButton().setOnMouseClicked(event -> {
             getSearchField().clear();
-            getOnClear().ifPresent(Runnable::run);
+
+            getControl().searchTermProperty().set("");
         });
-    }
-
-    private Consumer<String> getOnSearch() {
-        return getControl().getOnSearch();
-    }
-
-    private Optional<Runnable> getOnClear() {
-        return Optional.ofNullable(getControl().getOnClear());
     }
 
     private TextField getSearchField() {

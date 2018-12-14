@@ -16,10 +16,12 @@ import java.util.List;
 public class InitialisationChange<E> extends ListChangeListener.Change<E> {
     private final int from;
     private final int to;
+
     private boolean invalid = true;
 
     public InitialisationChange(int from, int to, ObservableList<E> list) {
         super(list);
+
         this.from = from;
         this.to = to;
     }

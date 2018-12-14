@@ -1,5 +1,9 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.phoenicis.javafx.views.AbstractFilter;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -16,13 +20,13 @@ public class LibraryFilter extends AbstractFilter {
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private Optional<String> searchTerm;
+    private final StringProperty searchTerm;
 
     /**
      * The selected shortcut category.
      * If no shortcut category has been selected, this value is {@link Optional#empty()}.
      */
-    private Optional<ShortcutCategoryDTO> selectedShortcutCategory;
+    private final ObjectProperty<ShortcutCategoryDTO> selectedShortcutCategory;
 
     /**
      * Constructor.
@@ -31,69 +35,45 @@ public class LibraryFilter extends AbstractFilter {
     public LibraryFilter() {
         super();
 
-        this.searchTerm = Optional.empty();
-        this.selectedShortcutCategory = Optional.empty();
-    }
-
-    /**
-     * Sets the search term to the given string.
-     *
-     * @param searchTerm The new search term
-     */
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = Optional.of(searchTerm);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Clears the search term
-     */
-    public void clearSearchTerm() {
-        this.searchTerm = Optional.empty();
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Sets the selected shortcut category
-     * @param shortcutCategory The shortcut category, that has been selected
-     */
-    public void setSelectedShortcutCategory(ShortcutCategoryDTO shortcutCategory) {
-        this.selectedShortcutCategory = Optional.ofNullable(shortcutCategory);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Clears both the search term and the selected shortcut category
-     */
-    public void clear() {
-        this.searchTerm = Optional.empty();
-        this.selectedShortcutCategory = Optional.empty();
+        this.searchTerm = new SimpleStringProperty("");
+        this.selectedShortcutCategory = new SimpleObjectProperty<>();
     }
 
     /**
      * Filters a given shortcut category
+     *
      * @param shortcutCategory The to be filtered shortcut category
      * @return True if the shortcut category should be shown, false otherwise
      */
     public boolean filter(ShortcutCategoryDTO shortcutCategory) {
-        return searchTerm.map(searchTerm -> shortcutCategory.getShortcuts().stream().anyMatch(this::filter))
+        return Optional.ofNullable(searchTerm.getValueSafe())
+                .map(searchTerm -> shortcutCategory.getShortcuts().stream().anyMatch(this::filter))
                 .orElse(true);
     }
 
     /**
      * Filters a given shortcut
+     *
      * @param shortcut The to be filtered shortcut
      * @return True if the shortcut should be shown, false otherwise
      */
     public boolean filter(ShortcutDTO shortcut) {
-        return searchTerm
+        final boolean searchTermConstraint = Optional.ofNullable(searchTerm.getValueSafe())
                 .map(searchTerm -> shortcut.getInfo().getName().toLowerCase().contains(searchTerm.toLowerCase()))
-                .orElse(true) &&
-                selectedShortcutCategory
-                        .map(selectedShortcutCategory -> selectedShortcutCategory.getShortcuts().contains(shortcut))
-                        .orElse(true);
+                .orElse(true);
+
+        final boolean selectedShortcutCategoryConstraint = Optional.ofNullable(selectedShortcutCategory.getValue())
+                .map(selectedShortcutCategory -> selectedShortcutCategory.getShortcuts().contains(shortcut))
+                .orElse(true);
+
+        return searchTermConstraint && selectedShortcutCategoryConstraint;
+    }
+
+    public StringProperty searchTermProperty() {
+        return searchTerm;
+    }
+
+    public ObjectProperty<ShortcutCategoryDTO> selectedShortcutCategoryProperty() {
+        return selectedShortcutCategory;
     }
 }
