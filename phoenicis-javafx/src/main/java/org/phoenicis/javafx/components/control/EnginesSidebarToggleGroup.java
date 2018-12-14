@@ -14,6 +14,7 @@ public class EnginesSidebarToggleGroup
      * Constructor
      *
      * @param title The title of the engines sidebar toggle group
+     * @param elements An observable list containing the elements of the sidebar toggle group
      */
     public EnginesSidebarToggleGroup(String title, ObservableList<EngineCategoryDTO> elements) {
         super(title, elements);

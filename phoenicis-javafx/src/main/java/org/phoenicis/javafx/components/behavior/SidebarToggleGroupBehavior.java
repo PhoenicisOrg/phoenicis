@@ -48,18 +48,21 @@ public class SidebarToggleGroupBehavior<E, C extends SidebarToggleGroupBase<E, C
         final ToggleGroup toggleGroup = getSkin().getToggleGroup();
 
         if (toggleGroup.getSelectedToggle() == null && !toggleGroup.getToggles().isEmpty()) {
-            if (getControl().selectedElementProperty().getValue() != null &&
-                    getControl().getElements().contains(getControl().selectedElementProperty().getValue())) {
+            final E selectedElement = getControl().selectedElementProperty().getValue();
+
+            if (selectedElement != null && getControl().getElements().contains(selectedElement)) {
                 // 1 if an "all" button exists, 0 otherwise
                 final int offset = toggleGroup.getToggles().size() - getControl().getElements().size();
 
                 final int index = getControl().getElements().indexOf(getControl().selectedElementProperty().getValue());
 
+                // reselect the previously selected item
                 toggleGroup.selectToggle(toggleGroup.getToggles().get(offset + index));
 
             } else {
                 final Toggle firstToggle = toggleGroup.getToggles().get(0);
 
+                // trigger the first item in the toggle group
                 if (firstToggle instanceof ToggleButton) {
                     ((ToggleButton) firstToggle).fire();
                 }

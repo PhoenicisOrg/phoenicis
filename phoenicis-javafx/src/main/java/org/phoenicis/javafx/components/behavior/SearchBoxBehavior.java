@@ -10,6 +10,9 @@ import org.phoenicis.javafx.components.skin.SearchBoxSkin;
  * The behavior for the {@link SearchBox} component
  */
 public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, SearchBoxBehavior> {
+    /**
+     * Functionality used to delay the search execution for a certain amount of time
+     */
     private final PauseTransition pause;
 
     /**
@@ -40,7 +43,7 @@ public class SearchBoxBehavior extends BehaviorBase<SearchBox, SearchBoxSkin, Se
             });
 
             // delay the adoption of the new search term
-            this.pause.playFromStart();
+            pause.playFromStart();
         });
 
         // add a mouse click listener to the clear button

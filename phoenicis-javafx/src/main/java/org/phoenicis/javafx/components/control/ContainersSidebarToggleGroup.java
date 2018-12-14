@@ -14,6 +14,7 @@ public class ContainersSidebarToggleGroup extends
      * Constructor
      *
      * @param title The title of the containers sidebar toggle group
+     * @param elements An observable list containing the elements of the sidebar toggle group
      */
     public ContainersSidebarToggleGroup(String title, ObservableList<ContainerCategoryDTO> elements) {
         super(title, elements);

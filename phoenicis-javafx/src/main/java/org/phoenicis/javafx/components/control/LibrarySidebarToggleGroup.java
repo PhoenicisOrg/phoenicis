@@ -14,6 +14,7 @@ public class LibrarySidebarToggleGroup
      * Constructor
      *
      * @param title The title of the library sidebar toggle group
+     * @param elements An observable list containing the elements of the sidebar toggle group
      */
     public LibrarySidebarToggleGroup(String title, ObservableList<ShortcutCategoryDTO> elements) {
         super(title, elements);

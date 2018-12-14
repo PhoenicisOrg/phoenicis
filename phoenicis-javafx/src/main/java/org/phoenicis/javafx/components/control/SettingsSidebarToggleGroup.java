@@ -14,6 +14,7 @@ public class SettingsSidebarToggleGroup extends
      * Constructor
      *
      * @param title The title of the settings sidebar toggle group
+     * @param elements An observable list containing the elements of the sidebar toggle group
      */
     public SettingsSidebarToggleGroup(String title, ObservableList<SettingsSidebarItem> elements) {
         super(title, elements);

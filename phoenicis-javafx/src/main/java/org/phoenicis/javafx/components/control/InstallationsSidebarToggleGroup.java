@@ -14,6 +14,7 @@ public class InstallationsSidebarToggleGroup extends
      * Constructor
      *
      * @param title The title of the installations sidebar toggle group
+     * @param elements An observable list containing the elements of the sidebar toggle group
      */
     public InstallationsSidebarToggleGroup(String title, ObservableList<InstallationCategoryDTO> elements) {
         super(title, elements);
