@@ -165,11 +165,11 @@ public class ContainersController {
 
     private void updateVerbs(RepositoryDTO repositoryDTO) {
         this.verbsManager.fetchAvailableVerbs(repositoryDTO,
-                verbs -> Platform.runLater(() -> this.verbs = verbs));
+                verbs -> this.verbs = verbs);
     }
 
     private void updateEngineTools(RepositoryDTO repositoryDTO) {
         this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
-                engineTools -> Platform.runLater(() -> this.engineTools = engineTools));
+                engineTools -> this.engineTools = engineTools);
     }
 }
