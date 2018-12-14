@@ -2,7 +2,7 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import org.phoenicis.javafx.components.control.SettingsSidebarToggleGroup;
+import org.phoenicis.javafx.components.setting.control.SettingsSidebarToggleGroup;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 
 import java.util.function.Consumer;
