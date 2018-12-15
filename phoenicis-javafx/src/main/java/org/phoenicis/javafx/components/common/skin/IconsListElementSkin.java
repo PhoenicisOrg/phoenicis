@@ -33,10 +33,7 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
      */
     @Override
     public void initialise() {
-        final Label title = createLabel();
-        final Region miniature = createMiniature();
-
-        final VBox container = new VBox(miniature, title);
+        final VBox container = new VBox(createMiniature(), createLabel());
         container.getStyleClass().add("iconListElement");
 
         container.widthProperty().addListener((observable, oldValue, newValue) -> container

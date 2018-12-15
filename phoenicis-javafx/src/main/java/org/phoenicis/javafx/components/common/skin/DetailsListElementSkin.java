@@ -36,11 +36,9 @@ public class DetailsListElementSkin<E> extends SkinBase<DetailsListElement<E>, D
         final List<ColumnConstraints> constraints = new ArrayList<>();
 
         // add the title label
-        final Label title = createTitle();
+        container.add(createTitle(), 0, 0);
 
         constraints.add(new ColumnConstraintsWithPercentage(30));
-
-        container.add(title, 0, 0);
 
         // TODO: the skin should react to changes done to the additional information list
         // TODO: the skin should react to changes done to the detailed information list
@@ -50,9 +48,9 @@ public class DetailsListElementSkin<E> extends SkinBase<DetailsListElement<E>, D
                     informationLabel.setWrapText(true);
                     informationLabel.getStyleClass().add("information");
 
-                    constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
-
                     container.add(informationLabel, constraints.size(), 0);
+
+                    constraints.add(new ColumnConstraintsWithPercentage(information.getWidth()));
                 });
 
         // set the last constraint to fill the remaining space
