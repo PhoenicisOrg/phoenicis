@@ -20,7 +20,7 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
     private static final PseudoClass SELECTED_PSEUDO_CLASS = PseudoClass.getPseudoClass("selected");
 
     /**
-     * Constructor for all SkinBase instances
+     * Constructor
      *
      * @param control The control belonging to the skin
      */
