@@ -27,24 +27,6 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
 
             return newElement;
         });
-
-        getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                final int newValueIndex = getControl().getElements().indexOf(newValue);
-
-                IconsListElement<E> newElement = mappedElements.get(newValueIndex);
-
-                newElement.setSelected(true);
-            }
-
-            if (oldValue != null) {
-                final int oldValueIndex = getControl().getElements().indexOf(oldValue);
-
-                IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
-
-                oldElement.setSelected(false);
-            }
-        });
     }
 
     @Override
@@ -61,6 +43,24 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         scrollPane.setCacheHint(CacheHint.QUALITY);
 
         container.prefWidthProperty().bind(scrollPane.widthProperty());
+
+        getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue != null) {
+                final int oldValueIndex = getControl().getElements().indexOf(oldValue);
+
+                IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
+
+                oldElement.setSelected(false);
+            }
+
+            if (newValue != null) {
+                final int newValueIndex = getControl().getElements().indexOf(newValue);
+
+                IconsListElement<E> newElement = mappedElements.get(newValueIndex);
+
+                newElement.setSelected(true);
+            }
+        });
 
         Bindings.bindContent(container.getChildren(), mappedElements);
 
