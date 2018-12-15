@@ -8,8 +8,17 @@ import javafx.scene.layout.FlowPane;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.IconsListElement;
 import org.phoenicis.javafx.components.common.control.IconsListWidget;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
+/**
+ * The skin for the {@link IconsListWidget} component
+ *
+ * @param <E> The concrete type of the elements shown in this list widget
+ */
 public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsListWidgetSkin<E>> {
+    /**
+     * Mapped list between the input {@link ListWidgetEntry} and {@link IconsListElement}
+     */
     private final ObservableList<IconsListElement<E>> mappedElements;
 
     /**
@@ -29,22 +38,37 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
-        final FlowPane container = new FlowPane();
-
-        container.setPrefHeight(0);
-        container.setPrefWidth(0);
-
-        final ScrollPane scrollPane = new ScrollPane(container);
+        final ScrollPane scrollPane = new ScrollPane();
         scrollPane.getStyleClass().add("iconListWidget");
 
         scrollPane.setCache(true);
         scrollPane.setCacheHint(CacheHint.QUALITY);
 
-        container.prefWidthProperty().bind(scrollPane.widthProperty());
+        scrollPane.setContent(createContent(scrollPane));
 
+        getChildren().addAll(scrollPane);
+    }
+
+    /**
+     * Creates the {@link FlowPane} which contains the icons of the icons list
+     *
+     * @param container The scroll pane container which will contain the {@link FlowPane}
+     * @return The new {@link FlowPane}
+     */
+    private FlowPane createContent(final ScrollPane container) {
+        final FlowPane content = new FlowPane();
+
+        content.prefWidthProperty().bind(container.widthProperty());
+        content.setPrefHeight(0);
+
+        // ensure, that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            // deselect the old element
             if (oldValue != null) {
                 final int oldValueIndex = getControl().getElements().indexOf(oldValue);
 
@@ -53,6 +77,7 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
                 oldElement.setSelected(false);
             }
 
+            // select the new element
             if (newValue != null) {
                 final int newValueIndex = getControl().getElements().indexOf(newValue);
 
@@ -62,8 +87,8 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
             }
         });
 
-        Bindings.bindContent(container.getChildren(), mappedElements);
+        Bindings.bindContent(content.getChildren(), mappedElements);
 
-        getChildren().addAll(scrollPane);
+        return content;
     }
 }
