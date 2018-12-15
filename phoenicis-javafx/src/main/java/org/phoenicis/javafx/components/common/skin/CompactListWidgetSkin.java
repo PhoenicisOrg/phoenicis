@@ -30,11 +30,12 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
 
     @Override
     public void initialise() {
-        ListView<CompactListElement<E>> container = new ListView<>();
+        final ListView<CompactListElement<E>> container = new ListView<>();
+        container.getStyleClass().addAll("listWidget", "compactListWidget");
 
         container.setPrefWidth(0);
         container.setPrefHeight(0);
-        container.getStyleClass().addAll("listWidget", "compactListWidget");
+
         container.setCellFactory(param -> new ListElementListCell<>());
 
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {

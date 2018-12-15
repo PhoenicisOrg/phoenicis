@@ -30,11 +30,12 @@ public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, Det
 
     @Override
     public void initialise() {
-        ListView<DetailsListElement<E>> container = new ListView<>();
+        final ListView<DetailsListElement<E>> container = new ListView<>();
+        container.getStyleClass().addAll("listWidget", "detailsListWidget");
 
         container.setPrefWidth(0);
         container.setPrefHeight(0);
-        container.getStyleClass().addAll("listWidget", "detailsListWidget");
+
         container.setCellFactory(param -> new ListElementListCell<>());
 
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
