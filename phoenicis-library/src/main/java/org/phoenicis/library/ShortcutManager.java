@@ -79,7 +79,13 @@ public class ShortcutManager {
 
             try {
                 if (shortcutDTO.getIcon() != null) {
-                    File file = new File(shortcutDTO.getIcon());
+                    File file;
+                    try {
+                        file = new File(shortcutDTO.getIcon());
+                    } catch (IllegalArgumentException e) {
+                        // fallback to phoenicis.png
+                        file = new File(getClass().getResource("phoenicis.png").toExternalForm());
+                    }
                     if (file.exists()) {
                         FileUtils.copyFile(file, iconFile);
                     }
@@ -89,7 +95,13 @@ public class ShortcutManager {
             }
             try {
                 if (shortcutDTO.getMiniature() != null) {
-                    File file = new File(shortcutDTO.getMiniature());
+                    File file;
+                    try {
+                        file = new File(shortcutDTO.getMiniature());
+                    } catch (IllegalArgumentException e) {
+                        // fallback to phoenicis.png
+                        file = new File(getClass().getResource("defaultMiniature.png").toExternalForm());
+                    }
                     if (file.exists()) {
                         FileUtils.copyFile(file, miniatureFile);
                     }
