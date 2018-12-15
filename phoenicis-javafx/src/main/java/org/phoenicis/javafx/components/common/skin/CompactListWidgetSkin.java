@@ -7,8 +7,17 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.CompactListElement;
 import org.phoenicis.javafx.components.common.control.CompactListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
+/**
+ * The skin for the {@link CompactListWidget} component
+ *
+ * @param <E> The concrete type of the elements shown in this list widget
+ */
 public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, CompactListWidgetSkin<E>> {
+    /**
+     * Mapped list between the input {@link ListWidgetEntry} and {@link CompactListElement}
+     */
     private final ObservableList<CompactListElement<E>> mappedElements;
 
     /**
@@ -28,6 +37,9 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final ListView<CompactListElement<E>> container = new ListView<>();
@@ -38,13 +50,16 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
 
         container.setCellFactory(param -> new ListElementListCell<>());
 
+        // ensure, that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            // deselect the old element
             if (oldValue != null) {
                 final int oldValueIndex = getControl().getElements().indexOf(oldValue);
 
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }
 
+            // select the new element
             if (newValue != null) {
                 final int newValueIndex = getControl().getElements().indexOf(newValue);
 
