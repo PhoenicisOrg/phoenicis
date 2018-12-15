@@ -35,25 +35,16 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
 
     @Override
     public void initialise() {
-        final VBox container = new VBox();
-
-        container.setPrefWidth(0);
-        container.setPrefHeight(0);
-
-        getControl().selectedListWidgetProperty().addListener((Observable invalidation) -> selectListWidget(container));
-        selectListWidget(container);
-
-        getChildren().addAll(container);
+        getControl().selectedListWidgetProperty().addListener((Observable invalidation) -> selectListWidget());
+        selectListWidget();
     }
 
-    private void selectListWidget(VBox container) {
+    private void selectListWidget() {
         final ListWidgetType listWidgetType = getControl().getSelectedListWidget();
 
         final Node currentList = getListWidget(listWidgetType);
 
-        container.getChildren().setAll(currentList);
-
-        VBox.setVgrow(currentList, Priority.ALWAYS);
+        getChildren().setAll(currentList);
     }
 
     private Node getListWidget(final ListWidgetType listWidgetType) {
