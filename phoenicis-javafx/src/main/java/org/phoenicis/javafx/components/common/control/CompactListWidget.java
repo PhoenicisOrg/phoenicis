@@ -14,7 +14,8 @@ public class CompactListWidget<E> extends ControlBase<CompactListWidget<E>, Comp
 
     private final ObjectProperty<ListWidgetEntry<E>> selectedElement;
 
-    public CompactListWidget(ObservableList<ListWidgetEntry<E>> elements, ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+    public CompactListWidget(ObservableList<ListWidgetEntry<E>> elements,
+            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
         super();
 
         this.elements = elements;

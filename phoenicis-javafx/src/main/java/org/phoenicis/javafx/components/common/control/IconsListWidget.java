@@ -14,7 +14,8 @@ public class IconsListWidget<E> extends ControlBase<IconsListWidget<E>, IconsLis
 
     private final ObjectProperty<ListWidgetEntry<E>> selectedElement;
 
-    public IconsListWidget(ObservableList<ListWidgetEntry<E>> elements, ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+    public IconsListWidget(ObservableList<ListWidgetEntry<E>> elements,
+            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
         super();
 
         this.elements = elements;

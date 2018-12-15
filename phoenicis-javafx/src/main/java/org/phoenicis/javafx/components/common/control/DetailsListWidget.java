@@ -14,7 +14,8 @@ public class DetailsListWidget<E> extends ControlBase<DetailsListWidget<E>, Deta
 
     private final ObjectProperty<ListWidgetEntry<E>> selectedElement;
 
-    public DetailsListWidget(ObservableList<ListWidgetEntry<E>> elements, ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+    public DetailsListWidget(ObservableList<ListWidgetEntry<E>> elements,
+            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
         super();
 
         this.elements = elements;
