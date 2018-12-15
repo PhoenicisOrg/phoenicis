@@ -79,13 +79,7 @@ public class ShortcutManager {
 
             try {
                 if (shortcutDTO.getIcon() != null) {
-                    File file;
-                    try {
-                        file = new File(shortcutDTO.getIcon());
-                    } catch (IllegalArgumentException e) {
-                        // fallback to phoenicis.png
-                        file = new File(getClass().getResource("phoenicis.png").toExternalForm());
-                    }
+                    File file = createFileWithFallback(shortcutDTO.getIcon(), "phoenicis.png");
                     if (file.exists()) {
                         FileUtils.copyFile(file, iconFile);
                     }
@@ -95,13 +89,7 @@ public class ShortcutManager {
             }
             try {
                 if (shortcutDTO.getMiniature() != null) {
-                    File file;
-                    try {
-                        file = new File(shortcutDTO.getMiniature());
-                    } catch (IllegalArgumentException e) {
-                        // fallback to phoenicis.png
-                        file = new File(getClass().getResource("defaultMiniature.png").toExternalForm());
-                    }
+                    File file = createFileWithFallback(shortcutDTO.getMiniature(), "defaultMiniature.png");
                     if (file.exists()) {
                         FileUtils.copyFile(file, miniatureFile);
                     }
@@ -223,6 +211,21 @@ public class ShortcutManager {
         }
         if (miniatureBackup.exists()) {
             miniatureBackup.delete();
+        }
+    }
+
+    /**
+     * creates a file with a resource fallback
+     * @param path file path
+     * @param resource resource which shall be used if file path cannot be accessed
+     * @return created file
+     */
+    private File createFileWithFallback(URI path, String resource) {
+        try {
+            return new File(path);
+        } catch (IllegalArgumentException e) {
+            // fallback
+            return new File(getClass().getResource(resource).toExternalForm());
         }
     }
 }
