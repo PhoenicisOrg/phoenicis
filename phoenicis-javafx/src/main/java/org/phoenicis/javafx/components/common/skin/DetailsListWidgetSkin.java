@@ -7,8 +7,17 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.DetailsListElement;
 import org.phoenicis.javafx.components.common.control.DetailsListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 
+/**
+ * The skin for the {@link DetailsListWidget} component
+ *
+ * @param <E> The concrete type of the elements shown in this list widget
+ */
 public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, DetailsListWidgetSkin<E>> {
+    /**
+     * Mapped list between the input {@link ListWidgetEntry} and {@link DetailsListElement}
+     */
     private final ObservableList<DetailsListElement<E>> mappedElements;
 
     /**
@@ -28,6 +37,9 @@ public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, Det
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final ListView<DetailsListElement<E>> container = new ListView<>();
@@ -38,13 +50,16 @@ public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, Det
 
         container.setCellFactory(param -> new ListElementListCell<>());
 
+        // ensure, that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            // deselect the old element
             if (oldValue != null) {
                 final int oldValueIndex = getControl().getElements().indexOf(oldValue);
 
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }
 
+            // select the new element
             if (newValue != null) {
                 final int newValueIndex = getControl().getElements().indexOf(newValue);
 
