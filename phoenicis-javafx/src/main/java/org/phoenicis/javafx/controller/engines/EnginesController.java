@@ -141,8 +141,10 @@ public class EnginesController {
                 .flatMap(type -> type.getCategories().stream())
                 .collect(Collectors.toList());
 
-        // generate the necessary css for the engine categories
-        setDefaultEngineIcons(categoryDTOS);
+        Platform.runLater(() -> {
+            // generate the necessary css for the engine categories
+            setDefaultEngineIcons(categoryDTOS);
+        });
 
         // fetch the engine categories objects contained in the engine categories
         final Queue<EngineCategoryDTO> engineCategories = new ArrayDeque<>(
