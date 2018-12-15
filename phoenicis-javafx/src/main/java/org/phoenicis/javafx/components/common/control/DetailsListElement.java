@@ -12,7 +12,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
 
 /**
- * A list element component shown inside an {@link DetailsListWidget}
+ * A list element component shown inside a {@link DetailsListWidget}
  *
  * @param <E> The concrete type of the element shown in this list element
  */
