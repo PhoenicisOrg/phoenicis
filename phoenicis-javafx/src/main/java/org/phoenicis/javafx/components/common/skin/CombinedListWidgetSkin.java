@@ -16,7 +16,7 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
     private final DetailsListWidget<E> detailsListWidget;
 
     /**
-     * Constructor for all SkinBase instances
+     * Constructor
      *
      * @param control The control belonging to the skin
      */
@@ -49,24 +49,23 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
     private void selectListWidget(VBox container) {
         final ListWidgetType listWidgetType = getControl().getSelectedListWidget();
 
-        Node currentList;
-
-        switch (listWidgetType) {
-            case ICONS_LIST:
-                currentList = iconsListWidget;
-                break;
-            case COMPACT_LIST:
-                currentList = compactListWidget;
-                break;
-            case DETAILS_LIST:
-                currentList = detailsListWidget;
-                break;
-            default:
-                currentList = iconsListWidget;
-        }
+        final Node currentList = getListWidget(listWidgetType);
 
         container.getChildren().setAll(currentList);
 
         VBox.setVgrow(currentList, Priority.ALWAYS);
+    }
+
+    private Node getListWidget(final ListWidgetType listWidgetType) {
+        switch (listWidgetType) {
+            case ICONS_LIST:
+                return iconsListWidget;
+            case COMPACT_LIST:
+                return compactListWidget;
+            case DETAILS_LIST:
+                return detailsListWidget;
+            default:
+                return iconsListWidget;
+        }
     }
 }
