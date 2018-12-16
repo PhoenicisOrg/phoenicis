@@ -53,4 +53,18 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
     public void setSelectedElement(ListWidgetEntry<E> selectedElement) {
         this.selectedElement.set(selectedElement);
     }
+
+    /**
+     * Selects the {@link ListWidgetEntry} which belongs to the given {@link E innerElement}
+     *
+     * @param innerElement The inner element
+     */
+    public void select(E innerElement) {
+        final ListWidgetEntry<E> foundElement = elements.stream()
+                .filter(element -> element.getItem() == innerElement).findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "The searched element is not contained inside the list widget"));
+
+        setSelectedElement(foundElement);
+    }
 }
