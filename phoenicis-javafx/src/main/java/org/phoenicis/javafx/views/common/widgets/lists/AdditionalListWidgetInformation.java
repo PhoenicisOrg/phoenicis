@@ -1,9 +1,10 @@
 package org.phoenicis.javafx.views.common.widgets.lists;
 
+import org.phoenicis.javafx.components.common.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.control.DetailsListWidget;
+
 /**
- * An additional information to be shown in a
- * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget}
- * or in a {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}.
+ * An additional information to be shown in a {@link CompactListWidget} or in a {@link DetailsListWidget}
  *
  * @author marc
  * @since 15.05.17
@@ -15,7 +16,7 @@ public class AdditionalListWidgetInformation {
     private final String content;
 
     /**
-     * In percent
+     * The width of the information in percent
      */
     private final int width;
 
@@ -32,6 +33,7 @@ public class AdditionalListWidgetInformation {
 
     /**
      * Returns the content of this information object
+     *
      * @return The content
      */
     public String getContent() {
@@ -40,6 +42,7 @@ public class AdditionalListWidgetInformation {
 
     /**
      * Returns the required width of the content of this information object
+     *
      * @return The width
      */
     public int getWidth() {

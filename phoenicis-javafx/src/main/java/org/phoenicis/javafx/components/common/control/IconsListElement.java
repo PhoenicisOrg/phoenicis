@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.common.control;
 import javafx.beans.property.*;
 import org.phoenicis.javafx.components.common.skin.IconsListElementSkin;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.icons.IconsListWidget;
 
 import java.net.URI;
 

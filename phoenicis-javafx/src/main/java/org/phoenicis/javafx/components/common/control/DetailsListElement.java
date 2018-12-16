@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.skin.DetailsListElementSkin;
 import org.phoenicis.javafx.views.common.widgets.lists.AdditionalListWidgetInformation;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
 
 /**
  * A list element component shown inside a {@link DetailsListWidget}

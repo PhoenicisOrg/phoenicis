@@ -2,6 +2,8 @@ package org.phoenicis.javafx.views.common.widgets.lists;
 
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.components.common.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.control.DetailsListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -23,7 +25,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A class containing all information needed for an entry in a {@link ListWidget}.
+ * A class containing all information needed for an entry in a list widget.
  *
  * @author marc
  * @since 15.05.17
@@ -37,9 +39,9 @@ public class ListWidgetEntry<E> {
 
     static {
         try {
-            DEFAULT_MINIATURE = ListWidget.class.getResource("defaultMiniature.png").toURI();
-            WINE_MINIATURE = ListWidget.class.getResource("wineMiniature.png").toURI();
-            CONTAINER_MINIATURE = ListWidget.class.getResource("containerMiniature.png").toURI();
+            DEFAULT_MINIATURE = ListWidgetEntry.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = ListWidgetEntry.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = ListWidgetEntry.class.getResource("containerMiniature.png").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -67,16 +69,13 @@ public class ListWidgetEntry<E> {
 
     /**
      * An optional list of additional information for this entry.
-     * These information are only shown inside a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget} or a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+     * These information are only shown inside a {@link CompactListWidget} or a {@link DetailsListWidget}
      */
     private List<AdditionalListWidgetInformation> additionalInformation;
 
     /**
      * An optional list of additional detailed information for this entry.
-     * These information are only shown inside a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+     * These information are only shown inside a {@link DetailsListWidget}
      */
     private List<AdditionalListWidgetInformation> detailedInformation;
 
@@ -231,10 +230,10 @@ public class ListWidgetEntry<E> {
     }
 
     /**
-     * create a miniature by composing segments of miniatures
+     * Creates a miniature by composing segments of miniatures
      *
-     * @param miniatures
-     * @return created miniature
+     * @param miniatures The miniature images
+     * @return The created segmented miniature
      */
     private static BufferedImage createSegmentedMiniature(List<BufferedImage> miniatures) {
         if (!miniatures.isEmpty()) {
@@ -262,10 +261,10 @@ public class ListWidgetEntry<E> {
     }
 
     /**
-     * saves bufferedImage to a temporary file
+     * Saves a {@link BufferedImage bufferedImage} to a temporary file
      *
-     * @param bufferedImage
-     * @param name
+     * @param bufferedImage The buffered image
+     * @param name The name of the destination file
      * @return URI to the saved file
      */
     private static Optional<URI> saveBufferedImage(BufferedImage bufferedImage, String name) {
