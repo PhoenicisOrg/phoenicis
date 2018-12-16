@@ -9,6 +9,7 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.IconsListElement;
 import org.phoenicis.javafx.components.common.control.IconsListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
 
 /**
  * The skin for the {@link IconsListWidget} component
@@ -32,7 +33,8 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         this.mappedElements = new MappedList<>(getControl().getElements(), value -> {
             IconsListElement<E> newElement = new IconsListElement<>(value);
 
-            newElement.setOnMouseClicked(event -> getControl().setSelectedElement(value));
+            newElement.setOnMouseClicked(
+                    event -> getControl().setSelectedElement(new ListWidgetSelection<>(value, event)));
 
             return newElement;
         });
@@ -70,7 +72,7 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             // deselect the old element
             if (oldValue != null) {
-                final int oldValueIndex = getControl().getElements().indexOf(oldValue);
+                final int oldValueIndex = getControl().getElements().indexOf(oldValue.getSelection());
 
                 IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
 
@@ -79,7 +81,7 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
 
             // select the new element
             if (newValue != null) {
-                final int newValueIndex = getControl().getElements().indexOf(newValue);
+                final int newValueIndex = getControl().getElements().indexOf(newValue.getSelection());
 
                 IconsListElement<E> newElement = mappedElements.get(newValueIndex);
 

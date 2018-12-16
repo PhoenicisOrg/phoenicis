@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.skin.CompactListWidgetSkin;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
 
 /**
  * A compact list widget component used to show a list of elements in a list with a small miniature icon and some
@@ -19,7 +20,7 @@ public class CompactListWidget<E> extends ListWidgetBase<E, CompactListWidget<E>
      * @param selectedElement The currently selected element
      */
     public CompactListWidget(ObservableList<ListWidgetEntry<E>> elements,
-            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+            ObjectProperty<ListWidgetSelection<E>> selectedElement) {
         super(elements, selectedElement);
     }
 

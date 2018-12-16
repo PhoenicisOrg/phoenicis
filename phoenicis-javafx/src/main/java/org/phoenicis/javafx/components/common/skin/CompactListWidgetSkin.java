@@ -8,6 +8,7 @@ import org.phoenicis.javafx.components.common.control.CompactListElement;
 import org.phoenicis.javafx.components.common.control.CompactListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
 
 /**
  * The skin for the {@link CompactListWidget} component
@@ -31,7 +32,8 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         this.mappedElements = new MappedList<>(getControl().getElements(), value -> {
             CompactListElement<E> newElement = new CompactListElement<>(value);
 
-            newElement.setOnMouseClicked(event -> getControl().setSelectedElement(value));
+            newElement.setOnMouseClicked(
+                    event -> getControl().setSelectedElement(new ListWidgetSelection<>(value, event)));
 
             return newElement;
         });
@@ -54,14 +56,14 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             // deselect the old element
             if (oldValue != null) {
-                final int oldValueIndex = getControl().getElements().indexOf(oldValue);
+                final int oldValueIndex = getControl().getElements().indexOf(oldValue.getSelection());
 
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }
 
             // select the new element
             if (newValue != null) {
-                final int newValueIndex = getControl().getElements().indexOf(newValue);
+                final int newValueIndex = getControl().getElements().indexOf(newValue.getSelection());
 
                 container.getSelectionModel().select(newValueIndex);
             }

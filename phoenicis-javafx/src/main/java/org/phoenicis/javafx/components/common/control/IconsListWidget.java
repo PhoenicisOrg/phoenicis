@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.skin.IconsListWidgetSkin;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
 
 /**
  * An icons list widget component used to show a list of elements using large icons
@@ -18,7 +19,7 @@ public class IconsListWidget<E> extends ListWidgetBase<E, IconsListWidget<E>, Ic
      * @param selectedElement The currently selected element
      */
     public IconsListWidget(ObservableList<ListWidgetEntry<E>> elements,
-            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+            ObjectProperty<ListWidgetSelection<E>> selectedElement) {
         super(elements, selectedElement);
     }
 

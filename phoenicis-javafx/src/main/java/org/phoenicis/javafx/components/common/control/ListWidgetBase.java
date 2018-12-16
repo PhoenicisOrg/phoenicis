@@ -2,8 +2,11 @@ package org.phoenicis.javafx.components.common.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
 
 /**
  * A base list widget component
@@ -22,7 +25,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
     /**
      * The currently selected element or null if no element is selected
      */
-    private final ObjectProperty<ListWidgetEntry<E>> selectedElement;
+    private final ObjectProperty<ListWidgetSelection<E>> selectedElement;
 
     /**
      * Constructor
@@ -31,7 +34,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
      * @param selectedElement The currently selected element
      */
     protected ListWidgetBase(ObservableList<ListWidgetEntry<E>> elements,
-            ObjectProperty<ListWidgetEntry<E>> selectedElement) {
+            ObjectProperty<ListWidgetSelection<E>> selectedElement) {
         super();
 
         this.elements = elements;
@@ -42,15 +45,15 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
         return elements;
     }
 
-    public ListWidgetEntry<E> getSelectedElement() {
+    public ListWidgetSelection<E> getSelectedElement() {
         return selectedElement.get();
     }
 
-    public ObjectProperty<ListWidgetEntry<E>> selectedElementProperty() {
+    public ObjectProperty<ListWidgetSelection<E>> selectedElementProperty() {
         return selectedElement;
     }
 
-    public void setSelectedElement(ListWidgetEntry<E> selectedElement) {
+    public void setSelectedElement(ListWidgetSelection<E> selectedElement) {
         this.selectedElement.set(selectedElement);
     }
 
@@ -65,6 +68,10 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
                 .orElseThrow(() -> new IllegalArgumentException(
                         "The searched element is not contained inside the list widget"));
 
-        setSelectedElement(foundElement);
+        setSelectedElement(new ListWidgetSelection<>(foundElement, new MouseEvent(
+                MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
+                false, false, false, false, false,
+                false, false, false, false, false,
+                null)));
     }
 }
