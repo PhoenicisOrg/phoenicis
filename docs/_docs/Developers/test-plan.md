@@ -128,7 +128,7 @@ Before you start, ensure that you are in a clean environment:
 * open "Engine Settings" tab
 * check that all settings are shown
 * open "Verbs" tab
-* check that all verbs are shown
+* check that all Verbs are shown
 * open "Engine Tools" tab
 * check that all tools open
 * open "Tools" tab
