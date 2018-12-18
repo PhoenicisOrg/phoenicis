@@ -20,8 +20,11 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
@@ -29,9 +32,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -47,7 +49,9 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryView extends MainWindowView<LibrarySidebar> {
+    private final String applicationName;
     private final LibraryFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     private LibraryPanel libraryPanel;
     private CreateShortcutPanel createShortcutPanel;
@@ -57,109 +61,95 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     private CombinedListWidget<ShortcutDTO> availableShortcuts;
 
     private ObservableList<ShortcutCategoryDTO> categories;
-    private SortedList<ShortcutCategoryDTO> sortedCategories;
-
-    private ObservableList<ShortcutDTO> shortcuts;
-    private PhoenicisFilteredList<ShortcutDTO> filteredShortcuts;
-    private SortedList<ShortcutDTO> sortedShortcuts;
 
     private TabPane libraryTabs;
-    private Runnable onTabOpened = () -> {
-    };
-    private Consumer<ShortcutDTO> onShortcutSelected = shortcut -> {
-    };
-    private Consumer<ShortcutDTO> onShortcutDoubleClicked = shortcut -> {
-    };
-    private Consumer<ShortcutDTO> onShortcutEdit = shortcut -> {
-    };
+    private Runnable onTabOpened;
+    private Consumer<ShortcutDTO> onShortcutDoubleClicked;
 
-    public LibraryView(String applicationName,
-            String containersPath,
-            ThemeManager themeManager,
-            ObjectMapper objectMapper,
-            JavaFxSettingsManager javaFxSettingsManager) {
+    public LibraryView(String applicationName, String containersPath, ThemeManager themeManager,
+            ObjectMapper objectMapper, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Library"), themeManager);
-        this.getStyleClass().add("mainWindowScene");
 
-        onShortcutEdit = shortcut -> showShortcutEdit(shortcut);
+        this.applicationName = applicationName;
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
-        availableShortcuts = new CombinedListWidget<>(ListWidgetEntry::create, (selectedItem, event) -> {
-
-            if (event.getButton() == MouseButton.PRIMARY) {
-                // select and show details
-                availableShortcuts.deselectAll();
-                availableShortcuts.select(selectedItem);
-                onShortcutSelected.accept(selectedItem);
-                showShortcutDetails(selectedItem);
-
-                if (event.getClickCount() == 2) {
-                    onShortcutDoubleClicked.accept(selectedItem);
-                }
-            } else if (event.getButton() == MouseButton.SECONDARY) {
-                // show context menu
-                final ContextMenu contextMenu = new ContextMenu();
-                MenuItem edit = new MenuItem("Edit");
-                contextMenu.getItems().addAll(edit);
-                edit.setOnAction(editEvent -> onShortcutEdit.accept(selectedItem));
-                contextMenu.show(availableShortcuts, event.getScreenX(), event.getScreenY());
-            }
-
-            event.consume();
-        });
-
-        // initialising the category lists
         this.categories = FXCollections.observableArrayList();
-        this.sortedCategories = this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
 
         this.filter = new LibraryFilter();
 
-        // initialising the shortcut lists
-        this.shortcuts = new ExpandedList<ShortcutDTO, ShortcutCategoryDTO>(this.sortedCategories,
-                ShortcutCategoryDTO::getShortcuts);
-        this.filteredShortcuts = new PhoenicisFilteredList<ShortcutDTO>(this.shortcuts, filter::filter);
-        this.filter.addOnFilterChanged(filteredShortcuts::trigger);
+        this.getStyleClass().add("mainWindowScene");
 
-        this.sortedShortcuts = this.filteredShortcuts
+        // initialising the shortcut lists
+        final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
+                categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
+                ShortcutCategoryDTO::getShortcuts)
+                        .filtered(filter::filter);
+
+        filteredShortcuts.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter,
+                        filter.searchTermProperty(), filter.selectedShortcutCategoryProperty()));
+
+        final SortedList<ShortcutDTO> sortedShortcuts = filteredShortcuts
                 .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
 
-        this.availableShortcuts.setOnMouseClicked(event -> {
-            this.availableShortcuts.deselectAll();
-            this.onShortcutSelected.accept(null);
+        this.availableShortcuts = new CombinedListWidget<>(sortedShortcuts, ListWidgetEntry::create,
+                (selectedItem, event) -> {
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        // select and show details
+                        availableShortcuts.deselectAll();
+                        availableShortcuts.select(selectedItem);
+                        showShortcutDetails(selectedItem);
+
+                        if (event.getClickCount() == 2) {
+                            onShortcutDoubleClicked.accept(selectedItem);
+                        }
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
+                        // show context menu
+                        final ContextMenu contextMenu = new ContextMenu();
+                        MenuItem edit = new MenuItem("Edit");
+                        contextMenu.getItems().addAll(edit);
+                        edit.setOnAction(editEvent -> showShortcutEdit(selectedItem));
+                        contextMenu.show(availableShortcuts, event.getScreenX(), event.getScreenY());
+                    }
+
+                    event.consume();
+                });
+
+        availableShortcuts.setOnMouseClicked(event -> {
+            availableShortcuts.deselectAll();
+
             event.consume();
         });
 
-        this.sidebar = new LibrarySidebar(applicationName, availableShortcuts, filter, javaFxSettingsManager);
-        this.sidebar.bindCategories(this.sortedCategories);
+        filter.selectedShortcutCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        // set the category selection consumers
-        this.sidebar.setOnCategorySelection(category -> {
-            filter.setSelectedShortcutCategory(category);
-            this.closeDetailsView();
-        });
-        this.sidebar.setOnAllCategorySelection(() -> {
-            filter.setSelectedShortcutCategory(null);
-            this.closeDetailsView();
-        });
-        this.sidebar.setOnCreateShortcut(this::showShortcutCreate);
+        LibrarySidebar sidebar = createLibrarySidebar();
+        sidebar.setOnCreateShortcut(this::showShortcutCreate);
 
-        this.setSidebar(this.sidebar);
-
-        this.availableShortcuts.bind(sortedShortcuts);
+        setSidebar(sidebar);
 
         this.libraryTabs = new TabPane();
-        this.libraryTabs.getStyleClass().add("rightPane");
+        libraryTabs.getStyleClass().add("rightPane");
 
         this.installedApplicationsTab = new Tab();
-        this.installedApplicationsTab.setClosable(false);
-        this.installedApplicationsTab.setText(tr("My applications"));
-        this.installedApplicationsTab.setContent(availableShortcuts);
-        this.libraryTabs.getTabs().add(this.installedApplicationsTab);
+        installedApplicationsTab.setClosable(false);
+        installedApplicationsTab.setText(tr("My applications"));
+        installedApplicationsTab.setContent(availableShortcuts);
 
-        this.setCenter(this.libraryTabs);
+        libraryTabs.getTabs().add(this.installedApplicationsTab);
+
+        setCenter(this.libraryTabs);
 
         this.libraryPanel = new LibraryPanel(objectMapper);
         this.createShortcutPanel = new CreateShortcutPanel(containersPath);
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
+    }
+
+    private LibrarySidebar createLibrarySidebar() {
+        final SortedList<ShortcutCategoryDTO> sortedCategories = categories
+                .sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
+
+        return new LibrarySidebar(applicationName, filter, javaFxSettingsManager, sortedCategories, availableShortcuts);
     }
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
@@ -177,18 +167,15 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     public void populate(List<ShortcutCategoryDTO> categories) {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
-            this.filter.clear();
-            this.sidebar.selectAllCategories();
 
-            this.closeDetailsView();
-            this.installedApplicationsTab.setContent(availableShortcuts);
+            closeDetailsView();
+            installedApplicationsTab.setContent(availableShortcuts);
         });
     }
 
     private void showShortcutDetails(ShortcutDTO shortcutDTO) {
         this.libraryPanel.setOnClose(this::closeDetailsView);
         this.libraryPanel.setShortcutDTO(shortcutDTO);
-        this.libraryPanel.setMaxWidth(400);
         this.libraryPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.showDetailsView(libraryPanel);
     }
@@ -201,11 +188,13 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.createShortcutPanel.setMaxWidth(600);
         this.createShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
         this.createShortcutPanel.populate();
-        this.showDetailsView(this.createShortcutPanel);
+
+        showDetailsView(this.createShortcutPanel);
     }
 
     /**
      * shows a details view which allows to edit the given shortcut
+     *
      * @param shortcutDTO
      */
     private void showShortcutEdit(ShortcutDTO shortcutDTO) {
@@ -213,7 +202,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.editShortcutPanel.setShortcutDTO(shortcutDTO);
         this.editShortcutPanel.setMaxWidth(600);
         this.editShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        this.showDetailsView(this.editShortcutPanel);
+
+        showDetailsView(this.editShortcutPanel);
     }
 
     public void createNewTab(Tab tab) {
@@ -222,16 +212,12 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         onTabOpened.run();
     }
 
-    public void closeTab(Tab tab) {
-        libraryTabs.getTabs().remove(tab);
-    }
-
     public void setOnTabOpened(Runnable onTabOpened) {
         this.onTabOpened = onTabOpened;
     }
 
     public void setOnOpenConsole(Runnable onOpenConsole) {
-        this.sidebar.setOnOpenConsole(onOpenConsole);
+        sidebar.setOnOpenConsole(onOpenConsole);
     }
 
     public void setOnShortcutCreate(Consumer<ShortcutCreationDTO> onShortcutCreate) {
@@ -247,6 +233,6 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     public void setOnScriptRun(Consumer<File> onScriptRun) {
-        this.sidebar.setOnScriptRun(onScriptRun);
+        sidebar.setOnScriptRun(onScriptRun);
     }
 }

@@ -1,7 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.*;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
@@ -39,13 +38,13 @@ public class EnginesFilter extends AbstractFilter {
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private Optional<String> searchTerm;
+    private StringProperty searchTerm;
 
     /**
      * The selected engine category.
      * If no engine category has been selected, this value is {@link Optional#empty()}.
      */
-    private Optional<EngineCategoryDTO> selectedEngineCategory;
+    private ObjectProperty<EngineCategoryDTO> selectedEngineCategory;
 
     /**
      * Are installed engines searched
@@ -67,16 +66,23 @@ public class EnginesFilter extends AbstractFilter {
 
         this.enginesPath = enginesPath;
 
-        this.searchTerm = Optional.empty();
-        this.selectedEngineCategory = Optional.empty();
+        this.searchTerm = new SimpleStringProperty("");
+        this.selectedEngineCategory = new SimpleObjectProperty<>();
 
         this.showInstalled = new SimpleBooleanProperty();
-        this.showInstalled
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.showNotInstalled = new SimpleBooleanProperty();
-        this.showNotInstalled
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
+    }
+
+    public EngineCategoryDTO getSelectedEngineCategory() {
+        return selectedEngineCategory.get();
+    }
+
+    public StringProperty searchTermProperty() {
+        return searchTerm;
+    }
+
+    public ObjectProperty<EngineCategoryDTO> selectedEngineCategoryProperty() {
+        return selectedEngineCategory;
     }
 
     public BooleanProperty showInstalledProperty() {
@@ -85,37 +91,6 @@ public class EnginesFilter extends AbstractFilter {
 
     public BooleanProperty showNotInstalledProperty() {
         return this.showNotInstalled;
-    }
-
-    /**
-     * Sets the search term to the given string.
-     *
-     * @param searchTerm The new search term
-     */
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = Optional.of(searchTerm);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Clears the search term
-     */
-    public void clearSearchTerm() {
-        this.searchTerm = Optional.empty();
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Sets the selected engine category
-     *
-     * @param engineCategory The selected engine category
-     */
-    public void setSelectedEngineCategory(EngineCategoryDTO engineCategory) {
-        this.selectedEngineCategory = Optional.ofNullable(engineCategory);
-
-        this.triggerFilterChanged();
     }
 
     /**
@@ -142,12 +117,14 @@ public class EnginesFilter extends AbstractFilter {
     public Predicate<EngineVersionDTO> createFilter(EngineCategoryDTO engineCategory,
             EngineSubCategoryDTO engineSubCategory) {
         return engineVersion -> {
-            final boolean containsSearchTerm = searchTerm
+            final boolean containsSearchTerm = Optional.ofNullable(searchTerm.getValueSafe())
                     .map(searchTerm -> engineVersion.getVersion().toLowerCase().contains(searchTerm.toLowerCase()))
                     .orElse(true);
-            final boolean fulfillsShowInstalled = this.showInstalled.getValue()
+
+            final boolean fulfillsShowInstalled = showInstalled.getValue()
                     && isInstalled(engineCategory, engineSubCategory, engineVersion);
-            final boolean fulfillsShowNotInstalled = this.showNotInstalled.getValue()
+
+            final boolean fulfillsShowNotInstalled = showNotInstalled.getValue()
                     && !isInstalled(engineCategory, engineSubCategory, engineVersion);
 
             return containsSearchTerm && (fulfillsShowInstalled || fulfillsShowNotInstalled);
@@ -161,21 +138,12 @@ public class EnginesFilter extends AbstractFilter {
      * @return True if the given engine category fulfills the filter, false otherwise
      */
     public boolean filter(EngineCategoryDTO engineCategory) {
-        return searchTerm.map(
-                searchTerm -> engineCategory.getSubCategories().stream().anyMatch(engineSubCategory -> engineSubCategory
-                        .getPackages().stream().anyMatch(version -> version.getVersion().contains(searchTerm))))
+        return Optional.ofNullable(searchTerm.getValueSafe())
+                .map(searchTerm -> engineCategory.getSubCategories().stream()
+                        .anyMatch(engineSubCategory -> engineSubCategory.getPackages().stream()
+                                .anyMatch(version -> version.getVersion().toLowerCase()
+                                        .contains(searchTerm.toLowerCase()))))
                 .orElse(true);
-    }
-
-    /**
-     * Checks whether a given engine sub category tab is empty or not
-     *
-     * @param engineSubCategoryTab The engine sub category tab
-     * @return True if the given engine sub category tab is not empty, false otherwise
-     */
-    private boolean isNotEmpty(EngineSubCategoryTab engineSubCategoryTab) {
-        return engineSubCategoryTab.getEngineSubCategory().getPackages().stream()
-                .anyMatch(engineSubCategoryTab.getFilterPredicate());
     }
 
     /**
@@ -185,8 +153,12 @@ public class EnginesFilter extends AbstractFilter {
      * @return True if the given engine sub category tab fulfills the filter, false otherwise
      */
     public boolean filter(EngineSubCategoryTab engineSubCategoryTab) {
-        return isNotEmpty(engineSubCategoryTab) && this.selectedEngineCategory
+        final boolean tabNotEmpty = engineSubCategoryTab.notEmpty();
+
+        final boolean selectedEngineCategoryConstraint = Optional.ofNullable(selectedEngineCategory.getValue())
                 .map(selectedEngineCategory -> selectedEngineCategory.equals(engineSubCategoryTab.getEngineCategory()))
                 .orElse(true);
+
+        return tabNotEmpty && selectedEngineCategoryConstraint;
     }
 }

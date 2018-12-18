@@ -177,4 +177,4 @@ The app description text is HTML in a WebView. It can be customized in the file 
 </figure>
 
 ## Icons
-To add custom icons to your theme, just place them in an "icons" folder in your theme directory. For a list of icons, please have a look at the [default theme](https://github.com/PhoenicisOrg/phoenicis/tree/master/phoenicis-javafx/src/main/resources/org/phoenicis/javafx/themes/default). You do not have to use a special resolution, as the icons will be resized automatically. Just make sure the resolution is high enough to work on high DPI displays.
+To add custom icons to your theme, just place them in an "icons" folder in your theme directory. For a list of icons, please have a look at the [standard theme](https://github.com/PhoenicisOrg/phoenicis/tree/master/phoenicis-javafx/src/main/resources/org/phoenicis/javafx/themes/standard). You do not have to use a special resolution, as the icons will be resized automatically. Just make sure the resolution is high enough to work on high DPI displays.

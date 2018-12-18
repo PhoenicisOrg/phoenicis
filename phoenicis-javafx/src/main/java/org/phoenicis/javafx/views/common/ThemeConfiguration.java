@@ -25,11 +25,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ThemeConfiguration {
-    @Value("${application.theme:defaultTheme.css}")
+    @Value("${application.theme:standardTheme.css}")
     private String theme;
 
     @Bean
     public ThemeManager themeManager() {
-        return new ThemeManager(Themes.fromShortName(theme).orElse(Themes.DEFAULT));
+        return new ThemeManager(Themes.fromShortName(theme).orElse(Themes.STANDARD));
     }
 }

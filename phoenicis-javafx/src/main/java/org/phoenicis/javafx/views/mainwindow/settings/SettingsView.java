@@ -58,13 +58,8 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         this.initializeSettingsItems();
 
-        this.sidebar = new SettingsSidebar();
-
+        this.sidebar = new SettingsSidebar(settingsItems);
         this.sidebar.setOnSelectSettingsItem(this::setCenter);
-
-        this.sidebar.bindSettingsItems(this.settingsItems);
-
-        this.sidebar.selectFirstSettingsCategory();
 
         this.setSidebar(this.sidebar);
     }

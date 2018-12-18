@@ -69,7 +69,7 @@ public class UserInterfacePanel extends VBox {
 
         this.themes = new ComboBox<>();
         this.themes.getItems().setAll(Themes.all());
-        this.themes.setValue(Themes.fromShortName(javaFxSettingsManager.getTheme()).orElse(Themes.DEFAULT));
+        this.themes.setValue(Themes.fromShortName(javaFxSettingsManager.getTheme()).orElse(Themes.STANDARD));
         this.themes.setOnAction(event -> {
             this.handleThemeChange();
             this.save();
