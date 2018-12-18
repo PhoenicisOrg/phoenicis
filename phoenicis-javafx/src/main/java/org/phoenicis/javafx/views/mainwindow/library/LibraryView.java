@@ -137,12 +137,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                         onShortcutDoubleClicked.accept(selectedItem);
                     }
                 } else if (event.getButton() == MouseButton.SECONDARY) {
-                    // show context menu
-
                     final MenuItem edit = new MenuItem("Edit");
                     edit.setOnAction(editEvent -> showShortcutEdit(selectedItem));
 
                     final ContextMenu contextMenu = new ContextMenu(edit);
+                    // show context menu
                     contextMenu.show(availableShortcuts, event.getScreenX(), event.getScreenY());
                 }
             }
