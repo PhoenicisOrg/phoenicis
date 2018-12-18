@@ -6,8 +6,8 @@ toc: false
 ---
 
 The following steps must be executed to release a new version of Phoenicis:
-* Create release branches (e.g. "5.0-alpha") for phoenicis and scripts
-* Protect release branch
+* Create release branches (e.g. "release/5.0-beta") for phoenicis and scripts
+* Using the scheme "release/\*" automatically protects the release branch with:
     * Require pull request reviews before merging
     * Require status checks to pass before merging (Travis CI and Codacy)
 * on the release branch:
