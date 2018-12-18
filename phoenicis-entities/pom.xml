@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.phoenicis</groupId>
         <artifactId>phoenicis</artifactId>
-        <version>5.0-SNAPSHOT</version>
+        <version>5.0-alpha-2</version>
     </parent>
     <artifactId>phoenicis-entities</artifactId>
     <properties>
