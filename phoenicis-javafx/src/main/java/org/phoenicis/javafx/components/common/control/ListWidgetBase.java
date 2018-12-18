@@ -61,17 +61,29 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
      * Selects the {@link ListWidgetEntry} which belongs to the given {@link E innerElement}
      *
      * @param innerElement The inner element
+     * @param event The corresponding mouse event used to trigger the selection
      */
-    public void select(E innerElement) {
+    public void select(E innerElement, MouseEvent event) {
         final ListWidgetEntry<E> foundElement = elements.stream()
                 .filter(element -> element.getItem() == innerElement).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         "The searched element is not contained inside the list widget"));
 
-        setSelectedElement(new ListWidgetSelection<>(foundElement, new MouseEvent(
+        setSelectedElement(new ListWidgetSelection<>(foundElement, event));
+    }
+
+    /**
+     * Selects the {@link ListWidgetEntry} which belongs to the given {@link E innerElement}
+     *
+     * @param innerElement The inner element
+     */
+    public void select(E innerElement) {
+        final MouseEvent event = new MouseEvent(
                 MouseEvent.MOUSE_CLICKED, 0, 0, 0, 0, MouseButton.PRIMARY, 1,
                 false, false, false, false, false,
                 false, false, false, false, false,
-                null)));
+                null);
+
+        select(innerElement, event);
     }
 }
