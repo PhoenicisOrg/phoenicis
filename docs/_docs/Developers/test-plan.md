@@ -32,7 +32,7 @@ Before you start, ensure that you are in a clean environment:
 
 # Engines
 * open "Engines" tab
-* check that Wine categoriy is shown
+* check that Wine category is shown
 * check that engines are listed
 * check that list style can be switched
 * search for "3.0"
