@@ -168,11 +168,10 @@ Before you start, ensure that you are in a clean environment:
 * check that new repository is listed
 * select new repository
 * click "delete"
-* approve pop-up
 * check that repository has been removed from list
 * click "add"
 * select "local repository"
-* use "/home/<userhome>/.Phoenicis/cache/git-XXXXXX"
+* use "/home/\<userhome\>/.Phoenicis/cache/git-XXXXXX"
 * click "finish"
 * check that new repository is listed
 * click "reset
