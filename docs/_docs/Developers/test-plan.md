@@ -122,10 +122,13 @@ Before you start, ensure that you are in a clean environment:
 * check that tabs exist
     * Information
     * Engine Settings
+    * Verbs
     * Engine Tools
     * Tools
 * open "Engine Settings" tab
 * check that all settings are shown
+* open "Verbs" tab
+* check that all Verbs are shown
 * open "Engine Tools" tab
 * check that all tools open
 * open "Tools" tab
