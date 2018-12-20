@@ -4,15 +4,13 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import org.phoenicis.javafx.components.common.control.CombinedListWidget;
-import org.phoenicis.javafx.components.installation.control.InstallationsSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
+import org.phoenicis.javafx.components.installation.control.InstallationsSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -61,7 +59,7 @@ public class InstallationsSidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(activeInstallations);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer()));
+        setCenter(createScrollPane(sidebarToggleGroup));
         setBottom(listWidgetSelector);
     }
 

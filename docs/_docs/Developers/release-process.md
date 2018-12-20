@@ -6,14 +6,16 @@ toc: false
 ---
 
 The following steps must be executed to release a new version of Phoenicis:
-* Create release branches (e.g. "5.0-alpha") for phoenicis and scripts
-* Protect release branch
+* Create release branches (e.g. "release/5.0-beta") for phoenicis and scripts
+* Using the scheme "release/\*" automatically protects the release branch with:
     * Require pull request reviews before merging
     * Require status checks to pass before merging (Travis CI and Codacy)
+* Enable analysis for release branches (phoenicis and scripts) in Codacy settings
 * on the release branch:
     * Add release branch to `branches` section of `.travis.yml` such that Travis CI executes checks for the branch
-    * Specify scripts release branch in configuration (`application.repository.default.git.url`)
+    * Specify scripts release branch in configuration (`application.repository.default.git.branch`)
     * Set release version for Maven in `pom.xml` files
+    * Set release version in Flatpak manifest (`phoenicis-dist/src/flatpak/org.phoenicis.javafx.json`)
     * Set release version in .deb control files
 * [Test]({{ site.baseurl }}{% link _docs/Developers/test-plan.md %})
 * Create GitHub release from the release branches for phoenicis and scripts

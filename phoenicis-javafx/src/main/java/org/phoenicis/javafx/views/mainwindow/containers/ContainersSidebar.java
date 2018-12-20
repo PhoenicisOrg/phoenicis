@@ -6,12 +6,11 @@ import javafx.collections.transformation.FilteredList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.components.common.control.CombinedListWidget;
-import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
+import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -62,7 +61,7 @@ public class ContainersSidebar extends Sidebar {
         ListWidgetSelector createListWidgetSelector = createListWidgetSelector(availableContainers);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup));
+        setCenter(createScrollPane(sidebarToggleGroup));
         setBottom(createListWidgetSelector);
     }
 

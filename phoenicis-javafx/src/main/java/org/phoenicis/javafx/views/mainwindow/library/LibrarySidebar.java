@@ -3,6 +3,7 @@ package org.phoenicis.javafx.views.mainwindow.library;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
@@ -11,9 +12,6 @@ import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarButton;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
@@ -74,11 +72,11 @@ public class LibrarySidebar extends Sidebar {
 
         SearchBox searchBox = createSearchBox();
         LibrarySidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
-        SidebarGroup<SidebarButton> advancedToolsGroup = createAdvancedToolsGroup();
+        SidebarGroup<Button> advancedToolsGroup = createAdvancedToolsGroup();
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(availableShortcuts);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer(), advancedToolsGroup));
+        setCenter(createScrollPane(sidebarToggleGroup, createSpacer(), advancedToolsGroup));
         setBottom(listWidgetSelector);
     }
 
@@ -133,13 +131,13 @@ public class LibrarySidebar extends Sidebar {
     /**
      * This method populates the advanced tools button group.
      */
-    private SidebarGroup<SidebarButton> createAdvancedToolsGroup() {
-        final SidebarButton createShortcut = new SidebarButton(tr("Create shortcut"));
-        createShortcut.getStyleClass().add("openTerminal");
+    private SidebarGroup<Button> createAdvancedToolsGroup() {
+        final Button createShortcut = new Button(tr("Create shortcut"));
+        createShortcut.getStyleClass().addAll("sidebarButton", "openTerminal");
         createShortcut.setOnMouseClicked(event -> onCreateShortcut.run());
 
-        final SidebarButton runScript = new SidebarButton(tr("Run a script"));
-        runScript.getStyleClass().add("scriptButton");
+        final Button runScript = new Button(tr("Run a script"));
+        runScript.getStyleClass().addAll("sidebarButton", "scriptButton");
         runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle(tr("Open Script ..."));
@@ -152,11 +150,11 @@ public class LibrarySidebar extends Sidebar {
             }
         });
 
-        final SidebarButton runConsole = new SidebarButton(tr("{0} console", applicationName));
-        runConsole.getStyleClass().add("consoleButton");
+        final Button runConsole = new Button(tr("{0} console", applicationName));
+        runConsole.getStyleClass().addAll("sidebarButton", "consoleButton");
         runConsole.setOnMouseClicked(event -> onOpenConsole.run());
 
-        SidebarGroup<SidebarButton> advancedToolsGroup = new SidebarGroup<>(tr("Advanced Tools"));
+        SidebarGroup<Button> advancedToolsGroup = new SidebarGroup<>(tr("Advanced Tools"));
         advancedToolsGroup.getComponents().addAll(createShortcut, /* runScript, */runConsole);
 
         return advancedToolsGroup;
