@@ -6,16 +6,13 @@ import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.CheckBox;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.components.engine.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
+import org.phoenicis.javafx.components.engine.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import java.util.List;
 
@@ -72,7 +69,7 @@ public class EnginesSidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(enginesVersionListWidgets);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(categoryView, new SidebarSpacer(), installationFilterGroup));
+        setCenter(createScrollPane(categoryView, createSpacer(), installationFilterGroup));
         setBottom(listWidgetSelector);
     }
 
@@ -111,11 +108,13 @@ public class EnginesSidebar extends Sidebar {
      * This method populates the button group containing buttons to filter for installed and not installed engines
      */
     private SidebarGroup<CheckBox> createInstallationFilters() {
-        final SidebarCheckBox installedCheck = new SidebarCheckBox(tr("Installed"));
+        final CheckBox installedCheck = new CheckBox(tr("Installed"));
+        installedCheck.getStyleClass().add("sidebarCheckBox");
         installedCheck.setSelected(true);
         filter.showInstalledProperty().bind(installedCheck.selectedProperty());
 
-        final SidebarCheckBox notInstalledCheck = new SidebarCheckBox(tr("Not installed"));
+        final CheckBox notInstalledCheck = new CheckBox(tr("Not installed"));
+        notInstalledCheck.getStyleClass().add("sidebarCheckBox");
         notInstalledCheck.setSelected(true);
         filter.showNotInstalledProperty().bind(notInstalledCheck.selectedProperty());
 

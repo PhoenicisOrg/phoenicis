@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.Node;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -66,15 +67,21 @@ public class MainWindowView<S extends Sidebar> extends Tab {
         this.content.getStyleClass().add("mainWindowScene");
 
         this.populateFailurePanel();
-        this.populateWaitPanel();
+        this.waitPanel = createWaitPanel();
 
         this.content.setCenter(waitPanel);
 
         this.setContent(content);
     }
 
-    private void populateWaitPanel() {
-        this.waitPanel = new WaitPanel();
+    private HBox createWaitPanel() {
+        final ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.getStyleClass().add("waiting-indicator");
+
+        final HBox waitPanel = new HBox(progressIndicator);
+        waitPanel.getStyleClass().add("rightPane");
+
+        return waitPanel;
     }
 
     private void populateFailurePanel() {
