@@ -13,7 +13,6 @@ import org.phoenicis.javafx.components.engine.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
 
 import java.util.List;
 
@@ -109,11 +108,13 @@ public class EnginesSidebar extends Sidebar {
      * This method populates the button group containing buttons to filter for installed and not installed engines
      */
     private SidebarGroup<CheckBox> createInstallationFilters() {
-        final SidebarCheckBox installedCheck = new SidebarCheckBox(tr("Installed"));
+        final CheckBox installedCheck = new CheckBox(tr("Installed"));
+        installedCheck.getStyleClass().add("sidebarCheckBox");
         installedCheck.setSelected(true);
         filter.showInstalledProperty().bind(installedCheck.selectedProperty());
 
-        final SidebarCheckBox notInstalledCheck = new SidebarCheckBox(tr("Not installed"));
+        final CheckBox notInstalledCheck = new CheckBox(tr("Not installed"));
+        notInstalledCheck.getStyleClass().add("sidebarCheckBox");
         notInstalledCheck.setSelected(true);
         filter.showNotInstalledProperty().bind(notInstalledCheck.selectedProperty());
 

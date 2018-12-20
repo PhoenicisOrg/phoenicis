@@ -11,7 +11,6 @@ import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -99,17 +98,21 @@ public class ApplicationsSidebar extends Sidebar {
     }
 
     private SidebarGroup<CheckBox> createFilterGroup() {
-        final CheckBox testingCheck = new SidebarCheckBox(tr("Testing"));
+        final CheckBox testingCheck = new CheckBox(tr("Testing"));
+        testingCheck.getStyleClass().add("sidebarCheckBox");
         filter.containTestingApplicationsProperty().bind(testingCheck.selectedProperty());
 
-        final CheckBox requiresPatchCheck = new SidebarCheckBox(tr("Patch required"));
+        final CheckBox requiresPatchCheck = new CheckBox(tr("Patch required"));
+        requiresPatchCheck.getStyleClass().add("sidebarCheckBox");
         filter.containRequiresPatchApplicationsProperty().bind(requiresPatchCheck.selectedProperty());
 
-        final CheckBox commercialCheck = new SidebarCheckBox(tr("Commercial"));
+        final CheckBox commercialCheck = new CheckBox(tr("Commercial"));
+        commercialCheck.getStyleClass().add("sidebarCheckBox");
         commercialCheck.setSelected(true);
         filter.containCommercialApplicationsProperty().bind(commercialCheck.selectedProperty());
 
-        final CheckBox operatingSystemCheck = new SidebarCheckBox(tr("All Operating Systems"));
+        final CheckBox operatingSystemCheck = new CheckBox(tr("All Operating Systems"));
+        operatingSystemCheck.getStyleClass().add("sidebarCheckBox");
         filter.containAllOSCompatibleApplicationsProperty().bind(operatingSystemCheck.selectedProperty());
 
         final SidebarGroup<CheckBox> filterGroup = new SidebarGroup<>(tr("Filters"));
