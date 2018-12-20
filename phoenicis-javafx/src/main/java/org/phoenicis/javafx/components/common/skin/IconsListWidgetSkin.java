@@ -68,7 +68,7 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         content.prefWidthProperty().bind(container.widthProperty());
         content.setPrefHeight(0);
 
-        // ensure, that updates to the selected element property are automatically reflected in the view
+        // ensure that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             // deselect the old element
             if (oldValue != null) {

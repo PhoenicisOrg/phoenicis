@@ -52,7 +52,7 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
 
         container.setCellFactory(param -> new ListElementListCell<>());
 
-        // ensure, that updates to the selected element property are automatically reflected in the view
+        // ensure that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             // deselect the old element
             if (oldValue != null) {

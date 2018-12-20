@@ -39,9 +39,9 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
      */
     @Override
     public void initialise() {
-        // ensure, that updates to the property are automatically reflected in the view
+        // ensure that updates to the property are automatically reflected in the view
         getControl().selectedListWidgetProperty().addListener((Observable invalidation) -> selectListWidget());
-        // ensure, that the correct list widget is shown at startup
+        // ensure that the correct list widget is shown at startup
         selectListWidget();
     }
 
