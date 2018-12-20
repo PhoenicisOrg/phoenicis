@@ -10,6 +10,7 @@ The following steps must be executed to release a new version of Phoenicis:
 * Using the scheme "release/\*" automatically protects the release branch with:
     * Require pull request reviews before merging
     * Require status checks to pass before merging (Travis CI and Codacy)
+* Enable analysis for release branches (phoenicis and scripts) in Codacy settings
 * on the release branch:
     * Add release branch to `branches` section of `.travis.yml` such that Travis CI executes checks for the branch
     * Specify scripts release branch in configuration (`application.repository.default.git.branch`)
