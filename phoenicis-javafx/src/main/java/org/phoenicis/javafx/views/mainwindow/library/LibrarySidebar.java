@@ -4,15 +4,14 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.stage.FileChooser;
-import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
+import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarButton;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
@@ -77,7 +76,7 @@ public class LibrarySidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(availableShortcuts);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup, createSpacer(), advancedToolsGroup));
+        setCenter(createScrollPane(sidebarToggleGroup, createSpacer(), advancedToolsGroup));
         setBottom(listWidgetSelector);
     }
 

@@ -12,7 +12,6 @@ import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -67,10 +66,8 @@ public class ApplicationsSidebar extends Sidebar {
         ApplicationSidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
         SidebarGroup<CheckBox> filterGroup = createFilterGroup();
 
-        SidebarScrollPane centerContent = new SidebarScrollPane(sidebarToggleGroup, createSpacer(), filterGroup);
-
         this.setTop(searchBox);
-        this.setCenter(centerContent);
+        this.setCenter(createScrollPane(sidebarToggleGroup, createSpacer(), filterGroup));
         this.setBottom(listWidgetSelector);
     }
 
