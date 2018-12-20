@@ -1,12 +1,12 @@
 package org.phoenicis.javafx.components.common.skin;
 
+import com.google.common.collect.ImmutableMap;
 import javafx.beans.Observable;
 import javafx.scene.Node;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
-import org.phoenicis.javafx.components.common.control.CompactListWidget;
-import org.phoenicis.javafx.components.common.control.DetailsListWidget;
-import org.phoenicis.javafx.components.common.control.IconsListWidget;
+import org.phoenicis.javafx.components.common.control.*;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+
+import java.util.Map;
 
 /**
  * The skin for the {@link CombinedListWidget} component
@@ -14,9 +14,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
  * @param <E> The concrete type of the elements shown in this list widget
  */
 public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, CombinedListWidgetSkin<E>> {
-    private final IconsListWidget<E> iconsListWidget;
-    private final CompactListWidget<E> compactListWidget;
-    private final DetailsListWidget<E> detailsListWidget;
+    private final Map<ListWidgetType, ListWidgetBase<E, ?, ?>> listWidgets;
 
     /**
      * Constructor
@@ -26,14 +24,14 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
     public CombinedListWidgetSkin(CombinedListWidget<E> control) {
         super(control);
 
-        this.iconsListWidget = new IconsListWidget<>(
-                getControl().getElements(), getControl().selectedElementProperty());
-
-        this.compactListWidget = new CompactListWidget<>(
-                getControl().getElements(), getControl().selectedElementProperty());
-
-        this.detailsListWidget = new DetailsListWidget<>(
-                getControl().getElements(), getControl().selectedElementProperty());
+        this.listWidgets = ImmutableMap.<ListWidgetType, ListWidgetBase<E, ?, ?>> builder()
+                .put(ListWidgetType.ICONS_LIST, new IconsListWidget<>(
+                        getControl().getElements(), getControl().selectedElementProperty()))
+                .put(ListWidgetType.COMPACT_LIST, new CompactListWidget<>(
+                        getControl().getElements(), getControl().selectedElementProperty()))
+                .put(ListWidgetType.DETAILS_LIST, new DetailsListWidget<>(
+                        getControl().getElements(), getControl().selectedElementProperty()))
+                .build();
     }
 
     /**
@@ -53,27 +51,8 @@ public class CombinedListWidgetSkin<E> extends SkinBase<CombinedListWidget<E>, C
     private void selectListWidget() {
         final ListWidgetType listWidgetType = getControl().getSelectedListWidget();
 
-        final Node currentListWidget = getListWidget(listWidgetType);
+        final ListWidgetBase<E, ?, ?> currentListWidget = listWidgets.get(listWidgetType);
 
         getChildren().setAll(currentListWidget);
-    }
-
-    /**
-     * Gets the list widget which belongs to the given {@link ListWidgetType}
-     *
-     * @param listWidgetType The list widget type
-     * @return The list widget belonging to the given {@link ListWidgetType}
-     */
-    private Node getListWidget(final ListWidgetType listWidgetType) {
-        switch (listWidgetType) {
-            case ICONS_LIST:
-                return iconsListWidget;
-            case COMPACT_LIST:
-                return compactListWidget;
-            case DETAILS_LIST:
-                return detailsListWidget;
-            default:
-                return iconsListWidget;
-        }
     }
 }
