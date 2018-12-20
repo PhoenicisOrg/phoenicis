@@ -15,7 +15,6 @@ import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import java.util.List;
 
@@ -72,7 +71,7 @@ public class EnginesSidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(enginesVersionListWidgets);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(categoryView, new SidebarSpacer(), installationFilterGroup));
+        setCenter(new SidebarScrollPane(categoryView, createSpacer(), installationFilterGroup));
         setBottom(listWidgetSelector);
     }
 

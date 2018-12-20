@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.mainwindow.ui;
 
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
 public abstract class Sidebar extends BorderPane {
 
@@ -26,5 +27,13 @@ public abstract class Sidebar extends BorderPane {
         super();
 
         this.getStyleClass().add("sidebar");
+    }
+
+    protected static Pane createSpacer() {
+        final Pane spacer = new Pane();
+
+        spacer.getStyleClass().add("sidebarSpacer");
+
+        return spacer;
     }
 }

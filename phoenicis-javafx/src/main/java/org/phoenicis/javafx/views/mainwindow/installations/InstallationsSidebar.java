@@ -12,7 +12,6 @@ import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCateg
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -61,7 +60,7 @@ public class InstallationsSidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(activeInstallations);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer()));
+        setCenter(new SidebarScrollPane(sidebarToggleGroup, createSpacer()));
         setBottom(listWidgetSelector);
     }
 
