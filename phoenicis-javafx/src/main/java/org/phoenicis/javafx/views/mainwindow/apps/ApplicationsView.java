@@ -94,12 +94,12 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
         filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
 
-        this.availableApps = createCombinedListWidget();
+        this.availableApps = createApplicationListWidget();
 
         setSidebar(createApplicationsSidebar(availableApps));
     }
 
-    private CombinedListWidget<ApplicationDTO> createCombinedListWidget() {
+    private CombinedListWidget<ApplicationDTO> createApplicationListWidget() {
         /*
          * initialising the application lists by:
          * 1. sorting the applications by their name

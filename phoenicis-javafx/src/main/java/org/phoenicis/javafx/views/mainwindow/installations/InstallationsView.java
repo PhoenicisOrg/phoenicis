@@ -70,7 +70,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
         this.getStyleClass().add("mainWindowScene");
 
-        this.activeInstallations = createCombinedListWidget();
+        this.activeInstallations = createInstallationListWidget();
 
         filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
@@ -78,7 +78,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         setCenter(activeInstallations);
     }
 
-    private CombinedListWidget<InstallationDTO> createCombinedListWidget() {
+    private CombinedListWidget<InstallationDTO> createInstallationListWidget() {
         final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
                 categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
                 InstallationCategoryDTO::getInstallations)

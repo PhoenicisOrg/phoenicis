@@ -78,7 +78,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
 
         filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        this.availableContainers = createCombinedListWidget();
+        this.availableContainers = createContainerListWidget();
 
         setSidebar(createContainersSidebar(availableContainers));
     }
@@ -93,7 +93,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         return new ContainersSidebar(filter, javaFxSettingsManager, sortedCategories, availableContainers);
     }
 
-    private CombinedListWidget<ContainerDTO> createCombinedListWidget() {
+    private CombinedListWidget<ContainerDTO> createContainerListWidget() {
         /*
          * initialize the container lists by:
          * 1. sorting the containers by their name

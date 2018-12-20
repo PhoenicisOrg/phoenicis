@@ -81,7 +81,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         this.getStyleClass().add("mainWindowScene");
 
-        this.availableShortcuts = createCombinedListWidget();
+        this.availableShortcuts = createShortcutListWidget();
 
         filter.selectedShortcutCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
@@ -107,7 +107,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
     }
 
-    private CombinedListWidget<ShortcutDTO> createCombinedListWidget() {
+    private CombinedListWidget<ShortcutDTO> createShortcutListWidget() {
         final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
                 categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
                 ShortcutCategoryDTO::getShortcuts)
