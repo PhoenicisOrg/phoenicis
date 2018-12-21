@@ -30,10 +30,10 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -119,8 +119,9 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                         filter.containRequiresPatchApplicationsProperty(),
                         filter.containTestingApplicationsProperty()));
 
-        final ObservableList<ListWidgetEntry<ApplicationDTO>> listWidgetEntries = new MappedList<>(filteredApplications,
-                ListWidgetEntry::create);
+        final ObservableList<ListWidgetElement<ApplicationDTO>> listWidgetEntries = new MappedList<>(
+                filteredApplications,
+                ListWidgetElement::create);
 
         final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
 

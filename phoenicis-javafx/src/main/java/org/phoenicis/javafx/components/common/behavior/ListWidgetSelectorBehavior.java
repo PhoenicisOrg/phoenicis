@@ -2,9 +2,9 @@ package org.phoenicis.javafx.components.common.behavior;
 
 import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
-import org.phoenicis.javafx.components.common.skin.ListWidgetSelectorSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.skin.ListWidgetSelectorSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 import java.util.Optional;
 import java.util.function.Consumer;

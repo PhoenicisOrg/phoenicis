@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.icons.skin;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
@@ -9,7 +9,8 @@ import javafx.scene.effect.ColorAdjust;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
-import org.phoenicis.javafx.components.common.control.IconsListElement;
+import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListElement;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 
 /**
  * The skin for the {@link IconsListElement} component

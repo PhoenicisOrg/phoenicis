@@ -1,8 +1,9 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.icons.control;
 
 import javafx.beans.property.*;
-import org.phoenicis.javafx.components.common.skin.IconsListElementSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.common.widgets.icons.skin.IconsListElementSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 
 import java.net.URI;
 
@@ -63,7 +64,7 @@ public class IconsListElement<E> extends ControlBase<IconsListElement<E>, IconsL
      *
      * @param item The list widget entry
      */
-    public IconsListElement(ListWidgetEntry<E> item) {
+    public IconsListElement(ListWidgetElement<E> item) {
         this(new SimpleObjectProperty<>(item.getItem()), new SimpleObjectProperty<>(item.getIconUri()),
                 new SimpleStringProperty(item.getTitle()), new SimpleBooleanProperty(item.isEnabled()),
                 new SimpleBooleanProperty());

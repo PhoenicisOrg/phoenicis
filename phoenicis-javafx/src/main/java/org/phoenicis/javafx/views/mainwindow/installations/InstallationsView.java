@@ -27,10 +27,10 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -91,8 +91,9 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
                 .sorted(Comparator.comparing(InstallationDTO::getName));
 
-        final ObservableList<ListWidgetEntry<InstallationDTO>> listWidgetEntries = new MappedList<>(sortedInstallations,
-                ListWidgetEntry::create);
+        final ObservableList<ListWidgetElement<InstallationDTO>> listWidgetEntries = new MappedList<>(
+                sortedInstallations,
+                ListWidgetElement::create);
 
         final CombinedListWidget<InstallationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
 

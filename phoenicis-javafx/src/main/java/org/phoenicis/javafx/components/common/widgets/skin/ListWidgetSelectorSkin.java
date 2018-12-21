@@ -1,11 +1,12 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.skin;
 
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.components.common.behavior.ListWidgetSelectorBehavior;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.skin.BehaviorSkinBase;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 /**
  * The skin for the {@link ListWidgetSelector} component

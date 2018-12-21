@@ -1,11 +1,12 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.compact.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import org.phoenicis.javafx.components.common.control.CompactListElement;
+import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 
 import java.util.ArrayList;

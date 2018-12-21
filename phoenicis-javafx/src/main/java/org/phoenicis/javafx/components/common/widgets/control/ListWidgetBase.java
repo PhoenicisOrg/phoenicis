@@ -1,12 +1,13 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
 /**
  * A base list widget component
@@ -20,7 +21,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
     /**
      * A list containing all elements shown inside this {@link C}
      */
-    private final ObservableList<ListWidgetEntry<E>> elements;
+    private final ObservableList<ListWidgetElement<E>> elements;
 
     /**
      * The currently selected element or null if no element is selected
@@ -33,7 +34,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
      * @param elements The elements shown in this list widget
      * @param selectedElement The currently selected element
      */
-    protected ListWidgetBase(ObservableList<ListWidgetEntry<E>> elements,
+    protected ListWidgetBase(ObservableList<ListWidgetElement<E>> elements,
             ObjectProperty<ListWidgetSelection<E>> selectedElement) {
         super();
 
@@ -41,7 +42,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
         this.selectedElement = selectedElement;
     }
 
-    public ObservableList<ListWidgetEntry<E>> getElements() {
+    public ObservableList<ListWidgetElement<E>> getElements() {
         return elements;
     }
 
@@ -58,13 +59,13 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
     }
 
     /**
-     * Selects the {@link ListWidgetEntry} which belongs to the given {@link E innerElement}
+     * Selects the {@link ListWidgetElement} which belongs to the given {@link E innerElement}
      *
      * @param innerElement The inner element
      * @param event The corresponding mouse event used to trigger the selection
      */
     public void select(E innerElement, MouseEvent event) {
-        final ListWidgetEntry<E> foundElement = elements.stream()
+        final ListWidgetElement<E> foundElement = elements.stream()
                 .filter(element -> element.getItem() == innerElement).findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(
                         "The searched element is not contained inside the list widget"));
@@ -73,7 +74,7 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
     }
 
     /**
-     * Selects the {@link ListWidgetEntry} which belongs to the given {@link E innerElement}
+     * Selects the {@link ListWidgetElement} which belongs to the given {@link E innerElement}
      *
      * @param innerElement The inner element
      */

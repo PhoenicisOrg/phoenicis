@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.icons.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
@@ -6,10 +6,11 @@ import javafx.scene.CacheHint;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.IconsListElement;
-import org.phoenicis.javafx.components.common.control.IconsListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListElement;
+import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListWidget;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
 /**
  * The skin for the {@link IconsListWidget} component
@@ -18,7 +19,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
  */
 public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsListWidgetSkin<E>> {
     /**
-     * Mapped list between the input {@link ListWidgetEntry} and {@link IconsListElement}
+     * Mapped list between the input {@link ListWidgetElement} and {@link IconsListElement}
      */
     private final ObservableList<IconsListElement<E>> mappedElements;
 

@@ -1,14 +1,15 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.compact.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CompactListElement;
-import org.phoenicis.javafx.components.common.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
+import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
 /**
  * The skin for the {@link CompactListWidget} component
@@ -17,7 +18,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
  */
 public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, CompactListWidgetSkin<E>> {
     /**
-     * Mapped list between the input {@link ListWidgetEntry} and {@link CompactListElement}
+     * Mapped list between the input {@link ListWidgetElement} and {@link CompactListElement}
      */
     private final ObservableList<CompactListElement<E>> mappedElements;
 
