@@ -34,10 +34,10 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
@@ -120,8 +120,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         final SortedList<ShortcutDTO> sortedShortcuts = filteredShortcuts
                 .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
 
-        final ObservableList<ListWidgetEntry<ShortcutDTO>> listWidgetEntries = new MappedList<>(sortedShortcuts,
-                ListWidgetEntry::create);
+        final ObservableList<ListWidgetElement<ShortcutDTO>> listWidgetEntries = new MappedList<>(sortedShortcuts,
+                ListWidgetElement::create);
 
         final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
 

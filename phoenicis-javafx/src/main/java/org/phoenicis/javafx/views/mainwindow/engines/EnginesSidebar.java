@@ -6,12 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.CheckBox;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.components.engine.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;

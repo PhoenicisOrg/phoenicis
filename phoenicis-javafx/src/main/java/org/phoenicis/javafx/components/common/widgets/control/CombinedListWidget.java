@@ -1,12 +1,12 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.common.skin.CombinedListWidgetSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.skin.CombinedListWidgetSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 /**
  * A combined list widget component which consists of multiple inner list widgets from which the user can choose
@@ -26,7 +26,7 @@ public class CombinedListWidget<E> extends ListWidgetBase<E, CombinedListWidget<
      * @param selectedElement The currently selected element
      * @param selectedListWidget The selected/shown inner list widget
      */
-    public CombinedListWidget(ObservableList<ListWidgetEntry<E>> elements,
+    public CombinedListWidget(ObservableList<ListWidgetElement<E>> elements,
             ObjectProperty<ListWidgetSelection<E>> selectedElement, ObjectProperty<ListWidgetType> selectedListWidget) {
         super(elements, selectedElement);
 
@@ -38,7 +38,7 @@ public class CombinedListWidget<E> extends ListWidgetBase<E, CombinedListWidget<
      *
      * @param elements The elements shown in this list widget
      */
-    public CombinedListWidget(ObservableList<ListWidgetEntry<E>> elements) {
+    public CombinedListWidget(ObservableList<ListWidgetElement<E>> elements) {
         this(elements, new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 

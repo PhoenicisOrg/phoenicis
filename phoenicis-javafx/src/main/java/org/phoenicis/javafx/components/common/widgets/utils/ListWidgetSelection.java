@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.widgets.lists;
+package org.phoenicis.javafx.components.common.widgets.utils;
 
 import javafx.scene.input.MouseEvent;
 
@@ -11,7 +11,7 @@ public class ListWidgetSelection<E> {
     /**
      * The selected element
      */
-    private final ListWidgetEntry<E> selection;
+    private final ListWidgetElement<E> selection;
 
     /**
      * The mouse event, which has been fired during the selection
@@ -24,7 +24,7 @@ public class ListWidgetSelection<E> {
      * @param selection The selected element
      * @param event The mouse event, which has been fired during the selection
      */
-    public ListWidgetSelection(ListWidgetEntry<E> selection, MouseEvent event) {
+    public ListWidgetSelection(ListWidgetElement<E> selection, MouseEvent event) {
         super();
 
         this.selection = selection;
@@ -36,7 +36,7 @@ public class ListWidgetSelection<E> {
      *
      * @return The selected element
      */
-    public ListWidgetEntry<E> getSelection() {
+    public ListWidgetElement<E> getSelection() {
         return selection;
     }
 
