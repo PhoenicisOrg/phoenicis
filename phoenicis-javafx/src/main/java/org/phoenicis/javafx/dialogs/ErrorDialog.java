@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.dialogs;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -7,9 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import org.apache.commons.lang.exception.ExceptionUtils;
+
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -29,16 +33,19 @@ public class ErrorDialog extends Alert {
     }
 
     private void initialise() {
-        contentTextProperty().bind(Bindings.createStringBinding(() -> getException().getMessage(), exception));
+        contentTextProperty().bind(Bindings.createStringBinding(
+                () -> Optional.ofNullable(getException()).map(Exception::getMessage).orElse(null), exception));
 
         getDialogPane().setExpandableContent(createExpandableContent());
 
-        getDialogPane().expandedProperty().addListener(observable -> {
+        getDialogPane().expandedProperty().addListener(observable -> Platform.runLater(() -> {
             getDialogPane().requestLayout();
 
             final Window window = getDialogPane().getScene().getWindow();
             window.sizeToScene();
-        });
+        }));
+
+        getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
     }
 
     private VBox createExpandableContent() {
@@ -47,8 +54,9 @@ public class ErrorDialog extends Alert {
         final TextArea textArea = new TextArea();
         textArea.setEditable(false);
 
-        textArea.textProperty()
-                .bind(Bindings.createStringBinding(() -> ExceptionUtils.getFullStackTrace(getException()), exception));
+        textArea.textProperty().bind(Bindings.createStringBinding(
+                () -> Optional.ofNullable(getException()).map(ExceptionUtils::getFullStackTrace).orElse(null),
+                exception));
 
         VBox.setVgrow(textArea, Priority.ALWAYS);
 
