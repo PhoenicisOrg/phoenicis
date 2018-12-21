@@ -28,10 +28,11 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -93,12 +94,12 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
         this.filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
 
-        this.availableApps = createCombinedListWidget();
+        this.availableApps = createApplicationListWidget();
 
         setSidebar(createApplicationsSidebar(this.availableApps));
     }
 
-    private CombinedListWidget<ApplicationDTO> createCombinedListWidget() {
+    private CombinedListWidget<ApplicationDTO> createApplicationListWidget() {
         /*
          * initialising the application lists by:
          * 1. sorting the applications by their name
@@ -118,8 +119,18 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                         this.filter.containRequiresPatchApplicationsProperty(),
                         this.filter.containTestingApplicationsProperty()));
 
-        return new CombinedListWidget<>(filteredApplications, ListWidgetEntry::create,
-                (element, event) -> showAppDetails(element, this.javaFxSettingsManager));
+        final ObservableList<ListWidgetEntry<ApplicationDTO>> listWidgetEntries = new MappedList<>(filteredApplications,
+                ListWidgetEntry::create);
+
+        final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showAppDetails(newValue.getItem(), this.javaFxSettingsManager);
+            }
+        });
+
+        return listWidget;
     }
 
     private ApplicationsSidebar createApplicationsSidebar(CombinedListWidget<ApplicationDTO> availableApps) {

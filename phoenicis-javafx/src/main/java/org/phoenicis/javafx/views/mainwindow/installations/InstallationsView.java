@@ -25,10 +25,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
@@ -69,6 +70,15 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
         this.getStyleClass().add("mainWindowScene");
 
+        this.activeInstallations = createInstallationListWidget();
+
+        this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+
+        setSidebar(createInstallationsSidebar());
+        setCenter(activeInstallations);
+    }
+
+    private CombinedListWidget<InstallationDTO> createInstallationListWidget() {
         final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
                 this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
                 InstallationCategoryDTO::getInstallations)
@@ -81,27 +91,18 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
                 .sorted(Comparator.comparing(InstallationDTO::getName));
 
-        this.activeInstallations = new CombinedListWidget<>(sortedInstallations, ListWidgetEntry::create,
-                (selectedItem, event) -> {
-                    this.activeInstallations.deselectAll();
-                    this.activeInstallations.select(selectedItem);
+        final ObservableList<ListWidgetEntry<InstallationDTO>> listWidgetEntries = new MappedList<>(sortedInstallations,
+                ListWidgetEntry::create);
 
-                    showInstallationDetails(selectedItem);
+        final CombinedListWidget<InstallationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
 
-                    event.consume();
-                });
-
-        // This looks strange to me
-        this.activeInstallations.setOnMouseClicked(event -> {
-            this.activeInstallations.deselectAll();
-
-            event.consume();
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showInstallationDetails(newValue.getItem());
+            }
         });
 
-        this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
-
-        setSidebar(createInstallationsSidebar());
-        setCenter(this.activeInstallations);
+        return combinedListWidget;
     }
 
     private InstallationsSidebar createInstallationsSidebar() {
@@ -149,12 +150,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     public void addInstallation(InstallationDTO installationDTO) {
         populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
 
-        Platform.runLater(() -> {
-            this.activeInstallations.deselectAll();
-            this.activeInstallations.select(installationDTO);
-
-            showInstallationDetails(installationDTO);
-        });
+        Platform.runLater(() -> this.activeInstallations.select(installationDTO));
 
         this.onInstallationAdded.run();
     }

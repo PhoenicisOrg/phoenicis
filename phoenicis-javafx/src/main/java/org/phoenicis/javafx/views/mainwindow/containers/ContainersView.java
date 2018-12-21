@@ -27,10 +27,11 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
@@ -76,7 +77,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         this.filter = new ContainersFilter();
         this.filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        this.availableContainers = createCombinedListWidget();
+        this.availableContainers = createContainerListWidget();
 
         setSidebar(createContainersSidebar(this.availableContainers));
     }
@@ -91,7 +92,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         return new ContainersSidebar(this.filter, this.javaFxSettingsManager, sortedCategories, availableContainers);
     }
 
-    private CombinedListWidget<ContainerDTO> createCombinedListWidget() {
+    private CombinedListWidget<ContainerDTO> createContainerListWidget() {
         /*
          * initialize the container lists by:
          * 1. sorting the containers by their name
@@ -106,8 +107,18 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         filteredContainers.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter, this.filter.searchTermProperty()));
 
-        return new CombinedListWidget<>(filteredContainers, ListWidgetEntry::create,
-                (element, event) -> showContainerDetails(element));
+        final ObservableList<ListWidgetEntry<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
+                ListWidgetEntry::create);
+
+        final CombinedListWidget<ContainerDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showContainerDetails(newValue.getItem());
+            }
+        });
+
+        return listWidget;
     }
 
     /**

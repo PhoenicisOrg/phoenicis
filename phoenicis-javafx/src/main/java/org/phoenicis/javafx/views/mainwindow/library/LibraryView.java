@@ -31,10 +31,12 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
@@ -79,47 +81,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         this.getStyleClass().add("mainWindowScene");
 
-        // initialising the shortcut lists
-        final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
-                this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
-                ShortcutCategoryDTO::getShortcuts)
-                        .filtered(this.filter::filter);
-
-        filteredShortcuts.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> this.filter::filter,
-                        this.filter.searchTermProperty(), this.filter.selectedShortcutCategoryProperty()));
-
-        final SortedList<ShortcutDTO> sortedShortcuts = filteredShortcuts
-                .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
-
-        this.availableShortcuts = new CombinedListWidget<>(sortedShortcuts, ListWidgetEntry::create,
-                (selectedItem, event) -> {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        // select and show details
-                        this.availableShortcuts.deselectAll();
-                        this.availableShortcuts.select(selectedItem);
-                        showShortcutDetails(selectedItem);
-
-                        if (event.getClickCount() == 2) {
-                            this.onShortcutDoubleClicked.accept(selectedItem);
-                        }
-                    } else if (event.getButton() == MouseButton.SECONDARY) {
-                        // show context menu
-                        final ContextMenu contextMenu = new ContextMenu();
-                        MenuItem edit = new MenuItem("Edit");
-                        contextMenu.getItems().addAll(edit);
-                        edit.setOnAction(editEvent -> showShortcutEdit(selectedItem));
-                        contextMenu.show(this.availableShortcuts, event.getScreenX(), event.getScreenY());
-                    }
-
-                    event.consume();
-                });
-
-        this.availableShortcuts.setOnMouseClicked(event -> {
-            this.availableShortcuts.deselectAll();
-
-            event.consume();
-        });
+        this.availableShortcuts = createShortcutListWidget();
 
         this.filter.selectedShortcutCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
@@ -143,6 +105,49 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.libraryPanel = new LibraryPanel(objectMapper);
         this.createShortcutPanel = new CreateShortcutPanel(containersPath);
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
+    }
+
+    private CombinedListWidget<ShortcutDTO> createShortcutListWidget() {
+        final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
+                this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
+                ShortcutCategoryDTO::getShortcuts)
+                        .filtered(this.filter::filter);
+
+        filteredShortcuts.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> this.filter::filter,
+                        this.filter.searchTermProperty(), this.filter.selectedShortcutCategoryProperty()));
+
+        final SortedList<ShortcutDTO> sortedShortcuts = filteredShortcuts
+                .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
+
+        final ObservableList<ListWidgetEntry<ShortcutDTO>> listWidgetEntries = new MappedList<>(sortedShortcuts,
+                ListWidgetEntry::create);
+
+        final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final ShortcutDTO selectedItem = newValue.getItem();
+                final MouseEvent event = newValue.getEvent();
+
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    showShortcutDetails(selectedItem);
+
+                    if (event.getClickCount() == 2) {
+                        this.onShortcutDoubleClicked.accept(selectedItem);
+                    }
+                } else if (event.getButton() == MouseButton.SECONDARY) {
+                    final MenuItem edit = new MenuItem("Edit");
+                    edit.setOnAction(editEvent -> showShortcutEdit(selectedItem));
+
+                    final ContextMenu contextMenu = new ContextMenu(edit);
+                    // show context menu
+                    contextMenu.show(this.availableShortcuts, event.getScreenX(), event.getScreenY());
+                }
+            }
+        });
+
+        return combinedListWidget;
     }
 
     private LibrarySidebar createLibrarySidebar() {
@@ -178,7 +183,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.libraryPanel.setOnClose(this::closeDetailsView);
         this.libraryPanel.setShortcutDTO(shortcutDTO);
         this.libraryPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        showDetailsView(this.libraryPanel);
+        this.showDetailsView(this.libraryPanel);
     }
 
     /**

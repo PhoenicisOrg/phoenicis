@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -10,8 +11,10 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.CombinedListWidget;
 import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -47,7 +50,8 @@ public class EngineSubCategoryTab extends Tab {
      * @param enginesPath The path to the engines
      */
     public EngineSubCategoryTab(EngineCategoryDTO engineCategory, EngineSubCategoryDTO engineSubCategory,
-            String enginesPath, EnginesFilter filter, Engine engine) {
+            String enginesPath, EnginesFilter filter, Engine engine,
+            ObjectProperty<ListWidgetType> selectedListWidget) {
         super(engineSubCategory.getDescription());
 
         this.engineCategory = engineCategory;
@@ -57,7 +61,7 @@ public class EngineSubCategoryTab extends Tab {
         this.filter = filter;
 
         this.filteredEngineVersions = createFilteredEngineVersions();
-        this.engineVersionsView = createListWidget();
+        this.engineVersionsView = createListWidget(selectedListWidget);
 
         setContent(engineVersionsView);
     }
@@ -78,25 +82,36 @@ public class EngineSubCategoryTab extends Tab {
         return filteredEngineVersions;
     }
 
-    private CombinedListWidget<EngineVersionDTO> createListWidget() {
-        return new CombinedListWidget<>(filteredEngineVersions,
-                engineVersionDTO -> ListWidgetEntry
-                        .create(engineVersionDTO,
-                                Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(),
-                                        engineSubCategory.getName(), engineVersionDTO.getVersion()))),
-                (engineItem, event) -> {
-                    Map<String, String> userData = new HashMap<>();
-                    userData.put("Mono", engineItem.getMonoFile());
-                    userData.put("Gecko", engineItem.getGeckoFile());
+    private CombinedListWidget<EngineVersionDTO> createListWidget(ObjectProperty<ListWidgetType> selectedListWidget) {
+        final ObservableList<ListWidgetEntry<EngineVersionDTO>> listWidgetEntries = new MappedList<>(
+                filteredEngineVersions,
+                engineVersionDTO -> ListWidgetEntry.create(engineVersionDTO,
+                        Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(),
+                                engineSubCategory.getName(), engineVersionDTO.getVersion()))));
 
-                    EngineDTO engineDTO = new EngineDTO.Builder()
-                            .withCategory(engineCategory.getName())
-                            .withSubCategory(engineSubCategory.getName())
-                            .withVersion(engineItem.getVersion())
-                            .withUserData(userData).build();
+        final CombinedListWidget<EngineVersionDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
 
-                    onSelectEngine.accept(engineDTO, engine);
-                });
+        listWidget.selectedListWidgetProperty().bind(selectedListWidget);
+
+        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final EngineVersionDTO engineItem = newValue.getItem();
+
+                Map<String, String> userData = new HashMap<>();
+                userData.put("Mono", engineItem.getMonoFile());
+                userData.put("Gecko", engineItem.getGeckoFile());
+
+                EngineDTO engineDTO = new EngineDTO.Builder()
+                        .withCategory(engineCategory.getName())
+                        .withSubCategory(engineSubCategory.getName())
+                        .withVersion(engineItem.getVersion())
+                        .withUserData(userData).build();
+
+                onSelectEngine.accept(engineDTO, engine);
+            }
+        });
+
+        return listWidget;
     }
 
     public boolean notEmpty() {
