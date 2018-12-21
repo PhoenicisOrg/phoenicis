@@ -23,6 +23,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
@@ -31,17 +32,25 @@ import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryController {
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LibraryController.class);
     @Value("${application.user.containers}")
     private String containersPath;
 
@@ -51,19 +60,20 @@ public class LibraryController {
     private final ShortcutManager shortcutManager;
     private final ScriptInterpreter scriptInterpreter;
     private final RepositoryManager repositoryManager;
+    private final ThemeManager themeManager;
 
     private boolean firstViewSelection = true;
 
     public LibraryController(LibraryView libraryView, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
-            ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
+            ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager, ThemeManager themeManager) {
         this.libraryView = libraryView;
         this.libraryManager = libraryManager;
         this.shortcutRunner = shortcutRunner;
         this.shortcutManager = shortcutManager;
         this.scriptInterpreter = scriptInterpreter;
-
         this.repositoryManager = repositoryManager;
+        this.themeManager = themeManager;
 
         libraryManager.setOnUpdate(this::updateLibrary);
 
@@ -164,6 +174,11 @@ public class LibraryController {
      * @param repositoryDTO
      */
     public void updateLibrary(RepositoryDTO repositoryDTO) {
+        Platform.runLater(() -> {
+            List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
+            setDefaultCategoryIcons(categoryDTOS);
+        });
+
         this.updateLibrary();
     }
 
@@ -175,5 +190,31 @@ public class LibraryController {
 
     public LibraryView getView() {
         return libraryView;
+    }
+
+    private void setDefaultCategoryIcons(List<CategoryDTO> categoryDTOS) {
+        try {
+            StringBuilder cssBuilder = new StringBuilder();
+            for (CategoryDTO category : categoryDTOS) {
+                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
+                URI categoryIcon = category.getIcon();
+                if (categoryIcon == null) {
+                    cssBuilder
+                            .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
+                } else {
+                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
+                }
+                cssBuilder.append("}\n");
+            }
+            String css = cssBuilder.toString();
+            Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
+            File tempFile = temp.toFile();
+            tempFile.deleteOnExit();
+            Files.write(temp, css.getBytes());
+            String defaultCategoryIconsCss = temp.toUri().toString();
+            themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
+        } catch (IOException e) {
+            LOGGER.warn("Could not set default category icons.", e);
+        }
     }
 }
