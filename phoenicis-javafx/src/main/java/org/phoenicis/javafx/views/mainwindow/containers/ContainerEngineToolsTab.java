@@ -33,7 +33,7 @@ public class ContainerEngineToolsTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public ContainerEngineToolsTab(ContainerDTO container, EngineToolsManager engineToolsManager,
-                                   ApplicationDTO engineTools) {
+            ApplicationDTO engineTools) {
         super(tr("Engine tools"));
 
         this.container = container;

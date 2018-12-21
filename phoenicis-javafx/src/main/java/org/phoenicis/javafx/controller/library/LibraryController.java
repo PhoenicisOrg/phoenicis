@@ -53,8 +53,8 @@ public class LibraryController {
     private final RepositoryManager repositoryManager;
 
     public LibraryController(LibraryView libraryView, ConsoleController consoleController,
-                             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
-                             ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
+            LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
+            ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
         this.libraryView = libraryView;
         this.libraryManager = libraryManager;
         this.shortcutRunner = shortcutRunner;
@@ -172,7 +172,7 @@ public class LibraryController {
     /**
      * shows an error message
      *
-     * @param e       exception that caused the error
+     * @param e exception that caused the error
      * @param message error message
      */
     private void showErrorMessage(Exception e, String message) {

@@ -32,7 +32,7 @@ public class ContainerToolsTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public ContainerToolsTab(ContainerDTO container,
-                             ContainerEngineController containerEngineController) {
+            ContainerEngineController containerEngineController) {
         super(tr("Tools"));
 
         this.container = container;
@@ -69,14 +69,15 @@ public class ContainerToolsTab extends Tab {
 
             File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
             if (file != null) {
-                containerEngineController.runInContainer(container, file.getAbsolutePath(), this::unlockAll, e -> Platform.runLater(() -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Error"))
-                            .withException(e)
-                            .build();
+                containerEngineController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
+                        e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .build();
 
-                    errorDialog.showAndWait();
-                }));
+                            errorDialog.showAndWait();
+                        }));
             } else {
                 // unlock if file chooser is closed
                 this.unlockAll();

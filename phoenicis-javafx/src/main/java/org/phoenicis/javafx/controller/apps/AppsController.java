@@ -49,8 +49,8 @@ public class AppsController {
     };
 
     public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
-                          ScriptInterpreter scriptInterpreter,
-                          ThemeManager themeManager) {
+            ScriptInterpreter scriptInterpreter,
+            ThemeManager themeManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;

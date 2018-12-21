@@ -30,7 +30,7 @@ public class ContainerVerbsTab extends Tab {
     private final List<Node> lockableElements = new ArrayList<>();
 
     public ContainerVerbsTab(ContainerDTO container, VerbsManager verbsManager,
-                             ApplicationDTO verbs) {
+            ApplicationDTO verbs) {
         super(tr("Verbs"));
 
         this.container = container;
@@ -59,14 +59,15 @@ public class ContainerVerbsTab extends Tab {
             verbButton.setOnMouseClicked(event -> {
                 this.lockAll();
                 // TODO: find a better way to get the engine ID
-                this.verbsManager.installVerb(container.getEngine().toLowerCase(), container.getName(), verb.getId(), this::unlockAll, e -> Platform.runLater(() -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Error"))
-                            .withException(e)
-                            .build();
+                this.verbsManager.installVerb(container.getEngine().toLowerCase(), container.getName(), verb.getId(),
+                        this::unlockAll, e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .build();
 
-                    errorDialog.showAndWait();
-                }));
+                            errorDialog.showAndWait();
+                        }));
             });
             this.lockableElements.add(verbButton);
             verbsContentPane.getChildren().add(verbButton);

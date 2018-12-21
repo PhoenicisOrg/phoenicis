@@ -56,12 +56,12 @@ public class ContainersController {
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
-                                ContainersManager containersManager,
-                                ContainerEngineController containerEngineController,
-                                RepositoryManager repositoryManager,
-                                EngineSettingsManager engineSettingsManager,
-                                VerbsManager verbsManager,
-                                EngineToolsManager engineToolsManager) {
+            ContainersManager containersManager,
+            ContainerEngineController containerEngineController,
+            RepositoryManager repositoryManager,
+            EngineSettingsManager engineSettingsManager,
+            VerbsManager verbsManager,
+            EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
@@ -154,7 +154,8 @@ public class ContainersController {
                         } catch (IOException e) {
                             Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
-                                        .withMessage(tr("Cannot open container {0} in file browser", container.getPath()))
+                                        .withMessage(
+                                                tr("Cannot open container {0} in file browser", container.getPath()))
                                         .withException(e)
                                         .withOwner(this.containersView.getContent().getScene().getWindow())
                                         .build();

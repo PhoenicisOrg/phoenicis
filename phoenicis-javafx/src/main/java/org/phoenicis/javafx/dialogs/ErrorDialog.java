@@ -44,7 +44,8 @@ public class ErrorDialog extends Alert {
         textArea.setMaxWidth(Double.MAX_VALUE);
         textArea.setMaxHeight(Double.MAX_VALUE);
 
-        textArea.textProperty().bind(Bindings.createStringBinding(() -> ExceptionUtils.getFullStackTrace(getException()), exception));
+        textArea.textProperty()
+                .bind(Bindings.createStringBinding(() -> ExceptionUtils.getFullStackTrace(getException()), exception));
 
         GridPane.setVgrow(textArea, Priority.ALWAYS);
         GridPane.setHgrow(textArea, Priority.ALWAYS);
