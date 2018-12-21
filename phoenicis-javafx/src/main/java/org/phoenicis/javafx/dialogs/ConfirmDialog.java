@@ -8,11 +8,23 @@ import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
 
 import java.util.Optional;
 
+/**
+ * A confirm dialog with two callbacks
+ */
 public class ConfirmDialog extends Alert {
+    /**
+     * Callback for {@link ButtonType#OK} button events
+     */
     private final ObjectProperty<Runnable> yesCallback;
 
+    /**
+     * Callback for other button events than {@link ButtonType#OK}
+     */
     private final ObjectProperty<Runnable> noCallback;
 
+    /**
+     * Constructor
+     */
     public ConfirmDialog() {
         super(AlertType.CONFIRMATION);
 
@@ -20,10 +32,19 @@ public class ConfirmDialog extends Alert {
         this.noCallback = new SimpleObjectProperty<>();
     }
 
+    /**
+     * Create a new builder for the confirm dialog
+     *
+     * @return A new builder instance
+     */
     public static ConfirmDialogBuilder builder() {
         return new ConfirmDialogBuilder();
     }
 
+    /**
+     * Displays the {@link ConfirmDialog} and waits for a result.
+     * After receiving a result from the dialog call either the yes or no callback
+     */
     public void showAndCallback() {
         ButtonType result = showAndWait().orElse(ButtonType.CANCEL);
         if (result == ButtonType.OK) {
