@@ -21,7 +21,6 @@ package org.phoenicis.javafx.views.scriptui;
 import javafx.application.Platform;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
-import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
 
 @Safe

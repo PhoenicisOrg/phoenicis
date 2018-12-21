@@ -28,7 +28,6 @@ import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
-import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
