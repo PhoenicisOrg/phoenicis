@@ -6,9 +6,8 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import org.apache.commons.lang.exception.ExceptionUtils;
 
@@ -33,30 +32,31 @@ public class ErrorDialog extends Alert {
         contentTextProperty().bind(Bindings.createStringBinding(() -> getException().getMessage(), exception));
 
         getDialogPane().setExpandableContent(createExpandableContent());
+
+        getDialogPane().expandedProperty().addListener(observable -> {
+            getDialogPane().requestLayout();
+
+            final Window window = getDialogPane().getScene().getWindow();
+            window.sizeToScene();
+        });
     }
 
-    private GridPane createExpandableContent() {
+    private VBox createExpandableContent() {
         final Label label = new Label(tr("Stack trace:"));
 
         final TextArea textArea = new TextArea();
         textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
 
         textArea.textProperty()
                 .bind(Bindings.createStringBinding(() -> ExceptionUtils.getFullStackTrace(getException()), exception));
 
-        GridPane.setVgrow(textArea, Priority.ALWAYS);
-        GridPane.setHgrow(textArea, Priority.ALWAYS);
+        VBox.setVgrow(textArea, Priority.ALWAYS);
 
-        final GridPane expContent = new GridPane();
-        expContent.setMaxWidth(Double.MAX_VALUE);
+        final VBox container = new VBox(label, textArea);
 
-        expContent.add(label, 0, 0);
-        expContent.add(textArea, 0, 1);
+        container.setFillWidth(true);
 
-        return expContent;
+        return container;
     }
 
     public Exception getException() {
@@ -112,15 +112,6 @@ public class ErrorDialog extends Alert {
             dialog.setException(exception);
             dialog.initOwner(owner);
             dialog.setResizable(resizable);
-
-            dialog.getDialogPane().expandedProperty().addListener(observable -> {
-                dialog.getDialogPane().requestLayout();
-
-                final Window window = dialog.getDialogPane().getScene().getWindow();
-                window.sizeToScene();
-            });
-
-            dialog.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
 
             return dialog;
         }
