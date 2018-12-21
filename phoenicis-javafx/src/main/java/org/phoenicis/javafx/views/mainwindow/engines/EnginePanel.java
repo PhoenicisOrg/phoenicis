@@ -23,7 +23,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineDTO;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.slf4j.Logger;
@@ -76,7 +76,13 @@ final class EnginePanel extends DetailsView {
                 onEngineInstall.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage(tr("An error occurred while installing the engine"), e).show();
+
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("An error occurred while installing the engine"))
+                        .withException(e)
+                        .build();
+
+                errorDialog.showAndWait();
             }
         });
         if (this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
@@ -89,7 +95,13 @@ final class EnginePanel extends DetailsView {
                 onEngineDelete.accept(engineDTO);
             } catch (IllegalArgumentException e) {
                 LOGGER.error("Failed to get engine", e);
-                new ErrorMessage(tr("An error occurred while deleting the engine"), e).show();
+
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("An error occurred while deleting the engine"))
+                        .withException(e)
+                        .build();
+
+                errorDialog.showAndWait();
             }
         });
         if (!this.engine.isInstalled(this.engineDTO.getSubCategory(), this.engineDTO.getVersion())) {
