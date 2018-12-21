@@ -83,7 +83,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         this.availableShortcuts = createShortcutListWidget();
 
-        filter.selectedShortcutCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+        this.filter.selectedShortcutCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
         LibrarySidebar sidebar = createLibrarySidebar();
         sidebar.setOnCreateShortcut(this::showShortcutCreate);
@@ -91,14 +91,14 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         setSidebar(sidebar);
 
         this.libraryTabs = new TabPane();
-        libraryTabs.getStyleClass().add("rightPane");
+        this.libraryTabs.getStyleClass().add("rightPane");
 
         this.installedApplicationsTab = new Tab();
-        installedApplicationsTab.setClosable(false);
-        installedApplicationsTab.setText(tr("My applications"));
-        installedApplicationsTab.setContent(availableShortcuts);
+        this.installedApplicationsTab.setClosable(false);
+        this.installedApplicationsTab.setText(tr("My applications"));
+        this.installedApplicationsTab.setContent(this.availableShortcuts);
 
-        libraryTabs.getTabs().add(this.installedApplicationsTab);
+        this.libraryTabs.getTabs().add(this.installedApplicationsTab);
 
         setCenter(this.libraryTabs);
 
@@ -109,13 +109,13 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
     private CombinedListWidget<ShortcutDTO> createShortcutListWidget() {
         final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
-                categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
+                this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
                 ShortcutCategoryDTO::getShortcuts)
-                        .filtered(filter::filter);
+                        .filtered(this.filter::filter);
 
         filteredShortcuts.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter,
-                        filter.searchTermProperty(), filter.selectedShortcutCategoryProperty()));
+                Bindings.createObjectBinding(() -> this.filter::filter,
+                        this.filter.searchTermProperty(), this.filter.selectedShortcutCategoryProperty()));
 
         final SortedList<ShortcutDTO> sortedShortcuts = filteredShortcuts
                 .sorted(Comparator.comparing(shortcut -> shortcut.getInfo().getName()));
@@ -134,7 +134,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     showShortcutDetails(selectedItem);
 
                     if (event.getClickCount() == 2) {
-                        onShortcutDoubleClicked.accept(selectedItem);
+                        this.onShortcutDoubleClicked.accept(selectedItem);
                     }
                 } else if (event.getButton() == MouseButton.SECONDARY) {
                     final MenuItem edit = new MenuItem("Edit");
@@ -142,7 +142,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
                     final ContextMenu contextMenu = new ContextMenu(edit);
                     // show context menu
-                    contextMenu.show(availableShortcuts, event.getScreenX(), event.getScreenY());
+                    contextMenu.show(this.availableShortcuts, event.getScreenX(), event.getScreenY());
                 }
             }
         });
@@ -151,10 +151,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private LibrarySidebar createLibrarySidebar() {
-        final SortedList<ShortcutCategoryDTO> sortedCategories = categories
+        final SortedList<ShortcutCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
 
-        return new LibrarySidebar(applicationName, filter, javaFxSettingsManager, sortedCategories, availableShortcuts);
+        return new LibrarySidebar(this.applicationName, this.filter, this.javaFxSettingsManager, sortedCategories,
+                this.availableShortcuts);
     }
 
     public void setOnShortcutDoubleClicked(Consumer<ShortcutDTO> onShortcutDoubleClicked) {
@@ -174,7 +175,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
             this.categories.setAll(categories);
 
             closeDetailsView();
-            installedApplicationsTab.setContent(availableShortcuts);
+            this.installedApplicationsTab.setContent(this.availableShortcuts);
         });
     }
 
@@ -182,7 +183,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.libraryPanel.setOnClose(this::closeDetailsView);
         this.libraryPanel.setShortcutDTO(shortcutDTO);
         this.libraryPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        this.showDetailsView(libraryPanel);
+        this.showDetailsView(this.libraryPanel);
     }
 
     /**
@@ -212,9 +213,9 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     public void createNewTab(Tab tab) {
-        libraryTabs.getTabs().add(tab);
-        libraryTabs.getSelectionModel().select(tab);
-        onTabOpened.run();
+        this.libraryTabs.getTabs().add(tab);
+        this.libraryTabs.getSelectionModel().select(tab);
+        this.onTabOpened.run();
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
@@ -222,7 +223,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     public void setOnOpenConsole(Runnable onOpenConsole) {
-        sidebar.setOnOpenConsole(onOpenConsole);
+        this.sidebar.setOnOpenConsole(onOpenConsole);
     }
 
     public void setOnShortcutCreate(Consumer<ShortcutCreationDTO> onShortcutCreate) {
@@ -238,6 +239,6 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     public void setOnScriptRun(Consumer<File> onScriptRun) {
-        sidebar.setOnScriptRun(onScriptRun);
+        this.sidebar.setOnScriptRun(onScriptRun);
     }
 }

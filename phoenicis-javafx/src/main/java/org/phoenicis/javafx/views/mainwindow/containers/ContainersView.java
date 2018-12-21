@@ -75,22 +75,21 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         this.categories = FXCollections.observableArrayList();
 
         this.filter = new ContainersFilter();
-
-        filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+        this.filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
         this.availableContainers = createContainerListWidget();
 
-        setSidebar(createContainersSidebar(availableContainers));
+        setSidebar(createContainersSidebar(this.availableContainers));
     }
 
     private ContainersSidebar createContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers) {
         /*
          * initialize the container categories by sorting them
          */
-        final SortedList<ContainerCategoryDTO> sortedCategories = categories
+        final SortedList<ContainerCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(ContainerCategoryDTO::getName));
 
-        return new ContainersSidebar(filter, javaFxSettingsManager, sortedCategories, availableContainers);
+        return new ContainersSidebar(this.filter, this.javaFxSettingsManager, sortedCategories, availableContainers);
     }
 
     private CombinedListWidget<ContainerDTO> createContainerListWidget() {
@@ -100,13 +99,13 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
          * 2. filtering the containers
          */
         final FilteredList<ContainerDTO> filteredContainers = new ExpandedList<>(
-                categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
+                this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
                 ContainerCategoryDTO::getContainers)
                         .sorted(Comparator.comparing(ContainerDTO::getName))
-                        .filtered(filter::filter);
+                        .filtered(this.filter::filter);
 
         filteredContainers.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter, filter.searchTermProperty()));
+                Bindings.createObjectBinding(() -> this.filter::filter, this.filter.searchTermProperty()));
 
         final ObservableList<ListWidgetElement<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
                 ListWidgetElement::create);
@@ -132,7 +131,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
             this.categories.setAll(categories);
 
             closeDetailsView();
-            setCenter(availableContainers);
+            setCenter(this.availableContainers);
         });
     }
 
@@ -143,7 +142,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
      */
     private void showContainerDetails(ContainerDTO container) {
         // TODO: separate details panel and controller
-        onSelectContainer.accept(container);
+        this.onSelectContainer.accept(container);
     }
 
     /**
