@@ -113,8 +113,8 @@ public class ListWidgetElement<E> {
      * @param enabled True if this entry is enabled
      */
     public ListWidgetElement(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-                             List<ListWidgetAdditionalInformation> additionalInformation,
-                             List<ListWidgetAdditionalInformation> detailedInformation, boolean enabled) {
+            List<ListWidgetAdditionalInformation> additionalInformation,
+            List<ListWidgetAdditionalInformation> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
