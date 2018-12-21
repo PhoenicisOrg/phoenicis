@@ -36,6 +36,7 @@ module org.phoenicis.javafx {
     opens org.phoenicis.javafx.themes.standard.icons.mainwindow.library;
     opens org.phoenicis.javafx.themes.standard.icons.mainwindow.settings;
     requires com.fasterxml.jackson.databind;
+    requires com.google.common;
     requires commons.lang;
     requires fuzzywuzzy;
     requires java.desktop;
