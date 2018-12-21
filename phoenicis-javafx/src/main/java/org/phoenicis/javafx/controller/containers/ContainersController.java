@@ -27,6 +27,8 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
@@ -103,18 +105,21 @@ public class ContainersController {
 
             panel.setOnDeletePrefix(
                     containerToDelete -> {
-                        ConfirmMessage confirmMessage = new ConfirmMessage(
-                                tr("Delete {0} container", containerToDelete.getName()),
-                                tr("Are you sure you want to delete the {0} container?", containerToDelete.getName()),
-                                this.containersView.getContent().getScene().getWindow());
-                        confirmMessage.setResizable(true);
-                        confirmMessage.ask(() -> {
-                            containersManager.deleteContainer(containerToDelete,
-                                    e -> Platform.runLater(
-                                            () -> new ErrorMessage("Error", e, this.containersView)
-                                                    .show()));
-                            loadContainers();
-                        });
+                        final ConfirmDialog confirmMessage = ConfirmDialogBuilder.builder()
+                                .withTitle(tr("Delete {0} container", containerToDelete.getName()))
+                                .withMessage(tr("Are you sure you want to delete the {0} container?",
+                                        containerToDelete.getName()))
+                                .withOwner(containersView.getContent().getScene().getWindow())
+                                .withResizable(true)
+                                .withYesCallback(() -> {
+                                    containersManager.deleteContainer(containerToDelete, e -> Platform.runLater(
+                                            () -> new ErrorMessage("Error", e, this.containersView).show()));
+
+                                    loadContainers();
+                                })
+                                .build();
+
+                        confirmMessage.showAndCallback();
                     });
 
             panel.setOnOpenFileBrowser(container -> {
