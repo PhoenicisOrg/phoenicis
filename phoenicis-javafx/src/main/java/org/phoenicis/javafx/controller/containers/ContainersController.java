@@ -27,6 +27,7 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.ConfirmMessage;
 import org.phoenicis.javafx.views.common.ErrorMessage;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
@@ -56,12 +57,12 @@ public class ContainersController {
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     public ContainersController(ContainersView containersView,
-            ContainersManager containersManager,
-            ContainerEngineController containerEngineController,
-            RepositoryManager repositoryManager,
-            EngineSettingsManager engineSettingsManager,
-            VerbsManager verbsManager,
-            EngineToolsManager engineToolsManager) {
+                                ContainersManager containersManager,
+                                ContainerEngineController containerEngineController,
+                                RepositoryManager repositoryManager,
+                                EngineSettingsManager engineSettingsManager,
+                                VerbsManager verbsManager,
+                                EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
@@ -69,19 +70,37 @@ public class ContainersController {
         this.engineToolsManager = engineToolsManager;
 
         this.engineSettings = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineSettings,
-                e -> Platform.runLater(
-                        () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateEngineSettings, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading engine settings failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         this.verbs = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateVerbs,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateVerbs, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading Verbs failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         this.engineTools = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineTools,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateEngineTools, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading engine tools failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         containersView.setOnSelectionChanged(event -> {
             if (containersView.isSelected()) {
