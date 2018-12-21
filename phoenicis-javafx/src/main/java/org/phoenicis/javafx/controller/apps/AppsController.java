@@ -45,6 +45,8 @@ public class AppsController {
     private final ScriptInterpreter scriptInterpreter;
     private ThemeManager themeManager;
 
+    private boolean firstViewSelection = true;
+
     private Runnable onAppLoaded = () -> {
     };
 
@@ -56,13 +58,21 @@ public class AppsController {
         this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView,
-                e -> Platform.runLater(() -> view.showFailure(
-                        tr("Connecting to the repository failed.\nPlease check your connection and try again."),
-                        Optional.of(e))));
+        this.view.setOnSelectionChanged(event -> {
+            if (this.view.isSelected() && this.firstViewSelection) {
+                this.repositoryManager.addCallbacks(this::populateView,
+                        e -> Platform.runLater(() -> view.showFailure(
+                                tr("Connecting to the repository failed.\nPlease check your connection and try again."),
+                                Optional.of(e))));
+
+                loadApps();
+
+                this.firstViewSelection = false;
+            }
+        });
     }
 
-    public void loadApps() {
+    private void loadApps() {
         this.view.showWait();
         this.repositoryManager.triggerRepositoryChange();
 

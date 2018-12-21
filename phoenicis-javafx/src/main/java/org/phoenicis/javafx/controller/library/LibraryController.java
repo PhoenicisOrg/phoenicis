@@ -52,6 +52,8 @@ public class LibraryController {
     private final ScriptInterpreter scriptInterpreter;
     private final RepositoryManager repositoryManager;
 
+    private boolean firstViewSelection = true;
+
     public LibraryController(LibraryView libraryView, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
             ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
@@ -62,8 +64,6 @@ public class LibraryController {
         this.scriptInterpreter = scriptInterpreter;
 
         this.repositoryManager = repositoryManager;
-        this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
-        });
 
         libraryManager.setOnUpdate(this::updateLibrary);
 
@@ -95,6 +95,15 @@ public class LibraryController {
             scriptInterpreter.runScript(file,
                     e -> Platform
                             .runLater(() -> new ErrorMessage(tr("Error while running script"), e, this.libraryView)));
+        });
+
+        this.libraryView.setOnSelectionChanged(event -> {
+            if (this.libraryView.isSelected() && this.firstViewSelection) {
+                this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
+                });
+                this.repositoryManager.triggerRepositoryChange();
+                this.firstViewSelection = false;
+            }
         });
     }
 

@@ -69,27 +69,31 @@ public class ContainersController {
         this.engineToolsManager = engineToolsManager;
 
         this.engineSettings = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineSettings,
-                e -> Platform.runLater(
-                        () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
-
         this.verbs = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateVerbs,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
-
         this.engineTools = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineTools,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
 
-        containersView.setOnSelectionChanged(event -> {
-            if (containersView.isSelected()) {
+        this.containersView.setOnSelectionChanged(event -> {
+            if (this.containersView.isSelected()) {
+                repositoryManager.addCallbacks(this::updateEngineSettings,
+                        e -> Platform.runLater(
+                                () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
+
+                repositoryManager.addCallbacks(this::updateVerbs,
+                        e -> Platform
+                                .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
+
+                repositoryManager.addCallbacks(this::updateEngineTools,
+                        e -> Platform
+                                .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e,
+                                        this.containersView)));
+
+                repositoryManager.triggerRepositoryChange();
+
                 loadContainers();
             }
         });
 
-        containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
+        this.containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
             // TODO: better way to get engine ID
             final String engineId = containerDTO.getEngine().toLowerCase();
             final ContainerPanel panel = new ContainerPanel(
