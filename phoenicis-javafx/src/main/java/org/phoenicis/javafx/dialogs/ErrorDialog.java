@@ -17,9 +17,18 @@ import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * An error callback used to display a thrown exception
+ */
 public class ErrorDialog extends Alert {
+    /**
+     * The thrown exception
+     */
     private final ObjectProperty<Exception> exception;
 
+    /**
+     * Constructor
+     */
     private ErrorDialog() {
         super(AlertType.ERROR);
 
@@ -28,16 +37,25 @@ public class ErrorDialog extends Alert {
         initialise();
     }
 
+    /**
+     * Create a new builder for the error dialog
+     *
+     * @return A new builder instance
+     */
     public static ErrorDialogBuilder builder() {
         return new ErrorDialogBuilder();
     }
 
+    /**
+     * Initializes the components used in the {@link ErrorDialog}
+     */
     private void initialise() {
         contentTextProperty().bind(Bindings.createStringBinding(
                 () -> Optional.ofNullable(getException()).map(Exception::getMessage).orElse(null), exception));
 
         getDialogPane().setExpandableContent(createExpandableContent());
 
+        // ensure that the dialog resizes correctly when the expanded state changes
         getDialogPane().expandedProperty().addListener(observable -> Platform.runLater(() -> {
             getDialogPane().requestLayout();
 
@@ -48,6 +66,11 @@ public class ErrorDialog extends Alert {
         getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
     }
 
+    /**
+     * Creates the expandable content component of the {@link ErrorDialog}
+     *
+     * @return The expandable content component of the {@link ErrorDialog}
+     */
     private VBox createExpandableContent() {
         final Label label = new Label(tr("Stack trace:"));
 
@@ -79,13 +102,28 @@ public class ErrorDialog extends Alert {
         this.exception.set(exception);
     }
 
+    /**
+     * A builder class for {@link ErrorDialog} instances
+     */
     public static class ErrorDialogBuilder {
+        /**
+         * The message of the {@link ErrorDialog}
+         */
         private String message;
 
+        /**
+         * The exception shown inside the {@link ErrorDialog}
+         */
         private Exception exception;
 
+        /**
+         * The owner window of the {@link ErrorDialog}
+         */
         private Window owner;
 
+        /**
+         * The resizable status of the {@link ErrorDialog}
+         */
         private boolean resizable = true;
 
         public ErrorDialogBuilder withMessage(String message) {
