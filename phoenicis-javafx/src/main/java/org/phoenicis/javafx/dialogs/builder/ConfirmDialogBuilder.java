@@ -18,14 +18,6 @@ public class ConfirmDialogBuilder {
 
     private boolean resizable;
 
-    private ConfirmDialogBuilder() {
-        super();
-    }
-
-    public static ConfirmDialogBuilder builder() {
-        return new ConfirmDialogBuilder();
-    }
-
     public ConfirmDialogBuilder withTitle(String title) {
         this.title = title;
 

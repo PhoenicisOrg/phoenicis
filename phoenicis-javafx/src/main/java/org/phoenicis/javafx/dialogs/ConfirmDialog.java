@@ -4,6 +4,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
 
 import java.util.Optional;
 
@@ -17,6 +18,10 @@ public class ConfirmDialog extends Alert {
 
         this.yesCallback = new SimpleObjectProperty<>();
         this.noCallback = new SimpleObjectProperty<>();
+    }
+
+    public static ConfirmDialogBuilder builder() {
+        return new ConfirmDialogBuilder();
     }
 
     public void showAndCallback() {
