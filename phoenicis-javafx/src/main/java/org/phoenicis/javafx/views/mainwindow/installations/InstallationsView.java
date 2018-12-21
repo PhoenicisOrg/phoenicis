@@ -70,21 +70,21 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         this.getStyleClass().add("mainWindowScene");
 
         final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
-                categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
+                this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
                 InstallationCategoryDTO::getInstallations)
-                        .filtered(filter::filter);
+                        .filtered(this.filter::filter);
 
         filteredInstallations.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter,
-                        filter.searchTermProperty(), filter.selectedInstallationCategoryProperty()));
+                Bindings.createObjectBinding(() -> this.filter::filter,
+                        this.filter.searchTermProperty(), this.filter.selectedInstallationCategoryProperty()));
 
         final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
                 .sorted(Comparator.comparing(InstallationDTO::getName));
 
         this.activeInstallations = new CombinedListWidget<>(sortedInstallations, ListWidgetEntry::create,
                 (selectedItem, event) -> {
-                    activeInstallations.deselectAll();
-                    activeInstallations.select(selectedItem);
+                    this.activeInstallations.deselectAll();
+                    this.activeInstallations.select(selectedItem);
 
                     showInstallationDetails(selectedItem);
 
@@ -92,23 +92,24 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
                 });
 
         // This looks strange to me
-        activeInstallations.setOnMouseClicked(event -> {
-            activeInstallations.deselectAll();
+        this.activeInstallations.setOnMouseClicked(event -> {
+            this.activeInstallations.deselectAll();
 
             event.consume();
         });
 
-        filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+        this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
         setSidebar(createInstallationsSidebar());
-        setCenter(activeInstallations);
+        setCenter(this.activeInstallations);
     }
 
     private InstallationsSidebar createInstallationsSidebar() {
-        final SortedList<InstallationCategoryDTO> sortedCategories = categories
+        final SortedList<InstallationCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
-        return new InstallationsSidebar(filter, javaFxSettingsManager, sortedCategories, activeInstallations);
+        return new InstallationsSidebar(this.filter, this.javaFxSettingsManager, sortedCategories,
+                this.activeInstallations);
     }
 
     /**
@@ -121,7 +122,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
             this.categories.setAll(categories);
 
             closeDetailsView();
-            setCenter(activeInstallations);
+            setCenter(this.activeInstallations);
         });
     }
 
@@ -146,16 +147,16 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO new installation
      */
     public void addInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().addInstallationToList(categories, installationDTO));
+        populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
 
         Platform.runLater(() -> {
-            activeInstallations.deselectAll();
-            activeInstallations.select(installationDTO);
+            this.activeInstallations.deselectAll();
+            this.activeInstallations.select(installationDTO);
 
             showInstallationDetails(installationDTO);
         });
 
-        onInstallationAdded.run();
+        this.onInstallationAdded.run();
     }
 
     /**
@@ -164,7 +165,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO installation to be removed
      */
     public void removeInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().removeInstallationFromList(categories, installationDTO));
+        populate(new InstallationsUtils().removeInstallationFromList(this.categories, installationDTO));
     }
 
     /**

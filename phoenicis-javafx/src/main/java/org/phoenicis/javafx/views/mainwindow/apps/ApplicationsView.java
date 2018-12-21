@@ -85,17 +85,17 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                 (filterText, application) -> {
                     if (StringUtils.isNotEmpty(filterText)) {
                         return FuzzySearch.partialRatio(application.getName().toLowerCase(),
-                                filterText) > javaFxSettingsManager.getFuzzySearchRatio();
+                                filterText) > this.javaFxSettingsManager.getFuzzySearchRatio();
                     } else {
                         return true;
                     }
                 });
 
-        filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
+        this.filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
 
         this.availableApps = createCombinedListWidget();
 
-        setSidebar(createApplicationsSidebar(availableApps));
+        setSidebar(createApplicationsSidebar(this.availableApps));
     }
 
     private CombinedListWidget<ApplicationDTO> createCombinedListWidget() {
@@ -105,21 +105,21 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
          * 2. filtering them
          */
         final FilteredList<ApplicationDTO> filteredApplications = new ExpandedList<>(
-                categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
+                this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
                 CategoryDTO::getApplications)
                         .sorted(Comparator.comparing(ApplicationDTO::getName))
-                        .filtered(filter::filter);
+                        .filtered(this.filter::filter);
 
         filteredApplications.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter,
-                        filter.filterTextProperty(), filter.filterCategoryProperty(),
-                        filter.containAllOSCompatibleApplicationsProperty(),
-                        filter.containCommercialApplicationsProperty(),
-                        filter.containRequiresPatchApplicationsProperty(),
-                        filter.containTestingApplicationsProperty()));
+                Bindings.createObjectBinding(() -> this.filter::filter,
+                        this.filter.filterTextProperty(), this.filter.filterCategoryProperty(),
+                        this.filter.containAllOSCompatibleApplicationsProperty(),
+                        this.filter.containCommercialApplicationsProperty(),
+                        this.filter.containRequiresPatchApplicationsProperty(),
+                        this.filter.containTestingApplicationsProperty()));
 
         return new CombinedListWidget<>(filteredApplications, ListWidgetEntry::create,
-                (element, event) -> showAppDetails(element, javaFxSettingsManager));
+                (element, event) -> showAppDetails(element, this.javaFxSettingsManager));
     }
 
     private ApplicationsSidebar createApplicationsSidebar(CombinedListWidget<ApplicationDTO> availableApps) {
@@ -128,11 +128,11 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
          * 1. filtering by installer categories
          * 2. sorting the remaining categories by their name
          */
-        final SortedList<CategoryDTO> sortedCategories = categories
+        final SortedList<CategoryDTO> sortedCategories = this.categories
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        return new ApplicationsSidebar(filter, javaFxSettingsManager, sortedCategories,
+        return new ApplicationsSidebar(this.filter, this.javaFxSettingsManager, sortedCategories,
                 availableApps);
     }
 
@@ -148,7 +148,7 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         Platform.runLater(() -> {
             this.categories.setAll(filteredCategories);
 
-            setCenter(availableApps);
+            setCenter(this.availableApps);
             closeDetailsView();
         });
     }
@@ -173,7 +173,7 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
      * @param javaFxSettingsManager The javafx settings manager
      */
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
-        final ApplicationPanel applicationPanel = new ApplicationPanel(application, filter, themeManager,
+        final ApplicationPanel applicationPanel = new ApplicationPanel(application, this.filter, this.themeManager,
                 javaFxSettingsManager);
 
         applicationPanel.setOnScriptInstall(this::installScript);
