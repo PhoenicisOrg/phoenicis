@@ -1,14 +1,15 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.details.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.DetailsListElement;
-import org.phoenicis.javafx.components.common.control.DetailsListWidget;
+import org.phoenicis.javafx.components.common.widgets.details.control.DetailsListElement;
+import org.phoenicis.javafx.components.common.widgets.details.control.DetailsListWidget;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
 /**
  * The skin for the {@link DetailsListWidget} component
@@ -17,7 +18,7 @@ import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetSelection;
  */
 public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, DetailsListWidgetSkin<E>> {
     /**
-     * Mapped list between the input {@link ListWidgetEntry} and {@link DetailsListElement}
+     * Mapped list between the input {@link ListWidgetElement} and {@link DetailsListElement}
      */
     private final ObservableList<DetailsListElement<E>> mappedElements;
 

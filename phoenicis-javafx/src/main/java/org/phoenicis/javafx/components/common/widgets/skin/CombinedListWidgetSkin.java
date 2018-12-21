@@ -1,10 +1,14 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.skin;
 
 import com.google.common.collect.ImmutableMap;
 import javafx.beans.Observable;
-import javafx.scene.Node;
-import org.phoenicis.javafx.components.common.control.*;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetBase;
+import org.phoenicis.javafx.components.common.widgets.details.control.DetailsListWidget;
+import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 import java.util.Map;
 

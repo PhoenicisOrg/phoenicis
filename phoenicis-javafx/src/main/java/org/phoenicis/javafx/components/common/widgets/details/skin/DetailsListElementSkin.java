@@ -1,9 +1,10 @@
-package org.phoenicis.javafx.components.common.skin;
+package org.phoenicis.javafx.components.common.widgets.details.skin;
 
 import javafx.scene.control.Label;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import org.phoenicis.javafx.components.common.control.DetailsListElement;
+import org.phoenicis.javafx.components.common.widgets.details.control.DetailsListElement;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 
 import java.util.ArrayList;

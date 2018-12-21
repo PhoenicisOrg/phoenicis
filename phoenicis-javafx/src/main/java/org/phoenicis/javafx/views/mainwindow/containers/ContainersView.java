@@ -29,10 +29,10 @@ import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
@@ -108,8 +108,8 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         filteredContainers.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> filter::filter, filter.searchTermProperty()));
 
-        final ObservableList<ListWidgetEntry<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
-                ListWidgetEntry::create);
+        final ObservableList<ListWidgetElement<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
+                ListWidgetElement::create);
 
         final CombinedListWidget<ContainerDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
 

@@ -12,9 +12,9 @@ import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.control.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -83,9 +83,9 @@ public class EngineSubCategoryTab extends Tab {
     }
 
     private CombinedListWidget<EngineVersionDTO> createListWidget(ObjectProperty<ListWidgetType> selectedListWidget) {
-        final ObservableList<ListWidgetEntry<EngineVersionDTO>> listWidgetEntries = new MappedList<>(
+        final ObservableList<ListWidgetElement<EngineVersionDTO>> listWidgetEntries = new MappedList<>(
                 filteredEngineVersions,
-                engineVersionDTO -> ListWidgetEntry.create(engineVersionDTO,
+                engineVersionDTO -> ListWidgetElement.create(engineVersionDTO,
                         Files.exists(Paths.get(enginesPath, engineCategory.getName().toLowerCase(),
                                 engineSubCategory.getName(), engineVersionDTO.getVersion()))));
 
