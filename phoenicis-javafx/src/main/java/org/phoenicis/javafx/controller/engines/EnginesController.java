@@ -26,7 +26,7 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
@@ -57,7 +57,7 @@ public class EnginesController {
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
-            EnginesManager enginesManager, ThemeManager themeManager) {
+                             EnginesManager enginesManager, ThemeManager themeManager) {
         super();
 
         this.enginesView = enginesView;
@@ -85,7 +85,15 @@ public class EnginesController {
                             this.versionsCache.put(engineId, versions);
                             this.enginesView.updateVersions(engineCategoryDTO, versions);
                         },
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                        e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                    .build();
+
+                            errorDialog.showAndWait();
+                        }));
             }
         });
 
@@ -101,7 +109,15 @@ public class EnginesController {
                         // invalidate cache and force view update to show installed version correctly
                         this.versionsCache.remove(engineDTO.getId());
                         this.forceViewUpdate();
-                    }, e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show())))
+                    }, e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    })))
                     .build();
 
             confirmMessage.showAndCallback();
@@ -119,7 +135,15 @@ public class EnginesController {
                         // invalidate cache and force view update to show deleted version correctly
                         this.versionsCache.remove(engineDTO.getId());
                         this.forceViewUpdate();
-                    }, e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show())))
+                    }, e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    })))
                     .build();
 
             confirmMessage.showAndCallback();
@@ -171,12 +195,12 @@ public class EnginesController {
      * Fetches all engine subcategories that belong to a given list of engine categories
      *
      * @param engineCategories The engine categories
-     * @param result The temporary transport variable
-     * @param callback A callback method, which is called after all engine subcategories have been fetched
+     * @param result           The temporary transport variable
+     * @param callback         A callback method, which is called after all engine subcategories have been fetched
      */
     private void fetchEngineSubcategories(Queue<EngineCategoryDTO> engineCategories,
-            Map<EngineCategoryDTO, List<EngineSubCategoryDTO>> result,
-            Consumer<Map<EngineCategoryDTO, List<EngineSubCategoryDTO>>> callback) {
+                                          Map<EngineCategoryDTO, List<EngineSubCategoryDTO>> result,
+                                          Consumer<Map<EngineCategoryDTO, List<EngineSubCategoryDTO>>> callback) {
         final Queue<EngineCategoryDTO> queue = new ArrayDeque<>(engineCategories);
 
         if (queue.isEmpty()) {
@@ -191,13 +215,21 @@ public class EnginesController {
                     versions -> {
                         // recursively process the remaining engine categories
                         fetchEngineSubcategories(queue,
-                                ImmutableMap.<EngineCategoryDTO, List<EngineSubCategoryDTO>> builder()
+                                ImmutableMap.<EngineCategoryDTO, List<EngineSubCategoryDTO>>builder()
                                         .putAll(result)
                                         .put(engineCategory, versions)
                                         .build(),
                                 callback);
                     },
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e, enginesView).show()));
+                    e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    }));
         }
     }
 
