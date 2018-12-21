@@ -74,7 +74,7 @@ public class AppsController {
 
     private void loadApps() {
         this.view.showWait();
-        this.repositoryManager.triggerRepositoryChange();
+        this.repositoryManager.triggerCallbacks();
 
         this.view.setOnRetryButtonClicked(event -> {
             this.view.showWait();

@@ -87,7 +87,7 @@ public class ContainersController {
                                 .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e,
                                         this.containersView)));
 
-                repositoryManager.triggerRepositoryChange();
+                repositoryManager.triggerCallbacks();
 
                 loadContainers();
             }

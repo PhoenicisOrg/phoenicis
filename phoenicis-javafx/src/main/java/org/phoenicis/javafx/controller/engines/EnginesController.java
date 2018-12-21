@@ -126,7 +126,7 @@ public class EnginesController {
                         e -> Platform.runLater(
                                 () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
-                this.repositoryManager.triggerRepositoryChange();
+                this.repositoryManager.triggerCallbacks();
 
                 this.firstViewSelection = false;
             }

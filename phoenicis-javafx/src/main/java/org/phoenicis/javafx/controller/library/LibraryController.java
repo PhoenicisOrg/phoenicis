@@ -101,7 +101,7 @@ public class LibraryController {
             if (this.libraryView.isSelected() && this.firstViewSelection) {
                 this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
                 });
-                this.repositoryManager.triggerRepositoryChange();
+                this.repositoryManager.triggerCallbacks();
                 this.firstViewSelection = false;
             }
         });
