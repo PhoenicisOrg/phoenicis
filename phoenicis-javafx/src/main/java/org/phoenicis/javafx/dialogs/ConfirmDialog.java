@@ -4,7 +4,9 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import org.phoenicis.javafx.dialogs.builder.ConfirmDialogBuilder;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+import javafx.stage.Window;
 
 import java.util.Optional;
 
@@ -25,7 +27,7 @@ public class ConfirmDialog extends Alert {
     /**
      * Constructor
      */
-    public ConfirmDialog() {
+    private ConfirmDialog() {
         super(AlertType.CONFIRMATION);
 
         this.yesCallback = new SimpleObjectProperty<>();
@@ -76,5 +78,95 @@ public class ConfirmDialog extends Alert {
 
     public void setNoCallback(Runnable noCallback) {
         this.noCallback.set(noCallback);
+    }
+
+    /**
+     * A builder class for {@link ConfirmDialog} instances
+     */
+    public static class ConfirmDialogBuilder {
+        /**
+         * The title of the {@link ConfirmDialog}
+         */
+        private String title;
+
+        /**
+         * The message of the {@link ConfirmDialog}
+         */
+        private String message;
+
+        /**
+         * The success callback of the {@link ConfirmDialog}
+         */
+        private Runnable yesCallback;
+
+        /**
+         * The failure callback of the {@link ConfirmDialog}
+         */
+        private Runnable noCallback;
+
+        /**
+         * The owner window of the {@link ConfirmDialog}
+         */
+        private Window owner;
+
+        /**
+         * The resizable status of the {@link ConfirmDialog}
+         */
+        private boolean resizable;
+
+        public ConfirmDialogBuilder withTitle(String title) {
+            this.title = title;
+
+            return this;
+        }
+
+        public ConfirmDialogBuilder withMessage(String message) {
+            this.message = message;
+
+            return this;
+        }
+
+        public ConfirmDialogBuilder withYesCallback(Runnable yesCallback) {
+            this.yesCallback = yesCallback;
+
+            return this;
+        }
+
+        public ConfirmDialogBuilder withNoCallback(Runnable noCallback) {
+            this.noCallback = noCallback;
+
+            return this;
+        }
+
+        public ConfirmDialogBuilder withOwner(Window owner) {
+            this.owner = owner;
+
+            return this;
+        }
+
+        public ConfirmDialogBuilder withResizable(boolean resizable) {
+            this.resizable = resizable;
+
+            return this;
+        }
+
+        public ConfirmDialog build() {
+            final ConfirmDialog dialog = new ConfirmDialog();
+
+            dialog.initOwner(owner);
+            dialog.setTitle(title);
+            dialog.setHeaderText(title);
+            dialog.setContentText(message);
+            dialog.setYesCallback(yesCallback);
+            dialog.setNoCallback(noCallback);
+            dialog.setResizable(resizable);
+
+            dialog.getDialogPane().getChildren().stream()
+                    .filter(node -> node instanceof Label)
+                    .map(node -> (Label) node)
+                    .forEach(label -> label.setMinHeight(Region.USE_PREF_SIZE));
+
+            return dialog;
+        }
     }
 }
