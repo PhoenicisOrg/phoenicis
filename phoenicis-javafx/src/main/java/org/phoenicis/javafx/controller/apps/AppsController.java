@@ -39,11 +39,9 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ApplicationsView view;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
-    private ThemeManager themeManager;
 
     private boolean firstViewSelection = true;
 
@@ -51,12 +49,10 @@ public class AppsController {
     };
 
     public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
-            ScriptInterpreter scriptInterpreter,
-            ThemeManager themeManager) {
+            ScriptInterpreter scriptInterpreter) {
         this.view = view;
         this.repositoryManager = repositoryManager;
         this.scriptInterpreter = scriptInterpreter;
-        this.themeManager = themeManager;
 
         this.view.setOnSelectionChanged(event -> {
             if (this.view.isSelected() && this.firstViewSelection) {
@@ -128,34 +124,7 @@ public class AppsController {
     private void populateView(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
             List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
-            setDefaultCategoryIcons(categoryDTOS);
             this.view.populate(categoryDTOS);
         });
-    }
-
-    private void setDefaultCategoryIcons(List<CategoryDTO> categoryDTOS) {
-        try {
-            StringBuilder cssBuilder = new StringBuilder();
-            for (CategoryDTO category : categoryDTOS) {
-                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
-                URI categoryIcon = category.getIcon();
-                if (categoryIcon == null) {
-                    cssBuilder
-                            .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                } else {
-                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                }
-                cssBuilder.append("}\n");
-            }
-            String css = cssBuilder.toString();
-            Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-            File tempFile = temp.toFile();
-            tempFile.deleteOnExit();
-            Files.write(temp, css.getBytes());
-            String defaultCategoryIconsCss = temp.toUri().toString();
-            themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-        } catch (IOException e) {
-            LOGGER.warn("Could not set default category icons.", e);
-        }
     }
 }
