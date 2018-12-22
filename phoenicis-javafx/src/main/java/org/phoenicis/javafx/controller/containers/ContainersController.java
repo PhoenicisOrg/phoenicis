@@ -55,6 +55,8 @@ public class ContainersController {
     private Map<String, ApplicationDTO> verbs; // Verbs per engine
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
+    private boolean firstViewSelection = true;
+
     public ContainersController(ContainersView containersView,
             ContainersManager containersManager,
             ContainerEngineController containerEngineController,
@@ -74,20 +76,25 @@ public class ContainersController {
 
         this.containersView.setOnSelectionChanged(event -> {
             if (this.containersView.isSelected()) {
-                repositoryManager.addCallbacks(this::updateEngineSettings,
-                        e -> Platform.runLater(
-                                () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
+                if (this.firstViewSelection) {
+                    repositoryManager.addCallbacks(this::updateEngineSettings,
+                            e -> Platform.runLater(
+                                    () -> new ErrorMessage(tr("Loading engine settings failed."), e,
+                                            this.containersView)));
 
-                repositoryManager.addCallbacks(this::updateVerbs,
-                        e -> Platform
-                                .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
+                    repositoryManager.addCallbacks(this::updateVerbs,
+                            e -> Platform
+                                    .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e,
+                                            this.containersView)));
 
-                repositoryManager.addCallbacks(this::updateEngineTools,
-                        e -> Platform
-                                .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e,
-                                        this.containersView)));
+                    repositoryManager.addCallbacks(this::updateEngineTools,
+                            e -> Platform
+                                    .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e,
+                                            this.containersView)));
 
-                repositoryManager.triggerCallbacks();
+                    repositoryManager.triggerCallbacks();
+                    this.firstViewSelection = false;
+                }
 
                 loadContainers();
             }
