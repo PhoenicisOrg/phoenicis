@@ -28,7 +28,7 @@ import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.repository.RepositoryManager;
@@ -69,19 +69,37 @@ public class ContainersController {
         this.engineToolsManager = engineToolsManager;
 
         this.engineSettings = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineSettings,
-                e -> Platform.runLater(
-                        () -> new ErrorMessage(tr("Loading engine settings failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateEngineSettings, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading engine settings failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         this.verbs = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateVerbs,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading Verbs failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateVerbs, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading Verbs failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         this.engineTools = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineTools,
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
+        repositoryManager.addCallbacks(this::updateEngineTools, e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Loading engine tools failed."))
+                    .withException(e)
+                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
 
         containersView.setOnSelectionChanged(event -> {
             if (containersView.isSelected()) {
@@ -110,8 +128,15 @@ public class ContainersController {
                                 .withOwner(containersView.getContent().getScene().getWindow())
                                 .withResizable(true)
                                 .withYesCallback(() -> {
-                                    containersManager.deleteContainer(containerToDelete, e -> Platform.runLater(
-                                            () -> new ErrorMessage("Error", e, this.containersView).show()));
+                                    containersManager.deleteContainer(containerToDelete, e -> Platform.runLater(() -> {
+                                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                                .withMessage(tr("Error"))
+                                                .withException(e)
+                                                .withOwner(this.containersView.getContent().getScene().getWindow())
+                                                .build();
+
+                                        errorDialog.showAndWait();
+                                    }));
 
                                     loadContainers();
                                 })
@@ -127,16 +152,28 @@ public class ContainersController {
                         try {
                             Desktop.getDesktop().open(containerDir);
                         } catch (IOException e) {
-                            Platform.runLater(
-                                    () -> new ErrorMessage(
-                                            tr("Cannot open container {0} in file browser", container.getPath()),
-                                            e, this.containersView).show());
+                            Platform.runLater(() -> {
+                                final ErrorDialog errorDialog = ErrorDialog.builder()
+                                        .withMessage(
+                                                tr("Cannot open container {0} in file browser", container.getPath()))
+                                        .withException(e)
+                                        .withOwner(this.containersView.getContent().getScene().getWindow())
+                                        .build();
+
+                                errorDialog.showAndWait();
+                            });
                         }
                     });
                 } catch (IllegalArgumentException e) {
-                    Platform.runLater(
-                            () -> new ErrorMessage(tr("Cannot open container {0} in file browser", container.getPath()),
-                                    e, this.containersView).show());
+                    Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Cannot open container {0} in file browser", container.getPath()))
+                                .withException(e)
+                                .withOwner(this.containersView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    });
                 }
             });
 
@@ -144,7 +181,6 @@ public class ContainersController {
             panel.prefWidthProperty().bind(this.containersView.getTabPane().widthProperty().divide(3));
 
             Platform.runLater(() -> containersView.showDetailsView(panel));
-            // });
         });
     }
 
@@ -162,8 +198,15 @@ public class ContainersController {
     private void updateEngineSettings(RepositoryDTO repositoryDTO) {
         this.engineSettingsManager.fetchAvailableEngineSettings(repositoryDTO,
                 engineSettings -> Platform.runLater(() -> this.engineSettings = engineSettings),
-                e -> Platform
-                        .runLater(() -> new ErrorMessage(tr("Loading engine tools failed."), e, this.containersView)));
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading engine tools failed."))
+                            .withException(e)
+                            .withOwner(this.containersView.getContent().getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                }));
     }
 
     private void updateVerbs(RepositoryDTO repositoryDTO) {
