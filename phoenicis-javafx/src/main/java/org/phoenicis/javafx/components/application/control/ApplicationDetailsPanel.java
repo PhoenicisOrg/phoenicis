@@ -1,8 +1,6 @@
 package org.phoenicis.javafx.components.application.control;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import org.phoenicis.javafx.components.application.skin.ApplicationDetailsPanelSkin;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
@@ -33,6 +31,12 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
         this.showScriptSource = showScriptSource;
         this.webEngineStylesheet = webEngineStylesheet;
         this.onClose = onClose;
+    }
+
+    public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
+            ObjectProperty<ApplicationDTO> application) {
+        this(scriptInterpreter, filter, application, new SimpleBooleanProperty(), new SimpleStringProperty(),
+                new SimpleObjectProperty<>());
     }
 
     @Override

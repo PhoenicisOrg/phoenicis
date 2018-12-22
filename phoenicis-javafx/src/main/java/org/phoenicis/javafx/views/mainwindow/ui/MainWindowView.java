@@ -46,7 +46,7 @@ import java.util.Optional;
 public class MainWindowView<S extends Sidebar> extends Tab {
     protected final ThemeManager themeManager;
 
-    private final BorderPane content;
+    protected final BorderPane content;
 
     protected S sidebar;
 
@@ -102,7 +102,6 @@ public class MainWindowView<S extends Sidebar> extends Tab {
      * @param nodeToShow
      */
     public void setCenter(Node nodeToShow) {
-        closeDetailsView();
         this.content.setCenter(nodeToShow);
     }
 
@@ -125,7 +124,6 @@ public class MainWindowView<S extends Sidebar> extends Tab {
      * shows the wait panel
      */
     public void showWait() {
-        closeDetailsView();
         setCenter(this.waitPanel);
     }
 
