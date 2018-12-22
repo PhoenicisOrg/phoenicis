@@ -19,13 +19,11 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -42,7 +40,7 @@ public class AppsController {
     private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ApplicationsView view;
     private final RepositoryManager repositoryManager;
-    private final ScriptInterpreter scriptInterpreter;
+
     private ThemeManager themeManager;
 
     private boolean firstViewSelection = true;
@@ -50,12 +48,9 @@ public class AppsController {
     private Runnable onAppLoaded = () -> {
     };
 
-    public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
-            ScriptInterpreter scriptInterpreter,
-            ThemeManager themeManager) {
+    public AppsController(ApplicationsView view, RepositoryManager repositoryManager, ThemeManager themeManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
-        this.scriptInterpreter = scriptInterpreter;
         this.themeManager = themeManager;
 
         this.view.setOnSelectionChanged(event -> {
@@ -80,39 +75,6 @@ public class AppsController {
             this.view.showWait();
             this.repositoryManager.triggerRepositoryChange();
         });
-
-        this.view.setOnSelectScript(
-                scriptDTO -> {
-                    final StringBuilder executeBuilder = new StringBuilder();
-                    executeBuilder.append("TYPE_ID=\"");
-                    executeBuilder.append(scriptDTO.getTypeId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("CATEGORY_ID=\"");
-                    executeBuilder.append(scriptDTO.getCategoryId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("APPLICATION_ID=\"");
-                    executeBuilder.append(scriptDTO.getApplicationId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("SCRIPT_ID=\"");
-                    executeBuilder.append(scriptDTO.getId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append(scriptDTO.getScript());
-                    executeBuilder.append("\n");
-                    // TODO: use Java interface instead of String
-                    executeBuilder.append("new Installer().run();");
-                    scriptInterpreter.runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
-                        // no exception if installation is cancelled
-                        if (!(e.getCause() instanceof InterruptedException)) {
-                            final ErrorDialog errorDialog = ErrorDialog.builder()
-                                    .withMessage(tr("The script ended unexpectedly"))
-                                    .withException(e)
-                                    .withOwner(this.view.getContent().getScene().getWindow())
-                                    .build();
-
-                            errorDialog.showAndWait();
-                        }
-                    }));
-                });
 
         onAppLoaded.run();
     }

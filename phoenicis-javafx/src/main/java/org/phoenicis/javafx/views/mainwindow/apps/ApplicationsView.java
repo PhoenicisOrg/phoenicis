@@ -42,13 +42,11 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.ToolsConfiguration;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -74,8 +72,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
     private final ScriptInterpreter scriptInterpreter;
 
     private final ObjectProperty<ApplicationDTO> selectedApplication;
-
-    private Consumer<ScriptDTO> onSelectScript;
 
     /**
      * Constructor
@@ -192,15 +188,6 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
             setCenter(this.availableApps);
         });
-    }
-
-    /**
-     * Sets the callback, which is called when a script has been selected
-     *
-     * @param onSelectScript The callback, which is called when a script has been selected
-     */
-    public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
-        this.onSelectScript = onSelectScript;
     }
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
