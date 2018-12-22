@@ -5,12 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -114,13 +114,16 @@ public class LibrarySidebar extends Sidebar {
     private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ShortcutDTO> availableShortcuts) {
         ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
 
-        listWidgetSelector.setSelected(javaFxSettingsManager.getLibraryListType());
-        listWidgetSelector.setOnSelect(type -> {
-            availableShortcuts.showList(type);
+        availableShortcuts.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
 
-            javaFxSettingsManager.setLibraryListType(type);
-            javaFxSettingsManager.save();
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setLibraryListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getLibraryListType());
 
         return listWidgetSelector;
     }

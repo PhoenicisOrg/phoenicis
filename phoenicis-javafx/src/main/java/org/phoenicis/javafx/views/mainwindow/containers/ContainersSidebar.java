@@ -5,11 +5,11 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -103,13 +103,16 @@ public class ContainersSidebar extends Sidebar {
     private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ContainerDTO> availableContainers) {
         ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
 
-        listWidgetSelector.setSelected(javaFxSettingsManager.getContainersListType());
-        listWidgetSelector.setOnSelect(type -> {
-            availableContainers.showList(type);
+        availableContainers.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
 
-            javaFxSettingsManager.setContainersListType(type);
-            javaFxSettingsManager.save();
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setContainersListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getContainersListType());
 
         return listWidgetSelector;
     }

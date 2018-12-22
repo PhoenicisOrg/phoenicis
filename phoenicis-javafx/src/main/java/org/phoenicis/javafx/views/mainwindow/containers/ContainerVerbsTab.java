@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.VerbsManager;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -60,8 +60,14 @@ public class ContainerVerbsTab extends Tab {
                 this.lockAll();
                 // TODO: find a better way to get the engine ID
                 this.verbsManager.installVerb(container.getEngine().toLowerCase(), container.getName(), verb.getId(),
-                        this::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        this::unlockAll, e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .build();
+
+                            errorDialog.showAndWait();
+                        }));
             });
             this.lockableElements.add(verbButton);
             verbsContentPane.getChildren().add(verbButton);
@@ -71,7 +77,7 @@ public class ContainerVerbsTab extends Tab {
 
         final ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER); // the TilePane adjusts the number of columns
-                                                                    // already
+        // already
         verbsContentPane.prefWidthProperty().bind(scrollPane.widthProperty());
         verbsContentPane.prefHeightProperty().bind(scrollPane.heightProperty());
         scrollPane.setBackground(verbsContentPane.getBackground());

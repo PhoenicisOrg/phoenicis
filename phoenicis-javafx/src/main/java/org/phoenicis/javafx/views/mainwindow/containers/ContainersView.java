@@ -27,11 +27,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
@@ -74,41 +75,50 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         this.categories = FXCollections.observableArrayList();
 
         this.filter = new ContainersFilter();
+        this.filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+        this.availableContainers = createContainerListWidget();
 
-        this.availableContainers = createCombinedListWidget();
-
-        setSidebar(createContainersSidebar(availableContainers));
+        setSidebar(createContainersSidebar(this.availableContainers));
     }
 
     private ContainersSidebar createContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers) {
         /*
          * initialize the container categories by sorting them
          */
-        final SortedList<ContainerCategoryDTO> sortedCategories = categories
+        final SortedList<ContainerCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(ContainerCategoryDTO::getName));
 
-        return new ContainersSidebar(filter, javaFxSettingsManager, sortedCategories, availableContainers);
+        return new ContainersSidebar(this.filter, this.javaFxSettingsManager, sortedCategories, availableContainers);
     }
 
-    private CombinedListWidget<ContainerDTO> createCombinedListWidget() {
+    private CombinedListWidget<ContainerDTO> createContainerListWidget() {
         /*
          * initialize the container lists by:
          * 1. sorting the containers by their name
          * 2. filtering the containers
          */
         final FilteredList<ContainerDTO> filteredContainers = new ExpandedList<>(
-                categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
+                this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
                 ContainerCategoryDTO::getContainers)
                         .sorted(Comparator.comparing(ContainerDTO::getName))
-                        .filtered(filter::filter);
+                        .filtered(this.filter::filter);
 
         filteredContainers.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter, filter.searchTermProperty()));
+                Bindings.createObjectBinding(() -> this.filter::filter, this.filter.searchTermProperty()));
 
-        return new CombinedListWidget<>(filteredContainers, ListWidgetEntry::create,
-                (element, event) -> showContainerDetails(element));
+        final ObservableList<ListWidgetElement<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
+                ListWidgetElement::create);
+
+        final CombinedListWidget<ContainerDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showContainerDetails(newValue.getItem());
+            }
+        });
+
+        return listWidget;
     }
 
     /**
@@ -121,7 +131,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
             this.categories.setAll(categories);
 
             closeDetailsView();
-            setCenter(availableContainers);
+            setCenter(this.availableContainers);
         });
     }
 
@@ -132,7 +142,7 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
      */
     private void showContainerDetails(ContainerDTO container) {
         // TODO: separate details panel and controller
-        onSelectContainer.accept(container);
+        this.onSelectContainer.accept(container);
     }
 
     /**

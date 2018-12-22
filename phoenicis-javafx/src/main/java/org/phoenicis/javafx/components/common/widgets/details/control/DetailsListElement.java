@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.details.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -6,10 +6,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.common.skin.DetailsListElementSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.AdditionalListWidgetInformation;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.common.widgets.details.skin.DetailsListElementSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetAdditionalInformation;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 
 /**
  * A list element component shown inside a {@link DetailsListWidget}
@@ -30,12 +30,12 @@ public class DetailsListElement<E> extends ControlBase<DetailsListElement<E>, De
     /**
      * A list with additional information for the item
      */
-    private final ObservableList<AdditionalListWidgetInformation> additionalInformation;
+    private final ObservableList<ListWidgetAdditionalInformation> additionalInformation;
 
     /**
      * A list with additional detailed information for the item
      */
-    private final ObservableList<AdditionalListWidgetInformation> detailedInformation;
+    private final ObservableList<ListWidgetAdditionalInformation> detailedInformation;
 
     /**
      * Constructor
@@ -46,8 +46,8 @@ public class DetailsListElement<E> extends ControlBase<DetailsListElement<E>, De
      * @param detailedInformation Additional detailed information for the item
      */
     public DetailsListElement(ObjectProperty<E> item, StringProperty title,
-            ObservableList<AdditionalListWidgetInformation> additionalInformation,
-            ObservableList<AdditionalListWidgetInformation> detailedInformation) {
+            ObservableList<ListWidgetAdditionalInformation> additionalInformation,
+            ObservableList<ListWidgetAdditionalInformation> detailedInformation) {
         super();
 
         this.item = item;
@@ -61,7 +61,7 @@ public class DetailsListElement<E> extends ControlBase<DetailsListElement<E>, De
      *
      * @param item The list widget entry
      */
-    public DetailsListElement(ListWidgetEntry<E> item) {
+    public DetailsListElement(ListWidgetElement<E> item) {
         this(new SimpleObjectProperty<>(item.getItem()), new SimpleStringProperty(item.getTitle()),
                 FXCollections.observableArrayList(item.getAdditionalInformation()),
                 FXCollections.observableArrayList(item.getDetailedInformation()));
@@ -99,11 +99,11 @@ public class DetailsListElement<E> extends ControlBase<DetailsListElement<E>, De
         this.title.set(title);
     }
 
-    public ObservableList<AdditionalListWidgetInformation> getAdditionalInformation() {
+    public ObservableList<ListWidgetAdditionalInformation> getAdditionalInformation() {
         return additionalInformation;
     }
 
-    public ObservableList<AdditionalListWidgetInformation> getDetailedInformation() {
+    public ObservableList<ListWidgetAdditionalInformation> getDetailedInformation() {
         return detailedInformation;
     }
 }

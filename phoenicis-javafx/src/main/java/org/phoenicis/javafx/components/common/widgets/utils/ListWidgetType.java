@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.widgets.lists;
+package org.phoenicis.javafx.components.common.widgets.utils;
 
 /**
  * An enum containing all implemented list widget types

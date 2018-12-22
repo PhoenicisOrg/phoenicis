@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
@@ -103,7 +103,13 @@ public class AppsController {
                     scriptInterpreter.runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
                         // no exception if installation is cancelled
                         if (!(e.getCause() instanceof InterruptedException)) {
-                            new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("The script ended unexpectedly"))
+                                    .withException(e)
+                                    .withOwner(this.view.getContent().getScene().getWindow())
+                                    .build();
+
+                            errorDialog.showAndWait();
                         }
                     }));
                 });

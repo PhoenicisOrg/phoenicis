@@ -1,9 +1,10 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.phoenicis.javafx.components.common.skin.ListWidgetSelectorSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.common.widgets.skin.ListWidgetSelectorSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 
 import java.util.function.Consumer;
 

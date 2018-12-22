@@ -25,11 +25,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.collections.ExpandedList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -69,46 +70,48 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
         this.getStyleClass().add("mainWindowScene");
 
-        final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
-                categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
-                InstallationCategoryDTO::getInstallations)
-                        .filtered(filter::filter);
+        this.activeInstallations = createInstallationListWidget();
 
-        filteredInstallations.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter,
-                        filter.searchTermProperty(), filter.selectedInstallationCategoryProperty()));
-
-        final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
-                .sorted(Comparator.comparing(InstallationDTO::getName));
-
-        this.activeInstallations = new CombinedListWidget<>(sortedInstallations, ListWidgetEntry::create,
-                (selectedItem, event) -> {
-                    activeInstallations.deselectAll();
-                    activeInstallations.select(selectedItem);
-
-                    showInstallationDetails(selectedItem);
-
-                    event.consume();
-                });
-
-        // This looks strange to me
-        activeInstallations.setOnMouseClicked(event -> {
-            activeInstallations.deselectAll();
-
-            event.consume();
-        });
-
-        filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+        this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
         setSidebar(createInstallationsSidebar());
         setCenter(activeInstallations);
     }
 
+    private CombinedListWidget<InstallationDTO> createInstallationListWidget() {
+        final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
+                this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
+                InstallationCategoryDTO::getInstallations)
+                        .filtered(this.filter::filter);
+
+        filteredInstallations.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> this.filter::filter,
+                        this.filter.searchTermProperty(), this.filter.selectedInstallationCategoryProperty()));
+
+        final SortedList<InstallationDTO> sortedInstallations = filteredInstallations
+                .sorted(Comparator.comparing(InstallationDTO::getName));
+
+        final ObservableList<ListWidgetElement<InstallationDTO>> listWidgetEntries = new MappedList<>(
+                sortedInstallations,
+                ListWidgetElement::create);
+
+        final CombinedListWidget<InstallationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showInstallationDetails(newValue.getItem());
+            }
+        });
+
+        return combinedListWidget;
+    }
+
     private InstallationsSidebar createInstallationsSidebar() {
-        final SortedList<InstallationCategoryDTO> sortedCategories = categories
+        final SortedList<InstallationCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
-        return new InstallationsSidebar(filter, javaFxSettingsManager, sortedCategories, activeInstallations);
+        return new InstallationsSidebar(this.filter, this.javaFxSettingsManager, sortedCategories,
+                this.activeInstallations);
     }
 
     /**
@@ -121,7 +124,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
             this.categories.setAll(categories);
 
             closeDetailsView();
-            setCenter(activeInstallations);
+            setCenter(this.activeInstallations);
         });
     }
 
@@ -146,16 +149,11 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO new installation
      */
     public void addInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().addInstallationToList(categories, installationDTO));
+        populate(new InstallationsUtils().addInstallationToList(this.categories, installationDTO));
 
-        Platform.runLater(() -> {
-            activeInstallations.deselectAll();
-            activeInstallations.select(installationDTO);
+        Platform.runLater(() -> this.activeInstallations.select(installationDTO));
 
-            showInstallationDetails(installationDTO);
-        });
-
-        onInstallationAdded.run();
+        this.onInstallationAdded.run();
     }
 
     /**
@@ -164,7 +162,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO installation to be removed
      */
     public void removeInstallation(InstallationDTO installationDTO) {
-        populate(new InstallationsUtils().removeInstallationFromList(categories, installationDTO));
+        populate(new InstallationsUtils().removeInstallationFromList(this.categories, installationDTO));
     }
 
     /**

@@ -1,7 +1,9 @@
-package org.phoenicis.javafx.views.common.widgets.lists;
+package org.phoenicis.javafx.components.common.widgets.utils;
 
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.widgets.details.control.DetailsListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -23,13 +25,13 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * A class containing all information needed for an entry in a {@link ListWidget}.
+ * A class containing all information needed for an element in a list widget.
  *
  * @author marc
  * @since 15.05.17
  */
-public class ListWidgetEntry<E> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ListWidgetEntry.class);
+public class ListWidgetElement<E> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListWidgetElement.class);
 
     private static URI DEFAULT_MINIATURE;
     private static URI WINE_MINIATURE;
@@ -37,9 +39,9 @@ public class ListWidgetEntry<E> {
 
     static {
         try {
-            DEFAULT_MINIATURE = ListWidget.class.getResource("defaultMiniature.png").toURI();
-            WINE_MINIATURE = ListWidget.class.getResource("wineMiniature.png").toURI();
-            CONTAINER_MINIATURE = ListWidget.class.getResource("containerMiniature.png").toURI();
+            DEFAULT_MINIATURE = ListWidgetElement.class.getResource("defaultMiniature.png").toURI();
+            WINE_MINIATURE = ListWidgetElement.class.getResource("wineMiniature.png").toURI();
+            CONTAINER_MINIATURE = ListWidgetElement.class.getResource("containerMiniature.png").toURI();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -67,18 +69,15 @@ public class ListWidgetEntry<E> {
 
     /**
      * An optional list of additional information for this entry.
-     * These information are only shown inside a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget} or a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+     * These information are only shown inside a {@link CompactListWidget} or a {@link DetailsListWidget}
      */
-    private List<AdditionalListWidgetInformation> additionalInformation;
+    private List<ListWidgetAdditionalInformation> additionalInformation;
 
     /**
      * An optional list of additional detailed information for this entry.
-     * These information are only shown inside a
-     * {@link org.phoenicis.javafx.views.common.widgets.lists.details.DetailsListWidget}
+     * These information are only shown inside a {@link DetailsListWidget}
      */
-    private List<AdditionalListWidgetInformation> detailedInformation;
+    private List<ListWidgetAdditionalInformation> detailedInformation;
 
     /**
      * True if this entry is enabled
@@ -96,9 +95,9 @@ public class ListWidgetEntry<E> {
      * @param additionalInformation An optional list of additional information to this entry
      * @param detailedInformation An optional list of additional detailed information to this entry
      */
-    public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            List<AdditionalListWidgetInformation> additionalInformation,
-            List<AdditionalListWidgetInformation> detailedInformation) {
+    public ListWidgetElement(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
+            List<ListWidgetAdditionalInformation> additionalInformation,
+            List<ListWidgetAdditionalInformation> detailedInformation) {
         this(item, iconUri, defaultIconUri, title, additionalInformation, detailedInformation, true);
     }
 
@@ -113,9 +112,9 @@ public class ListWidgetEntry<E> {
      * @param detailedInformation An optional list of additional detailed information to this entry
      * @param enabled True if this entry is enabled
      */
-    public ListWidgetEntry(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
-            List<AdditionalListWidgetInformation> additionalInformation,
-            List<AdditionalListWidgetInformation> detailedInformation, boolean enabled) {
+    public ListWidgetElement(E item, Optional<URI> iconUri, URI defaultIconUri, String title,
+            List<ListWidgetAdditionalInformation> additionalInformation,
+            List<ListWidgetAdditionalInformation> detailedInformation, boolean enabled) {
         super();
 
         this.item = item;
@@ -130,12 +129,12 @@ public class ListWidgetEntry<E> {
         this.enabled = enabled;
     }
 
-    public static ListWidgetEntry<ApplicationDTO> create(ApplicationDTO application) {
-        return new ListWidgetEntry<>(application, application.getMainMiniature(), DEFAULT_MINIATURE,
+    public static ListWidgetElement<ApplicationDTO> create(ApplicationDTO application) {
+        return new ListWidgetElement<>(application, application.getMainMiniature(), DEFAULT_MINIATURE,
                 application.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
-    public static ListWidgetEntry<ContainerDTO> create(ContainerDTO container) {
+    public static ListWidgetElement<ContainerDTO> create(ContainerDTO container) {
         final List<BufferedImage> miniatures = new ArrayList<>();
         // do not use too many segments (cannot recognize the miniature if the segment is too small)
         final int maxSegments = 4;
@@ -157,22 +156,22 @@ public class ListWidgetEntry<E> {
         final BufferedImage segmentedMiniature = createSegmentedMiniature(miniatures);
         final Optional<URI> shortcutMiniature = saveBufferedImage(segmentedMiniature, container.getName());
 
-        return new ListWidgetEntry<>(container, shortcutMiniature, CONTAINER_MINIATURE,
+        return new ListWidgetElement<>(container, shortcutMiniature, CONTAINER_MINIATURE,
                 container.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
-    public static ListWidgetEntry<ShortcutDTO> create(ShortcutDTO shortcut) {
-        return new ListWidgetEntry<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
+    public static ListWidgetElement<ShortcutDTO> create(ShortcutDTO shortcut) {
+        return new ListWidgetElement<>(shortcut, Optional.ofNullable(shortcut.getMiniature()),
                 DEFAULT_MINIATURE, shortcut.getInfo().getName(), Collections.emptyList(), Collections.emptyList());
     }
 
-    public static ListWidgetEntry<InstallationDTO> create(InstallationDTO installation) {
-        return new ListWidgetEntry<>(installation, Optional.ofNullable(installation.getMiniature()),
+    public static ListWidgetElement<InstallationDTO> create(InstallationDTO installation) {
+        return new ListWidgetElement<>(installation, Optional.ofNullable(installation.getMiniature()),
                 DEFAULT_MINIATURE, installation.getName(), Collections.emptyList(), Collections.emptyList());
     }
 
-    public static ListWidgetEntry<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
-        return new ListWidgetEntry<>(engineVersion, Optional.empty(), WINE_MINIATURE,
+    public static ListWidgetElement<EngineVersionDTO> create(EngineVersionDTO engineVersion, boolean installed) {
+        return new ListWidgetElement<>(engineVersion, Optional.empty(), WINE_MINIATURE,
                 engineVersion.getVersion(), Collections.emptyList(), Collections.emptyList(), installed);
     }
 
@@ -208,7 +207,7 @@ public class ListWidgetEntry<E> {
      *
      * @return The additional information for this entry
      */
-    public List<AdditionalListWidgetInformation> getAdditionalInformation() {
+    public List<ListWidgetAdditionalInformation> getAdditionalInformation() {
         return this.additionalInformation;
     }
 
@@ -217,7 +216,7 @@ public class ListWidgetEntry<E> {
      *
      * @return The additional detailed information for this entry
      */
-    public List<AdditionalListWidgetInformation> getDetailedInformation() {
+    public List<ListWidgetAdditionalInformation> getDetailedInformation() {
         return this.detailedInformation;
     }
 
@@ -231,10 +230,10 @@ public class ListWidgetEntry<E> {
     }
 
     /**
-     * create a miniature by composing segments of miniatures
+     * Creates a miniature by composing segments of miniatures
      *
-     * @param miniatures
-     * @return created miniature
+     * @param miniatures The miniature images
+     * @return The created segmented miniature
      */
     private static BufferedImage createSegmentedMiniature(List<BufferedImage> miniatures) {
         if (!miniatures.isEmpty()) {
@@ -262,10 +261,10 @@ public class ListWidgetEntry<E> {
     }
 
     /**
-     * saves bufferedImage to a temporary file
+     * Saves a {@link BufferedImage bufferedImage} to a temporary file
      *
-     * @param bufferedImage
-     * @param name
+     * @param bufferedImage The buffered image
+     * @param name The name of the destination file
      * @return URI to the saved file
      */
     private static Optional<URI> saveBufferedImage(BufferedImage bufferedImage, String name) {

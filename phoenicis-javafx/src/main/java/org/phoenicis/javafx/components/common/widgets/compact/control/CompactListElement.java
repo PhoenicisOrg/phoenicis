@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.components.common.control;
+package org.phoenicis.javafx.components.common.widgets.compact.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -6,10 +6,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.common.skin.CompactListElementSkin;
-import org.phoenicis.javafx.views.common.widgets.lists.AdditionalListWidgetInformation;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
-import org.phoenicis.javafx.views.common.widgets.lists.compact.CompactListWidget;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.common.widgets.compact.skin.CompactListElementSkin;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetAdditionalInformation;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 
 import java.net.URI;
 
@@ -37,7 +37,7 @@ public class CompactListElement<E> extends ControlBase<CompactListElement<E>, Co
     /**
      * A list with additional information for the item
      */
-    private final ObservableList<AdditionalListWidgetInformation> additionalInformation;
+    private final ObservableList<ListWidgetAdditionalInformation> additionalInformation;
 
     /**
      * Constructor
@@ -48,7 +48,7 @@ public class CompactListElement<E> extends ControlBase<CompactListElement<E>, Co
      * @param additionalInformation Additional information for the item
      */
     private CompactListElement(ObjectProperty<E> item, ObjectProperty<URI> miniatureUri, StringProperty title,
-            ObservableList<AdditionalListWidgetInformation> additionalInformation) {
+            ObservableList<ListWidgetAdditionalInformation> additionalInformation) {
         super();
 
         this.item = item;
@@ -62,7 +62,7 @@ public class CompactListElement<E> extends ControlBase<CompactListElement<E>, Co
      *
      * @param item The list widget entry
      */
-    public CompactListElement(ListWidgetEntry<E> item) {
+    public CompactListElement(ListWidgetElement<E> item) {
         this(new SimpleObjectProperty<>(item.getItem()), new SimpleObjectProperty<>(item.getIconUri()),
                 new SimpleStringProperty(item.getTitle()),
                 FXCollections.observableArrayList(item.getAdditionalInformation()));
@@ -112,7 +112,7 @@ public class CompactListElement<E> extends ControlBase<CompactListElement<E>, Co
         this.title.set(title);
     }
 
-    public ObservableList<AdditionalListWidgetInformation> getAdditionalInformation() {
+    public ObservableList<ListWidgetAdditionalInformation> getAdditionalInformation() {
         return additionalInformation;
     }
 }

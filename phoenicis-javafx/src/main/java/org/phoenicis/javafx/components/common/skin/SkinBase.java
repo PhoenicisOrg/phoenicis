@@ -16,7 +16,7 @@ public abstract class SkinBase<C extends ControlBase<C, S>, S extends SkinBase<C
      *
      * @param control The control belonging to the skin
      */
-    SkinBase(C control) {
+    protected SkinBase(C control) {
         super(control);
     }
 
