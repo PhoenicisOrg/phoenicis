@@ -20,6 +20,8 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,14 +32,16 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.ToolsConfiguration;
 
 import java.util.Comparator;
@@ -65,6 +69,8 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
     private final CombinedListWidget<ApplicationDTO> availableApps;
 
+    private final ScriptInterpreter scriptInterpreter;
+
     private Consumer<ScriptDTO> onSelectScript;
 
     /**
@@ -75,10 +81,11 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
      * @param toolsConfiguration The tools configuration
      */
     public ApplicationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
-            ToolsConfiguration toolsConfiguration) {
+            ToolsConfiguration toolsConfiguration, ScriptInterpreter scriptInterpreter) {
         super(tr("Apps"), themeManager);
 
         this.javaFxSettingsManager = javaFxSettingsManager;
+        this.scriptInterpreter = scriptInterpreter;
 
         this.categories = FXCollections.observableArrayList();
 
@@ -185,11 +192,12 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
      * @param javaFxSettingsManager The javafx settings manager
      */
     private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
-        final ApplicationPanel applicationPanel = new ApplicationPanel(application, this.filter, this.themeManager,
-                javaFxSettingsManager);
+        final ApplicationDetailsPanel applicationPanel = new ApplicationDetailsPanel(scriptInterpreter, filter,
+                new SimpleObjectProperty<>(), new SimpleBooleanProperty(javaFxSettingsManager.isViewScriptSource()),
+                themeManager.webEngineStylesheetProperty(), new SimpleObjectProperty<>(this::closeDetailsView));
 
-        applicationPanel.setOnScriptInstall(this::installScript);
-        applicationPanel.setOnClose(this::closeDetailsView);
+        applicationPanel.setApplication(application);
+
         applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
 
         showDetailsView(applicationPanel);

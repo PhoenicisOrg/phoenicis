@@ -22,7 +22,9 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
 
     private final ObjectProperty<Runnable> onClose;
 
-    public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter, ObjectProperty<ApplicationDTO> application, BooleanProperty showScriptSource, StringProperty webEngineStylesheet, ObjectProperty<Runnable> onClose) {
+    public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
+            ObjectProperty<ApplicationDTO> application, BooleanProperty showScriptSource,
+            StringProperty webEngineStylesheet, ObjectProperty<Runnable> onClose) {
         super();
 
         this.scriptInterpreter = scriptInterpreter;
@@ -54,12 +56,20 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
         return application;
     }
 
+    public void setApplication(ApplicationDTO application) {
+        this.application.set(application);
+    }
+
     public boolean isShowScriptSource() {
         return showScriptSource.get();
     }
 
     public BooleanProperty showScriptSourceProperty() {
         return showScriptSource;
+    }
+
+    public void setShowScriptSource(boolean showScriptSource) {
+        this.showScriptSource.set(showScriptSource);
     }
 
     public String getWebEngineStylesheet() {
@@ -70,11 +80,19 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
         return webEngineStylesheet;
     }
 
+    public void setWebEngineStylesheet(String webEngineStylesheet) {
+        this.webEngineStylesheet.set(webEngineStylesheet);
+    }
+
     public Runnable getOnClose() {
         return onClose.get();
     }
 
     public ObjectProperty<Runnable> onCloseProperty() {
         return onClose;
+    }
+
+    public void setOnClose(Runnable onClose) {
+        this.onClose.set(onClose);
     }
 }

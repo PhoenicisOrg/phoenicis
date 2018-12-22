@@ -20,7 +20,7 @@ import javafx.scene.web.WebView;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -57,14 +57,6 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
         this.scripts = FXCollections.observableArrayList();
         this.miniatureUris = FXCollections.observableArrayList();
 
-        control.applicationProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                title.setValue(newValue.getName());
-                scripts.setAll(newValue.getScripts());
-                miniatureUris.setAll(newValue.getMiniatures());
-            }
-        });
-
         this.filteredScripts = createFilteredScripts();
         this.miniatures = createMiniatures();
     }
@@ -79,8 +71,7 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
                         filter.containAllOSCompatibleApplicationsProperty(),
                         filter.containCommercialApplicationsProperty(),
                         filter.containRequiresPatchApplicationsProperty(),
-                        filter.containTestingApplicationsProperty())
-        );
+                        filter.containTestingApplicationsProperty()));
 
         return filteredScripts;
     }
@@ -106,7 +97,20 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
         container.setTop(createHeader());
         container.setCenter(createContent());
 
+        getControl().applicationProperty().addListener((Observable invalidation) -> updateApplication());
+        updateApplication();
+
         getChildren().addAll(container);
+    }
+
+    private void updateApplication() {
+        final ApplicationDTO application = getControl().getApplication();
+
+        if (application != null) {
+            title.setValue(application.getName());
+            scripts.setAll(application.getScripts());
+            miniatureUris.setAll(application.getMiniatures());
+        }
     }
 
     private VBox createContent() {
@@ -163,7 +167,12 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
                 try {
                     installScript(script);
                 } catch (IllegalArgumentException e) {
-                    new ErrorMessage(tr("Error while trying to download the installer"), e).show();
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Error while trying to download the installer"))
+                            .withException(e)
+                            .build();
+
+                    errorDialog.showAndWait();
                 }
             });
 
@@ -210,7 +219,12 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
         getControl().getScriptInterpreter().runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
             // no exception if installation is cancelled
             if (!(e.getCause() instanceof InterruptedException)) {
-                new ErrorMessage(tr("The script ended unexpectedly"), e);
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("The script ended unexpectedly"))
+                        .withException(e)
+                        .build();
+
+                errorDialog.showAndWait();
             }
         }));
     }
