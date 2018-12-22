@@ -87,4 +87,9 @@ public interface RepositoryManager {
      * If an error appeared, the onError callbacks will be called, with the error.
      */
     void triggerRepositoryChange();
+
+    /**
+     * Forces a synchronous update of the managed repositories
+     */
+    void forceSynchronousUpdate();
 }

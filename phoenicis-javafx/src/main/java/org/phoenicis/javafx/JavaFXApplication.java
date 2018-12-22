@@ -37,8 +37,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.phoenicis.javafx.controller.MainController;
-import org.phoenicis.library.LibraryManager;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.repository.RepositoryManager;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -115,17 +115,17 @@ public class JavaFXApplication extends Application {
                 updateMessage(tr("All fonts loaded"));
                 LOGGER.debug("All fonts loaded");
 
-                // load library
+                // load repository
                 loadStep++;
-                updateMessage(tr("Loading library ..."));
-                LOGGER.debug("Loading library ...");
+                updateMessage(tr("Loading repository ..."));
+                LOGGER.debug("Loading repository ...");
                 ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
                         AppConfigurationNoUi.class);
-                LibraryManager libraryManager = applicationContext.getBean(LibraryManager.class);
-                libraryManager.fetchShortcuts();
+                RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
+                repositoryManager.forceSynchronousUpdate();
                 updateProgress(loadStep, numLoadSteps);
-                updateMessage(tr("Library loaded"));
-                LOGGER.debug("Library loaded");
+                updateMessage(tr("Repository loaded"));
+                LOGGER.debug("Repository loaded");
 
                 return null;
             }
