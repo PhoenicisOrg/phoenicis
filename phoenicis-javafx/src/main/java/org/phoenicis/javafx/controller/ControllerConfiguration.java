@@ -105,7 +105,7 @@ public class ControllerConfiguration {
         return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(),
                 libraryConfiguration.libraryManager(), libraryConfiguration.shortcutRunner(),
                 libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter(),
-                repositoryConfiguration.repositoryManager());
+                repositoryConfiguration.repositoryManager(), themeConfiguration.themeManager());
     }
 
     @Bean

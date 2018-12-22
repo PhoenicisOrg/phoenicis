@@ -55,6 +55,8 @@ public class ContainersController {
     private Map<String, ApplicationDTO> verbs; // Verbs per engine
     private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
+    private boolean firstViewSelection = true;
+
     public ContainersController(ContainersView containersView,
             ContainersManager containersManager,
             ContainerEngineController containerEngineController,
@@ -68,46 +70,54 @@ public class ContainersController {
         this.verbsManager = verbsManager;
         this.engineToolsManager = engineToolsManager;
 
-        this.engineSettings = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineSettings, e -> Platform.runLater(() -> {
-            final ErrorDialog errorDialog = ErrorDialog.builder()
-                    .withMessage(tr("Loading engine settings failed."))
-                    .withException(e)
-                    .withOwner(this.containersView.getContent().getScene().getWindow())
-                    .build();
+        this.containersView.setOnSelectionChanged(event -> {
+            if (this.containersView.isSelected()) {
+                if (this.firstViewSelection) {
+                    this.engineSettings = new HashMap<>();
+                    repositoryManager.addCallbacks(this::updateEngineSettings,
+                            e -> Platform.runLater(() -> {
+                                final ErrorDialog errorDialog = ErrorDialog.builder()
+                                        .withMessage(tr("Loading engine settings failed."))
+                                        .withException(e)
+                                        .withOwner(this.containersView.getContent().getScene().getWindow())
+                                        .build();
 
-            errorDialog.showAndWait();
-        }));
+                                errorDialog.showAndWait();
+                            }));
 
-        this.verbs = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateVerbs, e -> Platform.runLater(() -> {
-            final ErrorDialog errorDialog = ErrorDialog.builder()
-                    .withMessage(tr("Loading Verbs failed."))
-                    .withException(e)
-                    .withOwner(this.containersView.getContent().getScene().getWindow())
-                    .build();
+                    this.verbs = new HashMap<>();
+                    repositoryManager.addCallbacks(this::updateVerbs,
+                            e -> Platform.runLater(() -> {
+                                final ErrorDialog errorDialog = ErrorDialog.builder()
+                                        .withMessage(tr("Loading Verbs failed."))
+                                        .withException(e)
+                                        .withOwner(this.containersView.getContent().getScene().getWindow())
+                                        .build();
 
-            errorDialog.showAndWait();
-        }));
+                                errorDialog.showAndWait();
+                            }));
 
-        this.engineTools = new HashMap<>();
-        repositoryManager.addCallbacks(this::updateEngineTools, e -> Platform.runLater(() -> {
-            final ErrorDialog errorDialog = ErrorDialog.builder()
-                    .withMessage(tr("Loading engine tools failed."))
-                    .withException(e)
-                    .withOwner(this.containersView.getContent().getScene().getWindow())
-                    .build();
+                    this.engineTools = new HashMap<>();
+                    repositoryManager.addCallbacks(this::updateEngineTools,
+                            e -> Platform.runLater(() -> {
+                                final ErrorDialog errorDialog = ErrorDialog.builder()
+                                        .withMessage(tr("Loading engine tools failed."))
+                                        .withException(e)
+                                        .withOwner(this.containersView.getContent().getScene().getWindow())
+                                        .build();
 
-            errorDialog.showAndWait();
-        }));
+                                errorDialog.showAndWait();
+                            }));
 
-        containersView.setOnSelectionChanged(event -> {
-            if (containersView.isSelected()) {
+                    repositoryManager.triggerCallbacks();
+                    this.firstViewSelection = false;
+                }
+
                 loadContainers();
             }
         });
 
-        containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
+        this.containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
             // TODO: better way to get engine ID
             final String engineId = containerDTO.getEngine().toLowerCase();
             final ContainerPanel panel = new ContainerPanel(

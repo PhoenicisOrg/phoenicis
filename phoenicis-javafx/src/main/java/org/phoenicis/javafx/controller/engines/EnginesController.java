@@ -56,6 +56,8 @@ public class EnginesController {
     private Map<String, Engine> enginesCache = new HashMap<>();
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
+    private boolean firstViewSelection = true;
+
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
             EnginesManager enginesManager, ThemeManager themeManager) {
         super();
@@ -64,16 +66,6 @@ public class EnginesController {
         this.repositoryManager = repositoryManager;
         this.enginesManager = enginesManager;
         this.themeManager = themeManager;
-
-        this.repositoryManager.addCallbacks(
-                repositoryDTO -> {
-                    this.enginesManager.fetchAvailableEngines(
-                            repositoryDTO,
-                            engines -> this.populateView(repositoryDTO, engines),
-                            e -> Platform.runLater(
-                                    () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
-                },
-                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
             // TODO: better way to get engine ID
@@ -147,6 +139,23 @@ public class EnginesController {
                     .build();
 
             confirmMessage.showAndCallback();
+        });
+
+        this.enginesView.setOnSelectionChanged(event -> {
+            if (this.enginesView.isSelected() && this.firstViewSelection) {
+                this.repositoryManager.addCallbacks(
+                        repositoryDTO -> this.enginesManager.fetchAvailableEngines(
+                                repositoryDTO,
+                                engines -> this.populateView(repositoryDTO, engines),
+                                e -> Platform.runLater(
+                                        () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
+                        e -> Platform.runLater(
+                                () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
+
+                this.repositoryManager.triggerCallbacks();
+
+                this.firstViewSelection = false;
+            }
         });
     }
 
