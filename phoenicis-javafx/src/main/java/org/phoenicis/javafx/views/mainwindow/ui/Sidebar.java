@@ -18,7 +18,11 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 
 public abstract class Sidebar extends BorderPane {
 
@@ -26,5 +30,23 @@ public abstract class Sidebar extends BorderPane {
         super();
 
         this.getStyleClass().add("sidebar");
+    }
+
+    protected static Pane createSpacer() {
+        final Pane spacer = new Pane();
+
+        spacer.getStyleClass().add("sidebarSpacer");
+
+        return spacer;
+    }
+
+    protected static ScrollPane createScrollPane(Node... nodes) {
+        final VBox content = new VBox(nodes);
+
+        final ScrollPane scrollPane = new ScrollPane(content);
+
+        scrollPane.getStyleClass().add("sidebarScrollbar");
+
+        return scrollPane;
     }
 }

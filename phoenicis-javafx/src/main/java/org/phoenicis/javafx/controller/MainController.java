@@ -71,8 +71,6 @@ public class MainController {
         appsController.setOnAppLoaded(() -> {
             containersController.loadContainers();
         });
-
-        appsController.loadApps();
     }
 
     public void show() {
