@@ -2,12 +2,12 @@ package org.phoenicis.javafx.components.common.widgets.compact.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
-import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
@@ -51,7 +51,24 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         container.setPrefWidth(0);
         container.setPrefHeight(0);
 
-        container.setCellFactory(param -> new ListElementListCell<>());
+        // ensure that empty rows have the same height as non-empty ones
+        container.setCellFactory(param -> {
+            final ListCell<CompactListElement<E>> listCell = new ListCell<CompactListElement<E>>() {
+                @Override
+                public void updateItem(CompactListElement<E> item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty && item != null) {
+                        setGraphic(item);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
+            };
+
+            listCell.getStyleClass().addAll("compactListElement");
+
+            return listCell;
+        });
 
         // ensure that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
