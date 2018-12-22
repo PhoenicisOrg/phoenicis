@@ -26,9 +26,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
+import org.phoenicis.javafx.collections.PhoenicisFilteredList;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.ErrorMessage;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -184,7 +184,13 @@ final class ApplicationPanel extends DetailsView {
                     onScriptInstall.accept(script);
                 } catch (IllegalArgumentException e) {
                     LOGGER.error("Failed to get script", e);
-                    new ErrorMessage(tr("Error while trying to download the installer"), e).show();
+
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Error while trying to download the installer"))
+                            .withException(e)
+                            .build();
+
+                    errorDialog.showAndWait();
                 }
             });
 

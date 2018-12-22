@@ -89,6 +89,12 @@ public interface RepositoryManager {
     void triggerRepositoryChange();
 
     /**
+     * This method triggers all registered callbacks.
+     * In contrast to {@link #triggerRepositoryChange()}, it does not update the repository before.
+     */
+    void triggerCallbacks();
+
+    /**
      * Forces a synchronous update of the managed repositories
      */
     void forceSynchronousUpdate();

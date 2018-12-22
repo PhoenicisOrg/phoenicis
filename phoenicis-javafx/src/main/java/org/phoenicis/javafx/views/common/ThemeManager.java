@@ -26,7 +26,7 @@ public class ThemeManager {
     private ObservableList<String> stylesheets;
 
     /**
-     * The stylesheet to be used inside the {@link org.phoenicis.javafx.views.mainwindow.apps.AppPanel}
+     * The stylesheet to be used inside the {@link org.phoenicis.javafx.views.mainwindow.apps.ApplicationPanel}
      */
     private StringProperty webEngineStylesheet;
 
@@ -109,10 +109,10 @@ public class ThemeManager {
         defaultCategoryIconsCss.ifPresent(stylesheets::add);
         defaultEngineIconsCss.ifPresent(stylesheets::add);
 
-        LOGGER.info(String.format("Loading default theme at '%s'", Themes.DEFAULT.getResourceUrl("main.css")));
-        stylesheets.add(Themes.DEFAULT.getResourceUrl("main.css").toString());
+        LOGGER.info(String.format("Loading standard theme at '%s'", Themes.STANDARD.getResourceUrl("main.css")));
+        stylesheets.add(Themes.STANDARD.getResourceUrl("main.css").toString());
 
-        if (!currentTheme.equals(Themes.DEFAULT)) {
+        if (!currentTheme.equals(Themes.STANDARD)) {
             LOGGER.info(String.format("Loading '%s' theme at '%s'", currentTheme.getName(),
                     currentTheme.getResourceUrl("main.css")));
             stylesheets.add(currentTheme.getResourceUrl("main.css").toString());

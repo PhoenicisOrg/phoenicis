@@ -31,6 +31,7 @@
   },
   "command": "phoenicis-javafx",
   "finish-args": [
+    "--filesystem=home",
     "--allow=multiarch",
     "--share=ipc",
     "--socket=x11",
@@ -80,7 +81,7 @@
           "type": "script",
           "dest-filename": "phoenicis-javafx",
           "commands": [
-            "/app/jre/bin/java -Duser.home=\"$XDG_DATA_HOME\" --module-path /app/phoenicis/lib/ -m org.phoenicis.javafx/org.phoenicis.javafx.JavaFXApplication \"$@\""
+            "/app/jre/bin/java --module-path /app/phoenicis/lib/ -m org.phoenicis.javafx/org.phoenicis.javafx.JavaFXApplication \"$@\""
           ]
         },
         {

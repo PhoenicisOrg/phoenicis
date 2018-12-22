@@ -19,17 +19,20 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.common.lists.ExpandedList;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetEntry;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
@@ -50,15 +53,11 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class ContainersView extends MainWindowView<ContainersSidebar> {
     private final ContainersFilter filter;
+    private final JavaFxSettingsManager javaFxSettingsManager;
+
+    private final ObservableList<ContainerCategoryDTO> categories;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
-
-    private ObservableList<ContainerCategoryDTO> categories;
-    private SortedList<ContainerCategoryDTO> sortedCategories;
-
-    private ObservableList<ContainerDTO> containers;
-    private SortedList<ContainerDTO> sortedContainers;
-    private PhoenicisFilteredList<ContainerDTO> filteredContainers;
 
     private Consumer<ContainerDTO> onSelectContainer;
 
@@ -71,37 +70,55 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
     public ContainersView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {
         super(tr("Containers"), themeManager);
 
+        this.javaFxSettingsManager = javaFxSettingsManager;
+
+        this.categories = FXCollections.observableArrayList();
+
         this.filter = new ContainersFilter();
+        this.filter.selectedContainerCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
-        this.availableContainers = new CombinedListWidget<ContainerDTO>(ListWidgetEntry::create,
-                (element, event) -> showContainerDetails(element));
-        this.sidebar = new ContainersSidebar(availableContainers, filter, javaFxSettingsManager);
+        this.availableContainers = createContainerListWidget();
 
+        setSidebar(createContainersSidebar(this.availableContainers));
+    }
+
+    private ContainersSidebar createContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers) {
         /*
          * initialize the container categories by sorting them
          */
-        this.categories = FXCollections.observableArrayList();
-        this.sortedCategories = this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName));
+        final SortedList<ContainerCategoryDTO> sortedCategories = this.categories
+                .sorted(Comparator.comparing(ContainerCategoryDTO::getName));
 
+        return new ContainersSidebar(this.filter, this.javaFxSettingsManager, sortedCategories, availableContainers);
+    }
+
+    private CombinedListWidget<ContainerDTO> createContainerListWidget() {
         /*
          * initialize the container lists by:
          * 1. sorting the containers by their name
          * 2. filtering the containers
          */
-        this.containers = new ExpandedList<>(this.sortedCategories, ContainerCategoryDTO::getContainers);
-        this.sortedContainers = this.containers.sorted(Comparator.comparing(ContainerDTO::getName));
-        this.filteredContainers = new PhoenicisFilteredList<>(this.sortedContainers, filter::filter);
-        this.filter.addOnFilterChanged(filteredContainers::trigger);
+        final FilteredList<ContainerDTO> filteredContainers = new ExpandedList<>(
+                this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
+                ContainerCategoryDTO::getContainers)
+                        .sorted(Comparator.comparing(ContainerDTO::getName))
+                        .filtered(this.filter::filter);
 
-        this.sidebar.bindCategories(this.sortedCategories);
+        filteredContainers.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> this.filter::filter, this.filter.searchTermProperty()));
 
-        this.availableContainers.bind(this.filteredContainers);
+        final ObservableList<ListWidgetElement<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
+                ListWidgetElement::create);
 
-        // set the category selection consumers
-        this.sidebar.setOnCategorySelection(category -> closeDetailsView());
-        this.sidebar.setOnAllCategorySelection(this::closeDetailsView);
+        final CombinedListWidget<ContainerDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
 
-        this.setSidebar(this.sidebar);
+        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                showContainerDetails(newValue.getItem());
+            }
+        });
+
+        return listWidget;
     }
 
     /**
@@ -113,10 +130,8 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
         Platform.runLater(() -> {
             this.categories.setAll(categories);
 
-            this.sidebar.selectAllCategories();
-
-            this.closeDetailsView();
-            this.setCenter(availableContainers);
+            closeDetailsView();
+            setCenter(this.availableContainers);
         });
     }
 

@@ -71,8 +71,6 @@ public class MainController {
         appsController.setOnAppLoaded(() -> {
             containersController.loadContainers();
         });
-
-        appsController.loadApps();
     }
 
     public void show() {
@@ -82,6 +80,7 @@ public class MainController {
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setResizable(true);
             alert.initOwner(this.mainWindow);
             alert.setTitle(applicationName);
             alert.setHeaderText(tr("Are you sure you want to close all {0} windows?", applicationName));

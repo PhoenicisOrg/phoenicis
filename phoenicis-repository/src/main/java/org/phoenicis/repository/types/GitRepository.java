@@ -30,9 +30,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
-import java.util.concurrent.Semaphore;
+import java.nio.channels.FileLock;
 
 public class GitRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
@@ -45,7 +46,10 @@ public class GitRepository implements Repository {
     private final LocalRepository.Factory localRepositoryFactory;
 
     private final File localFolder;
-    private static Semaphore mutex = new Semaphore(1);
+    // lock file to avoid concurrent access to the git clone
+    private final File lockFile;
+
+    private static final Object mutex = new Object();
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
@@ -57,6 +61,7 @@ public class GitRepository implements Repository {
         this.localRepositoryFactory = localRepositoryFactory;
 
         this.localFolder = createRepositoryLocation(cacheDirectoryPath);
+        this.lockFile = new File(this.localFolder.getAbsolutePath() + ".lock");
     }
 
     private File createRepositoryLocation(String cacheDirectoryPath) {
@@ -65,72 +70,101 @@ public class GitRepository implements Repository {
         return new File(cacheDirectoryPath + "/git" + hashcode);
     }
 
-    @Override
-    public synchronized RepositoryDTO fetchInstallableApplications() {
-        RepositoryDTO result = null;
-        try {
-            mutex.acquire();
+    private void cloneOrUpdateWithLock() throws RepositoryException {
+        synchronized (mutex) {
             try {
                 LOGGER.info("Begin fetching process of " + this);
 
-                boolean folderExists = this.localFolder.exists();
+                boolean lockFileExists = this.lockFile.exists();
 
-                // check that the repository folder exists
-                if (!folderExists) {
-                    LOGGER.info("Creating local folder for " + this);
+                // check that the repository lock file exists
+                if (!lockFileExists) {
+                    LOGGER.info("Creating lock file for " + this);
 
-                    if (!this.localFolder.mkdirs()) {
-                        throw new RepositoryException("Couldn't create local folder for " + this);
+                    try {
+                        this.lockFile.getParentFile().mkdirs();
+                        this.lockFile.createNewFile();
+                    } catch (IOException e) {
+                        throw new RepositoryException("Couldn't create lock file " + this.lockFile.getAbsolutePath());
                     }
                 }
-                Git gitRepository = null;
-
-                try {
-                    /*
-                     * if the repository folder previously didn't exist, clone the
-                     * repository now and checkout the correct branch
-                     */
-                    if (!folderExists) {
-                        LOGGER.info("Cloning " + this);
-
-                        gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
-                                .setDirectory(this.localFolder)
-                                .setBranch(this.branch).call();
-                    }
-                    /*
-                     * otherwise open the folder and pull the newest updates from the
-                     * repository
-                     */
-                    else {
-                        LOGGER.info("Opening " + this);
-
-                        gitRepository = Git.open(localFolder);
-
-                        LOGGER.info("Pulling new commits from " + this);
-
-                        gitRepository.pull().call();
-                    }
-
-                    result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
-                            .fetchInstallableApplications();
-                } catch (RepositoryNotFoundException | GitAPIException e) {
-                    throw new RepositoryException(
-                            String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
-                } catch (IOException e) {
-                    throw new RepositoryException("An unknown error occurred", e);
-                } finally {
-                    // close repository to free resources
-                    if (gitRepository != null) {
-                        gitRepository.close();
+                try (FileOutputStream lockFileStream = new FileOutputStream(lockFile, true)) {
+                    try (FileLock ignored = lockFileStream.getChannel().lock()) {
+                        cloneOrUpdate();
                     }
                 }
-            } finally {
-                mutex.release();
+            } catch (IOException e) {
+                throw new RepositoryException("An unknown error occurred", e);
             }
-        } catch (InterruptedException e) {
-            throw new RepositoryException("InterruptedException occurred", e);
         }
+    }
 
+    private void cloneOrUpdate() throws RepositoryException {
+        final boolean folderExists = this.localFolder.exists();
+
+        // check that the repository folder exists
+        if (!folderExists) {
+            LOGGER.info("Creating local folder for " + this);
+
+            if (!this.localFolder.mkdirs()) {
+                throw new RepositoryException("Couldn't create local folder for " + this);
+            }
+        }
+        Git gitRepository = null;
+
+        /*
+         * if the repository folder previously didn't exist, clone the
+         * repository now and checkout the correct branch
+         */
+        if (!folderExists) {
+            LOGGER.info("Cloning " + this);
+
+            try {
+                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
+                        .setDirectory(this.localFolder)
+                        .setBranch(this.branch).call();
+            } catch (GitAPIException e) {
+                throw new RepositoryException(
+                        String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
+            } finally {
+                // close repository to free resources
+                if (gitRepository != null) {
+                    gitRepository.close();
+                }
+            }
+        }
+        /*
+         * otherwise open the folder and pull the newest updates from the
+         * repository
+         */
+        else {
+            // if anything doesn't work here, we still have our local checkout
+            // e.g. could be that the git repository cannot be accessed, there is not Internet connection etc.
+            // TODO: it might make sense to ensure that our local checkout is not empty / a valid git repository
+            try {
+                LOGGER.info("Opening " + this);
+
+                gitRepository = Git.open(localFolder);
+
+                LOGGER.info("Pulling new commits from " + this);
+
+                gitRepository.pull().call();
+            } catch (Exception e) {
+                LOGGER.warn("Could not update {0}. Local checkout will be used.", e);
+            }
+        }
+    }
+
+    @Override
+    public RepositoryDTO fetchInstallableApplications() {
+        RepositoryDTO result;
+        try {
+            this.cloneOrUpdateWithLock();
+            result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
+                    .fetchInstallableApplications();
+        } catch (RepositoryException e) {
+            throw new RepositoryException("Could not clone or update git repository", e);
+        }
         return result;
     }
 
@@ -141,7 +175,7 @@ public class GitRepository implements Repository {
 
             LOGGER.info("Deleted " + this);
         } catch (IOException e) {
-            LOGGER.error(String.format("Couldn't delete " + this), e);
+            LOGGER.error("Couldn't delete " + this, e);
         }
     }
 

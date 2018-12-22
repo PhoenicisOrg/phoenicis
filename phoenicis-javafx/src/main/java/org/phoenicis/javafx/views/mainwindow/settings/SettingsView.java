@@ -58,30 +58,29 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         this.initializeSettingsItems();
 
-        this.sidebar = new SettingsSidebar();
-
+        this.sidebar = new SettingsSidebar(this.settingsItems);
         this.sidebar.setOnSelectSettingsItem(this::setCenter);
 
-        this.sidebar.bindSettingsItems(this.settingsItems);
-
-        this.sidebar.selectFirstSettingsCategory();
-
         this.setSidebar(this.sidebar);
+
     }
 
     private void initializeSettingsItems() {
         AboutPanel.ApplicationBuildInformation buildInformation = new AboutPanel.ApplicationBuildInformation(
-                applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
+                this.applicationName, this.applicationVersion, this.applicationGitRevision,
+                this.applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSidebar.SettingsSidebarItem(new UserInterfacePanel(javaFxSettingsManager, themeManager),
+                new SettingsSidebar.SettingsSidebarItem(
+                        new UserInterfacePanel(this.javaFxSettingsManager, this.themeManager),
                         "userInterfaceButton", tr("User Interface")),
-                new SettingsSidebar.SettingsSidebarItem(new RepositoriesPanel(settingsManager, repositoryManager),
+                new SettingsSidebar.SettingsSidebarItem(
+                        new RepositoriesPanel(this.settingsManager, this.repositoryManager),
                         "repositoriesButton", tr("Repositories")),
                 new SettingsSidebar.SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
                 new SettingsSidebar.SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, opener), "aboutButton",
+                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, this.opener), "aboutButton",
                         tr("About")));
     }
 }

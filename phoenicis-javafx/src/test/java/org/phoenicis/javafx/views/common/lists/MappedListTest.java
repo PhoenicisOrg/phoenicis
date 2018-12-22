@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
 import org.junit.Test;
-import org.phoenicis.javafx.views.common.lists.MappedList;
+import org.phoenicis.javafx.collections.MappedList;
 
 import java.util.Arrays;
 import java.util.Comparator;

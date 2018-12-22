@@ -1,20 +1,18 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.application.control.ApplicationSidebarToggleGroup;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.control.SearchBox;
+import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
-import org.phoenicis.javafx.views.mainwindow.ui.*;
+import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
-
-import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -41,32 +39,7 @@ public class ApplicationsSidebar extends Sidebar {
     private final ApplicationFilter filter;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
-    // the search bar user for application filtering/searching
-    private SearchBox searchBar;
-
-    // container for the center content of this sidebar
-    private SidebarScrollPane centerContent;
-
-    private ObservableList<CategoryDTO> categories;
-    private PhoenicisFilteredList<CategoryDTO> filteredCategories;
-
-    // the toggleable categories
-    private SidebarToggleGroup<CategoryDTO> categoryView;
-
-    // the group containing the application filters (testing, noCdNeeded and commercial)
-    private SidebarGroup filterGroup;
-
-    private CheckBox testingCheck;
-    private CheckBox requiresPatchCheck;
-    private CheckBox commercialCheck;
-    private CheckBox operatingSystemCheck;
-
-    // widget to switch between the different list widgets in the center view
-    private ListWidgetChooser<ApplicationDTO> listWidgetChooser;
-
-    // consumers called after a category selection has been made
-    private Runnable onAllCategorySelection;
-    private Consumer<CategoryDTO> onCategorySelection;
+    private final ObservableList<CategoryDTO> categories;
 
     /**
      * Constructor
@@ -74,74 +47,78 @@ public class ApplicationsSidebar extends Sidebar {
      * @param combinedListWidget The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ApplicationsSidebar(CombinedListWidget<ApplicationDTO> combinedListWidget, ApplicationFilter filter,
-            JavaFxSettingsManager javaFxSettingsManager) {
+    public ApplicationsSidebar(ApplicationFilter filter, JavaFxSettingsManager javaFxSettingsManager,
+            ObservableList<CategoryDTO> categories, CombinedListWidget<ApplicationDTO> combinedListWidget) {
         super();
 
         this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
+        this.categories = categories;
 
-        this.populateSearchBar();
-        this.populateCategories();
-        this.populateFilters();
-        this.populateListWidgetChooser(combinedListWidget);
-
-        this.centerContent = new SidebarScrollPane(this.categoryView, new SidebarSpacer(), this.filterGroup);
-
-        this.setTop(this.searchBar);
-        this.setCenter(this.centerContent);
-        this.setBottom(this.listWidgetChooser);
+        initialize(combinedListWidget);
     }
 
-    /**
-     * This method selects the "All" application category
-     */
-    public void selectAllCategories() {
-        this.categoryView.selectAll();
+    private void initialize(final CombinedListWidget<ApplicationDTO> combinedListWidget) {
+        SearchBox searchBox = createSearchBox();
+        ListWidgetSelector listWidgetSelector = createListWidgetSelector(combinedListWidget);
+
+        ApplicationSidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
+        SidebarGroup<CheckBox> filterGroup = createFilterGroup();
+
+        this.setTop(searchBox);
+        this.setCenter(createScrollPane(sidebarToggleGroup, createSpacer(), filterGroup));
+        this.setBottom(listWidgetSelector);
     }
 
-    /**
-     * This method binds the given category list <code>categories</code> to the categories toggle group.
-     *
-     * @param categories The to be bound category list
-     */
-    public void bindCategories(ObservableList<CategoryDTO> categories) {
-        Bindings.bindContent(this.categories, categories);
+    private SearchBox createSearchBox() {
+        final SearchBox searchBox = new SearchBox();
+
+        filter.filterTextProperty().bind(searchBox.searchTermProperty());
+
+        return searchBox;
     }
 
-    private void populateSearchBar() {
-        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(filter::setFilterText),
-                () -> filter.setFilterText(""));
+    private ApplicationSidebarToggleGroup createSidebarToggleGroup() {
+        final FilteredList<CategoryDTO> filteredCategories = categories.filtered(filter::filter);
+
+        filteredCategories.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter,
+                        filter.filterTextProperty(),
+                        filter.containAllOSCompatibleApplicationsProperty(),
+                        filter.containCommercialApplicationsProperty(),
+                        filter.containRequiresPatchApplicationsProperty(),
+                        filter.containTestingApplicationsProperty()));
+
+        ApplicationSidebarToggleGroup categoryView = new ApplicationSidebarToggleGroup(tr("Categories"),
+                filteredCategories);
+
+        filter.filterCategoryProperty().bind(categoryView.selectedElementProperty());
+
+        return categoryView;
     }
 
-    private void populateCategories() {
-        this.categories = FXCollections.observableArrayList();
-        this.filteredCategories = new PhoenicisFilteredList<>(categories, filter::filter);
-        this.filter.addOnFilterChanged(filteredCategories::trigger);
+    private SidebarGroup<CheckBox> createFilterGroup() {
+        final CheckBox testingCheck = new CheckBox(tr("Testing"));
+        testingCheck.getStyleClass().add("sidebarCheckBox");
+        filter.containTestingApplicationsProperty().bind(testingCheck.selectedProperty());
 
-        this.categoryView = SidebarToggleGroup.create(tr("Categories"), this::createAllCategoriesToggleButton,
-                this::createCategoryToggleButton);
+        final CheckBox requiresPatchCheck = new CheckBox(tr("Patch required"));
+        requiresPatchCheck.getStyleClass().add("sidebarCheckBox");
+        filter.containRequiresPatchApplicationsProperty().bind(requiresPatchCheck.selectedProperty());
 
-        Bindings.bindContent(categoryView.getElements(), filteredCategories);
-    }
+        final CheckBox commercialCheck = new CheckBox(tr("Commercial"));
+        commercialCheck.getStyleClass().add("sidebarCheckBox");
+        commercialCheck.setSelected(true);
+        filter.containCommercialApplicationsProperty().bind(commercialCheck.selectedProperty());
 
-    private void populateFilters() {
-        this.testingCheck = new SidebarCheckBox(tr("Testing"));
-        this.testingCheck.selectedProperty().bindBidirectional(filter.containTestingApplicationsProperty());
+        final CheckBox operatingSystemCheck = new CheckBox(tr("All Operating Systems"));
+        operatingSystemCheck.getStyleClass().add("sidebarCheckBox");
+        filter.containAllOSCompatibleApplicationsProperty().bind(operatingSystemCheck.selectedProperty());
 
-        this.requiresPatchCheck = new SidebarCheckBox(tr("Patch required"));
-        this.requiresPatchCheck.selectedProperty().bindBidirectional(filter.containRequiresPatchApplicationsProperty());
+        final SidebarGroup<CheckBox> filterGroup = new SidebarGroup<>(tr("Filters"));
+        filterGroup.getComponents().addAll(testingCheck, requiresPatchCheck, commercialCheck, operatingSystemCheck);
 
-        this.commercialCheck = new SidebarCheckBox(tr("Commercial"));
-        this.commercialCheck.selectedProperty().bindBidirectional(filter.containCommercialApplicationsProperty());
-        this.commercialCheck.setSelected(true);
-
-        this.operatingSystemCheck = new SidebarCheckBox(tr("All Operating Systems"));
-        this.operatingSystemCheck.selectedProperty().bindBidirectional(filter.containAllOSCompatibleApplications());
-        this.operatingSystemCheck.setSelected(false);
-
-        this.filterGroup = new SidebarGroup("Filters", testingCheck, requiresPatchCheck, commercialCheck,
-                operatingSystemCheck);
+        return filterGroup;
     }
 
     /**
@@ -149,60 +126,24 @@ public class ApplicationsSidebar extends Sidebar {
      *
      * @param combinedListWidget The managed CombinedListWidget
      */
-    private void populateListWidgetChooser(CombinedListWidget<ApplicationDTO> combinedListWidget) {
-        this.listWidgetChooser = new ListWidgetChooser<>(combinedListWidget);
-        this.listWidgetChooser.choose(this.javaFxSettingsManager.getAppsListType());
-        this.listWidgetChooser.setOnChoose(type -> {
-            this.javaFxSettingsManager.setAppsListType(type);
-            this.javaFxSettingsManager.save();
+    private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ApplicationDTO> combinedListWidget) {
+        final ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
+
+        combinedListWidget.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
+
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setAppsListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getAppsListType());
+
+        return listWidgetSelector;
     }
 
-    /**
-     * This method is responsible for creating the "All" categories toggle button.
-     *
-     * @return The newly created "All" categories toggle button
-     */
-    private ToggleButton createAllCategoriesToggleButton() {
-        final SidebarToggleButton allCategoryButton = new SidebarToggleButton(tr("All"));
-
-        allCategoryButton.setSelected(true);
-        allCategoryButton.setId("allButton");
-        allCategoryButton.setOnAction(event -> onAllCategorySelection.run());
-
-        return allCategoryButton;
-    }
-
-    /**
-     * This method is responsible for creating a toggle button for a given category.
-     *
-     * @param category The category for which a toggle button should be created
-     * @return The newly created toggle button
-     */
-    private ToggleButton createCategoryToggleButton(CategoryDTO category) {
-        final SidebarToggleButton categoryButton = new SidebarToggleButton(category.getName());
-
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
-        categoryButton.setOnAction(event -> onCategorySelection.accept(category));
-
-        return categoryButton;
-    }
-
-    /**
-     * This method sets the consumer, that is called after a category has been selected
-     *
-     * @param onAllCategorySelection The new consumer to be used
-     */
-    public void setOnAllCategorySelection(Runnable onAllCategorySelection) {
-        this.onAllCategorySelection = onAllCategorySelection;
-    }
-
-    /**
-     * This method sets the consumer, that is called after the "All" categories toggle button has been selected
-     *
-     * @param onCategorySelection The new consumer to be used
-     */
-    public void setOnCategorySelection(Consumer<CategoryDTO> onCategorySelection) {
-        this.onCategorySelection = onCategorySelection;
+    public ObservableList<CategoryDTO> getCategories() {
+        return categories;
     }
 }

@@ -1,6 +1,7 @@
 module org.phoenicis.javafx {
     exports org.phoenicis.javafx;
     opens org.phoenicis.javafx;
+    opens org.phoenicis.javafx.components.common.widgets.utils;
     opens org.phoenicis.javafx.controller;
     opens org.phoenicis.javafx.controller.apps;
     opens org.phoenicis.javafx.controller.containers;
@@ -11,7 +12,6 @@ module org.phoenicis.javafx {
     opens org.phoenicis.javafx.settings;
     opens org.phoenicis.javafx.views;
     opens org.phoenicis.javafx.views.common;
-    opens org.phoenicis.javafx.views.common.widgets.lists;
     opens org.phoenicis.javafx.views.mainwindow.apps;
     opens org.phoenicis.javafx.views.mainwindow.console;
     opens org.phoenicis.javafx.views.mainwindow.containers;
@@ -20,7 +20,23 @@ module org.phoenicis.javafx {
     opens org.phoenicis.javafx.views.mainwindow.library;
     opens org.phoenicis.javafx.views.mainwindow.settings;
     opens org.phoenicis.javafx.views.scriptui;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.apps;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.containers;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.engines;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.general;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.library;
+    opens org.phoenicis.javafx.themes.breezeDark.icons.mainwindow.settings;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.apps;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.containers;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.engines;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.general;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.installations;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.library;
+    opens org.phoenicis.javafx.themes.standard.icons.mainwindow.settings;
     requires com.fasterxml.jackson.databind;
+    requires com.google.common;
     requires commons.lang;
     requires fuzzywuzzy;
     requires java.desktop;
