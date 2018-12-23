@@ -6,11 +6,13 @@ import javafx.scene.CacheHint;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListElement;
 import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListWidget;
-import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
+
+import java.util.Optional;
 
 /**
  * The skin for the {@link IconsListWidget} component
@@ -69,29 +71,52 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         content.prefWidthProperty().bind(container.widthProperty());
         content.setPrefHeight(0);
 
+        Bindings.bindContent(content.getChildren(), mappedElements);
+
         // ensure that updates to the selected element property are automatically reflected in the view
         getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             // deselect the old element
-            if (oldValue != null) {
-                final int oldValueIndex = getControl().getElements().indexOf(oldValue.getSelection());
-
-                IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
-
-                oldElement.setSelected(false);
-            }
+            updateOldSelection(oldValue);
 
             // select the new element
-            if (newValue != null) {
-                final int newValueIndex = getControl().getElements().indexOf(newValue.getSelection());
-
-                IconsListElement<E> newElement = mappedElements.get(newValueIndex);
-
-                newElement.setSelected(true);
-            }
+            updateNewSelection(newValue);
         });
 
-        Bindings.bindContent(content.getChildren(), mappedElements);
+        // initialise selection at startup
+        updateNewSelection(getControl().getSelectedElement());
 
         return content;
+    }
+
+    /**
+     * Deselect the old/previous selection
+     *
+     * @param oldSelection The old/previous selection
+     */
+    private void updateOldSelection(ListWidgetSelection<E> oldSelection) {
+        // deselect the old element
+        Optional.ofNullable(oldSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
+            final int oldValueIndex = getControl().getElements().indexOf(selection);
+
+            IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
+
+            oldElement.setSelected(false);
+        });
+    }
+
+    /**
+     * Select the current/new selection
+     *
+     * @param newSelection The current/new selection
+     */
+    private void updateNewSelection(ListWidgetSelection<E> newSelection) {
+        // select the new element
+        Optional.ofNullable(newSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
+            final int newValueIndex = getControl().getElements().indexOf(selection);
+
+            IconsListElement<E> newElement = mappedElements.get(newValueIndex);
+
+            newElement.setSelected(true);
+        });
     }
 }
