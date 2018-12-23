@@ -2,7 +2,6 @@ package org.phoenicis.javafx.components.application.control;
 
 import javafx.beans.property.*;
 import org.phoenicis.javafx.components.application.skin.ApplicationDetailsPanelSkin;
-import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;

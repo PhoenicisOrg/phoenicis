@@ -102,6 +102,7 @@ public class MainWindowView<S extends Sidebar> extends Tab {
      * @param nodeToShow
      */
     public void setCenter(Node nodeToShow) {
+        closeDetailsView();
         this.content.setCenter(nodeToShow);
     }
 
@@ -124,6 +125,7 @@ public class MainWindowView<S extends Sidebar> extends Tab {
      * shows the wait panel
      */
     public void showWait() {
+        closeDetailsView();
         setCenter(this.waitPanel);
     }
 

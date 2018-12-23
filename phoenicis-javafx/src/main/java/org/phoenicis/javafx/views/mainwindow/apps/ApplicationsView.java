@@ -114,7 +114,7 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                 selectedApplication);
 
         applicationPanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
-        applicationPanel.setOnClose(() -> availableApps.setSelectedElement(null));
+        applicationPanel.setOnClose(this::closeDetailsView);
 
         applicationPanel.webEngineStylesheetProperty().bind(themeManager.webEngineStylesheetProperty());
 
@@ -188,6 +188,11 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
             setCenter(this.availableApps);
         });
+    }
+
+    @Override
+    public void closeDetailsView() {
+        this.availableApps.setSelectedElement(null);
     }
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
