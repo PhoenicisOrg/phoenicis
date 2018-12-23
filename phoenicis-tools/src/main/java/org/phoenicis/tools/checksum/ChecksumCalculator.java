@@ -36,7 +36,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 @Safe
 public class ChecksumCalculator {
     private static final int BLOCK_SIZE = 2048;
-    private static final String WAIT_MESSAGE = tr("Verifying the file ...");
+    private static final String WAIT_MESSAGE = tr("Verifying the file…");
 
     public String calculate(String fileToCheck, String algorithm, Consumer<ProgressEntity> onChange)
             throws IOException {
