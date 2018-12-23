@@ -6,11 +6,10 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -19,20 +18,18 @@ import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
-import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.net.URI;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
-    private final StringProperty title;
-
+public class ApplicationDetailsPanelSkin
+        extends DetailsPanelBaseSkin<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
     private final DoubleProperty miniatureHeight;
 
     private final ObservableList<ScriptDTO> scripts;
@@ -51,7 +48,6 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
     public ApplicationDetailsPanelSkin(ApplicationDetailsPanel control) {
         super(control);
 
-        this.title = new SimpleStringProperty();
         this.miniatureHeight = new SimpleDoubleProperty();
 
         this.scripts = FXCollections.observableArrayList();
@@ -91,16 +87,10 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
 
     @Override
     public void initialise() {
-        final BorderPane container = new BorderPane();
-        container.getStyleClass().add("detailsPane");
-
-        container.setTop(createHeader());
-        container.setCenter(createContent());
+        super.initialise();
 
         getControl().applicationProperty().addListener((Observable invalidation) -> updateApplication());
         updateApplication();
-
-        getChildren().addAll(container);
     }
 
     private void updateApplication() {
@@ -113,7 +103,7 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
         }
     }
 
-    private VBox createContent() {
+    protected Node createContent() {
         final WebView appDescription = new WebView();
         appDescription.getEngine().userStyleSheetLocationProperty().bind(getControl().webEngineStylesheetProperty());
         VBox.setVgrow(appDescription, Priority.ALWAYS);
@@ -188,21 +178,6 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
         }
     }
 
-    private HBox createHeader() {
-        final Label titleLabel = new Label();
-        titleLabel.getStyleClass().add("descriptionTitle");
-        titleLabel.textProperty().bind(title);
-
-        final Button closeButton = new Button();
-        closeButton.getStyleClass().add("closeIcon");
-        closeButton.setOnAction(event -> getOnClose().ifPresent(Runnable::run));
-
-        final Region filler = new Region();
-        HBox.setHgrow(filler, Priority.ALWAYS);
-
-        return new HBox(titleLabel, filler, closeButton);
-    }
-
     private void installScript(ScriptDTO script) {
         final StringBuilder executeBuilder = new StringBuilder();
         executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", script.getTypeId()));
@@ -227,9 +202,5 @@ public class ApplicationDetailsPanelSkin extends SkinBase<ApplicationDetailsPane
                 errorDialog.showAndWait();
             }
         }));
-    }
-
-    private Optional<Runnable> getOnClose() {
-        return Optional.ofNullable(getControl().getOnClose());
     }
 }

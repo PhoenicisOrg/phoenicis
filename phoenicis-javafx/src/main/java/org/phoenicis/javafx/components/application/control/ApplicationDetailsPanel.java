@@ -3,11 +3,12 @@ package org.phoenicis.javafx.components.application.control;
 import javafx.beans.property.*;
 import org.phoenicis.javafx.components.application.skin.ApplicationDetailsPanelSkin;
 import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
-public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
+public class ApplicationDetailsPanel extends DetailsPanelBase<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
     private final ScriptInterpreter scriptInterpreter;
 
     private final ApplicationFilter filter;
@@ -18,19 +19,16 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
 
     private final StringProperty webEngineStylesheet;
 
-    private final ObjectProperty<Runnable> onClose;
-
     public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
             ObjectProperty<ApplicationDTO> application, BooleanProperty showScriptSource,
             StringProperty webEngineStylesheet, ObjectProperty<Runnable> onClose) {
-        super();
+        super(onClose);
 
         this.scriptInterpreter = scriptInterpreter;
         this.filter = filter;
         this.application = application;
         this.showScriptSource = showScriptSource;
         this.webEngineStylesheet = webEngineStylesheet;
-        this.onClose = onClose;
     }
 
     public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
@@ -86,17 +84,5 @@ public class ApplicationDetailsPanel extends ControlBase<ApplicationDetailsPanel
 
     public void setWebEngineStylesheet(String webEngineStylesheet) {
         this.webEngineStylesheet.set(webEngineStylesheet);
-    }
-
-    public Runnable getOnClose() {
-        return onClose.get();
-    }
-
-    public ObjectProperty<Runnable> onCloseProperty() {
-        return onClose;
-    }
-
-    public void setOnClose(Runnable onClose) {
-        this.onClose.set(onClose);
     }
 }
