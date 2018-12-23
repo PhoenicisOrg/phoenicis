@@ -113,6 +113,11 @@ public class MainController {
         });
     }
 
+    /**
+     * sets the default category icons from the repository for the sidebar buttons
+     *
+     * @param repositoryDTO repository
+     */
     private void setDefaultCategoryIcons(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
             try {
