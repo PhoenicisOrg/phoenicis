@@ -140,7 +140,7 @@ public class LibrarySidebar extends Sidebar {
         runScript.getStyleClass().addAll("sidebarButton", "scriptButton");
         runScript.setOnMouseClicked(event -> {
             final FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Open Script ..."));
+            fileChooser.setTitle(tr("Open Script…"));
 
             // TODO: use correct owner window
             final File scriptToRun = fileChooser.showOpenDialog(null);
