@@ -19,39 +19,28 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
     private final ApplicationsView view;
     private final RepositoryManager repositoryManager;
-
-    private ThemeManager themeManager;
 
     private boolean firstViewSelection = true;
 
     private Runnable onAppLoaded = () -> {
     };
 
-    public AppsController(ApplicationsView view, RepositoryManager repositoryManager, ThemeManager themeManager) {
+    public AppsController(ApplicationsView view, RepositoryManager repositoryManager) {
         this.view = view;
         this.repositoryManager = repositoryManager;
-        this.themeManager = themeManager;
 
         this.view.setOnSelectionChanged(event -> {
             if (this.view.isSelected() && this.firstViewSelection) {
@@ -90,34 +79,7 @@ public class AppsController {
     private void populateView(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
             List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
-            setDefaultCategoryIcons(categoryDTOS);
             this.view.populate(categoryDTOS);
         });
-    }
-
-    private void setDefaultCategoryIcons(List<CategoryDTO> categoryDTOS) {
-        try {
-            StringBuilder cssBuilder = new StringBuilder();
-            for (CategoryDTO category : categoryDTOS) {
-                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
-                URI categoryIcon = category.getIcon();
-                if (categoryIcon == null) {
-                    cssBuilder
-                            .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                } else {
-                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                }
-                cssBuilder.append("}\n");
-            }
-            String css = cssBuilder.toString();
-            Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-            File tempFile = temp.toFile();
-            tempFile.deleteOnExit();
-            Files.write(temp, css.getBytes());
-            String defaultCategoryIconsCss = temp.toUri().toString();
-            themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-        } catch (IOException e) {
-            LOGGER.warn("Could not set default category icons.", e);
-        }
     }
 }
