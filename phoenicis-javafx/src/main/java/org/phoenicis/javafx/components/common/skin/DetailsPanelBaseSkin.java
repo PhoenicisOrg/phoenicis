@@ -13,12 +13,21 @@ import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
 
 import java.util.Optional;
 
+/**
+ * The base skin for all details panels
+ *
+ * @param <C> The concrete component class
+ * @param <S> The concrete skin class
+ */
 public abstract class DetailsPanelBaseSkin<C extends DetailsPanelBase<C, S>, S extends DetailsPanelBaseSkin<C, S>>
         extends SkinBase<C, S> {
+    /**
+     * The title of the details panel
+     */
     protected final StringProperty title;
 
     /**
-     * Constructor for all SkinBase instances
+     * Constructor
      *
      * @param control The control belonging to the skin
      */
@@ -28,6 +37,9 @@ public abstract class DetailsPanelBaseSkin<C extends DetailsPanelBase<C, S>, S e
         this.title = new SimpleStringProperty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final BorderPane container = new BorderPane();
@@ -39,6 +51,12 @@ public abstract class DetailsPanelBaseSkin<C extends DetailsPanelBase<C, S>, S e
         getChildren().addAll(container);
     }
 
+    /**
+     * Creates the header for the details panel.
+     * The header contains an optional title and a close button
+     *
+     * @return The header
+     */
     private HBox createHeader() {
         final Label titleLabel = new Label();
         titleLabel.getStyleClass().add("descriptionTitle");
@@ -54,6 +72,11 @@ public abstract class DetailsPanelBaseSkin<C extends DetailsPanelBase<C, S>, S e
         return new HBox(titleLabel, filler, closeButton);
     }
 
+    /**
+     * Creates the content for the details panel
+     *
+     * @return The content
+     */
     protected abstract Node createContent();
 
     private Optional<Runnable> getOnClose() {

@@ -28,16 +28,34 @@ import java.net.URI;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The skin for the {@link ApplicationDetailsPanel} component
+ */
 public class ApplicationDetailsPanelSkin
         extends DetailsPanelBaseSkin<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
+    /**
+     * The preferred height for the application miniature images
+     */
     private final DoubleProperty miniatureHeight;
 
+    /**
+     * A list of all scripts for the shown application
+     */
     private final ObservableList<ScriptDTO> scripts;
 
+    /**
+     * A filtered version of <code>scripts</code>
+     */
     private final ObservableList<ScriptDTO> filteredScripts;
 
+    /**
+     * A list containing the {@link URI}s for the miniatures for the shown application
+     */
     private final ObservableList<URI> miniatureUris;
 
+    /**
+     * A mapped list between the <code>miniatureUris</code> and a {@link Region} component
+     */
     private final ObservableList<Region> miniatures;
 
     /**
@@ -57,6 +75,11 @@ public class ApplicationDetailsPanelSkin
         this.miniatures = createMiniatures();
     }
 
+    /**
+     * Creates a filtered version of <code>scripts</code>
+     *
+     * @return A filtered version of the scripts list
+     */
     private FilteredList<ScriptDTO> createFilteredScripts() {
         final ApplicationFilter filter = getControl().getFilter();
 
@@ -72,6 +95,11 @@ public class ApplicationDetailsPanelSkin
         return filteredScripts;
     }
 
+    /**
+     * Creates a mapped list between the <code>miniatureUris</code> and a {@link Region} component
+     *
+     * @return A mapped list between miniatureUris and a Region component
+     */
     private ObservableList<Region> createMiniatures() {
         return new MappedList<>(miniatureUris, miniatureUri -> {
             final Region image = new Region();
@@ -85,24 +113,23 @@ public class ApplicationDetailsPanelSkin
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         super.initialise();
 
+        // ensure that the content of the details panel changes when the to be shown application changes
         getControl().applicationProperty().addListener((Observable invalidation) -> updateApplication());
+        // initialise the content of the details panel correct
         updateApplication();
     }
 
-    private void updateApplication() {
-        final ApplicationDTO application = getControl().getApplication();
-
-        if (application != null) {
-            title.setValue(application.getName());
-            scripts.setAll(application.getScripts());
-            miniatureUris.setAll(application.getMiniatures());
-        }
-    }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected Node createContent() {
         final WebView appDescription = new WebView();
         appDescription.getEngine().userStyleSheetLocationProperty().bind(getControl().webEngineStylesheetProperty());
@@ -131,6 +158,19 @@ public class ApplicationDetailsPanelSkin
         miniatureHeight.bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
 
         return new VBox(appDescription, installers, scriptGrid, miniaturesPaneWrapper);
+    }
+
+    /**
+     * Update the content of the details panel when the to be shown application changes
+     */
+    private void updateApplication() {
+        final ApplicationDTO application = getControl().getApplication();
+
+        if (application != null) {
+            title.setValue(application.getName());
+            scripts.setAll(application.getScripts());
+            miniatureUris.setAll(application.getMiniatures());
+        }
     }
 
     /**
@@ -170,6 +210,11 @@ public class ApplicationDetailsPanelSkin
         }
     }
 
+    /**
+     * Updates the application description when the application changes
+     *
+     * @param appDescription The web view containing the application description
+     */
     private void updateDescription(final WebView appDescription) {
         final ApplicationDTO application = getControl().getApplication();
 
@@ -178,6 +223,11 @@ public class ApplicationDetailsPanelSkin
         }
     }
 
+    /**
+     * Install the given script
+     *
+     * @param script The script to be installed
+     */
     private void installScript(ScriptDTO script) {
         final StringBuilder executeBuilder = new StringBuilder();
         executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", script.getTypeId()));
@@ -191,6 +241,7 @@ public class ApplicationDetailsPanelSkin
         // TODO: use Java interface instead of String
         executeBuilder.append("new Installer().run();");
 
+        // execute the script
         getControl().getScriptInterpreter().runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
             // no exception if installation is cancelled
             if (!(e.getCause() instanceof InterruptedException)) {
