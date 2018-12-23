@@ -21,6 +21,7 @@ package org.phoenicis.javafx;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -29,6 +30,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -39,6 +41,7 @@ import javafx.stage.StageStyle;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.repository.RepositoryManager;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -49,7 +52,7 @@ import java.util.List;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class JavaFXApplication extends Application {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
 
     private double splashWidth;
     private double splashHeight;
@@ -81,8 +84,9 @@ public class JavaFXApplication extends Application {
         loadProgress.setPrefWidth(splashWidth);
         progressText = new Label(tr("Loading ..."));
         progressText.setFont(new Font(12));
-        splashLayout = new VBox();
-        splashLayout.getChildren().addAll(splash, loadProgress, progressText);
+        progressText.setPadding(new Insets(5, 5, 5, 5));
+        progressText.setBackground(Background.EMPTY);
+        splashLayout = new VBox(splash, loadProgress, progressText);
         progressText.setAlignment(Pos.CENTER);
         splashLayout.setEffect(new DropShadow());
     }
@@ -135,6 +139,13 @@ public class JavaFXApplication extends Application {
         new Thread(loadTask).start();
     }
 
+    /**
+     * shows splash as long as task is in progress
+     *
+     * @param initStage stage to show the splash
+     * @param task pre-loading task
+     * @param initCompletionHandler handler which is called once task is finished
+     */
     private void showSplash(final Stage initStage, Task<?> task, InitCompletionHandler initCompletionHandler) {
         progressText.textProperty().bind(task.messageProperty());
         loadProgress.progressProperty().bind(task.progressProperty());
@@ -161,6 +172,10 @@ public class JavaFXApplication extends Application {
         initStage.show();
     }
 
+    /**
+     * shows the main JavaFX stage
+     * (call if pre-loading finished)
+     */
     private void showMainStage() {
         Stage mainStage = new Stage(StageStyle.DECORATED);
         mainStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
@@ -178,6 +193,9 @@ public class JavaFXApplication extends Application {
         mainStage.toFront();
     }
 
+    /**
+     * called if pre-loading task is finished
+     */
     public interface InitCompletionHandler {
         void complete();
     }
