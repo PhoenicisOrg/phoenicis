@@ -19,14 +19,13 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
+import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
@@ -42,7 +41,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -95,22 +93,25 @@ public class MainController {
 
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setResizable(true);
-            alert.initOwner(this.mainWindow);
-            alert.setTitle(this.applicationName);
-            alert.setHeaderText(tr("Are you sure you want to close all {0} windows?", this.applicationName));
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                this.javaFxSettingsManager.setWindowHeight(this.mainWindow.getHeight());
-                this.javaFxSettingsManager.setWindowWidth(this.mainWindow.getWidth());
-                this.javaFxSettingsManager.setWindowMaximized(this.mainWindow.isMaximized());
-                this.javaFxSettingsManager.save();
-                Platform.exit();
-                onClose.run();
-            } else {
-                event.consume();
-            }
+            final ConfirmDialog confirmDialog = ConfirmDialog.builder()
+                    .withTitle(this.applicationName)
+                    .withMessage(tr("Are you sure you want to close all {0} windows?", this.applicationName))
+                    .withOwner(this.mainWindow)
+                    .withResizable(true)
+                    .withYesCallback(() -> {
+                        this.javaFxSettingsManager.setWindowHeight(this.mainWindow.getHeight());
+                        this.javaFxSettingsManager.setWindowWidth(this.mainWindow.getWidth());
+                        this.javaFxSettingsManager.setWindowMaximized(this.mainWindow.isMaximized());
+                        this.javaFxSettingsManager.save();
+
+                        Platform.exit();
+
+                        onClose.run();
+                    })
+                    .withNoCallback(event::consume)
+                    .build();
+
+            confirmDialog.showAndCallback();
         });
     }
 
