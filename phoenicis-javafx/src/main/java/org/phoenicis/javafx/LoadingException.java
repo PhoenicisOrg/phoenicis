@@ -18,6 +18,9 @@
 
 package org.phoenicis.javafx;
 
+/**
+ * exception for issues during the pre-loading phase ("splash")
+ */
 public class LoadingException extends RuntimeException {
     LoadingException(String message) {
         super(message);
