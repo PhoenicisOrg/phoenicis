@@ -33,6 +33,7 @@ import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
@@ -46,7 +47,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MainController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final MainWindow mainWindow;
     private final ThemeManager themeManager;
     private final JavaFxSettingsManager javaFxSettingsManager;
