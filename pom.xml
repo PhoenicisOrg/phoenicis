@@ -250,7 +250,7 @@
                         <artifactId>maven-compiler-plugin</artifactId>
                         <version>3.8.0</version>
                         <configuration>
-                            <release>11</release>
+                            <release>10</release>
                         </configuration>
                     </plugin>
                     <plugin>
@@ -265,7 +265,7 @@
             </build>
             <properties>
                 <maven.compiler.source>1.11</maven.compiler.source>
-                <maven.compiler.target>1.11</maven.compiler.target>
+                <maven.compiler.target>1.10</maven.compiler.target>
             </properties>
         </profile>
         <profile>
