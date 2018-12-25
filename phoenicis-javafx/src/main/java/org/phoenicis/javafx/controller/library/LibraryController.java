@@ -21,8 +21,8 @@ package org.phoenicis.javafx.controller.library;
 import javafx.application.Platform;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.views.common.ConfirmMessage;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
@@ -34,6 +34,7 @@ import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Collections;
@@ -42,6 +43,7 @@ import java.util.List;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryController {
+    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LibraryController.class);
     @Value("${application.user.containers}")
     private String containersPath;
 
@@ -52,6 +54,8 @@ public class LibraryController {
     private final ScriptInterpreter scriptInterpreter;
     private final RepositoryManager repositoryManager;
 
+    private boolean firstViewSelection = true;
+
     public LibraryController(LibraryView libraryView, ConsoleController consoleController,
             LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
             ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
@@ -60,10 +64,7 @@ public class LibraryController {
         this.shortcutRunner = shortcutRunner;
         this.shortcutManager = shortcutManager;
         this.scriptInterpreter = scriptInterpreter;
-
         this.repositoryManager = repositoryManager;
-        this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
-        });
 
         libraryManager.setOnUpdate(this::updateLibrary);
 
@@ -71,18 +72,36 @@ public class LibraryController {
         this.libraryView.setOnShortcutRun(this::runShortcut);
         this.libraryView.setOnShortcutDoubleClicked(this::runShortcut);
         this.libraryView.setOnShortcutStop(
-                shortcutDTO -> shortcutRunner.stop(shortcutDTO,
-                        e -> new ErrorMessage(tr("Error"), e, this.libraryView)));
+                shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Error"))
+                            .withException(e)
+                            .withOwner(this.libraryView.getContent().getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                }));
 
         this.libraryView.setOnShortcutUninstall(shortcutDTO -> {
             final String shortcutName = shortcutDTO.getInfo().getName();
-            ConfirmMessage confirmMessage = new ConfirmMessage(tr("Uninstall {0}", shortcutName),
-                    tr("Are you sure you want to uninstall {0}?", shortcutName),
-                    this.libraryView.getContent().getScene().getWindow());
-            confirmMessage.setResizable(true);
-            confirmMessage.ask(() -> shortcutManager.uninstallFromShortcut(shortcutDTO,
-                    e -> new ErrorMessage("Error while uninstalling " + shortcutName, e,
-                            this.libraryView)));
+
+            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+                    .withTitle(tr("Uninstall {0}", shortcutName))
+                    .withMessage(tr("Are you sure you want to uninstall {0}?", shortcutName))
+                    .withOwner(libraryView.getContent().getScene().getWindow())
+                    .withResizable(true)
+                    .withYesCallback(() -> shortcutManager.uninstallFromShortcut(shortcutDTO, e -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error while uninstalling {0}", shortcutName))
+                                .withException(e)
+                                .withOwner(this.libraryView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    }))
+                    .build();
+
+            confirmMessage.showAndCallback();
         });
 
         this.libraryView.setOnShortcutChanged(shortcutDTO -> this.shortcutManager.updateShortcut(shortcutDTO));
@@ -92,14 +111,30 @@ public class LibraryController {
         });
 
         this.libraryView.setOnScriptRun(file -> {
-            scriptInterpreter.runScript(file,
-                    e -> Platform
-                            .runLater(() -> new ErrorMessage(tr("Error while running script"), e, this.libraryView)));
+            scriptInterpreter.runScript(file, e -> Platform.runLater(() -> {
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("Error while running script"))
+                        .withException(e)
+                        .withOwner(this.libraryView.getContent().getScene().getWindow())
+                        .build();
+
+                errorDialog.showAndWait();
+            }));
+        });
+
+        this.libraryView.setOnSelectionChanged(event -> {
+            if (this.libraryView.isSelected() && this.firstViewSelection) {
+                this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
+                });
+                this.repositoryManager.triggerCallbacks();
+                this.firstViewSelection = false;
+            }
         });
     }
 
     /**
      * creates a new shortcut
+     *
      * @param shortcutCreationDTO DTO describing the new shortcut
      */
     private void createShortcut(ShortcutCreationDTO shortcutCreationDTO) {
@@ -133,17 +168,33 @@ public class LibraryController {
     }
 
     private void runShortcut(ShortcutDTO shortcutDTO) {
-        shortcutRunner.run(shortcutDTO, Collections.emptyList(),
-                e -> Platform.runLater(() -> new ErrorMessage(tr("Error"), e, this.libraryView)));
+        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("Error"))
+                    .withException(e)
+                    .withOwner(this.libraryView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        }));
     }
 
     /**
      * shows an error message
+     *
      * @param e exception that caused the error
      * @param message error message
      */
     private void showErrorMessage(Exception e, String message) {
-        Platform.runLater(() -> new ErrorMessage(message, e, this.libraryView));
+        Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(message)
+                    .withException(e)
+                    .withOwner(this.libraryView.getContent().getScene().getWindow())
+                    .build();
+
+            errorDialog.showAndWait();
+        });
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
@@ -152,6 +203,7 @@ public class LibraryController {
 
     /**
      * update library with translations from repository
+     *
      * @param repositoryDTO
      */
     public void updateLibrary(RepositoryDTO repositoryDTO) {

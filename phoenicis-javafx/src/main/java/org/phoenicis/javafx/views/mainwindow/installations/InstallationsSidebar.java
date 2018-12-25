@@ -3,16 +3,14 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import org.phoenicis.javafx.components.installation.control.InstallationsSidebarToggleGroup;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
+import org.phoenicis.javafx.components.installation.control.InstallationsSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -61,7 +59,7 @@ public class InstallationsSidebar extends Sidebar {
         ListWidgetSelector listWidgetSelector = createListWidgetSelector(activeInstallations);
 
         setTop(searchBox);
-        setCenter(new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer()));
+        setCenter(createScrollPane(sidebarToggleGroup));
         setBottom(listWidgetSelector);
     }
 
@@ -99,13 +97,16 @@ public class InstallationsSidebar extends Sidebar {
     private ListWidgetSelector createListWidgetSelector(CombinedListWidget<InstallationDTO> activeInstallations) {
         ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
 
-        listWidgetSelector.setSelected(javaFxSettingsManager.getInstallationsListType());
-        listWidgetSelector.setOnSelect(type -> {
-            activeInstallations.showList(type);
+        activeInstallations.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
 
-            javaFxSettingsManager.setInstallationsListType(type);
-            javaFxSettingsManager.save();
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setInstallationsListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getInstallationsListType());
 
         return listWidgetSelector;
     }

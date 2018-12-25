@@ -25,8 +25,8 @@ import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
-import org.phoenicis.javafx.views.common.ConfirmMessage;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
@@ -56,6 +56,8 @@ public class EnginesController {
     private Map<String, Engine> enginesCache = new HashMap<>();
     private Map<String, List<EngineSubCategoryDTO>> versionsCache = new HashMap<>();
 
+    private boolean firstViewSelection = true;
+
     public EnginesController(EnginesView enginesView, RepositoryManager repositoryManager,
             EnginesManager enginesManager, ThemeManager themeManager) {
         super();
@@ -64,16 +66,6 @@ public class EnginesController {
         this.repositoryManager = repositoryManager;
         this.enginesManager = enginesManager;
         this.themeManager = themeManager;
-
-        this.repositoryManager.addCallbacks(
-                repositoryDTO -> {
-                    this.enginesManager.fetchAvailableEngines(
-                            repositoryDTO,
-                            engines -> this.populateView(repositoryDTO, engines),
-                            e -> Platform.runLater(
-                                    () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
-                },
-                e -> Platform.runLater(() -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
 
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
             // TODO: better way to get engine ID
@@ -85,42 +77,85 @@ public class EnginesController {
                             this.versionsCache.put(engineId, versions);
                             this.enginesView.updateVersions(engineCategoryDTO, versions);
                         },
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e, this.enginesView).show()));
+                        e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                    .build();
+
+                            errorDialog.showAndWait();
+                        }));
             }
         });
 
         this.enginesView.setOnInstallEngine(engineDTO -> {
-            ConfirmMessage confirmMessage = new ConfirmMessage(
-                    tr("Install {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to install {0}?", engineDTO.getVersion()),
-                    this.enginesView.getContent().getScene().getWindow());
-            confirmMessage.setResizable(true);
-            confirmMessage.ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
-                    engine -> {
+            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+                    .withTitle(tr("Install {0}", engineDTO.getVersion()))
+                    .withMessage(tr("Are you sure you want to install {0}?", engineDTO.getVersion()))
+                    .withOwner(enginesView.getContent().getScene().getWindow())
+                    .withResizable(true)
+                    .withYesCallback(() -> this.enginesManager.getEngine(engineDTO.getId(), engine -> {
                         engine.install(engineDTO.getSubCategory(), engineDTO.getVersion());
+
                         // invalidate cache and force view update to show installed version correctly
                         this.versionsCache.remove(engineDTO.getId());
                         this.forceViewUpdate();
-                    },
-                    e -> Platform.runLater(
-                            () -> new ErrorMessage("Error", e, this.enginesView).show())));
+                    }, e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    })))
+                    .build();
+
+            confirmMessage.showAndCallback();
         });
 
         this.enginesView.setOnDeleteEngine(engineDTO -> {
-            ConfirmMessage confirmMessage = new ConfirmMessage(
-                    tr("Delete {0}", engineDTO.getVersion()),
-                    tr("Are you sure you want to delete {0}?", engineDTO.getVersion()),
-                    this.enginesView.getContent().getScene().getWindow());
-            confirmMessage.setResizable(true);
-            confirmMessage.ask(() -> this.enginesManager.getEngine(engineDTO.getId(),
-                    engine -> {
+            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+                    .withTitle(tr("Delete {0}", engineDTO.getVersion()))
+                    .withMessage(tr("Are you sure you want to delete {0}?", engineDTO.getVersion()))
+                    .withOwner(enginesView.getContent().getScene().getWindow())
+                    .withResizable(true)
+                    .withYesCallback(() -> this.enginesManager.getEngine(engineDTO.getId(), engine -> {
                         engine.delete(engineDTO.getSubCategory(), engineDTO.getVersion());
+
                         // invalidate cache and force view update to show deleted version correctly
                         this.versionsCache.remove(engineDTO.getId());
                         this.forceViewUpdate();
-                    },
-                    e -> Platform.runLater(
-                            () -> new ErrorMessage("Error", e, this.enginesView).show())));
+                    }, e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    })))
+                    .build();
+
+            confirmMessage.showAndCallback();
+        });
+
+        this.enginesView.setOnSelectionChanged(event -> {
+            if (this.enginesView.isSelected() && this.firstViewSelection) {
+                this.repositoryManager.addCallbacks(
+                        repositoryDTO -> this.enginesManager.fetchAvailableEngines(
+                                repositoryDTO,
+                                engines -> this.populateView(repositoryDTO, engines),
+                                e -> Platform.runLater(
+                                        () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
+                        e -> Platform.runLater(
+                                () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e))));
+
+                this.repositoryManager.triggerCallbacks();
+
+                this.firstViewSelection = false;
+            }
         });
     }
 
@@ -195,7 +230,15 @@ public class EnginesController {
                                         .build(),
                                 callback);
                     },
-                    e -> Platform.runLater(() -> new ErrorMessage("Error", e, enginesView).show()));
+                    e -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error"))
+                                .withException(e)
+                                .withOwner(this.enginesView.getContent().getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    }));
         }
     }
 

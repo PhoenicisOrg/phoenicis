@@ -5,15 +5,12 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.CheckBox;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebarToggleGroup;
-import org.phoenicis.javafx.components.common.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarCheckBox;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarSpacer;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -68,10 +65,8 @@ public class ApplicationsSidebar extends Sidebar {
         ApplicationSidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
         SidebarGroup<CheckBox> filterGroup = createFilterGroup();
 
-        SidebarScrollPane centerContent = new SidebarScrollPane(sidebarToggleGroup, new SidebarSpacer(), filterGroup);
-
         this.setTop(searchBox);
-        this.setCenter(centerContent);
+        this.setCenter(createScrollPane(sidebarToggleGroup, createSpacer(), filterGroup));
         this.setBottom(listWidgetSelector);
     }
 
@@ -103,17 +98,21 @@ public class ApplicationsSidebar extends Sidebar {
     }
 
     private SidebarGroup<CheckBox> createFilterGroup() {
-        final CheckBox testingCheck = new SidebarCheckBox(tr("Testing"));
+        final CheckBox testingCheck = new CheckBox(tr("Testing"));
+        testingCheck.getStyleClass().add("sidebarCheckBox");
         filter.containTestingApplicationsProperty().bind(testingCheck.selectedProperty());
 
-        final CheckBox requiresPatchCheck = new SidebarCheckBox(tr("Patch required"));
+        final CheckBox requiresPatchCheck = new CheckBox(tr("Patch required"));
+        requiresPatchCheck.getStyleClass().add("sidebarCheckBox");
         filter.containRequiresPatchApplicationsProperty().bind(requiresPatchCheck.selectedProperty());
 
-        final CheckBox commercialCheck = new SidebarCheckBox(tr("Commercial"));
+        final CheckBox commercialCheck = new CheckBox(tr("Commercial"));
+        commercialCheck.getStyleClass().add("sidebarCheckBox");
         commercialCheck.setSelected(true);
         filter.containCommercialApplicationsProperty().bind(commercialCheck.selectedProperty());
 
-        final CheckBox operatingSystemCheck = new SidebarCheckBox(tr("All Operating Systems"));
+        final CheckBox operatingSystemCheck = new CheckBox(tr("All Operating Systems"));
+        operatingSystemCheck.getStyleClass().add("sidebarCheckBox");
         filter.containAllOSCompatibleApplicationsProperty().bind(operatingSystemCheck.selectedProperty());
 
         final SidebarGroup<CheckBox> filterGroup = new SidebarGroup<>(tr("Filters"));
@@ -130,13 +129,16 @@ public class ApplicationsSidebar extends Sidebar {
     private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ApplicationDTO> combinedListWidget) {
         final ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
 
-        listWidgetSelector.setSelected(this.javaFxSettingsManager.getAppsListType());
-        listWidgetSelector.setOnSelect(type -> {
-            combinedListWidget.showList(type);
+        combinedListWidget.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
 
-            this.javaFxSettingsManager.setAppsListType(type);
-            this.javaFxSettingsManager.save();
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setAppsListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
+
+        listWidgetSelector.setSelected(javaFxSettingsManager.getAppsListType());
 
         return listWidgetSelector;
     }

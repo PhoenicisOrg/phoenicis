@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.settings;
 
-import org.phoenicis.javafx.views.common.widgets.lists.ListWidgetType;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.DefaultPropertiesPersister;
 
