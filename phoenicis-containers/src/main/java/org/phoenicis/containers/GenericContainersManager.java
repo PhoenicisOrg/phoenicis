@@ -20,7 +20,6 @@ package org.phoenicis.containers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -133,21 +132,23 @@ public class GenericContainersManager implements ContainersManager {
         final String engineId = container.getEngine().toLowerCase();
 
         List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
-        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-                .forEach(shortcutDTO -> {
-                    final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
-                            .createInteractiveSession();
-                    interactiveScriptSession.eval(
-                            "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"reader\"]);",
-                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                shortcutReader.callMember("of", shortcutDTO);
-                                final String containerName = (String) shortcutReader.callMember("container");
-                                if (containerName.equals(container.getName())) {
-                                    this.shortcutManager.deleteShortcut(shortcutDTO);
-                                }
-                            }, errorCallback), errorCallback);
-                });
+        /*
+         * categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
+         * .forEach(shortcutDTO -> {
+         * final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
+         * .createInteractiveSession();
+         * interactiveScriptSession.eval(
+         * "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"reader\"]);",
+         * ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+         * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+         * shortcutReader.callMember("of", shortcutDTO);
+         * final String containerName = (String) shortcutReader.callMember("container");
+         * if (containerName.equals(container.getName())) {
+         * this.shortcutManager.deleteShortcut(shortcutDTO);
+         * }
+         * }, errorCallback), errorCallback);
+         * });
+         */
     }
 
     /**

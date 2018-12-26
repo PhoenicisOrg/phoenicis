@@ -1,14 +1,10 @@
 package org.phoenicis.scripts.nashorn.builtins;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.nashorn.NashornEngine;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -25,8 +21,8 @@ public class IncludeInjector implements EngineInjector {
     public void injectInto(NashornEngine nashornEngine) {
         final Set<List<String>> includedScripts = new HashSet<>();
 
-        nashornEngine.put("include", (Consumer<ScriptObjectMirror>) args -> {
-            final String[] arguments = args.to(String[].class);
+        nashornEngine.put("include", (Consumer<List>) args -> {
+            final String[] arguments = (String[]) args.toArray();
             final String script = scriptFetcher.getScript(arguments);
             if (script == null) {
                 throwException(new ScriptException(Arrays.asList(arguments).toString() + " is not found"));
