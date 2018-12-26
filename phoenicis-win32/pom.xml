@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.phoenicis</groupId>
         <artifactId>phoenicis</artifactId>
-        <version>5.0-alpha-2</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
     <artifactId>phoenicis-win32</artifactId>
     <properties>
@@ -51,12 +51,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-configuration</artifactId>
-            <version>${phoenicis.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.phoenicis</groupId>

@@ -21,7 +21,7 @@
     <parent>
         <groupId>org.phoenicis</groupId>
         <artifactId>phoenicis</artifactId>
-        <version>5.0-alpha-2</version>
+        <version>5.0-SNAPSHOT</version>
     </parent>
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
@@ -125,15 +125,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <pluginRepositories>
-        <pluginRepository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>oss-sonatype-snapshots</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
     <build>
         <resources>
             <resource>
@@ -169,18 +160,15 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>com.zenjava</groupId>
-                <artifactId>javafx-maven-plugin</artifactId>
-                <version>8.9.0-SNAPSHOT</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
-                    <appName>Phoenicis PlayOnMac</appName>
-                    <vendor>Phoenicis</vendor>
-                    <mainClass>org.phoenicis.javafx/org.phoenicis.javafx.JavaFXApplication</mainClass>
-                    <bundleArguments>
-                        <module-path>/Users/qparis/Documents/Developement/git/phoenicis/phoenicis-dist/target/phoenicis/</module-path>
-                    </bundleArguments>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
-
             </plugin>
         </plugins>
     </build>

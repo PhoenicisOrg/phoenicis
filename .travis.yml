@@ -95,7 +95,9 @@ jobs:
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
                                                mvn -B clean package;
-                                               cd phoenicis-dist/target/;
+                                               cd phoenicis-dist/src/scripts/;
+                                               bash phoenicis-create-package.sh;
+                                               cd ../../target/packages/
                                                dpkg -R -i ./;
                                                apt install -fy"
     - stage: Packages
@@ -103,9 +105,9 @@ jobs:
       os: osx
       osx_image: xcode9.3
       after_script:
-        - mvn clean install
-        - cd phoenicis-dist/target/
-        - mvn jfx:native
+        - mvn -B clean package
+        - cd phoenicis-dist/src/scripts
+        - bash phoenicis-create-package.sh
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
