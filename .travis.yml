@@ -70,6 +70,9 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk11
+      before_install:
+        - sudo apt-get update
+        - sudo apt-get install -y flatpak-builder
       after_script:
         - cd phoenicis-dist/src/flatpak/
         - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
