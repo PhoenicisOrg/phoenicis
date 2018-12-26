@@ -75,6 +75,12 @@ jobs:
         - sudo apt-get update -q
         - sudo apt-get install -y flatpak flatpak-builder
       after_script:
+        - flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        - flatpak install flathub org.freedesktop.Platform/x86_64/18.08
+        - flatpak install flathub org.freedesktop.Sdk/x86_64/18.08
+        - flatpak install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/18.08
+        - flatpak install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
+        - flatpak install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
         - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
     - stage: Packages
