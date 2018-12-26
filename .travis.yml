@@ -68,7 +68,7 @@ jobs:
     - stage: Packages
       name: Flatpak
       os: linux
-      dist: trusty
+      dist: xenial
       jdk: openjdk11
       before_install:
         - sudo add-apt-repository ppa:alexlarsson/flatpak -y
