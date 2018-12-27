@@ -86,7 +86,7 @@ public class ChooseRepositoryTypePanel extends BorderPane {
      * @return The translated header text
      */
     public String getHeader() {
-        return tr("Choose repository type…");
+        return tr("Choose repository type...");
     }
 
     /**
