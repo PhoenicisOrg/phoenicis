@@ -138,7 +138,7 @@ final class CreateShortcutPanel extends DetailsView {
 
         TextField executable = new TextField();
 
-        Button openExecutableBrowser = new Button(tr("Browse…"));
+        Button openExecutableBrowser = new Button(tr("Browse..."));
         openExecutableBrowser.setOnAction(event -> {
             FileChooser chooser = new FileChooser();
 
