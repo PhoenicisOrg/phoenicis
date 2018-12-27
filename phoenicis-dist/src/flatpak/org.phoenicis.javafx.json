@@ -65,17 +65,18 @@
       "buildsystem": "simple",
       "build-commands": [
         "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
-        "install -D phoenicis-dist-5.0-SNAPSHOT.jar /app/phoenicis/phoenicis-javafx.jar",
-        "cp -r lib /app/phoenicis",
+        "mkdir -p /app/phoenicis/lib",
+        "cp -r phoenicis-flatpak/lib/* /app/phoenicis/lib",
         "chmod 755 -R /app/phoenicis",
-        "install -Dm644 org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
-        "install -Dm644 org.phoenicis.javafx.desktop /app/share/applications/org.phoenicis.javafx.desktop",
-        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.javafx.png; done"
+        "install -Dm644 phoenicis-flatpak/org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
+        "install -Dm644 phoenicis-flatpak/org.phoenicis.javafx.desktop /app/share/applications/org.phoenicis.javafx.desktop",
+        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis-flatpak/phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.javafx.png; done"
       ],
       "sources": [
         {
-          "type": "dir",
-          "path": "../../target"
+          "type": "archive",
+          "path": "../../target/phoenicis-flatpak.zip",
+          "dest": "phoenicis-flatpak"
         },
         {
           "type": "script",
