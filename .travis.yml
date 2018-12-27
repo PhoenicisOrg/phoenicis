@@ -53,35 +53,19 @@ jobs:
     - stage: Packages
       name: deb
       os: linux
-      dist: trusty
+      dist: xenial
       jdk: openjdk11
-      sudo: required
-      services:
-        - docker
       before_install:
-        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
-      install:
-        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386;
-                                               apt -qq update;
-                                               apt install -y git;
-                                               apt install -y maven;
-                                               apt install -y gettext"
-      script:
-        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
-                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
-                                               cd phoenicis;
-                                               mvn -B clean package;
-                                               cd phoenicis-dist/src/scripts/;
-                                               bash phoenicis-create-package.sh;
-                                               cd ../../target/packages/
-                                               dpkg -R -i ./;
-                                               apt install -fy"
+        - sudo apt-get update -q
+        - sudo apt-get install -y fakeroot
+      after_script:
+        - cd phoenicis-dist/src/scripts
+        - bash phoenicis-create-package.sh
     - stage: Packages
       name: dmg
       os: osx
       osx_image: xcode10.1
       after_script:
-        - mvn -B clean package
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
 
