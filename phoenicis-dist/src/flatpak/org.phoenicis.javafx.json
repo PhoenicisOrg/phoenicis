@@ -65,7 +65,7 @@
       "buildsystem": "simple",
       "build-commands": [
         "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
-        "install -D phoenicis-dist-5.0-alpha-2.jar /app/phoenicis/phoenicis-javafx.jar",
+        "install -D phoenicis-dist-5.0-SNAPSHOT.jar /app/phoenicis/phoenicis-javafx.jar",
         "cp -r lib /app/phoenicis",
         "chmod 755 -R /app/phoenicis",
         "install -Dm644 org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
