@@ -55,8 +55,10 @@ jobs:
       os: linux
       dist: xenial
       jdk: openjdk11
+      before_install:
+        - sudo apt-get update -q
+        - sudo apt-get install -y fakeroot
       after_script:
-        - mvn -B clean package
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
     - stage: Packages
@@ -64,7 +66,6 @@ jobs:
       os: osx
       osx_image: xcode10.1
       after_script:
-        - mvn -B clean package
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
 
