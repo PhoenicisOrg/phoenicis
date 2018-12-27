@@ -81,7 +81,7 @@
           "type": "script",
           "dest-filename": "phoenicis-javafx",
           "commands": [
-            "/app/jre/bin/java --module-path /app/phoenicis/lib/ -m org.phoenicis.javafx/org.phoenicis.javafx.JavaFXApplication \"$@\""
+            "/app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=ALL-MODULE-PATH org.phoenicis.javafx.JavaFXApplication \"$@\""
           ]
         },
         {
