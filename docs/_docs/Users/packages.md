@@ -6,7 +6,7 @@ order: 2
 
 The packaging is done in phoenicis-dist. 
 
-The built packages are located in the target folder:
+The built packages are located in the target/packages folder:
 - .zip
 - .deb
 
