@@ -25,17 +25,18 @@
 		<format>zip</format>
 	</formats>
 	<includeBaseDirectory>true</includeBaseDirectory>
-	<files>
-		<file>
-			<source>${basedir}/src/scripts/phoenicis.sh</source>
-			<destName>phoenicis.sh</destName>
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/src/flatpak</directory>
+            <includes>
+                <include>phoenicis_*.png</include>
+                <include>ld.so.conf</include>
+                <include>org.phoenicis.javafx.desktop</include>
+                <include>org.phoenicis.javafx.appdata.xml</include>
+            </includes>
 			<outputDirectory></outputDirectory>
-		</file>
-		<file>
-			<source>${basedir}/src/scripts/copyright</source>
-			<outputDirectory></outputDirectory>
-		</file>
-	</files>
+        </fileSet>
+    </fileSets>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>

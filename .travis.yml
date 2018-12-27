@@ -3,7 +3,7 @@ language: java
 # avoid double builds on pull requests
 branches:
   only:
-    master
+    - master
 
 jobs:
   include:
@@ -15,34 +15,6 @@ jobs:
       script: mvn -Pcheck-formatted validate formatter:validate
 
     # build + test
-    - stage: Build + test
-      name: Linux OpenJDK 8
-      os: linux
-      dist: trusty
-      jdk: openjdk8
-      sudo: required
-      services:
-        - docker
-      before_install:
-        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
-      install:
-        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
-                                               apt install -y git;
-                                               apt install -y maven;
-                                               apt install -y openjfx;
-                                               apt install -y gettext"
-      script:
-        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
-                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
-                                               cd phoenicis;
-                                               mvn -B clean package"
-
-    # build + test
-    - stage: Build + test
-      name: Linux Oracle JDK 8
-      os: linux
-      dist: trusty
-      jdk: oraclejdk8
     - stage: Build + test
       name: Linux OpenJDK 10
       os: linux
@@ -59,18 +31,23 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk11
-    - stage: Build + test
-      name: OSX XCode 9.2
-      os: osx
-      osx_image: xcode9.2
-
     # Build + test packages
     - stage: Packages
       name: Flatpak
       os: linux
-      dist: trusty
+      dist: xenial
       jdk: openjdk11
+      before_install:
+        - sudo add-apt-repository ppa:alexlarsson/flatpak -y
+        - sudo apt-get update -q
+        - sudo apt-get install -y flatpak flatpak-builder
       after_script:
+        - flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        - flatpak --user -y install flathub org.freedesktop.Platform/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
         - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
     - stage: Packages
@@ -94,17 +71,19 @@ jobs:
                                                git clone https://github.com/PhoenicisOrg/phoenicis.git;
                                                cd phoenicis;
                                                mvn -B clean package;
-                                               cd phoenicis-dist/target/;
+                                               cd phoenicis-dist/src/scripts/;
+                                               bash phoenicis-create-package.sh;
+                                               cd ../../target/packages/
                                                dpkg -R -i ./;
                                                apt install -fy"
     - stage: Packages
       name: dmg
       os: osx
-      osx_image: xcode9.3
+      osx_image: xcode10.1
       after_script:
-        - mvn clean install
-        - cd phoenicis-dist/target/
-        - mvn jfx:native
+        - mvn -B clean package
+        - cd phoenicis-dist/src/scripts
+        - bash phoenicis-create-package.sh
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
