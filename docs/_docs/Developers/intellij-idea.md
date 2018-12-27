@@ -14,7 +14,9 @@ Build phoenicis (root) → Lifecycle → package
 
 ### Run
 Run → Edit Configurations
-add: JavaFXApplication with main class org.phoenicis.javafx.JavaFXApplication
+add: JavaFXApplication with:
+* main class: org.phoenicis.javafx.JavaFXApplication
+* VM options: --add-modules=ALL-MODULE-PATH --module-path=phoenicis-dist/target/lib
 ![IntelliJ IDEA configuration](/images/intellij-idea-run.png)
 
 ### Code Style

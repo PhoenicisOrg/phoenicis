@@ -10,9 +10,17 @@ toc: true
 * Install the dependencies:
 ```
 sudo apt update
-sudo apt install git maven openjdk-11-jdk
+sudo apt install git maven openjdk-11-jdk fakeroot
 ```
-    
+
+* Optional: if your distribution does not support Java 10+ **or** if you need to create packages, grab the latest JDK 
+```
+ wget https://download.java.net/java/GA/jdk11/28/GPL/openjdk-11+28_linux-x64_bin.tar.gz -O /tmp/openjdk-11+28_linux-x64_bin.tar.gz
+ sudo tar xfvz /tmp/openjdk-11+28_linux-x64_bin.tar.gz --directory /usr/lib/jvm
+ export JAVA_HOME="/usr/lib/jvm/jdk-11"
+```
+ 
+
 * Clone the repository from GitHub:
 ```
 git clone https://github.com/PhoenicisOrg/phoenicis.git
@@ -29,45 +37,19 @@ cd phoenicis
 mvn clean package
 ```
 
-## Ubuntu 16.04
-
-* Install the dependencies:
+* Create packages 
 ```
-sudo apt-get update
-sudo apt-get install git maven openjdk-8-jdk openjfx libxext6:i386
-```
-
-* Set the Java version:
-  * OpenJDK
-    * `export JAVA_HOME="/usr/lib/jvm/java-8-openjdk-amd64"`
-  * Oracle JDK
-    * `export JAVA_HOME="/usr/lib/jvm/java-8-oracle"`
-    
-* Clone the repository from GitHub:
-```
-git clone https://github.com/PhoenicisOrg/phoenicis.git
-```
-
-* Build Phoenicis:
-```
-cd phoenicis
-mvn clean package
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
 ```
 
 ## Arch Linux
 
-* Install the dependencies. Set the JAVA_HOME after installing `jdk8-openjdk`, but before installing `openjfx`.
+* Install the dependencies.
   * git
-  * jdk8-openjdk
-  * java-openjfx
+  * jdk11
   * maven
   * gradle-1.8 (AUR)
-
-* Set the Java version:
-  * OpenJDK
-    * `export JAVA_HOME="/usr/lib/jvm/java-8-openjdk"`
-  * Oracle JDK
-    * `export JAVA_HOME="/usr/lib/jvm/java-8-oracle"`
     
 * Clone the repository from GitHub:
 ```
@@ -104,11 +86,17 @@ cd phoenicis
 mvn clean package
 ```
 
+* Create packages 
+```
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
+```
+
 ## TrueOS
 
 * Install the dependencies:
 ```
-sudo pkg install git openjdk8 openjfx8-devel maven roboto-fonts-ttf
+sudo pkg install git openjdk11 maven roboto-fonts-ttf
 ```
 
 * Clone the repository from GitHub:
@@ -123,14 +111,6 @@ application.name = Phoenicis PlayOnBSD
 ```
 Note : As there is not FreeBSD wine at the moment, the linux wine package will be displayed in the engine window.
 
-## Run
-
-```
-cd phoenicis/phoenicis-dist/target
-unzip phoenicis.zip
-cd phoenicis
-./phoenicis.sh
-```
 
 ## Troubleshooting
 
@@ -148,11 +128,12 @@ sudo /var/lib/dpkg/info/ca-certificates-java.postinst configure
 
 If this doesn't help, you can try to delete the `.m2` directory in your home directory. This will force Maven to re-download all dependencies.
 
-### Old Java version on Arch Linux
+### Old Java version
 
 Problem:
 ```
-Exception in thread "main" java.lang.UnsupportedClassVersionError: org/phoenicis/javafx/JavaFXApplication : Unsupported major.minor version 52.0
+Exception in thread "main" java.lang.UnsupportedClassVersionError: org/phoenicis/javafx/JavaFXApplication : Unsupported major.minor version
 ```
 Solution:
-Switch to at least Java 8 (see: these [instructions](https://wiki.archlinux.org/index.php/java#Switching_between_JVM))
+Switch to at least Java 10 for running locally (see: these [instructions](https://wiki.archlinux.org/index.php/java#Switching_between_JVM))
+Switch to at least Java 11 for creating packages
