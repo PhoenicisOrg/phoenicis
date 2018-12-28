@@ -49,7 +49,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @SafeVarargs
     public static <F> ConcatenatedList<F> createPrefixList(ObservableList<F> list, F... prefixes) {
-        return new ConcatenatedList<F>(FXCollections.observableArrayList(
+        return new ConcatenatedList<>(FXCollections.observableArrayList(
                 ImmutableList.<ObservableList<F>> builder()
                         .add(FXCollections.observableArrayList(prefixes))
                         .add(list).build()));
@@ -66,7 +66,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @SafeVarargs
     public static <F> ConcatenatedList<F> createSuffixList(ObservableList<F> list, F... suffixes) {
-        return new ConcatenatedList<F>(FXCollections.observableArrayList(
+        return new ConcatenatedList<>(FXCollections.observableArrayList(
                 ImmutableList.<ObservableList<F>> builder()
                         .add(list)
                         .add(FXCollections.observableArrayList(suffixes)).build()));
@@ -81,7 +81,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @SafeVarargs
     public static <F> ConcatenatedList<F> create(ObservableList<F>... lists) {
-        return new ConcatenatedList<F>(FXCollections.observableArrayList(lists));
+        return new ConcatenatedList<>(FXCollections.observableArrayList(lists));
     }
 
     /**
@@ -93,7 +93,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @SafeVarargs
     public static <F> ConcatenatedList<F> create(List<F>... lists) {
-        return new ConcatenatedList<F>(FXCollections.observableArrayList(
+        return new ConcatenatedList<>(FXCollections.observableArrayList(
                 Arrays.stream(lists).map(FXCollections::observableArrayList).collect(Collectors.toList())));
     }
 
