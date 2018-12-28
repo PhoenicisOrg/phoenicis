@@ -24,15 +24,8 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
     }
 
     @Test
@@ -46,31 +39,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.add(1, FXCollections.observableArrayList("01", "02"));
 
-        assertEquals(5, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("01", expandedList.get(1));
-        assertEquals("02", expandedList.get(2));
-        assertEquals("21", expandedList.get(3));
-        assertEquals("22", expandedList.get(4));
-
-        assertEquals(5, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("01", actual.get(1));
-        assertEquals("02", actual.get(2));
-        assertEquals("21", actual.get(3));
-        assertEquals("22", actual.get(4));
+        assertEquals(Arrays.asList("11", "01", "02", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "01", "02", "21", "22"), actual);
     }
 
     @Test
@@ -84,25 +59,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.remove(0);
 
-        assertEquals(2, expandedList.size());
-        assertEquals("21", expandedList.get(0));
-        assertEquals("22", expandedList.get(1));
-
-        assertEquals(2, actual.size());
-        assertEquals("21", actual.get(0));
-        assertEquals("22", actual.get(1));
+        assertEquals(Arrays.asList("21", "22"), expandedList);
+        assertEquals(Arrays.asList("21", "22"), actual);
     }
 
     @Test
@@ -116,23 +79,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.remove(1);
 
-        assertEquals(1, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-
-        assertEquals(1, actual.size());
-        assertEquals("11", actual.get(0));
+        assertEquals(Arrays.asList("11"), expandedList);
+        assertEquals(Arrays.asList("11"), actual);
     }
 
     @Test
@@ -146,27 +99,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.remove(2);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
     }
 
     @Test
@@ -180,33 +119,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.set(2, FXCollections.observableArrayList("31", "32", "33"));
 
-        assertEquals(6, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-        assertEquals("31", expandedList.get(3));
-        assertEquals("32", expandedList.get(4));
-        assertEquals("33", expandedList.get(5));
-
-        assertEquals(6, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
-        assertEquals("31", actual.get(3));
-        assertEquals("32", actual.get(4));
-        assertEquals("33", actual.get(5));
+        assertEquals(Arrays.asList("11", "21", "22", "31", "32", "33"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22", "31", "32", "33"), actual);
     }
 
     @Test
@@ -221,41 +140,18 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(4, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-        assertEquals("31", expandedList.get(3));
-
-        assertEquals(4, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
-        assertEquals("31", actual.get(3));
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         observableList.setPredicate(value -> value.size() != 1);
 
-        assertEquals(2, expandedList.size());
-        assertEquals("21", expandedList.get(0));
-        assertEquals("22", expandedList.get(1));
-
-        assertEquals(2, actual.size());
-        assertEquals("21", actual.get(0));
-        assertEquals("22", actual.get(1));
+        assertEquals(Arrays.asList("21", "22"), expandedList);
+        assertEquals(Arrays.asList("21", "22"), actual);
 
         observableList.setPredicate(value -> true);
 
-        assertEquals(4, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-        assertEquals("31", expandedList.get(3));
-
-        assertEquals(4, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
-        assertEquals("31", actual.get(3));
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
     }
 
     @Test
@@ -270,27 +166,13 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        assertEquals(3, expandedList.size());
-        assertEquals("11", expandedList.get(0));
-        assertEquals("21", expandedList.get(1));
-        assertEquals("22", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("11", actual.get(0));
-        assertEquals("21", actual.get(1));
-        assertEquals("22", actual.get(2));
+        assertEquals(Arrays.asList("11", "21", "22"), expandedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
 
         observableList.comparatorProperty().set(Comparator.comparing(o -> ((List<String>) o).size()).reversed());
 
-        assertEquals(3, expandedList.size());
-        assertEquals("21", expandedList.get(0));
-        assertEquals("22", expandedList.get(1));
-        assertEquals("11", expandedList.get(2));
-
-        assertEquals(3, actual.size());
-        assertEquals("21", actual.get(0));
-        assertEquals("22", actual.get(1));
-        assertEquals("11", actual.get(2));
+        assertEquals(Arrays.asList("21", "22", "11"), expandedList);
+        assertEquals(Arrays.asList("21", "22", "11"), actual);
     }
 
     @Test
@@ -306,10 +188,12 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.add("23");
 
+        assertEquals(Arrays.asList("11", "21", "22", "23", "31"), expandedList);
         assertEquals(Arrays.asList("11", "21", "22", "23", "31"), actual);
     }
 
@@ -326,10 +210,12 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.remove(0);
 
+        assertEquals(Arrays.asList("11", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "22", "31"), actual);
     }
 
@@ -346,10 +232,12 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.set(0, "20");
 
+        assertEquals(Arrays.asList("11", "20", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "20", "22", "31"), actual);
     }
 
@@ -366,10 +254,12 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
+        assertEquals(Arrays.asList("11", "21", "22", "31"), expandedList);
         assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.setComparator(Comparator.reverseOrder());
 
+        assertEquals(Arrays.asList("11", "22", "21", "31"), expandedList);
         assertEquals(Arrays.asList("11", "22", "21", "31"), actual);
     }
 }
