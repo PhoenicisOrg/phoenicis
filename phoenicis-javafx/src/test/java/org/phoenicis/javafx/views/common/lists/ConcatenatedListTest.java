@@ -2,11 +2,9 @@ package org.phoenicis.javafx.views.common.lists;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import org.junit.Assert;
 import org.junit.Test;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 
@@ -308,11 +306,11 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        Assert.assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.add("23");
 
-        Assert.assertEquals(Arrays.asList("11", "21", "22", "23", "31"), actual);
+        assertEquals(Arrays.asList("11", "21", "22", "23", "31"), actual);
     }
 
     @Test
@@ -328,11 +326,11 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        Assert.assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.remove(0);
 
-        Assert.assertEquals(Arrays.asList("11", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "22", "31"), actual);
     }
 
     @Test
@@ -348,11 +346,11 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        Assert.assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.set(0, "20");
 
-        Assert.assertEquals(Arrays.asList("11", "20", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "20", "22", "31"), actual);
     }
 
     @Test
@@ -368,10 +366,10 @@ public class ConcatenatedListTest {
 
         Bindings.bindContent(actual, expandedList);
 
-        Assert.assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
+        assertEquals(Arrays.asList("11", "21", "22", "31"), actual);
 
         list2.setComparator(Comparator.reverseOrder());
 
-        Assert.assertEquals(Arrays.asList("11", "22", "21", "31"), actual);
+        assertEquals(Arrays.asList("11", "22", "21", "31"), actual);
     }
 }

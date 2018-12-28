@@ -12,9 +12,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * An implementation of a concatenated {@link ObservableList}, which concatenates the values of multiple
+ * {@link ObservableList}s into a single {@link ObservableList}
+ *
+ * @param <E> The instance type of the elements in the concatenated lists
+ */
 public class ConcatenatedList<E> extends PhoenicisTransformationList<E, ObservableList<E>> {
+    /**
+     * An internal copy of the source list of lists
+     */
     private final List<List<E>> expandedValues;
 
+    /**
+     * Constructor
+     *
+     * @param source A list of lists which should be concatenated
+     */
     public ConcatenatedList(ObservableList<? extends ObservableList<E>> source) {
         super(source);
 
@@ -24,6 +38,15 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         fireChange(new InitialisationChange<>(0, size(), this));
     }
 
+    /**
+     * Creates a new {@link ConcatenatedList} concatenating the given prefix values and the given {@link ObservableList
+     * list}
+     *
+     * @param list The list
+     * @param prefixes The prefix values
+     * @param <F> The instance type of the elements in the list and the prefix values
+     * @return A new {@link ConcatenatedList} containing all elements in given list and the prefix values
+     */
     @SafeVarargs
     public static <F> ConcatenatedList<F> createPrefixList(ObservableList<F> list, F... prefixes) {
         return new ConcatenatedList<F>(FXCollections.observableArrayList(
@@ -32,6 +55,15 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
                         .add(list).build()));
     }
 
+    /**
+     * Creates a new {@link ConcatenatedList} concatenating the given {@link ObservableList list} and the given suffix
+     * values
+     *
+     * @param list The list
+     * @param suffixes The suffix values
+     * @param <F> The instance type of the elements in the list and the suffix values
+     * @return A new {@link ConcatenatedList} containing all elements in given list and the suffix values
+     */
     @SafeVarargs
     public static <F> ConcatenatedList<F> createSuffixList(ObservableList<F> list, F... suffixes) {
         return new ConcatenatedList<F>(FXCollections.observableArrayList(
@@ -40,15 +72,67 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
                         .add(FXCollections.observableArrayList(suffixes)).build()));
     }
 
+    /**
+     * Creates a new {@link ConcatenatedList} with the given {@link ObservableList[] lists}
+     *
+     * @param lists The lists, which should be concatenated
+     * @param <F> The instance type of the elements in the to be concatenated lists
+     * @return A new {@link ConcatenatedList} containing all elements in the given lists
+     */
     @SafeVarargs
     public static <F> ConcatenatedList<F> create(ObservableList<F>... lists) {
         return new ConcatenatedList<F>(FXCollections.observableArrayList(lists));
     }
 
+    /**
+     * Creates a new {@link ConcatenatedList} with the given {@link List[] lists}
+     *
+     * @param lists The lists, which should be concatenated
+     * @param <F> The instance type of the elements in the to be concatenated lists
+     * @return A new {@link ConcatenatedList} containing all elements in the given lists
+     */
     @SafeVarargs
     public static <F> ConcatenatedList<F> create(List<F>... lists) {
         return new ConcatenatedList<F>(FXCollections.observableArrayList(
                 Arrays.stream(lists).map(FXCollections::observableArrayList).collect(Collectors.toList())));
+    }
+
+    /**
+     * Gets the first index in the target list belonging to an item in the list marked by the given
+     * <code>sourceIndex</code>
+     *
+     * @param sourceIndex The index marking a list in the source list
+     * @return The first index in the target list belonging to an item in the list marked by <code>sourceIndex</code>
+     */
+    private int getFirstIndex(int sourceIndex) {
+        int position = 0;
+
+        for (int i = 0; i < sourceIndex; i++) {
+            final List<E> innerList = expandedValues.get(i);
+
+            position += innerList.size();
+        }
+
+        return position;
+    }
+
+    /**
+     * Gets the last index in the target list belonging to an item in the list marked by the given
+     * <code>sourceIndex</code>
+     *
+     * @param sourceIndex The index marking a list in the source list
+     * @return The last index in the target list belonging to an item in the list marked by <code>sourceIndex</code>
+     */
+    private int getLastIndexPlusOne(int sourceIndex) {
+        int position = 0;
+
+        for (int i = 0; i <= sourceIndex; i++) {
+            final List<E> innerList = expandedValues.get(i);
+
+            position += innerList.size();
+        }
+
+        return position;
     }
 
     /**
@@ -111,53 +195,21 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int size() {
         return expandedValues.stream().mapToInt(List::size).sum();
     }
 
     /**
-     * Gets the first index in the target list belonging to an item in the list marked by the given
-     * <code>sourceIndex</code>
-     *
-     * @param sourceIndex The index marking a list in the source list
-     * @return The first index in the target list belonging to an item in the list marked by <code>sourceIndex</code>
+     * {@inheritDoc}
      */
-    private int getFirstIndex(int sourceIndex) {
-        int position = 0;
-
-        for (int i = 0; i < sourceIndex; i++) {
-            final List<E> innerList = expandedValues.get(i);
-
-            position += innerList.size();
-        }
-
-        return position;
-    }
-
-    /**
-     * Gets the last index in the target list belonging to an item in the list marked by the given
-     * <code>sourceIndex</code>
-     *
-     * @param sourceIndex The index marking a list in the source list
-     * @return The last index in the target list belonging to an item in the list marked by <code>sourceIndex</code>
-     */
-    private int getLastIndexPlusOne(int sourceIndex) {
-        int position = 0;
-
-        for (int i = 0; i <= sourceIndex; i++) {
-            final List<E> innerList = expandedValues.get(i);
-
-            position += innerList.size();
-        }
-
-        return position;
-    }
-
     @Override
-    protected void permute(ListChangeListener.Change<? extends ObservableList<E>> c) {
-        int from = c.getFrom();
-        int to = c.getTo();
+    protected void permute(ListChangeListener.Change<? extends ObservableList<E>> change) {
+        int from = change.getFrom();
+        int to = change.getTo();
 
         int expandedFrom = getFirstIndex(from);
         int expandedTo = getLastIndexPlusOne(to - 1);
@@ -167,7 +219,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
             List<List<E>> valuesClone = new ArrayList<>(expandedValues);
 
             for (int i = from; i < to; ++i) {
-                valuesClone.set(i, expandedValues.get(c.getPermutation(i)));
+                valuesClone.set(i, expandedValues.get(change.getPermutation(i)));
             }
 
             this.expandedValues.clear();
@@ -182,10 +234,13 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void update(ListChangeListener.Change<? extends ObservableList<E>> c) {
-        int from = c.getFrom();
-        int to = c.getTo();
+    protected void update(ListChangeListener.Change<? extends ObservableList<E>> change) {
+        int from = change.getFrom();
+        int to = change.getTo();
 
         if (to > from) {
             for (int i = from; i < to; ++i) {
@@ -227,17 +282,20 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void addRemove(ListChangeListener.Change<? extends ObservableList<E>> c) {
-        int from = c.getFrom();
+    protected void addRemove(ListChangeListener.Change<? extends ObservableList<E>> change) {
+        int from = change.getFrom();
 
-        for (int index = from + c.getRemovedSize() - 1; index >= from; index--) {
+        for (int index = from + change.getRemovedSize() - 1; index >= from; index--) {
             int firstOldIndex = getFirstIndex(index);
 
             nextRemove(firstOldIndex, expandedValues.remove(index));
         }
 
-        for (int index = from; index < from + c.getAddedSize(); index++) {
+        for (int index = from; index < from + change.getAddedSize(); index++) {
             int lastOldIndex = getLastIndexPlusOne(index - 1);
 
             ObservableList<E> newValues = getSource().get(index);
@@ -250,6 +308,12 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         }
     }
 
+    /**
+     * Adds a {@link ListChangeListener} to the given {@link ObservableList innerList}.
+     * This {@link ListChangeListener} listens to changes made to the given list.
+     *
+     * @param innerList The {@link ObservableList} to which the {@link ListChangeListener} is added
+     */
     private void addUpdateListener(final ObservableList<E> innerList) {
         innerList.addListener((ListChangeListener.Change<? extends E> change) -> {
             ObservableList<? extends E> activatorList = change.getList();
