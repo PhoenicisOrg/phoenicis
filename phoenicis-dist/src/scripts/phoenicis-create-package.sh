@@ -62,15 +62,15 @@ fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     jpackager create-image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"  --linux-bundle-name "phoenicis-playonlinux"
-
+    packageName="Phoenicis_$VERSION"
     cd "$PHOENICIS_TARGET"
     rmdir packages/PhoenicisPlayOnLinux/
-    rm -rf packages/phoenicis
+    rm -rf "packages/phoenicis" 2> /dev/null
     mv packages/Phoenicis\ PlayOnLinux/ packages/phoenicis
-    rm -rf deb
-    mkdir -p deb/DEBIAN/
+    rm -rf "$packageName" 2> /dev/null
+    mkdir -p "$packageName/DEBIAN/"
 
-    cat << EOF > deb/DEBIAN/control
+    cat << EOF > "$packageName/DEBIAN/control"
 Package: phoenicis-playonlinux
 Version: $VERSION
 Section: misc
@@ -85,17 +85,17 @@ Description: This program is a front-end for wine.
  Copyright 2011-2019 PlayOnLinux team <contact@playonlinux.com>
 EOF
 
-    mkdir -p deb/usr/share/applications
-    mkdir -p deb/usr/share/pixmaps
+    mkdir -p $packageName/usr/share/applications
+    mkdir -p $packageName/usr/share/pixmaps
 
-    cp -a packages/phoenicis deb/usr/share/
+    cp -a packages/phoenicis $packageName/usr/share/
 
-    cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "deb/usr/share/applications"
-    cp "$SCRIPT_PATH/../resources/phoenicis.png" "deb/usr/share/pixmaps"
-    cp "$SCRIPT_PATH/../resources/phoenicis-16.png" "deb/usr/share/pixmaps"
-    cp "$SCRIPT_PATH/../resources/phoenicis-32.png" "deb/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "$packageName/usr/share/applications"
+    cp "$SCRIPT_PATH/../resources/phoenicis.png" "$packageName/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-16.png" "$packageName/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-32.png" "$packageName/usr/share/pixmaps"
 
-    fakeroot dpkg-deb --build deb
+    fakeroot dpkg-deb --build "$packageName"
     rm -rf deb
 fi
 
