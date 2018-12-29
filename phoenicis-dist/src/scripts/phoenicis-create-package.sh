@@ -90,7 +90,10 @@ EOF
     cp -a packages/phoenicis deb/usr/share/
 
     cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "deb/usr/share/applications"
-    cp "$SCRIPT_PATH/../resources/*.png" "deb/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis.png" "deb/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-16.png" "deb/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-32.png" "deb/usr/share/pixmaps"
+
     fakeroot dpkg-deb --build deb
     rm -rf deb
 fi
