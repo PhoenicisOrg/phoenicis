@@ -54,7 +54,6 @@ public class JavaFXApplication extends Application {
     private double splashWidth;
     private double splashHeight;
     private VBox splashLayout;
-    private ProgressIndicator loadProgress;
     private Label progressText;
 
     public static void main(String[] args) {
@@ -80,7 +79,7 @@ public class JavaFXApplication extends Application {
                 backgroundSize);
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
-        loadProgress = new ProgressIndicator();
+        ProgressIndicator loadProgress = new ProgressIndicator();
         progressText = new Label(tr("Loading..."));
         progressText.setFont(new Font(12));
         progressText.setPadding(new Insets(20, 5, 10, 5));
