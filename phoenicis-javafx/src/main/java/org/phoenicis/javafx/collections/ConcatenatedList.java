@@ -44,8 +44,9 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
     }
 
     /**
-     * Creates a new {@link ConcatenatedList} concatenating the given prefix values and the given {@link ObservableList
-     * list}
+     * Creates a new {@link ConcatenatedList} concatenating the given prefix values and the given
+     * {@link ObservableList list}. In the created {@link ConcatenatedList} the prefix values are in
+     * front of the {@link ObservableList list}
      *
      * @param list The list
      * @param prefixes The prefix values
@@ -62,7 +63,8 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
 
     /**
      * Creates a new {@link ConcatenatedList} concatenating the given {@link ObservableList list} and the given suffix
-     * values
+     * values. In the created {@link ConcatenatedList} the suffix values are located after the
+     * {@link ObservableList list}
      *
      * @param list The list
      * @param suffixes The suffix values

@@ -48,7 +48,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testListRemove1() {
+    public void testListRemoveFirstList() {
         ObservableList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>> builder()
                         .add(FXCollections.observableArrayList("11"))
@@ -69,7 +69,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testListRemove2() {
+    public void testListRemoveMiddleList() {
         ObservableList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>> builder()
                         .add(FXCollections.observableArrayList("11"))
@@ -90,7 +90,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testListRemove3() {
+    public void testListRemoveLastList() {
         ObservableList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>> builder()
                         .add(FXCollections.observableArrayList("11"))
@@ -111,7 +111,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testListUpdate1() {
+    public void testListUpdateLastList() {
         ObservableList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>> builder()
                         .add(FXCollections.observableArrayList("11"))
@@ -132,7 +132,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testListUpdate2() {
+    public void testListUpdateViaFilteredList() {
         FilteredList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>> builder()
                         .add(FXCollections.observableArrayList("11"))
