@@ -6,9 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.collections.change.InitialisationChange;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -19,6 +17,12 @@ import java.util.stream.IntStream;
  * @param <E> The instance type of the elements in the concatenated lists
  */
 public class ConcatenatedList<E> extends PhoenicisTransformationList<E, ObservableList<E>> {
+    /**
+     * A map linking the created {@link ListChangeListener} instances to their corresponding {@link ObservableList}.
+     * This map is required to allow for the removal of the listener when an {@link ObservableList} is removed
+     */
+    private final Map<ObservableList<E>, ListChangeListener<E>> innerListeners;
+
     /**
      * An internal copy of the source list of lists
      */
@@ -32,6 +36,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
     public ConcatenatedList(ObservableList<? extends ObservableList<E>> source) {
         super(source);
 
+        this.innerListeners = new HashMap<>();
         this.expandedValues = source.stream().map(ArrayList::new).collect(Collectors.toList());
 
         source.forEach(this::addUpdateListener);
@@ -208,15 +213,16 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @Override
     protected void permute(ListChangeListener.Change<? extends ObservableList<E>> change) {
-        int from = change.getFrom();
-        int to = change.getTo();
+        final int from = change.getFrom();
+        final int to = change.getTo();
 
-        int expandedFrom = getFirstIndex(from);
-        int expandedTo = getLastIndexPlusOne(to - 1);
+        final int expandedFrom = getFirstIndex(from);
+        final int expandedTo = getLastIndexPlusOne(to - 1);
 
         if (to > from) {
-            List<E> beforePermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
-            List<List<E>> valuesClone = new ArrayList<>(expandedValues);
+            final List<E> beforePermutation = expandedValues.stream().flatMap(List::stream)
+                    .collect(Collectors.toList());
+            final List<List<E>> valuesClone = new ArrayList<>(expandedValues);
 
             for (int i = from; i < to; ++i) {
                 valuesClone.set(i, expandedValues.get(change.getPermutation(i)));
@@ -225,9 +231,9 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
             this.expandedValues.clear();
             this.expandedValues.addAll(valuesClone);
 
-            List<E> afterPermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
+            final List<E> afterPermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
 
-            int[] perm = beforePermutation.stream()
+            final int[] perm = beforePermutation.stream()
                     .mapToInt(afterPermutation::indexOf).toArray();
 
             nextPermutation(expandedFrom, expandedTo, perm);
@@ -239,44 +245,46 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @Override
     protected void update(ListChangeListener.Change<? extends ObservableList<E>> change) {
-        int from = change.getFrom();
-        int to = change.getTo();
+        final int from = change.getFrom();
+        final int to = change.getTo();
 
-        if (to > from) {
-            for (int i = from; i < to; ++i) {
-                int firstOldIndex = getFirstIndex(i);
+        for (int i = from; i < to; i++) {
+            final ObservableList<E> oldValues = change.getRemoved().get(i - from);
 
-                List<E> oldValues = expandedValues.get(i);
+            // remove the update listener form the old observable list
+            removeUpdateListener(oldValues);
 
-                ObservableList<E> newValues = getSource().get(i);
+            final ObservableList<E> newValues = change.getAddedSubList().get(i - from);
 
-                expandedValues.set(i, new ArrayList<>(newValues));
+            expandedValues.set(i, new ArrayList<>(newValues));
 
-                addUpdateListener(newValues);
+            // add an update listener to the new observable list
+            addUpdateListener(newValues);
 
-                // more values were removed than added
-                if (oldValues.size() > newValues.size()) {
-                    for (int count = 0; count < newValues.size(); count++) {
-                        nextUpdate(firstOldIndex + count);
-                    }
+            final int firstOldIndex = getFirstIndex(i);
 
-                    nextRemove(firstOldIndex, oldValues.subList(newValues.size(), oldValues.size()));
+            // more values were removed than added
+            if (oldValues.size() > newValues.size()) {
+                for (int count = 0; count < newValues.size(); count++) {
+                    nextUpdate(firstOldIndex + count);
                 }
 
-                // more values were added than removed
-                if (oldValues.size() < newValues.size()) {
-                    for (int count = 0; count < oldValues.size(); count++) {
-                        nextUpdate(firstOldIndex + count);
-                    }
+                nextRemove(firstOldIndex, oldValues.subList(newValues.size(), oldValues.size()));
+            }
 
-                    nextAdd(firstOldIndex + oldValues.size(), firstOldIndex + newValues.size());
+            // more values were added than removed
+            if (oldValues.size() < newValues.size()) {
+                for (int count = 0; count < oldValues.size(); count++) {
+                    nextUpdate(firstOldIndex + count);
                 }
 
-                // all old values were replaces
-                if (oldValues.size() == newValues.size()) {
-                    for (int count = 0; count < oldValues.size(); count++) {
-                        nextUpdate(firstOldIndex + count);
-                    }
+                nextAdd(firstOldIndex + oldValues.size(), firstOldIndex + newValues.size());
+            }
+
+            // all old values were replaces
+            if (oldValues.size() == newValues.size()) {
+                for (int count = 0; count < oldValues.size(); count++) {
+                    nextUpdate(firstOldIndex + count);
                 }
             }
         }
@@ -287,22 +295,32 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      */
     @Override
     protected void addRemove(ListChangeListener.Change<? extends ObservableList<E>> change) {
-        int from = change.getFrom();
+        final int from = change.getFrom();
 
-        for (int index = from + change.getRemovedSize() - 1; index >= from; index--) {
-            int firstOldIndex = getFirstIndex(index);
+        for (int removedIndex = change.getRemovedSize() - 1; removedIndex >= 0; removedIndex--) {
+            final int index = from + removedIndex;
+
+            final ObservableList<E> oldValues = change.getRemoved().get(removedIndex);
+
+            // remove the update listener form the old observable list
+            removeUpdateListener(oldValues);
+
+            final int firstOldIndex = getFirstIndex(index);
 
             nextRemove(firstOldIndex, expandedValues.remove(index));
         }
 
-        for (int index = from; index < from + change.getAddedSize(); index++) {
-            int lastOldIndex = getLastIndexPlusOne(index - 1);
+        for (int addedIndex = 0; addedIndex < change.getAddedSize(); addedIndex++) {
+            final int index = from + addedIndex;
 
-            ObservableList<E> newValues = getSource().get(index);
+            final ObservableList<E> newValues = change.getAddedSubList().get(addedIndex);
 
             expandedValues.add(index, new ArrayList<>(newValues));
 
+            // add an update listener to the new observable list
             addUpdateListener(newValues);
+
+            final int lastOldIndex = getLastIndexPlusOne(index - 1);
 
             nextAdd(lastOldIndex, lastOldIndex + newValues.size());
         }
@@ -315,37 +333,46 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * @param innerList The {@link ObservableList} to which the {@link ListChangeListener} is added
      */
     private void addUpdateListener(final ObservableList<E> innerList) {
-        innerList.addListener((ListChangeListener.Change<? extends E> change) -> {
-            ObservableList<? extends E> activatorList = change.getList();
+        final ListChangeListener<E> innerListener = (ListChangeListener.Change<? extends E> change) -> {
+            final ObservableList<? extends E> activatorList = change.getList();
 
             beginChange();
             while (change.next()) {
                 final int activatorListIndex = getSource().indexOf(innerList);
 
+                expandedValues.set(activatorListIndex, new ArrayList<>(activatorList));
+
+                final int expandedFrom = getFirstIndex(activatorListIndex);
+
                 if (change.wasPermutated()) {
-                    int expandedFrom = getFirstIndex(activatorListIndex);
-
-                    expandedValues.set(activatorListIndex, new ArrayList<>(activatorList));
-
                     nextPermutation(expandedFrom + change.getFrom(), expandedFrom + change.getTo(),
                             IntStream.range(change.getFrom(), change.getTo()).map(change::getPermutation).toArray());
                 } else if (change.wasUpdated()) {
-                    int expandedFrom = getFirstIndex(activatorListIndex);
-
-                    expandedValues.set(activatorListIndex, new ArrayList<>(activatorList));
-
                     IntStream.range(expandedFrom + change.getFrom(), expandedFrom + change.getTo())
                             .forEach(this::nextUpdate);
                 } else {
-                    int expandedFrom = getFirstIndex(activatorListIndex);
-
-                    expandedValues.set(activatorListIndex, new ArrayList<>(activatorList));
-
                     nextRemove(expandedFrom + change.getFrom(), change.getRemoved());
                     nextAdd(expandedFrom + change.getFrom(), expandedFrom + change.getFrom() + change.getAddedSize());
                 }
             }
             endChange();
-        });
+        };
+
+        innerListeners.put(innerList, innerListener);
+
+        innerList.addListener(innerListener);
+    }
+
+    /**
+     * Removes the {@link ListChangeListener} from the given {@link ObservableList innerList}
+     *
+     * @param innerList The {@link ObservableList} from which the {@link ListChangeListener} should be removed
+     */
+    private void removeUpdateListener(final ObservableList<E> innerList) {
+        final ListChangeListener<E> innerListener = innerListeners.get(innerList);
+
+        innerList.removeListener(innerListener);
+
+        innerListeners.remove(innerList);
     }
 }
