@@ -34,7 +34,7 @@ fi
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
 PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
-PHOENICIS_MODULES="java.base,javafx.base,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql"
+PHOENICIS_MODULES="java.base,javafx.base,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn"
 PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION")
 
 
@@ -62,6 +62,7 @@ fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     jpackager create-image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"  --linux-bundle-name "phoenicis-playonlinux"
+
     packageName="Phoenicis_$VERSION"
     cd "$PHOENICIS_TARGET"
     rmdir packages/PhoenicisPlayOnLinux/

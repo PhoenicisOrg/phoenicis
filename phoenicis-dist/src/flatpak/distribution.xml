@@ -31,8 +31,8 @@
             <includes>
                 <include>phoenicis_*.png</include>
                 <include>ld.so.conf</include>
-                <include>org.phoenicis.javafx.desktop</include>
-                <include>org.phoenicis.javafx.appdata.xml</include>
+                <include>org.phoenicis.playonlinux.desktop</include>
+                <include>org.phoenicis.playonlinux.appdata.xml</include>
             </includes>
 			<outputDirectory></outputDirectory>
         </fileSet>

@@ -1,5 +1,5 @@
 {
-  "app-id": "org.phoenicis.javafx",
+  "app-id": "org.phoenicis.playonlinux",
   "runtime": "org.freedesktop.Platform",
   "runtime-version": "18.08",
   "sdk": "org.freedesktop.Sdk",
@@ -29,7 +29,7 @@
       "enable-if": "active-gl-driver"
     }
   },
-  "command": "phoenicis-javafx",
+  "command": "phoenicis-playonlinux",
   "finish-args": [
     "--filesystem=home",
     "--allow=multiarch",
@@ -61,16 +61,16 @@
       ]
     },
     {
-      "name": "javafx",
+      "name": "playonlinux",
       "buildsystem": "simple",
       "build-commands": [
-        "install -D phoenicis-javafx /app/bin/phoenicis-javafx",
+        "install -D phoenicis-playonlinux /app/bin/phoenicis-playonlinux",
         "mkdir -p /app/phoenicis/lib",
         "cp -r phoenicis-flatpak/lib/* /app/phoenicis/lib",
         "chmod 755 -R /app/phoenicis",
-        "install -Dm644 phoenicis-flatpak/org.phoenicis.javafx.appdata.xml /app/share/appdata/org.phoenicis.javafx.appdata.xml",
-        "install -Dm644 phoenicis-flatpak/org.phoenicis.javafx.desktop /app/share/applications/org.phoenicis.javafx.desktop",
-        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis-flatpak/phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.javafx.png; done"
+        "install -Dm644 phoenicis-flatpak/org.phoenicis.playonlinux.appdata.xml /app/share/appdata/org.phoenicis.playonlinux.appdata.xml",
+        "install -Dm644 phoenicis-flatpak/org.phoenicis.playonlinux.desktop /app/share/applications/org.phoenicis.playonlinux.desktop",
+        "for icon_size in 16 22 24 32 48 64 256; do install -d /app/share/icons/hicolor/${icon_size}x${icon_size}/apps; install -m644 phoenicis-flatpak/phoenicis_${icon_size}.png /app/share/icons/hicolor/${icon_size}x${icon_size}/apps/org.phoenicis.playonlinux.png; done"
       ],
       "sources": [
         {
@@ -80,18 +80,18 @@
         },
         {
           "type": "script",
-          "dest-filename": "phoenicis-javafx",
+          "dest-filename": "phoenicis-playonlinux",
           "commands": [
             "/app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=ALL-MODULE-PATH org.phoenicis.javafx.JavaFXApplication \"$@\""
           ]
         },
         {
           "type": "file",
-          "path": "org.phoenicis.javafx.appdata.xml"
+          "path": "org.phoenicis.playonlinux.appdata.xml"
         },
         {
           "type": "file",
-          "path": "org.phoenicis.javafx.desktop"
+          "path": "org.phoenicis.playonlinux.desktop"
         },
         {
             "type": "file",

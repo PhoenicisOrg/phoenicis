@@ -1,12 +1,12 @@
 [Desktop Entry]
-Name=Phoenicis JavaFX
-Comment=Front-end for Wine
-Exec=phoenicis-javafx %U
+Name=Phoenicis PlayOnLinux
+Comment=Graphical front-end for Wine
+Exec=phoenicis-playonlinux %U
 StartupNotify=true
 Terminal=false
 Type=Application
 MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
-Icon=org.phoenicis.javafx
+Icon=org.phoenicis.playonlinux
 Categories=Utility
 Keywords=Phoenicis;PlayOnLinux;Wine;
 
