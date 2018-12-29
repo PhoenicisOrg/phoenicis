@@ -26,13 +26,10 @@ import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
@@ -56,8 +53,8 @@ public class JavaFXApplication extends Application {
 
     private double splashWidth;
     private double splashHeight;
-    private Pane splashLayout;
-    private ProgressBar loadProgress;
+    private VBox splashLayout;
+    private ProgressIndicator loadProgress;
     private Label progressText;
 
     public static void main(String[] args) {
@@ -77,17 +74,22 @@ public class JavaFXApplication extends Application {
         splashWidth = Screen.getPrimary().getBounds().getWidth() / 3;
         splashHeight = splashWidth * (1 / splashImageAspectRatio);
 
-        final ImageView splash = new ImageView(splashImage);
-        splash.setFitWidth(splashWidth);
-        splash.setFitHeight(splashHeight);
-        loadProgress = new ProgressBar();
-        loadProgress.setPrefWidth(splashWidth);
-        progressText = new Label(tr("Loading ..."));
+        BackgroundSize backgroundSize = new BackgroundSize(splashWidth, splashHeight, false, false, true, true);
+        BackgroundImage backgroundImage = new BackgroundImage(splashImage, BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                backgroundSize);
+        Region spacer = new Region();
+        VBox.setVgrow(spacer, Priority.ALWAYS);
+        loadProgress = new ProgressIndicator();
+        progressText = new Label(tr("Loading..."));
         progressText.setFont(new Font(12));
-        progressText.setPadding(new Insets(5, 5, 5, 5));
+        progressText.setPadding(new Insets(20, 5, 10, 5));
         progressText.setBackground(Background.EMPTY);
-        splashLayout = new VBox(splash, loadProgress, progressText);
         progressText.setAlignment(Pos.CENTER);
+        splashLayout = new VBox(spacer, loadProgress, progressText);
+        splashLayout.setPrefSize(splashWidth, splashHeight);
+        splashLayout.setAlignment(Pos.CENTER);
+        splashLayout.setBackground(new Background(backgroundImage));
         splashLayout.setEffect(new DropShadow());
     }
 
@@ -148,11 +150,8 @@ public class JavaFXApplication extends Application {
      */
     private void showSplash(final Stage initStage, Task<?> task, InitCompletionHandler initCompletionHandler) {
         progressText.textProperty().bind(task.messageProperty());
-        loadProgress.progressProperty().bind(task.progressProperty());
         task.stateProperty().addListener((observableValue, oldState, newState) -> {
             if (newState == Worker.State.SUCCEEDED) {
-                loadProgress.progressProperty().unbind();
-                loadProgress.setProgress(1);
                 initStage.toFront();
                 initStage.close();
 
