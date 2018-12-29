@@ -89,6 +89,8 @@ EOF
     mkdir -p $packageName/usr/share/pixmaps
 
     cp -a packages/phoenicis $packageName/usr/share/
+    cp -a "$SCRIPT_PATH/../bin/phoenicis" $packageName/usr/bin
+    chmod +x $packageName/usr/bin/phoenicis
 
     cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "$packageName/usr/share/applications"
     cp "$SCRIPT_PATH/../resources/phoenicis.png" "$packageName/usr/share/pixmaps"
