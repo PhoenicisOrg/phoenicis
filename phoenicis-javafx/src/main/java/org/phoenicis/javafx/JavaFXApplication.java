@@ -110,12 +110,12 @@ public class JavaFXApplication extends Application {
                         "views/common/roboto/Roboto-Light.ttf",
                         "views/common/roboto/Roboto-Bold.ttf");
 
-                updateMessage(tr("Loading fonts ..."));
-                LOGGER.debug("Loading fonts ...");
+                updateMessage(tr("Loading fonts..."));
+                LOGGER.debug("Loading fonts...");
                 for (int i = 0; i < requiredFonts.size(); i++) {
                     Font.loadFont(getClass().getResource(requiredFonts.get(i)).toExternalForm(), 12);
-                    updateMessage(tr("Loading font {0} of {1} ...", i + 1, requiredFonts.size()));
-                    LOGGER.debug(String.format("Loading font %s ...", requiredFonts.get(i)));
+                    updateMessage(tr("Loading font {0} of {1}...", i + 1, requiredFonts.size()));
+                    LOGGER.debug(String.format("Loading font %s...", requiredFonts.get(i)));
                 }
                 updateProgress(loadStep, numLoadSteps);
                 updateMessage(tr("All fonts loaded"));
@@ -123,8 +123,8 @@ public class JavaFXApplication extends Application {
 
                 // load repository
                 loadStep++;
-                updateMessage(tr("Loading repository ..."));
-                LOGGER.debug("Loading repository ...");
+                updateMessage(tr("Loading repository..."));
+                LOGGER.debug("Loading repository...");
                 ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
                         AppConfigurationNoUi.class);
                 RepositoryManager repositoryManager = applicationContext.getBean(RepositoryManager.class);
