@@ -43,13 +43,15 @@
         <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
     </scm>
     <properties>
+        <maven.compiler.source>1.10</maven.compiler.source>
+        <maven.compiler.target>1.10</maven.compiler.target>
         <phoenicis.version>${project.version}</phoenicis.version>
         <project.root>${project.basedir}</project.root>
         <project.settings>${project.root}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <surefire.version>3.0.0-M2</surefire.version>
+        <surefire.version>3.0.0-M3</surefire.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
         <mockito.version>2.23.4</mockito.version>
@@ -235,100 +237,25 @@
                     </replacements>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <release>10</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${surefire.version}</version>
+                <configuration>
+                    <forkCount>0</forkCount>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <profiles>
-        <profile>
-            <id>jdk11</id>
-            <activation>
-                <jdk>11</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.0</version>
-                        <configuration>
-                            <release>11</release>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <forkCount>0</forkCount>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <maven.compiler.source>1.11</maven.compiler.source>
-                <maven.compiler.target>1.11</maven.compiler.target>
-            </properties>
-        </profile>
-        <profile>
-            <id>jdk10</id>
-            <activation>
-                <jdk>10</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.0</version>
-                        <configuration>
-                            <release>10</release>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                        <configuration>
-                            <forkCount>0</forkCount>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <maven.compiler.source>1.10</maven.compiler.source>
-                <maven.compiler.target>1.10</maven.compiler.target>
-            </properties>
-        </profile>
-        <profile>
-            <id>jdk8</id>
-            <activation>
-                <jdk>1.8</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <version>3.8.0</version>
-                        <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
-                            <excludes>
-                                <exclude>module-info.java</exclude>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>${surefire.version}</version>
-                    </plugin>
-                </plugins>
-            </build>
-            <properties>
-                <maven.compiler.source>1.8</maven.compiler.source>
-                <maven.compiler.target>1.8</maven.compiler.target>
-            </properties>
-        </profile>
         <profile>
             <id>check-formatted</id>
             <activation>
