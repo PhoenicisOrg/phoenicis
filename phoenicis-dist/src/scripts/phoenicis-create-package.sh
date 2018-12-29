@@ -67,7 +67,7 @@ if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     rmdir packages/PhoenicisPlayOnLinux/
     mv packages/Phoenicis\ PlayOnLinux/ packages/phoenicis
     rm -rf deb
-    mkdir -p deb/
+    mkdir -p deb/DEBIAN/
 
     cat << EOF > deb/DEBIAN/control
 Package: phoenicis-playonlinux
