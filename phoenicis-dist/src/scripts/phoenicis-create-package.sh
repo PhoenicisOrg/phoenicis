@@ -65,6 +65,7 @@ if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
 
     cd "$PHOENICIS_TARGET"
     rmdir packages/PhoenicisPlayOnLinux/
+    rm -rf packages/phoenicis
     mv packages/Phoenicis\ PlayOnLinux/ packages/phoenicis
     rm -rf deb
     mkdir -p deb/DEBIAN/
