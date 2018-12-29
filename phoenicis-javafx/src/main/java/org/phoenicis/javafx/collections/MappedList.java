@@ -13,29 +13,51 @@ import java.util.function.Function;
 import java.util.stream.IntStream;
 
 /**
- * Created by marc on 01.04.17.
+ * An implementation of a mapped {@link ObservableList}, which maps the values of the source {@link ObservableList} into
+ * values of the target type {@link E}.
+ *
+ * @param <E> The instance type of the target elements
+ * @param <F> The instance type of the source elements
  */
 public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
+    /**
+     * The mapper function used to map the source values to the target type {@link E}.
+     * If the mapper function is set to <code>null</code> the list acts as if it were empty
+     */
     private final ObjectProperty<Function<? super F, ? extends E>> mapper;
 
+    /**
+     * A list of all mapped values
+     */
     private final List<E> mappedValues;
 
+    /**
+     * Constructor
+     *
+     * @param source The source list
+     * @param mapper The mapper function
+     */
     public MappedList(ObservableList<? extends F> source, ObjectProperty<Function<? super F, ? extends E>> mapper) {
         super(source);
 
         this.mapper = mapper;
         this.mappedValues = new ArrayList<>();
 
-        Optional.ofNullable(mapper.getValue())
+        // create a cache of all mapped source elements
+        Optional.ofNullable(getMapper())
                 .ifPresent(mapperFunction -> source.stream().map(mapperFunction).forEach(mappedValues::add));
 
+        // add a listener to detect changes of the mapper function
         mapper.addListener((observable, oldMapper, newMapper) -> {
             beginChange();
+            // the mapper function has been set to null
             if (oldMapper != null && newMapper == null) {
                 mappedValues.clear();
 
                 nextRemove(0, mappedValues);
             }
+
+            // the mapper function has been set from null to another value
             if (oldMapper == null && newMapper != null) {
                 for (F element : getSource()) {
                     mappedValues.add(newMapper.apply(element));
@@ -43,6 +65,8 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
 
                 nextAdd(0, size());
             }
+
+            // the mapper function has been changed (from not null to not null)
             if (oldMapper != null && newMapper != null) {
                 mappedValues.clear();
 
@@ -57,17 +81,32 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
             endChange();
         });
 
+        // fire an initialisation event containing all mapped elements
         fireChange(new InitialisationChange<>(0, size(), this));
     }
 
+    /**
+     * Constructor
+     *
+     * @param source The source list
+     * @param mapper The mapper function
+     */
     public MappedList(ObservableList<? extends F> source, Function<? super F, ? extends E> mapper) {
         this(source, new SimpleObjectProperty<>(mapper));
     }
 
+    /**
+     * Constructor
+     *
+     * @param source The source list
+     */
     public MappedList(ObservableList<? extends F> source) {
         this(source, new SimpleObjectProperty<>());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getSourceIndex(int index) {
         if (index >= size()) {
@@ -92,6 +131,9 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         return index;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public E get(int index) {
         if (index >= size()) {
@@ -101,12 +143,21 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         return mappedValues.get(index);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * If no mapper function is set, the size of this list is always <code>0</code>, otherwise it equals
+     * the size of the source list
+     */
     @Override
     public int size() {
         return Optional.ofNullable(getMapper())
                 .map(mapper -> getSource().size()).orElse(0);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void permute(Change<? extends F> c) {
         final int from = c.getFrom();
@@ -125,6 +176,9 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void update(Change<? extends F> c) {
         final int from = c.getFrom();
@@ -141,6 +195,9 @@ public class MappedList<E, F> extends PhoenicisTransformationList<E, F> {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void addRemove(Change<? extends F> c) {
         final int from = c.getFrom();
