@@ -87,6 +87,7 @@ EOF
 
     mkdir -p $packageName/usr/share/applications
     mkdir -p $packageName/usr/share/pixmaps
+    mkdir -p $packageName/usr/bin
 
     cp -a packages/phoenicis $packageName/usr/share/
     cp -a "$SCRIPT_PATH/../launchers/phoenicis" $packageName/usr/bin/phoenicis
