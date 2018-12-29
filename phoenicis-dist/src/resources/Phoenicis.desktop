@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Phoenicis
+GenericName=Game
+Comment=Phoenicis
+Type=Application
+Exec=phoenicis %F
+Icon=phoenicis
+Categories=Game;
