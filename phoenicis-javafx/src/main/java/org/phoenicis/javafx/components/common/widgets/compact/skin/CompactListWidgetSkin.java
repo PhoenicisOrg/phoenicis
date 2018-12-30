@@ -8,6 +8,7 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
+import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
@@ -100,7 +101,10 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         Optional.ofNullable(oldSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
             final int oldValueIndex = getControl().getElements().indexOf(selection);
 
-            container.getSelectionModel().clearSelection(oldValueIndex);
+            // In some corner cases (category / filter changes, the current selection can disappear)
+            if (oldValueIndex != -1) {
+                container.getSelectionModel().clearSelection(oldValueIndex);
+            }
         });
     }
 

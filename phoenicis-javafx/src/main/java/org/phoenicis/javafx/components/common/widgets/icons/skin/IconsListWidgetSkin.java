@@ -98,6 +98,7 @@ public class IconsListWidgetSkin<E> extends SkinBase<IconsListWidget<E>, IconsLi
         Optional.ofNullable(oldSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
             final int oldValueIndex = getControl().getElements().indexOf(selection);
 
+            // In some corner cases (category / filter changes, the current selection can disappear)
             if (mappedElements.size() > oldValueIndex && oldValueIndex != -1) {
                 IconsListElement<E> oldElement = mappedElements.get(oldValueIndex);
 
