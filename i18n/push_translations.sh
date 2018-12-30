@@ -22,9 +22,14 @@ if [[ $TRAVIS_BRANCH != master ]]; then
     exit 1
 fi
 git checkout master
-git add *.pot
-git commit --message "Update translations"
-if ! git push https://$GH_TOKEN@github.com/PhoenicisOrg/phoenicis.git > /dev/null 2>&1; then
-    echo "could not push translation updates"
-    exit 1
+
+# check if anything except "POT creation date" has changed
+git diff --numstat i18n/keys.pot |  awk '{ if($1 == 1 && $2 == 1) { exit 1 } else exit 0 }'
+if [ $? == 0 ];  then
+    git add *.pot
+    git commit --message "Update translations"
+    if ! git push https://$GH_TOKEN@github.com/PhoenicisOrg/phoenicis.git > /dev/null 2>&1; then
+        echo "could not push translation updates"
+        exit 1
+    fi
 fi
