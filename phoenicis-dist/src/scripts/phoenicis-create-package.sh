@@ -38,7 +38,6 @@ PHOENICIS_JVM_ARGS="-Xint -XX:+UseG1GC -XX:MaxHeapFreeRatio=10 -XX:MinHeapFreeRa
 PHOENICIS_MODULES="java.base,javafx.base,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn"
 PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--jvm-args" "$PHOENICIS_JVM_ARGS" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION")
 
-
 _download_jpackager() {
     mkdir -p "$PHOENICIS_JPACKAGER"
     cd "$PHOENICIS_JPACKAGER"
