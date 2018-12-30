@@ -100,7 +100,7 @@ public class EnginesController {
 
                         // invalidate cache and force view update to show installed version correctly
                         this.versionsCache.remove(engineDTO.getId());
-                        Platform.runLater(this::forceViewUpdate);
+                        this.forceViewUpdate();
                     }, e -> Platform.runLater(() -> {
                         final ErrorDialog errorDialog = ErrorDialog.builder()
                                 .withMessage(tr("Error"))
@@ -126,7 +126,7 @@ public class EnginesController {
 
                         // invalidate cache and force view update to show deleted version correctly
                         this.versionsCache.remove(engineDTO.getId());
-                        Platform.runLater(this::forceViewUpdate);
+                        this.forceViewUpdate();
                     }, e -> Platform.runLater(() -> {
                         final ErrorDialog errorDialog = ErrorDialog.builder()
                                 .withMessage(tr("Error"))
@@ -146,7 +146,7 @@ public class EnginesController {
                 this.repositoryManager.addCallbacks(
                         repositoryDTO -> this.enginesManager.fetchAvailableEngines(
                                 repositoryDTO,
-                                engines -> Platform.runLater(() -> this.populateView(repositoryDTO, engines)),
+                                engines -> this.populateView(repositoryDTO, engines),
                                 e -> Platform.runLater(
                                         () -> enginesView.showFailure(tr("Loading engines failed."), Optional.of(e)))),
                         e -> Platform.runLater(
@@ -168,7 +168,7 @@ public class EnginesController {
         this.enginesCache = engines;
 
         // show a waiting screen until the engines are loaded
-        enginesView.showWait();
+        Platform.runLater(enginesView::showWait);
 
         // fetch all categories consisting of engines that are contained in the repository
         final List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().stream()
