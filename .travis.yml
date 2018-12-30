@@ -94,6 +94,7 @@ env:
   # to create secure for travis-ci.com
   # 1. create personal access token with public_repo permissions
   # 2. clone this repo (not a fork)
-  # 3. run in the clone: travis encrypt GH_TOKEN="<access_token>" --pro (GH_TOKEN is the variable which is used e.g. in push_translations.sh)
-  # 4. set output below
+  # 3. install travis gem (https://github.com/travis-ci/travis.rb)
+  # 4. run in the clone: travis encrypt GH_TOKEN="<access_token>" --pro (GH_TOKEN is the variable which is used e.g. in push_translations.sh)
+  # 5. set output below
   - secure: "NNFWW2gm1hzMI2vLr8b7EuRz8u+eSk5FGoXDq0UZbdnmcnb/8Isx2sd8j73VSRN4LvRAnqFnZUuouFjVBeX+T8eUv4qL1z8QBz4nqS1ZrbYEwVFKEv/87RB7FfpvA+nqEzJv0Nq9jFLmkgBw2pji5xNkL23RABxm4kFO9zJRrlrWNJCAFxNI2Tzrw8RWuFuG49eH16BPOZfECcMzP16rBcpr0YZjcZ/p+yjUaz+IaOinQyHs/p45oPVF3XxSVLOODVsaVw7kxZxXZRCDz60ssCefTt6XlgR5J5blo6QGX1Y3bks25A2Jeivax+Lv2J5zrOBV8TgDDyj6+XP2HyxM91A7LFnOvA/iXjDZUgh8jGGmBnCpESq8b+Llymhy1i9nfGAAQYedq2/zNaiETOr+vakcgbITk1sPb9YxydB0RIyjnRnlwjxAjWTckxZCWQbFieODYBsGBZN8X9k/4iHsMkIHpEJ41BPGapOxjolIHD8sAqA3XlT0hR1nKjTUM08c/9JHyCZ1BAyiFvbsD/gT9oYFwhe/Im57N/WBBiXzkiElmJ3RogUyFuapKYuwOvCQvgpSP2weDgO0k9Q+Y1g4VH5I5aViR+G44kf4P7Dn2RvvI1n6mLDs9bki94WYWNBMwhRM+cmcrYCtW/dszSIr5W5ZzH0jHd/9VxiLV44mL7k="
