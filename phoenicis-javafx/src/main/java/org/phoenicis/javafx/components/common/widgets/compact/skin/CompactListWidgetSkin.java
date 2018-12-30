@@ -8,7 +8,6 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
-import org.phoenicis.javafx.components.common.widgets.icons.control.IconsListElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 
