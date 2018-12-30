@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 21:12+0000\n"
-"PO-Revision-Date: 2018-12-30 21:41\n"
+"PO-Revision-Date: 2018-12-30 21:51\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -131,11 +131,11 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:81
 msgid "File Associations"
-msgstr ""
+msgstr "Bestands associaties"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:82
 msgid "Network"
-msgstr ""
+msgstr "Netwerk"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:84
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:62
@@ -218,12 +218,12 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:53
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
 msgid "Name:"
-msgstr ""
+msgstr "Naam:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:59
 msgid "Version:"
-msgstr ""
+msgstr "Versie:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:75
 msgid "Git Revision:"
@@ -333,7 +333,7 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:101
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:84
 msgid "Categories"
-msgstr ""
+msgstr "Categorieën"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:101
 msgid "Testing"
@@ -414,7 +414,7 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
 msgid "Images"
-msgstr ""
+msgstr "Afbeeldingen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:79
 msgid "Please specify a name!"
@@ -422,7 +422,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:82
 msgid "Category:"
-msgstr ""
+msgstr "Categorie:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:90
 msgid "Please specify a category!"
@@ -430,7 +430,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:93
 msgid "Description:"
-msgstr ""
+msgstr "Beschrijving:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:131
 msgid "Please specify a valid miniature!"
@@ -450,7 +450,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:65
 msgid "Installations"
-msgstr ""
+msgstr "Installaties"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
@@ -483,7 +483,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:80
 msgid "Loading engine settings failed."
-msgstr ""
+msgstr "Engine-instellingen laden mislukt."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:92
 msgid "Loading Verbs failed."
@@ -492,17 +492,17 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:104
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:213
 msgid "Loading engine tools failed."
-msgstr ""
+msgstr "Engine-gereedschap laden mislukt."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:135
 #, java-format
 msgid "Delete {0} container"
-msgstr ""
+msgstr "Verwijder {0} container"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:136
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
-msgstr ""
+msgstr "Weet u zeker dat u deze {0} container wilt verwijderen?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:168
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:180
@@ -512,12 +512,12 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:204
 msgid "Loading containers failed."
-msgstr ""
+msgstr "Containers laden mislukt."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:98
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
-msgstr ""
+msgstr "Weet u zeker dat u alle vensters van {0} wilt afsluiten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:54
 msgid "Connecting to the repository failed.\n"
@@ -526,17 +526,17 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:96
 msgid "The script ended unexpectedly"
-msgstr ""
+msgstr "Het script werd onverwacht beëindigd"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:89
 #, java-format
 msgid "Uninstall {0}"
-msgstr ""
+msgstr "Deïnstalleren {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:90
 #, java-format
 msgid "Are you sure you want to uninstall {0}?"
-msgstr ""
+msgstr "Weet u zeker dat u {0} wilt deïnstalleren?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:95
 #, java-format
@@ -545,32 +545,32 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:116
 msgid "Error while running script"
-msgstr ""
+msgstr "Fout tijdens het uitvoeren van script"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:166
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:167
 msgid "Error while creating shortcut"
-msgstr ""
+msgstr "Fout tijdens het aanmaken van de snelkoppeling"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
 msgid "Install {0}"
-msgstr ""
+msgstr "{0} installeren"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:95
 #, java-format
 msgid "Are you sure you want to install {0}?"
-msgstr ""
+msgstr "Weet u zeker dat u {0} wilt installeren?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:120
 #, java-format
 msgid "Delete {0}"
-msgstr ""
+msgstr "{0} verwijderen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:121
 #, java-format
 msgid "Are you sure you want to delete {0}?"
-msgstr ""
+msgstr "Weet u zeker dat u {0} wilt verwijderen?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:151
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:153
@@ -582,7 +582,7 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:32
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
