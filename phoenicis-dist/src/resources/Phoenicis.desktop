@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
 Encoding=UTF-8
-Name=Phoenicis
-GenericName=Game
+Name=Phoenicis PlayOnLinux
+GenericName=Game;Utility
 Comment=Phoenicis
 Type=Application
 Exec=phoenicis %F

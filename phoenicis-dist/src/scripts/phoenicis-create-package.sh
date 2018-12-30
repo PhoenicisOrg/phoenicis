@@ -102,5 +102,3 @@ EOF
     fakeroot dpkg-deb --build "$packageName"
     rm -rf deb
 fi
-
-
