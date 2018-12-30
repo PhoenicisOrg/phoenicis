@@ -101,7 +101,7 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
             final int oldValueIndex = getControl().getElements().indexOf(selection);
 
             // In some corner cases (category / filter changes, the current selection can disappear)
-            if (oldValueIndex != -1) {
+            if (mappedElements.size() > oldValueIndex && oldValueIndex != -1) {
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }
         });

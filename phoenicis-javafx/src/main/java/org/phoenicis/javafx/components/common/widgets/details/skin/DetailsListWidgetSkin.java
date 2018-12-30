@@ -101,7 +101,7 @@ public class DetailsListWidgetSkin<E> extends SkinBase<DetailsListWidget<E>, Det
             final int oldValueIndex = getControl().getElements().indexOf(selection);
 
             // In some corner cases (category / filter changes, the current selection can disappear)
-            if (oldValueIndex != -1) {
+            if (mappedElements.size() > oldValueIndex && oldValueIndex != -1) {
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }
         });
