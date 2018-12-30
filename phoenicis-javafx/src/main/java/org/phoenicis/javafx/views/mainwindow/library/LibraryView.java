@@ -215,7 +215,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     public void createNewTab(Tab tab) {
         this.libraryTabs.getTabs().add(tab);
         this.libraryTabs.getSelectionModel().select(tab);
-        if(this.onTabOpened != null) {
+        if (this.onTabOpened != null) {
             this.onTabOpened.run();
         }
     }
