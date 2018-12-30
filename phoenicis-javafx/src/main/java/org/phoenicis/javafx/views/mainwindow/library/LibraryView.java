@@ -209,7 +209,9 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     public void createNewTab(Tab tab) {
         libraryTabs.getTabs().add(tab);
         libraryTabs.getSelectionModel().select(tab);
-        onTabOpened.run();
+        if (onTabOpened != null) {
+             onTabOpened.run();
+         }
     }
 
     public void setOnTabOpened(Runnable onTabOpened) {
