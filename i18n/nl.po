@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 21:12+0000\n"
-"PO-Revision-Date: 2018-12-30 21:21\n"
+"PO-Revision-Date: 2018-12-30 21:41\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -37,7 +37,7 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
 msgid "Error"
-msgstr ""
+msgstr "Fout"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Standard theme"
@@ -45,19 +45,19 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:14
 msgid "Dark theme"
-msgstr ""
+msgstr "Donkere thema"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:15
 msgid "Breeze Dark theme"
-msgstr ""
+msgstr "Donkere thema Breeze"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:17
 msgid "Unity theme"
-msgstr ""
+msgstr "Unity thema"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:19
 msgid "Mint-X theme"
-msgstr ""
+msgstr "Mint-X thema"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
 msgid "Click or drag-and-drop file here"
@@ -98,7 +98,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:134
 msgid "Add"
-msgstr ""
+msgstr "Toevoegen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:151
 msgid "Remove"
@@ -119,11 +119,11 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsSidebar.java:45
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:49
 msgid "Settings"
-msgstr ""
+msgstr "Instellingen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:76
 msgid "User Interface"
-msgstr ""
+msgstr "Gebruikersinterface"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:79
 msgid "Repositories"
