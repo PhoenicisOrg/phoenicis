@@ -14,6 +14,15 @@ jobs:
       install: true
       script: mvn -Pcheck-formatted validate formatter:validate
 
+    # Update translations
+    - stage: Basics
+      name: Update translations
+      install: true
+      script: mvn -Pupdate-translations validate
+      after_success:
+        # push translation updates only for master (PR changes must be committed to master before they are taken into account)
+        - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./i18n/push_translations.sh; fi
+
     # build + test
     - stage: Build + test
       name: Linux OpenJDK 10
