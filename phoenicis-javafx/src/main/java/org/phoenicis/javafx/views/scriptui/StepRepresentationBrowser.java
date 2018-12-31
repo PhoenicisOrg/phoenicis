@@ -31,7 +31,7 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     private final Message<?> messageWaitingForResponse;
 
     public StepRepresentationBrowser(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,
-                                     String textToShow) {
+            String textToShow) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
     }
@@ -57,11 +57,12 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     public void waitForUrl(String urlMatch) {
         final Semaphore lock = new Semaphore(0);
 
-        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty().addListener(((observableValue, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED && urlMatches(getCurrentUrl(), urlMatch)) {
-                lock.release();
-            }
-        })));
+        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty()
+                .addListener(((observableValue, oldState, newState) -> {
+                    if (newState == Worker.State.SUCCEEDED && urlMatches(getCurrentUrl(), urlMatch)) {
+                        lock.release();
+                    }
+                })));
 
         try {
             lock.acquire();
@@ -87,11 +88,12 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     public void waitForBeingLoaded() {
         final Semaphore lock = new Semaphore(0);
 
-        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty().addListener(((observableValue, oldState, newState) -> {
-            if (newState == Worker.State.SUCCEEDED) {
-                lock.release();
-            }
-        })));
+        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty()
+                .addListener(((observableValue, oldState, newState) -> {
+                    if (newState == Worker.State.SUCCEEDED) {
+                        lock.release();
+                    }
+                })));
 
         try {
             lock.acquire();
