@@ -30,12 +30,12 @@ public class MultithreadingConfiguration {
 
     @Bean
     public ControlledThreadPoolExecutorService appsExecutorService() {
-        return new ControlledThreadPoolExecutorService("Apps", 1, 1);
+        return new ControlledThreadPoolExecutorService("Apps", 2, 1);
     }
 
     @Bean
     public ControlledThreadPoolExecutorService containersExecutorService() {
-        return new ControlledThreadPoolExecutorService("Containers", 1, 5);
+        return new ControlledThreadPoolExecutorService("Containers", 2, 5);
     }
 
     @Bean
