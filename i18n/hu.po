@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 21:12+0000\n"
-"PO-Revision-Date: 2018-12-30 21:21\n"
+"PO-Revision-Date: 2018-12-31 13:51\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -41,7 +41,7 @@ msgstr "Hiba"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Standard theme"
-msgstr ""
+msgstr "Szabványos téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:14
 msgid "Dark theme"
@@ -196,11 +196,11 @@ msgstr "Adattárolók típus:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
 msgid "Choose repository type..."
-msgstr ""
+msgstr "Adattároló típus választás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
 msgid "Choose Directory..."
-msgstr ""
+msgstr "Könyvtárválasztás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
 msgid "Choose the location of the local repository"
@@ -278,7 +278,7 @@ msgstr "Tartály eltávolítása"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:118
 msgid "Open in file browser"
-msgstr ""
+msgstr "Megnyitás fájlkezelőben"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
@@ -291,12 +291,12 @@ msgstr "Végrehajtható fájlfuttatás"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable..."
-msgstr ""
+msgstr "Végrehajtható fájlválasztás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:46
 msgid "Verbs"
-msgstr ""
+msgstr "Igék"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
 msgid "Retry"
@@ -353,7 +353,7 @@ msgstr "Minden operációs rendszer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:118
 msgid "Filters"
-msgstr ""
+msgstr "Szűrők"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:135
 msgid "Create shortcut"
@@ -365,7 +365,7 @@ msgstr "Parancsfájl futtatása"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:143
 msgid "Open Script..."
-msgstr ""
+msgstr "Parancsfájl megnyitása…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:153
 #, java-format
@@ -409,7 +409,7 @@ msgstr "Kisméretű:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:141
 msgid "Browse..."
-msgstr ""
+msgstr "Tallózás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
@@ -487,7 +487,7 @@ msgstr "Szolgáltatási beállítások betöltése sikertelen."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:92
 msgid "Loading Verbs failed."
-msgstr ""
+msgstr "Az igék betöltése sikertelen."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:104
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:213
@@ -508,7 +508,7 @@ msgstr "Biztosan szeretné a(z) {0} tartály eltávolítása?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:180
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr ""
+msgstr "A(z) {0} tároló megnyitása fájlkezelőben nem sikerült"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:204
 msgid "Loading containers failed."
@@ -542,7 +542,7 @@ msgstr "Biztosan szeretné a(z) {0} eltávolítása?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:95
 #, java-format
 msgid "Error while uninstalling {0}"
-msgstr ""
+msgstr "Hiba történt a(z) {0} eltávolítása közben."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:116
 msgid "Error while running script"
@@ -587,7 +587,7 @@ msgstr "Összes"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
-msgstr ""
+msgstr "Fájl ellenőrzése…"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
@@ -616,5 +616,5 @@ msgstr "{0} nem vállal felelősséget bármiért, amely a parancsfájlok haszn�
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click Next to start."
-msgstr ""
+msgstr "Kezdéshez kattintson a Tovább gombra."
 
