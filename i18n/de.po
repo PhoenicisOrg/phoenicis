@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-30 21:12+0000\n"
-"PO-Revision-Date: 2018-12-30 21:41\n"
+"PO-Revision-Date: 2018-12-31 09:58\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -41,7 +41,7 @@ msgstr "Fehler"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Standard theme"
-msgstr ""
+msgstr "Standard"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:14
 msgid "Dark theme"
@@ -278,7 +278,7 @@ msgstr "Container löschen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:118
 msgid "Open in file browser"
-msgstr ""
+msgstr "Im Dateimanager öffnen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
@@ -508,7 +508,7 @@ msgstr "Sind Sie sicher, dass Sie den Container {0} löschen möchten?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:180
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr ""
+msgstr "Container {0} kann nicht in Dateimanager geöffnet werden"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:204
 msgid "Loading containers failed."
@@ -542,7 +542,7 @@ msgstr "Sind Sie sicher, dass Sie {0} deinstallieren möchten?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:95
 #, java-format
 msgid "Error while uninstalling {0}"
-msgstr ""
+msgstr "Fehler bei der Deinstallation von {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:116
 msgid "Error while running script"
