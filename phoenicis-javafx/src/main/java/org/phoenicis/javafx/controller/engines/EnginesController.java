@@ -168,7 +168,7 @@ public class EnginesController {
         this.enginesCache = engines;
 
         // show a waiting screen until the engines are loaded
-        enginesView.showWait();
+        Platform.runLater(enginesView::showWait);
 
         // fetch all categories consisting of engines that are contained in the repository
         final List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().stream()
