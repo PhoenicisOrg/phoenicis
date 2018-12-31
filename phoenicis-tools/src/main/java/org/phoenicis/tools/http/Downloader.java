@@ -27,6 +27,7 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -65,6 +66,40 @@ public class Downloader {
      * downloads url to localFile, shows progress via onChange
      * @param url download URL
      * @param localFile destination of the download
+     * @param headers HTTP headers
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     */
+    public void get(String url, String localFile, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+        try {
+            get(new URL(url), new File(localFile), headers, onChange);
+        } catch (MalformedURLException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
+    /*
+     * downloads url to localFile, shows progress via onChange
+     * 
+     * @param url download URL
+     * 
+     * @param localFile destination of the download
+     * 
+     * @param headers Headers
+     * 
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     */
+    public void get(URL url, File localFile, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+        try {
+            get(url, new FileOutputStream(localFile), headers, onChange);
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
+    /**
+     * downloads url to localFile, shows progress via onChange
+     * @param url download URL
+     * @param localFile destination of the download
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
     public void get(URL url, File localFile, Consumer<ProgressEntity> onChange) {
@@ -85,6 +120,23 @@ public class Downloader {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try {
             get(new URL(url), outputStream, onChange);
+        } catch (MalformedURLException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+        return outputStream.toString();
+    }
+
+    /**
+     * downloads url and returns downloaded content, shows progress via onChange
+     * @param url download URL
+     * @param headers http headers
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     * @return downloaded content
+     */
+    public String get(String url, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            get(new URL(url), outputStream, headers, onChange);
         } catch (MalformedURLException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }
@@ -122,8 +174,25 @@ public class Downloader {
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
     private void get(URL url, OutputStream outputStream, Consumer<ProgressEntity> onChange) {
+        get(url, outputStream, null, onChange);
+    }
+
+    /**
+     * downloads url to outputStream, shows progress via onChange
+     * @param url download URL
+     * @param outputStream file is downloaded to this stream
+     * @param headers HTTP headers to append
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     */
+    private void get(URL url, OutputStream outputStream, Map<String, String> headers,
+            Consumer<ProgressEntity> onChange) {
         try {
             URLConnection connection = url.openConnection();
+
+            if (headers != null) {
+                headers.forEach(connection::setRequestProperty);
+            }
+
             saveConnectionToStream(url, connection, outputStream, onChange);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
