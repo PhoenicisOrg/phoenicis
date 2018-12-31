@@ -18,7 +18,7 @@
 
 package org.phoenicis.scripts.wizard;
 
-public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard {
+public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard, BrowserWizard {
     @Override
     void close();
 }
