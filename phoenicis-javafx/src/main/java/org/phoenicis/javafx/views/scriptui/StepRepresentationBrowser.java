@@ -87,11 +87,7 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
             return true;
         }
 
-        if (pattern.endsWith("*") && urlToTest.startsWith(pattern.replace("*", ""))) {
-            return true;
-        }
-
-        return false;
+        return pattern.endsWith("*") && urlToTest.startsWith(pattern.replace("*", ""));
     }
 
     @Override

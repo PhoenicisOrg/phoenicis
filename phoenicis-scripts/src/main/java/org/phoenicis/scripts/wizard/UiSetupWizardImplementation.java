@@ -29,7 +29,6 @@ import java.io.StringWriter;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
