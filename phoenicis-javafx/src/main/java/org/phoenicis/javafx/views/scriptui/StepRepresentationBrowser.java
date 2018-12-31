@@ -43,6 +43,7 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     protected void drawStepContent() {
         super.drawStepContent();
         webView.prefWidthProperty().bind(getContentPane().widthProperty());
+        webView.getEngine().setUserAgent("use required / intended UA string");
         this.addToContentPane(webView);
     }
 
@@ -75,12 +76,18 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
 
     }
 
-    private boolean urlMatches(String currentUrl, String urlMatch) {
-        if (currentUrl.equals(urlMatch)) {
+    /**
+     * Checks that a url matchs a pattern
+     * @param urlToTest The url
+     * @param pattern The pattern
+     * @return True of url matches
+     */
+    private boolean urlMatches(String urlToTest, String pattern) {
+        if (urlToTest.equals(pattern)) {
             return true;
         }
 
-        if (urlMatch.endsWith("*") && currentUrl.startsWith(urlMatch.replace("*", ""))) {
+        if (pattern.endsWith("*") && urlToTest.startsWith(pattern.replace("*", ""))) {
             return true;
         }
 
