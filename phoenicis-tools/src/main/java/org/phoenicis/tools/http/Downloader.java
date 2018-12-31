@@ -77,11 +77,15 @@ public class Downloader {
         }
     }
 
-    /*cd
+    /*
      * downloads url to localFile, shows progress via onChange
+     * 
      * @param url download URL
+     * 
      * @param localFile destination of the download
+     * 
      * @param headers Headers
+     * 
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
     public void get(URL url, File localFile, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
@@ -180,11 +184,12 @@ public class Downloader {
      * @param headers HTTP headers to append
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
-    private void get(URL url, OutputStream outputStream, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+    private void get(URL url, OutputStream outputStream, Map<String, String> headers,
+            Consumer<ProgressEntity> onChange) {
         try {
             URLConnection connection = url.openConnection();
 
-            if(headers != null) {
+            if (headers != null) {
                 headers.forEach(connection::setRequestProperty);
             }
 
