@@ -27,18 +27,6 @@ public class AboutPanel extends VBox {
 
     private GridPane aboutGrid;
 
-    private Text nameDescription;
-    private Label nameLabel;
-
-    private Text versionDescription;
-    private Label versionLabel;
-
-    private Text gitRevisionDescription;
-    private Hyperlink gitRevisionHyperlink;
-
-    private Text buildTimestampDescription;
-    private Label buildTimestampLabel;
-
     /**
      * Constructor
      *
@@ -66,36 +54,39 @@ public class AboutPanel extends VBox {
         this.aboutGrid.setHgap(20);
         this.aboutGrid.setVgap(10);
 
-        this.nameDescription = new TextWithStyle(tr("Name:"), "captionTitle");
-        this.nameLabel = new Label(buildInformation.getApplicationName());
-
-        this.versionDescription = new TextWithStyle(tr("Version:"), "captionTitle");
-        this.versionLabel = new Label(buildInformation.getApplicationVersion());
-
-        this.gitRevisionDescription = new TextWithStyle(tr("Git Revision:"), "captionTitle");
-        this.gitRevisionHyperlink = new Hyperlink(buildInformation.getApplicationGitRevision());
-        this.gitRevisionHyperlink.setOnAction(event -> {
-            try {
-                URI uri = new URI("https://github.com/PhoenicisOrg/phoenicis/commit/"
-                        + buildInformation.getApplicationGitRevision());
-                opener.open(uri);
-            } catch (URISyntaxException e) {
-                e.printStackTrace();
-            }
-        });
-
-        this.buildTimestampDescription = new TextWithStyle(tr("Build Timestamp:"), "captionTitle");
-        this.buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
-
+        Text nameDescription = new TextWithStyle(tr("Name:"), "captionTitle");
+        Label nameLabel = new Label(buildInformation.getApplicationName());
         this.aboutGrid.add(nameDescription, 0, 0);
         this.aboutGrid.add(nameLabel, 1, 0);
 
+        Text versionDescription = new TextWithStyle(tr("Version:"), "captionTitle");
+        Label versionLabel = new Label(buildInformation.getApplicationVersion());
         this.aboutGrid.add(versionDescription, 0, 1);
         this.aboutGrid.add(versionLabel, 1, 1);
 
-        this.aboutGrid.add(gitRevisionDescription, 0, 2);
-        this.aboutGrid.add(gitRevisionHyperlink, 1, 2);
+        Text gitRevisionDescription = new TextWithStyle(tr("Git Revision:"), "captionTitle");
 
+        final String gitRevision = buildInformation.getApplicationGitRevision();
+        this.aboutGrid.add(gitRevisionDescription, 0, 2);
+        if (gitRevision.equals("unknown")) {
+            Label gitRevisionLabel = new Label(gitRevision);
+            this.aboutGrid.add(gitRevisionLabel, 1, 2);
+        } else {
+            Hyperlink gitRevisionHyperlink = new Hyperlink(gitRevision);
+            gitRevisionHyperlink.setOnAction(event -> {
+                try {
+                    URI uri = new URI("https://github.com/PhoenicisOrg/phoenicis/commit/"
+                            + buildInformation.getApplicationGitRevision());
+                    opener.open(uri);
+                } catch (URISyntaxException e) {
+                    e.printStackTrace();
+                }
+            });
+            this.aboutGrid.add(gitRevisionHyperlink, 1, 2);
+        }
+
+        Text buildTimestampDescription = new TextWithStyle(tr("Build Timestamp:"), "captionTitle");
+        Label buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
         this.aboutGrid.add(buildTimestampDescription, 0, 3);
         this.aboutGrid.add(buildTimestampLabel, 1, 3);
     }
