@@ -26,6 +26,9 @@ import org.phoenicis.scripts.ui.Message;
 
 import java.util.concurrent.Semaphore;
 
+/**
+ * This step will present a browser to the user
+ */
 public class StepRepresentationBrowser extends StepRepresentationMessage implements BrowserControl {
     private final WebView webView = new WebView();
     private final Message<?> messageWaitingForResponse;

@@ -133,9 +133,9 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
 
     @Override
     public void showBrowser(Message<BrowserControl> message, String textToShow) {
-        StepRepresentationBrowser stepProgressBar = new StepRepresentationBrowser(this, message, textToShow);
-        stepProgressBar.installStep();
-        message.send(stepProgressBar);
+        StepRepresentationBrowser stepBrowser = new StepRepresentationBrowser(this, message, textToShow);
+        stepBrowser.installStep();
+        message.send(stepBrowser);
     }
 
     @Override
