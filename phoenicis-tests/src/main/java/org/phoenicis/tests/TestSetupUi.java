@@ -18,10 +18,7 @@
 
 package org.phoenicis.tests;
 
-import org.phoenicis.scripts.ui.MenuItem;
-import org.phoenicis.scripts.ui.Message;
-import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupUi;
+import org.phoenicis.scripts.ui.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -83,6 +80,11 @@ class TestSetupUi implements SetupUi {
 
             }
         });
+    }
+
+    @Override
+    public void showBrowser(Message<BrowserControl> doneCallback, String textToShow) {
+        doneCallback.send(null);
     }
 
     @Override
