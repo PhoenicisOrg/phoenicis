@@ -68,7 +68,7 @@ public class AboutPanel extends VBox {
 
         final String gitRevision = buildInformation.getApplicationGitRevision();
         this.aboutGrid.add(gitRevisionDescription, 0, 2);
-        if (gitRevision.equals("unknown")) {
+        if ("unknown".equals(gitRevision)) {
             Label gitRevisionLabel = new Label(gitRevision);
             this.aboutGrid.add(gitRevisionLabel, 1, 2);
         } else {
