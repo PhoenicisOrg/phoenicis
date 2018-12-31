@@ -19,10 +19,7 @@
 package org.phoenicis.cli.scriptui;
 
 import org.jsoup.Jsoup;
-import org.phoenicis.scripts.ui.MenuItem;
-import org.phoenicis.scripts.ui.Message;
-import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupUi;
+import org.phoenicis.scripts.ui.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -109,6 +106,11 @@ class SetupUiCliImplementation implements SetupUi {
                 printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
             }
         });
+    }
+
+    @Override
+    public void showBrowser(Message<BrowserControl> doneCallback, String textToShow) {
+        throw new UnsupportedOperationException("CLI does not support browser");
     }
 
     @Override

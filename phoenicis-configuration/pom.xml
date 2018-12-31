@@ -104,7 +104,6 @@
                         <id>gettext</id>
                         <phase>compile</phase>
                         <goals>
-                            <goal>gettext</goal>
                             <goal>dist</goal>
                         </goals>
                     </execution>
@@ -118,4 +117,36 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>update-translations</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.googlecode.gettext-commons</groupId>
+                        <artifactId>gettext-maven-plugin</artifactId>
+                        <version>1.2.4</version>
+                        <executions>
+                            <execution>
+                                <id>gettext</id>
+                                <phase>validate</phase>
+                                <goals>
+                                    <goal>gettext</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <poDirectory>${project.basedir}/../i18n</poDirectory>
+                            <sourceDirectory>${project.basedir}/../</sourceDirectory>
+                            <targetBundle>org.phoenicis.configuration.localisation.Messages</targetBundle>
+                            <outputFormat>properties</outputFormat>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
