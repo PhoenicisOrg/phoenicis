@@ -50,7 +50,8 @@ jobs:
         - sudo add-apt-repository ppa:alexlarsson/flatpak -y
         - sudo apt-get update -q
         - sudo apt-get install -y flatpak flatpak-builder
-      after_script:
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
         - flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         - flatpak --user -y install flathub org.freedesktop.Platform/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/18.08
@@ -67,14 +68,16 @@ jobs:
       before_install:
         - sudo apt-get update -q
         - sudo apt-get install -y fakeroot
-      after_script:
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
     - stage: Packages
       name: dmg
       os: osx
       osx_image: xcode10.1
-      after_script:
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
 
