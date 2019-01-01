@@ -15,13 +15,12 @@ The following steps must be executed to release a new version of Phoenicis:
     * Add release branch to `branches` section of `.travis.yml` such that Travis CI executes checks for the branch
     * Specify scripts release branch in configuration (`application.repository.default.git.branch`)
     * Set release version for Maven in `pom.xml` files
-    * Set release version in Flatpak manifest (`phoenicis-dist/src/flatpak/org.phoenicis.javafx.json`)
-    * Set release version in .deb control files
 * [Test]({{ site.baseurl }}{% link _docs/Developers/test-plan.md %})
 * Create GitHub release from the release branches for phoenicis and scripts
-    * attach .zip
+    * attach .tar.gz
     * attach .deb
     * attach .dmg
+    * attach flatpak .zip
     * attach .flatpak (see [single-file bundle](http://docs.flatpak.org/en/latest/single-file-bundles.html))
 * Announce release on phoenicis.org
     * Showcase new features
