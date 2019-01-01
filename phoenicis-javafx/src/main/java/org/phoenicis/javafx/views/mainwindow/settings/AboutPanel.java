@@ -20,57 +20,46 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 23.04.17
  */
 public class AboutPanel extends VBox {
-    private ApplicationBuildInformation buildInformation;
-    private Opener opener;
-
-    private Text title;
-
-    private GridPane aboutGrid;
 
     /**
      * Constructor
      *
-     * @param buildInformation The information of the used build of POL 5
+     * @param buildInformation The information of the used build of Phoenicis
      * @param opener The opener util object to be used to open websites
      */
     public AboutPanel(ApplicationBuildInformation buildInformation, Opener opener) {
         super();
 
-        this.buildInformation = buildInformation;
-        this.opener = opener;
-
         this.getStyleClass().add("containerConfigurationPane");
 
-        this.populate();
-
-        this.getChildren().setAll(title, aboutGrid);
+        this.populate(buildInformation, opener);
     }
 
-    private void populate() {
-        this.title = new TextWithStyle(tr("About"), "title");
+    private void populate(ApplicationBuildInformation buildInformation, Opener opener) {
+        Text title = new TextWithStyle(tr("About"), "title");
 
-        this.aboutGrid = new GridPane();
-        this.aboutGrid.getStyleClass().add("grid");
-        this.aboutGrid.setHgap(20);
-        this.aboutGrid.setVgap(10);
+        GridPane aboutGrid = new GridPane();
+        aboutGrid.getStyleClass().add("grid");
+        aboutGrid.setHgap(20);
+        aboutGrid.setVgap(10);
 
         final Text nameDescription = new TextWithStyle(tr("Name:"), "captionTitle");
         final Label nameLabel = new Label(buildInformation.getApplicationName());
-        this.aboutGrid.add(nameDescription, 0, 0);
-        this.aboutGrid.add(nameLabel, 1, 0);
+        aboutGrid.add(nameDescription, 0, 0);
+        aboutGrid.add(nameLabel, 1, 0);
 
         final Text versionDescription = new TextWithStyle(tr("Version:"), "captionTitle");
         final Label versionLabel = new Label(buildInformation.getApplicationVersion());
-        this.aboutGrid.add(versionDescription, 0, 1);
-        this.aboutGrid.add(versionLabel, 1, 1);
+        aboutGrid.add(versionDescription, 0, 1);
+        aboutGrid.add(versionLabel, 1, 1);
 
         final Text gitRevisionDescription = new TextWithStyle(tr("Git Revision:"), "captionTitle");
 
         final String gitRevision = buildInformation.getApplicationGitRevision();
-        this.aboutGrid.add(gitRevisionDescription, 0, 2);
+        aboutGrid.add(gitRevisionDescription, 0, 2);
         if ("unknown".equals(gitRevision)) {
             final Label gitRevisionLabel = new Label(gitRevision);
-            this.aboutGrid.add(gitRevisionLabel, 1, 2);
+            aboutGrid.add(gitRevisionLabel, 1, 2);
         } else {
             final Hyperlink gitRevisionHyperlink = new Hyperlink(gitRevision);
             gitRevisionHyperlink.setOnAction(event -> {
@@ -82,26 +71,28 @@ public class AboutPanel extends VBox {
                     e.printStackTrace();
                 }
             });
-            this.aboutGrid.add(gitRevisionHyperlink, 1, 2);
+            aboutGrid.add(gitRevisionHyperlink, 1, 2);
         }
 
         final Text buildTimestampDescription = new TextWithStyle(tr("Build Timestamp:"), "captionTitle");
         final Label buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
-        this.aboutGrid.add(buildTimestampDescription, 0, 3);
-        this.aboutGrid.add(buildTimestampLabel, 1, 3);
+        aboutGrid.add(buildTimestampDescription, 0, 3);
+        aboutGrid.add(buildTimestampLabel, 1, 3);
+
+        this.getChildren().setAll(title, aboutGrid);
     }
 
     /**
-     * This class contains information about the POL 5 build
+     * This class contains information about the Phoenicis build
      */
     public static class ApplicationBuildInformation {
         // the name of the application
         private String applicationName;
         // the version of the application (taken from the maven pom file)
         private String applicationVersion;
-        // the git revision/commit used to build POL 5
+        // the git revision/commit used to build Phoenicis
         private String applicationGitRevision;
-        // the timestamp when POL 5 was built
+        // the timestamp when Phoenicis was built
         private String applicationBuildTimestamp;
 
         /**
@@ -109,8 +100,8 @@ public class AboutPanel extends VBox {
          *
          * @param applicationName the name of the application
          * @param applicationVersion the version of the application
-         * @param applicationGitRevision the git revision/commit used to build POL 5
-         * @param applicationBuildTimestamp the timestamp when POL 5 was built
+         * @param applicationGitRevision the git revision/commit used to build Phoenicis
+         * @param applicationBuildTimestamp the timestamp when Phoenicis was built
          */
         public ApplicationBuildInformation(String applicationName, String applicationVersion,
                 String applicationGitRevision, String applicationBuildTimestamp) {
