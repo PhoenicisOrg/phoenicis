@@ -134,7 +134,7 @@ public class Downloader {
     }
 
     /**
-     * Downloads a remote file and put it inside a given directory. Returns the path of the file
+     * Downloads a remote file and puts it inside a given directory. Returns the path of the file
      *
      * @param url The URL
      * @param directory The local directory
