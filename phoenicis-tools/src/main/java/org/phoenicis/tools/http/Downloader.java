@@ -52,7 +52,7 @@ public class Downloader {
      * downloads url to localDestination, shows progress via onChange
      *
      * @param url download URL
-     * @param localDestination destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      *
      * @return the local path of the downloaded file
@@ -69,7 +69,7 @@ public class Downloader {
      * downloads url to localDestination, shows progress via onChange
      *
      * @param url download URL
-     * @param localDestination destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
      * @param headers HTTP headers
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      *
@@ -88,7 +88,7 @@ public class Downloader {
      * downloads url to localDestination, shows progress via onChange
      *
      * @param url download URL
-     * @param localDestination destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
      * @param headers Headers
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      *
@@ -113,7 +113,7 @@ public class Downloader {
      * downloads url to localFile, shows progress via onChange
      *
      * @param url download URL
-     * @param localDestination destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      *
      * @return The path of the created local file
