@@ -54,6 +54,7 @@ public class Downloader {
      * @param url download URL
      * @param localDestination destination of the download
      * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
      * @return the local path of the downloaded file
      */
     public File get(String url, String localDestination, Consumer<ProgressEntity> onChange) {
@@ -71,6 +72,8 @@ public class Downloader {
      * @param localDestination destination of the download
      * @param headers HTTP headers
      * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return The path of the created local file
      */
     public File get(String url, String localDestination, Map<String, String> headers,
             Consumer<ProgressEntity> onChange) {
@@ -112,6 +115,8 @@ public class Downloader {
      * @param url download URL
      * @param localDestination destination of the download
      * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return The path of the created local file
      */
     public File get(URL url, File localDestination, Consumer<ProgressEntity> onChange) {
         try {

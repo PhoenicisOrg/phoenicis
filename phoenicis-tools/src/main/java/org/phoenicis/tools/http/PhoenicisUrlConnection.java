@@ -7,6 +7,9 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Map;
 
+/**
+ * Wrapper around {@link HttpURLConnection class} that follows correctly HTTP redirects
+ */
 class PhoenicisUrlConnection {
     private Integer responseCode;
     private HttpURLConnection delegateUrlConnexion;
