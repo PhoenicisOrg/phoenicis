@@ -5,8 +5,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.tools.system.opener.Opener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,6 +21,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 23.04.17
  */
 public class AboutPanel extends VBox {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AboutPanel.class);
 
     /**
      * Constructor
@@ -35,32 +37,44 @@ public class AboutPanel extends VBox {
         this.populate(buildInformation, opener);
     }
 
+    /**
+     * populates the about panel
+     *
+     * @param buildInformation The information of the used build of Phoenicis
+     * @param opener The opener util object to be used to open websites
+     */
     private void populate(ApplicationBuildInformation buildInformation, Opener opener) {
-        Text title = new TextWithStyle(tr("About"), "title");
+        final Text title = new Text(tr("About"));
+        title.setStyle("title");
 
-        GridPane aboutGrid = new GridPane();
+        final GridPane aboutGrid = new GridPane();
         aboutGrid.getStyleClass().add("grid");
         aboutGrid.setHgap(20);
         aboutGrid.setVgap(10);
 
-        final Text nameDescription = new TextWithStyle(tr("Name:"), "captionTitle");
+        final Text nameDescription = new Text(tr("Name:"));
+        nameDescription.setStyle("captionTitle");
         final Label nameLabel = new Label(buildInformation.getApplicationName());
         aboutGrid.add(nameDescription, 0, 0);
         aboutGrid.add(nameLabel, 1, 0);
 
-        final Text versionDescription = new TextWithStyle(tr("Version:"), "captionTitle");
+        final Text versionDescription = new Text(tr("Version:"));
+        versionDescription.setStyle("captionTitle");
         final Label versionLabel = new Label(buildInformation.getApplicationVersion());
         aboutGrid.add(versionDescription, 0, 1);
         aboutGrid.add(versionLabel, 1, 1);
 
-        final Text gitRevisionDescription = new TextWithStyle(tr("Git Revision:"), "captionTitle");
+        final Text gitRevisionDescription = new Text(tr("Git Revision:"));
+        gitRevisionDescription.setStyle("captionTitle");
 
         final String gitRevision = buildInformation.getApplicationGitRevision();
         aboutGrid.add(gitRevisionDescription, 0, 2);
         if ("unknown".equals(gitRevision)) {
+            // plain label if git revision is unknown
             final Label gitRevisionLabel = new Label(gitRevision);
             aboutGrid.add(gitRevisionLabel, 1, 2);
         } else {
+            // hyperlink to GitHub commit if git revision is known
             final Hyperlink gitRevisionHyperlink = new Hyperlink(gitRevision);
             gitRevisionHyperlink.setOnAction(event -> {
                 try {
@@ -68,13 +82,14 @@ public class AboutPanel extends VBox {
                             + buildInformation.getApplicationGitRevision());
                     opener.open(uri);
                 } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Could not open GitHub URL.", e);
                 }
             });
             aboutGrid.add(gitRevisionHyperlink, 1, 2);
         }
 
-        final Text buildTimestampDescription = new TextWithStyle(tr("Build Timestamp:"), "captionTitle");
+        final Text buildTimestampDescription = new Text(tr("Build Timestamp:"));
+        buildTimestampDescription.setStyle("captionTitle");
         final Label buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
         aboutGrid.add(buildTimestampDescription, 0, 3);
         aboutGrid.add(buildTimestampLabel, 1, 3);
