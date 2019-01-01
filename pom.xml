@@ -43,8 +43,6 @@
         <connection>scm:git:https://github.com/PhoenicisOrg/phoenicis.git</connection>
     </scm>
     <properties>
-        <maven.compiler.source>1.10</maven.compiler.source>
-        <maven.compiler.target>1.10</maven.compiler.target>
         <phoenicis.version>${project.version}</phoenicis.version>
         <project.root>${project.basedir}</project.root>
         <project.settings>${project.root}/settings</project.settings>
@@ -242,7 +240,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>10</release>
+                    <source>1.10</source>
+                    <target>1.10</target>
                 </configuration>
             </plugin>
             <plugin>
