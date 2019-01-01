@@ -40,7 +40,8 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk11
-    # Build + test packages
+
+    # packages
     - stage: Packages
       name: Flatpak
       os: linux
@@ -77,7 +78,7 @@ jobs:
       os: osx
       osx_image: xcode10.1
       script:
-        - mvn clean package -DskipTests # no need to run tests again
+        - mvn clean package # run tests for OSX (doesn't run in 'build + test')
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
 
