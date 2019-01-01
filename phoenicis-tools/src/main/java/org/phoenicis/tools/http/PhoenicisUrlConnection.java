@@ -16,12 +16,24 @@ class PhoenicisUrlConnection {
     private URL url;
     private Map<String, String> headers;
 
+    /**
+     * Creates the instance. Stores internally the {@link URL} and the {@link java.net.URLConnection} objects
+     * @param urlConnection The URL connection
+     * @param url The URL
+     * @see #fromURL(URL) to build
+     */
     private PhoenicisUrlConnection(HttpURLConnection urlConnection, URL url) {
         this.delegateUrlConnexion = urlConnection;
         this.url = url;
         this.responseCode = null;
     }
 
+    /**
+     * Constructor Equivalents to {@link URL#openConnection()}
+     * @param url The URL
+     * @return The {@link PhoenicisUrlConnection} instance
+     * @throws IOException if any IO Error happens
+     */
     static PhoenicisUrlConnection fromURL(URL url) throws IOException {
         final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setInstanceFollowRedirects(false);
