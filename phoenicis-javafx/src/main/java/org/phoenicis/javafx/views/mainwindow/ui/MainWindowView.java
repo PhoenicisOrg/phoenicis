@@ -46,7 +46,7 @@ import java.util.Optional;
 public class MainWindowView<S extends Sidebar> extends Tab {
     protected final ThemeManager themeManager;
 
-    private final BorderPane content;
+    protected final BorderPane content;
 
     protected S sidebar;
 

@@ -20,6 +20,9 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,19 +33,20 @@ import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.ToolsConfiguration;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -65,7 +69,9 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
     private final CombinedListWidget<ApplicationDTO> availableApps;
 
-    private Consumer<ScriptDTO> onSelectScript;
+    private final ScriptInterpreter scriptInterpreter;
+
+    private final ObjectProperty<ApplicationDTO> selectedApplication;
 
     /**
      * Constructor
@@ -75,12 +81,14 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
      * @param toolsConfiguration The tools configuration
      */
     public ApplicationsView(ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager,
-            ToolsConfiguration toolsConfiguration) {
+            ToolsConfiguration toolsConfiguration, ScriptInterpreter scriptInterpreter) {
         super(tr("Apps"), themeManager);
 
         this.javaFxSettingsManager = javaFxSettingsManager;
+        this.scriptInterpreter = scriptInterpreter;
 
         this.categories = FXCollections.observableArrayList();
+        this.selectedApplication = new SimpleObjectProperty<>();
 
         this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 (filterText, application) -> {
@@ -92,11 +100,29 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                     }
                 });
 
-        this.filter.filterCategoryProperty().addListener(invalidation -> closeDetailsView());
-
         this.availableApps = createApplicationListWidget();
 
+        this.filter.filterCategoryProperty().addListener(invalidation -> this.availableApps.setSelectedElement(null));
+
         setSidebar(createApplicationsSidebar(this.availableApps));
+
+        content.rightProperty().bind(createApplicationDetailsPanel());
+    }
+
+    private ObjectBinding<ApplicationDetailsPanel> createApplicationDetailsPanel() {
+        final ApplicationDetailsPanel applicationPanel = new ApplicationDetailsPanel(scriptInterpreter, filter,
+                selectedApplication);
+
+        applicationPanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
+        applicationPanel.setOnClose(this::closeDetailsView);
+
+        applicationPanel.webEngineStylesheetProperty().bind(themeManager.webEngineStylesheetProperty());
+
+        applicationPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return Bindings.when(Bindings.isNotNull(selectedApplication))
+                .then(applicationPanel)
+                .otherwise((ApplicationDetailsPanel) null);
     }
 
     private CombinedListWidget<ApplicationDTO> createApplicationListWidget() {
@@ -125,11 +151,11 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
 
         final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
 
-        listWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                showAppDetails(newValue.getItem(), this.javaFxSettingsManager);
-            }
-        });
+        this.selectedApplication.bind(Bindings.createObjectBinding(() -> {
+            final ListWidgetSelection<ApplicationDTO> selection = listWidget.getSelectedElement();
+
+            return selection != null ? selection.getItem() : null;
+        }, listWidget.selectedElementProperty()));
 
         return listWidget;
     }
@@ -161,46 +187,15 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
             this.categories.setAll(filteredCategories);
 
             setCenter(this.availableApps);
-            closeDetailsView();
         });
     }
 
-    /**
-     * Sets the callback, which is called when a script has been selected
-     *
-     * @param onSelectScript The callback, which is called when a script has been selected
-     */
-    public void setOnSelectScript(Consumer<ScriptDTO> onSelectScript) {
-        this.onSelectScript = onSelectScript;
+    @Override
+    public void closeDetailsView() {
+        this.availableApps.setSelectedElement(null);
     }
 
     public void setOnRetryButtonClicked(EventHandler<? super MouseEvent> event) {
         getFailurePanel().getRetryButton().setOnMouseClicked(event);
-    }
-
-    /**
-     * Displays the application details view on the right side for a given application.
-     *
-     * @param application The application, whose details should be shown
-     * @param javaFxSettingsManager The javafx settings manager
-     */
-    private void showAppDetails(ApplicationDTO application, JavaFxSettingsManager javaFxSettingsManager) {
-        final ApplicationPanel applicationPanel = new ApplicationPanel(application, this.filter, this.themeManager,
-                javaFxSettingsManager);
-
-        applicationPanel.setOnScriptInstall(this::installScript);
-        applicationPanel.setOnClose(this::closeDetailsView);
-        applicationPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-
-        showDetailsView(applicationPanel);
-    }
-
-    /**
-     * Starts the installation process for a given script
-     *
-     * @param scriptDTO The script to be installed
-     */
-    private void installScript(ScriptDTO scriptDTO) {
-        this.onSelectScript.accept(scriptDTO);
     }
 }

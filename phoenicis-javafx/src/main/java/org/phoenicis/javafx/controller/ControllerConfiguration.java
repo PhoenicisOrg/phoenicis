@@ -111,8 +111,7 @@ public class ControllerConfiguration {
 
     @Bean
     public AppsController appsController() {
-        return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager(),
-                scriptsConfiguration.scriptInterpreter());
+        return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager());
     }
 
     @Bean
