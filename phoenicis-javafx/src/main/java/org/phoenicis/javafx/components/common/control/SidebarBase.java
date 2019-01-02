@@ -27,7 +27,7 @@ public abstract class SidebarBase<E, C extends SidebarBase<E, C, S>, S extends S
     /**
      * Constructor
      *
-     * @param items        The items shown inside a toggle button group in the sidebar
+     * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedItem The currently selected item in the toggle button group
      */
     protected SidebarBase(ObservableList<E> items, ObjectProperty<E> selectedItem) {

@@ -49,13 +49,13 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     /**
      * Constructor
      *
-     * @param items                  The items shown inside a toggle button group in the sidebar
-     * @param selectedListWidget     The currently selected {@link ListWidgetType} by the user
+     * @param items The items shown inside a toggle button group in the sidebar
+     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      * @param operatingSystemFetcher The operating system fetcher
-     * @param fuzzySearchRatio       The fuzzy search ratio
+     * @param fuzzySearchRatio The fuzzy search ratio
      */
     public ApplicationSidebar(ObservableList<CategoryDTO> items, ObjectProperty<ListWidgetType> selectedListWidget,
-                              OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
+            OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
         super(items, selectedListWidget);
 
         this.filterCategory = new SimpleObjectProperty<>();

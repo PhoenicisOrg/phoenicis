@@ -29,12 +29,12 @@ public abstract class ExtendedSidebarBase<E, C extends ExtendedSidebarBase<E, C,
     /**
      * Constructor
      *
-     * @param items              The items shown inside a toggle button group in the sidebar
-     * @param searchTerm         The search term entered by the user
+     * @param items The items shown inside a toggle button group in the sidebar
+     * @param searchTerm The search term entered by the user
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
     protected ExtendedSidebarBase(ObservableList<E> items, StringProperty searchTerm,
-                                  ObjectProperty<ListWidgetType> selectedListWidget) {
+            ObjectProperty<ListWidgetType> selectedListWidget) {
         super(items);
 
         this.searchTerm = searchTerm;
@@ -44,7 +44,7 @@ public abstract class ExtendedSidebarBase<E, C extends ExtendedSidebarBase<E, C,
     /**
      * Constructor
      *
-     * @param items              The items shown inside a toggle button group in the sidebar
+     * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
     protected ExtendedSidebarBase(ObservableList<E> items, ObjectProperty<ListWidgetType> selectedListWidget) {
