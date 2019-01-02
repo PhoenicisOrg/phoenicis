@@ -1,5 +1,7 @@
 package org.phoenicis.javafx.components.setting.control;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.components.setting.skin.SettingsSidebarToggleGroupSkin;
@@ -13,11 +15,12 @@ public class SettingsSidebarToggleGroup extends
     /**
      * Constructor
      *
-     * @param title The title of the settings sidebar toggle group
+     * @param title    The title of the settings sidebar toggle group
      * @param elements An observable list containing the elements of the sidebar toggle group
      */
-    public SettingsSidebarToggleGroup(String title, ObservableList<SettingsSidebarItem> elements) {
-        super(title, elements);
+    public SettingsSidebarToggleGroup(String title, ObservableList<SettingsSidebarItem> elements,
+                                      ObjectProperty<SettingsSidebarItem> selectedElement) {
+        super(new SimpleStringProperty(title), elements, selectedElement);
     }
 
     /**

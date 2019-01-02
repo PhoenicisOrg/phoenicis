@@ -27,9 +27,7 @@ public class SettingsSidebarSkin extends SidebarSkinBase<SettingsSidebarItem, Se
     @Override
     protected ScrollPane createMainContent() {
         final SettingsSidebarToggleGroup sidebarToggleGroup = new SettingsSidebarToggleGroup(
-                tr("Settings"), getControl().getItems());
-
-        getControl().selectedItemProperty().bindBidirectional(sidebarToggleGroup.selectedElementProperty());
+                tr("Settings"), getControl().getItems(), getControl().selectedItemProperty());
 
         return createScrollPane(sidebarToggleGroup);
     }
