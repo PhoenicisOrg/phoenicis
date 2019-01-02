@@ -12,21 +12,42 @@ import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 
+/**
+ * A sidebar implementation for the applications tab
+ */
 public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, ApplicationSidebar, ApplicationSidebarSkin> {
+    /**
+     * The selected {@link CategoryDTO} by the user
+     */
     private final ObjectProperty<CategoryDTO> filterCategory;
 
+    /**
+     * Information about whether the user wants to see commercial applications or not
+     */
     private final BooleanProperty containCommercialApplications;
 
+    /**
+     * Information about whether the user wants to see scripts requiring patches
+     */
     private final BooleanProperty containRequiresPatchApplications;
 
+    /**
+     * Information about whether the user wants to see scripts that are still in testing
+     */
     private final BooleanProperty containTestingApplications;
 
+    /**
+     * Information about whether the user wants to see scripts that are not tested on his operating system
+     */
     private final BooleanProperty containAllOSCompatibleApplications;
 
+    /**
+     * An application filter utility class
+     */
     private final ApplicationFilter filter;
 
     public ApplicationSidebar(ObservableList<CategoryDTO> items, ObjectProperty<ListWidgetType> selectedListWidget,
-            OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
+                              OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
         super(items, selectedListWidget);
 
         this.filterCategory = new SimpleObjectProperty<>();
@@ -40,6 +61,9 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
                 containTestingApplications, containAllOSCompatibleApplications);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ApplicationSidebarSkin createSkin() {
         return new ApplicationSidebarSkin(this);

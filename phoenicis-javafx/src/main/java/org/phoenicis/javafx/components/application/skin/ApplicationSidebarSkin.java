@@ -13,6 +13,9 @@ import org.phoenicis.repository.dto.CategoryDTO;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The skin for the {@link ApplicationSidebar} component
+ */
 public class ApplicationSidebarSkin
         extends ExtendedSidebarSkinBase<CategoryDTO, ApplicationSidebar, ApplicationSidebarSkin> {
     /**
@@ -24,6 +27,9 @@ public class ApplicationSidebarSkin
         super(control);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ScrollPane createMainContent() {
         return createScrollPane(createSidebarToggleGroup(), createSpacer(), createFilterGroup());
