@@ -79,7 +79,6 @@ public class ChooseRepositoryTypePanel extends BorderPane {
         HBox.setHgrow(choiceBox, Priority.ALWAYS);
 
         this.setCenter(content);
-        setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 
     /**
