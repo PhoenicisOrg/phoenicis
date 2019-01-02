@@ -45,7 +45,7 @@ public class AboutPanel extends VBox {
      */
     private void populate(ApplicationBuildInformation buildInformation, Opener opener) {
         final Text title = new Text(tr("About"));
-        title.setStyle("title");
+        title.getStyleClass().add("title");
 
         final GridPane aboutGrid = new GridPane();
         aboutGrid.getStyleClass().add("grid");
@@ -53,19 +53,19 @@ public class AboutPanel extends VBox {
         aboutGrid.setVgap(10);
 
         final Text nameDescription = new Text(tr("Name:"));
-        nameDescription.setStyle("captionTitle");
+        nameDescription.getStyleClass().add("captionTitle");
         final Label nameLabel = new Label(buildInformation.getApplicationName());
         aboutGrid.add(nameDescription, 0, 0);
         aboutGrid.add(nameLabel, 1, 0);
 
         final Text versionDescription = new Text(tr("Version:"));
-        versionDescription.setStyle("captionTitle");
+        versionDescription.getStyleClass().add("captionTitle");
         final Label versionLabel = new Label(buildInformation.getApplicationVersion());
         aboutGrid.add(versionDescription, 0, 1);
         aboutGrid.add(versionLabel, 1, 1);
 
         final Text gitRevisionDescription = new Text(tr("Git Revision:"));
-        gitRevisionDescription.setStyle("captionTitle");
+        gitRevisionDescription.getStyleClass().add("captionTitle");
 
         final String gitRevision = buildInformation.getApplicationGitRevision();
         aboutGrid.add(gitRevisionDescription, 0, 2);
@@ -89,7 +89,7 @@ public class AboutPanel extends VBox {
         }
 
         final Text buildTimestampDescription = new Text(tr("Build Timestamp:"));
-        buildTimestampDescription.setStyle("captionTitle");
+        buildTimestampDescription.getStyleClass().add("captionTitle");
         final Label buildTimestampLabel = new Label(buildInformation.getApplicationBuildTimestamp());
         aboutGrid.add(buildTimestampDescription, 0, 3);
         aboutGrid.add(buildTimestampLabel, 1, 3);
