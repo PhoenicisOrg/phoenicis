@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-30 21:12+0000\n"
-"PO-Revision-Date: 2018-12-31 09:58\n"
+"POT-Creation-Date: 2019-01-02 12:20+0000\n"
+"PO-Revision-Date: 2019-01-02 12:22\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -138,7 +138,7 @@ msgid "Network"
 msgstr "Netzwerk"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:84
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:62
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:47
 msgid "About"
 msgstr "Über"
 
@@ -214,22 +214,22 @@ msgstr "Classpath:"
 msgid "Choose the location of your classpath repository"
 msgstr "Pfad für Ihr Classpath-Repository auswählen"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:69
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:55
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:53
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
 msgid "Name:"
 msgstr "Name:"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:72
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:61
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:59
 msgid "Version:"
 msgstr "Version:"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:75
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:67
 msgid "Git Revision:"
 msgstr "Git Revision:"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:91
 msgid "Build Timestamp:"
 msgstr "Zeitstempel des Builds:"
 
@@ -307,27 +307,9 @@ msgstr "Wiederholen"
 msgid "Reason: {0}"
 msgstr "Grund: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:79
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:85
 msgid "Apps"
 msgstr "Anwendungen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:132
-msgid "Installers"
-msgstr "Installationsskripts"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:177
-#, java-format
-msgid "Source: {0}"
-msgstr "Quelle: {0}"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:181
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:73
-msgid "Install"
-msgstr "Installieren"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationPanel.java:189
-msgid "Error while trying to download the installer"
-msgstr "Fehler beim Herunterladen des Skripts"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:92
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:101
@@ -469,6 +451,11 @@ msgstr "Installiert"
 msgid "Not installed"
 msgstr "Nicht installiert"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:73
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
+msgid "Install"
+msgstr "Installieren"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:81
 msgid "An error occurred while installing the engine"
 msgstr "Bei der Installation der Engine ist ein Fehler aufgetreten"
@@ -519,15 +506,11 @@ msgstr "Laden der Container fehlgeschlagen."
 msgid "Are you sure you want to close all {0} windows?"
 msgstr "Sind Sie sicher, dass Sie alle {0} Fenster schließen möchten?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:54
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:49
 msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
 msgstr "Verbindung mit dem Repository fehlgeschlagen.\n"
 "Bitte überprüfen Sie Ihre Verbindung und versuchen es nochmal."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:96
-msgid "The script ended unexpectedly"
-msgstr "Das Skript wurde unerwartet beendet"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:89
 #, java-format
@@ -584,6 +567,23 @@ msgstr "Laden der Engines fehlgeschlagen."
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:32
 msgid "All"
 msgstr "Alle"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:141
+msgid "Installers"
+msgstr "Installationsskripts"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:191
+#, java-format
+msgid "Source: {0}"
+msgstr "Quelle: {0}"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:201
+msgid "Error while trying to download the installer"
+msgstr "Fehler beim Herunterladen des Skripts"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:249
+msgid "The script ended unexpectedly"
+msgstr "Das Skript wurde unerwartet beendet"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
