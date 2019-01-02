@@ -11,7 +11,7 @@ public class BytesUtilities {
     /**
      * Fetches a string inside a byte array delimited by an offset and the null characte r
      *
-     * @param bytes  The byte array
+     * @param bytes The byte array
      * @param offset The start offset
      * @return The given string
      */

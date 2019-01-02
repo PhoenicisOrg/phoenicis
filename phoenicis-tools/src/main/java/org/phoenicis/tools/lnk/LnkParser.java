@@ -54,8 +54,8 @@ public class LnkParser extends FilesManipulator {
         final boolean hasArguments = lnkData.hasArguments();
 
         final int fileStart = fetchFileStart(rawLnkShortcutByteArray, lnkData);
-        final byte[] rawLnkContentWithoutHeader =
-                Arrays.copyOfRange(rawLnkShortcutByteArray, fileStart, rawLnkShortcutByteArray.length - 1);
+        final byte[] rawLnkContentWithoutHeader = Arrays.copyOfRange(rawLnkShortcutByteArray, fileStart,
+                rawLnkShortcutByteArray.length - 1);
 
         final boolean isLocal = this.isLnkLocal(rawLnkContentWithoutHeader);
         final String fileName = parseLnkContent(rawLnkContentWithoutHeader, isLocal);
@@ -93,21 +93,25 @@ public class LnkParser extends FilesManipulator {
      * Parse the acutal content of the shortcut
      *
      * @param rawLnkShortcutByteArrayWithoutHeader Raw lnk file content
-     * @param isLocal                              Search for local or network filename
+     * @param isLocal Search for local or network filename
      */
     private String parseLnkContent(byte[] rawLnkShortcutByteArrayWithoutHeader, boolean isLocal) {
         final int finalNameOffset = rawLnkShortcutByteArrayWithoutHeader[FINALNAME_OFFSET_OFFSET];
 
-        final String finalName = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader, finalNameOffset);
+        final String finalName = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader,
+                finalNameOffset);
 
         if (isLocal) {
             final int basenameOffset = rawLnkShortcutByteArrayWithoutHeader[BASENAME_OFFSET_OFFSET];
-            final String basename = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader, basenameOffset);
+            final String basename = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader,
+                    basenameOffset);
             return basename + finalName;
         } else {
             final int networkVolumeTableOffset = rawLnkShortcutByteArrayWithoutHeader[NETWORK_VOLUME_TABLE_OFFSET_OFFSET];
-            final int shareNameOffset = rawLnkShortcutByteArrayWithoutHeader[networkVolumeTableOffset + SHARE_NAME_OFFSET_OFFSET] + networkVolumeTableOffset;
-            final String shareName = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader, shareNameOffset);
+            final int shareNameOffset = rawLnkShortcutByteArrayWithoutHeader[networkVolumeTableOffset
+                    + SHARE_NAME_OFFSET_OFFSET] + networkVolumeTableOffset;
+            final String shareName = BytesUtilities.getNullDelimitedString(rawLnkShortcutByteArrayWithoutHeader,
+                    shareNameOffset);
             return shareName + "\\" + finalName;
         }
     }
@@ -116,7 +120,7 @@ public class LnkParser extends FilesManipulator {
      * Fetches the start of the .lnk file once the header is removed
      *
      * @param rawLnkContent The content of the .lnk
-     * @param dataFlags     The dataflags that will be used to determine if there is a shell section
+     * @param dataFlags The dataflags that will be used to determine if there is a shell section
      * @return The offset where the sortcuts file starts
      */
     private int fetchFileStart(byte[] rawLnkContent, LnkData dataFlags) {

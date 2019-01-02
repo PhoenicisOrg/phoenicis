@@ -1,5 +1,8 @@
 package org.phoenicis.tools.lnk;
 
+/**
+ * Parsed data structure
+ */
 public class LnkFile {
     private final boolean isDirectory;
     private final boolean isLocal;
@@ -7,9 +10,9 @@ public class LnkFile {
     private final boolean hasArguments;
 
     public LnkFile(boolean isDirectory,
-                   boolean isLocal,
-                   String realFilename,
-                   boolean hasArguments) {
+            boolean isLocal,
+            String realFilename,
+            boolean hasArguments) {
         this.isDirectory = isDirectory;
         this.isLocal = isLocal;
         this.realFilename = realFilename;

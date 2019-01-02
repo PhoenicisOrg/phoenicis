@@ -20,10 +20,20 @@ public class LnkData {
         };
     }
 
+    /**
+     * Determines if the .lnk has a working directory
+     *
+     * @return true if the .lnk has a working directory
+     */
     public boolean hasWorkingDir() {
         return (rawBytes[0] & MASK_HAS_WORKING_DIR) > 1;
     }
 
+    /**
+     * Determines if the .lnk has arguments
+     *
+     * @return true if the .lnk has arguments
+     */
     public boolean hasArguments() {
         return (rawBytes[0] & MASK_HAS_ARGUMENTS) > 1;
     }

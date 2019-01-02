@@ -16,6 +16,10 @@ public class LnkFileAttribute {
         };
     }
 
+    /**
+     * Determines is the .lnk is a directory
+     * @return true if it is a directory
+     */
     public boolean hasDirMask() {
         return (rawBytes[0] & FILE_ATTRIBUTE_DIRECTORY) > 1;
     }
