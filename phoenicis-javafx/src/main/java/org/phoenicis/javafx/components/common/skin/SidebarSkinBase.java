@@ -7,6 +7,13 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 
+/**
+ * The base skin for all {@link SidebarBase} implementations
+ *
+ * @param <E> The element type of the toggle button group
+ * @param <C> The concrete component type
+ * @param <S> The concrete skin type
+ */
 public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S extends SidebarSkinBase<E, C, S>>
         extends SkinBase<C, S> {
     /**
@@ -18,6 +25,11 @@ public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S exten
         super(control);
     }
 
+    /**
+     * Creates a spacer component
+     *
+     * @return A spacer component
+     */
     protected static Pane createSpacer() {
         final Pane spacer = new Pane();
 
@@ -26,6 +38,13 @@ public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S exten
         return spacer;
     }
 
+    /**
+     * Creates a {@link ScrollPane} containing the given {@link Node[] nodes}.
+     * The nodes are shown below each other in the {@link ScrollPane}
+     *
+     * @param nodes The nodes inside the returned {@link ScrollPane}
+     * @return A {@link ScrollPane} containing all given nodes
+     */
     protected static ScrollPane createScrollPane(Node... nodes) {
         final VBox content = new VBox(nodes);
 
@@ -36,6 +55,9 @@ public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S exten
         return scrollPane;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final BorderPane container = new BorderPane();
@@ -46,5 +68,10 @@ public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S exten
         getChildren().addAll(container);
     }
 
+    /**
+     * Creates the main content of the sidebar
+     *
+     * @return A {@link ScrollPane} containing the main content of the sidebar
+     */
     protected abstract ScrollPane createMainContent();
 }
