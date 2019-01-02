@@ -14,6 +14,15 @@ jobs:
       install: true
       script: mvn -Pcheck-formatted validate formatter:validate
 
+    # Update translations
+    - stage: Basics
+      name: Update translations
+      install: true
+      script: mvn -Pupdate-translations validate
+      after_success:
+        # push translation updates only for master (PR changes must be committed to master before they are taken into account)
+        - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./i18n/push_translations.sh; fi
+
     # build + test
     - stage: Build + test
       name: Linux OpenJDK 10
@@ -31,7 +40,8 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk11
-    # Build + test packages
+
+    # packages
     - stage: Packages
       name: Flatpak
       os: linux
@@ -41,7 +51,8 @@ jobs:
         - sudo add-apt-repository ppa:alexlarsson/flatpak -y
         - sudo apt-get update -q
         - sudo apt-get install -y flatpak flatpak-builder
-      after_script:
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
         - flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         - flatpak --user -y install flathub org.freedesktop.Platform/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/18.08
@@ -49,7 +60,7 @@ jobs:
         - flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
-        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
+        - flatpak-builder build-dir org.phoenicis.playonlinux.json --force-clean
     - stage: Packages
       name: deb
       os: linux
@@ -58,14 +69,16 @@ jobs:
       before_install:
         - sudo apt-get update -q
         - sudo apt-get install -y fakeroot
-      after_script:
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
     - stage: Packages
       name: dmg
       os: osx
       osx_image: xcode10.1
-      after_script:
+      script:
+        - mvn clean package # run tests for OSX (doesn't run in 'build + test')
         - cd phoenicis-dist/src/scripts
         - bash phoenicis-create-package.sh
 
@@ -79,3 +92,13 @@ jobs:
       script:
         - bundle exec jekyll build
         - bundle exec htmlproofer ./_site --only-4xx --check-favicon --check-html --assume-extension
+
+env:
+  global:
+  # to create secure for travis-ci.com
+  # 1. create personal access token with public_repo permissions
+  # 2. clone this repo (not a fork)
+  # 3. install travis gem (https://github.com/travis-ci/travis.rb)
+  # 4. run in the clone: travis encrypt GH_TOKEN="<access_token>" --pro (GH_TOKEN is the variable which is used e.g. in push_translations.sh)
+  # 5. set output below
+  - secure: "NNFWW2gm1hzMI2vLr8b7EuRz8u+eSk5FGoXDq0UZbdnmcnb/8Isx2sd8j73VSRN4LvRAnqFnZUuouFjVBeX+T8eUv4qL1z8QBz4nqS1ZrbYEwVFKEv/87RB7FfpvA+nqEzJv0Nq9jFLmkgBw2pji5xNkL23RABxm4kFO9zJRrlrWNJCAFxNI2Tzrw8RWuFuG49eH16BPOZfECcMzP16rBcpr0YZjcZ/p+yjUaz+IaOinQyHs/p45oPVF3XxSVLOODVsaVw7kxZxXZRCDz60ssCefTt6XlgR5J5blo6QGX1Y3bks25A2Jeivax+Lv2J5zrOBV8TgDDyj6+XP2HyxM91A7LFnOvA/iXjDZUgh8jGGmBnCpESq8b+Llymhy1i9nfGAAQYedq2/zNaiETOr+vakcgbITk1sPb9YxydB0RIyjnRnlwjxAjWTckxZCWQbFieODYBsGBZN8X9k/4iHsMkIHpEJ41BPGapOxjolIHD8sAqA3XlT0hR1nKjTUM08c/9JHyCZ1BAyiFvbsD/gT9oYFwhe/Im57N/WBBiXzkiElmJ3RogUyFuapKYuwOvCQvgpSP2weDgO0k9Q+Y1g4VH5I5aViR+G44kf4P7Dn2RvvI1n6mLDs9bki94WYWNBMwhRM+cmcrYCtW/dszSIr5W5ZzH0jHd/9VxiLV44mL7k="
