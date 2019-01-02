@@ -4,7 +4,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -44,7 +43,6 @@ public class ClasspathRepositoryDetailsPanel extends RepositoryDetailsPanel<Clas
         HBox.setHgrow(classpathField, Priority.ALWAYS);
 
         this.setCenter(content);
-        setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 
     @Override

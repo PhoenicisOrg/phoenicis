@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +62,6 @@ public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitReposit
         grid.add(branchField, 1, 1);
 
         this.setCenter(grid);
-        setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 
     @Override
