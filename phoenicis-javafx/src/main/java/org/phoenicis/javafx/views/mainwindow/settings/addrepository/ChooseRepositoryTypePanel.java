@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.util.StringConverter;
 
 import java.util.Arrays;
@@ -78,6 +79,7 @@ public class ChooseRepositoryTypePanel extends BorderPane {
         HBox.setHgrow(choiceBox, Priority.ALWAYS);
 
         this.setCenter(content);
+        setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 
     /**

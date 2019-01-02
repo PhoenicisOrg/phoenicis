@@ -4,6 +4,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import org.phoenicis.repository.location.LocalRepositoryLocation;
 
@@ -57,6 +58,7 @@ public class LocalRepositoryDetailsPanel extends RepositoryDetailsPanel<LocalRep
         HBox.setHgrow(pathField, Priority.ALWAYS);
 
         this.setCenter(content);
+        setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 
     @Override
