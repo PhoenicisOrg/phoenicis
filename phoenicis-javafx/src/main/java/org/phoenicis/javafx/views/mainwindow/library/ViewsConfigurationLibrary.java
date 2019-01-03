@@ -22,6 +22,8 @@ import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.common.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
+import org.phoenicis.library.LibraryConfiguration;
+import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -39,6 +41,12 @@ public class ViewsConfigurationLibrary {
     private ThemeConfiguration themeConfiguration;
 
     @Autowired
+    private LibraryConfiguration libraryConfiguration;
+
+    @Autowired
+    private ScriptsConfiguration scriptsConfiguration;
+
+    @Autowired
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
 
     @Autowired
@@ -49,7 +57,10 @@ public class ViewsConfigurationLibrary {
         return new LibraryView(applicationName,
                 containersPath,
                 themeConfiguration.themeManager(),
+                scriptsConfiguration.scriptInterpreter(),
                 phoenicisGlobalConfiguration.objectMapper(),
+                libraryConfiguration.shortcutRunner(),
+                libraryConfiguration.shortcutManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
 
