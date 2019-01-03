@@ -1,15 +1,26 @@
 package org.phoenicis.tools.lnk;
 
-public class BytesUtilities {
-    /*
-     * Convert two little endian bytes into a short note
+class BytesUtilities {
+    /**
+     * Convert little endian bytes into an integer
+     * @param bytes The byte
+     * @param offset The offset to starts with
+     * @param numberOfBytes The number of bytes
+     *
+     * @return An integer
      */
-    static int bytes2short(byte[] bytes, int offset) {
-        return ((bytes[offset + 1] & 0xff) << 8) | (bytes[offset] & 0xff);
+    static int bytes2int(byte[] bytes, int offset, int numberOfBytes) {
+        int result = 0;
+
+        for (int i = 0; i < numberOfBytes; i++) {
+            result |= (bytes[offset + i] & 0xff) << i * 8;
+        }
+
+        return result;
     }
 
     /**
-     * Fetches a string inside a byte array delimited by an offset and the null characte r
+     * Fetches a string inside a byte array delimited by an offset and the null character
      *
      * @param bytes The byte array
      * @param offset The start offset

@@ -8,7 +8,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * This file parses .lnk files
@@ -45,26 +49,129 @@ public class LnkParser extends FilesManipulator {
      * @return a {@link LnkFile}
      */
     public LnkFile parse(byte[] rawLnkShortcutByteArray) {
-        final byte dataFlags = rawLnkShortcutByteArray[20];
-
         final LnkFileAttribute fileAttributes = fetchFilesAttributes(rawLnkShortcutByteArray);
-        final LnkData lnkData = fetchLnkData(rawLnkShortcutByteArray);
+        final LnkDataFlags lnkDataFlag = fetchLnkData(rawLnkShortcutByteArray);
 
         final boolean isDirectory = fileAttributes.hasDirMask();
-        final boolean hasArguments = lnkData.hasArguments();
+        final boolean hasArguments = lnkDataFlag.hasArguments();
 
-        final int fileStart = fetchFileStart(rawLnkShortcutByteArray, lnkData);
+        final int fileStart = fetchFileStart(rawLnkShortcutByteArray, lnkDataFlag);
         final byte[] rawLnkContentWithoutHeader = Arrays.copyOfRange(rawLnkShortcutByteArray, fileStart,
                 rawLnkShortcutByteArray.length - 1);
 
         final boolean isLocal = this.isLnkLocal(rawLnkContentWithoutHeader);
         final String fileName = parseLnkContent(rawLnkContentWithoutHeader, isLocal);
 
-        return new LnkFile(isDirectory, isLocal, fileName, hasArguments);
+        final LnkStringData lnkStringData = fetchStringData(
+                rawLnkContentWithoutHeader,
+                lnkDataFlag);
+
+        return new LnkFile(isDirectory, isLocal, fileName, hasArguments, lnkStringData);
     }
 
-    private LnkData fetchLnkData(byte[] rawLnkShortcutByteArray) {
-        return new LnkData(rawLnkShortcutByteArray);
+    /**
+     * Fetches string data inside an array
+     *
+     * @param rawLnkContentWithoutHeader The byte array content of the sortcut
+     * @param lnkDataFlags The lig data flags
+     * @return a {@link LnkDataFlags}
+     */
+    private LnkStringData fetchStringData(byte[] rawLnkContentWithoutHeader,
+            LnkDataFlags lnkDataFlags) {
+        final int numberOfStrings = lnkDataFlags.fetchNumberOfStringData();
+        final List<String> stringDatas = fetchStringData(rawLnkContentWithoutHeader, numberOfStrings);
+
+        int nameIndex = 0;
+        int relativePathIndex = 1;
+        int workingDirIndex = 2;
+        int commandLineArgumentsIndex = 3;
+        int iconLocationIndex = 4;
+
+        final Optional<String> name;
+        final Optional<String> relativePath;
+        final Optional<String> workingDir;
+        final Optional<String> arguments;
+        final Optional<String> iconLocation;
+
+        if (lnkDataFlags.hasName()) {
+            name = Optional.of(stringDatas.get(nameIndex));
+        } else {
+            name = Optional.empty();
+            relativePathIndex--;
+            workingDirIndex--;
+            commandLineArgumentsIndex--;
+            iconLocationIndex--;
+        }
+
+        if (lnkDataFlags.hasRelativePath()) {
+            relativePath = Optional.of(stringDatas.get(relativePathIndex));
+        } else {
+            relativePath = Optional.empty();
+            workingDirIndex--;
+            commandLineArgumentsIndex--;
+            iconLocationIndex--;
+        }
+
+        if (lnkDataFlags.hasWorkingDir()) {
+            workingDir = Optional.of(stringDatas.get(workingDirIndex));
+        } else {
+            workingDir = Optional.empty();
+            commandLineArgumentsIndex--;
+            iconLocationIndex--;
+        }
+
+        if (lnkDataFlags.hasArguments()) {
+            arguments = Optional.of(stringDatas.get(commandLineArgumentsIndex));
+        } else {
+            arguments = Optional.empty();
+            iconLocationIndex--;
+        }
+
+        if (lnkDataFlags.hasArguments()) {
+            iconLocation = Optional.of(stringDatas.get(iconLocationIndex));
+        } else {
+            iconLocation = Optional.empty();
+        }
+
+        return new LnkStringData(name, relativePath, workingDir, arguments, iconLocation);
+    }
+
+    /**
+     * Fetches string data inside an array
+     *
+     * @param rawLnkContentWithoutHeader Raw lnk file content
+     * @param numberOfStringToRead The number of string datas to read
+     * @return a list of string containing string datas
+     */
+    private List<String> fetchStringData(byte[] rawLnkContentWithoutHeader,
+            int numberOfStringToRead) {
+        final List<String> stringDatas = new ArrayList<>();
+
+        final int linkInfoSize = BytesUtilities.bytes2int(rawLnkContentWithoutHeader, 0, 3);
+
+        int index = linkInfoSize;
+        for (int i = 0; i < numberOfStringToRead; i++) {
+            final int stringSize = BytesUtilities.bytes2int(rawLnkContentWithoutHeader, index, 2);
+
+            final String decodedString = new String(Arrays.copyOfRange(
+                    rawLnkContentWithoutHeader, index + 2, index + (stringSize) * 2), Charset.forName("UTF-16LE"));
+            stringDatas.add(decodedString);
+
+            index = index + (stringSize) * 2 + 2;
+        }
+
+        return stringDatas;
+    }
+
+    /**
+     * Fetches LnkDataFlags
+     *
+     * @param rawLnkShortcutByteArray Raw lnk file content
+     * @return The Data Flags
+     * @see LnkDataFlags
+     */
+    private LnkDataFlags fetchLnkData(byte[] rawLnkShortcutByteArray) {
+        return new LnkDataFlags(rawLnkShortcutByteArray);
     }
 
     /**
@@ -90,7 +197,7 @@ public class LnkParser extends FilesManipulator {
     }
 
     /**
-     * Parse the acutal content of the shortcut
+     * Parse the actual content of the shortcut
      *
      * @param rawLnkShortcutByteArrayWithoutHeader Raw lnk file content
      * @param isLocal Search for local or network filename
@@ -123,25 +230,25 @@ public class LnkParser extends FilesManipulator {
      * @param dataFlags The dataflags that will be used to determine if there is a shell section
      * @return The offset where the sortcuts file starts
      */
-    private int fetchFileStart(byte[] rawLnkContent, LnkData dataFlags) {
-        return LNK_HEADER_SIZE + fetchShellLength(rawLnkContent, dataFlags);
+    private int fetchFileStart(byte[] rawLnkContent, LnkDataFlags dataFlags) {
+        return LNK_HEADER_SIZE + fetchLinkTargetIdListLength(rawLnkContent, dataFlags);
     }
 
     /**
      * Fetches shell section length
      *
      * @param rawLnkContent raw .lnk content
-     * @param dataFlags {@link LnkData to fetch shell}
+     * @param dataFlags {@link LnkDataFlags to fetch shell}
      * @return the size of the section
      */
-    private int fetchShellLength(byte[] rawLnkContent, LnkData dataFlags) {
-        int shellLength = 0;
-        if (dataFlags.hasShell()) {
+    private int fetchLinkTargetIdListLength(byte[] rawLnkContent, LnkDataFlags dataFlags) {
+        int linkTargetIdListLength = 0;
+        if (dataFlags.hasLinkTargetIdList()) {
             final int lengthMarkerSize = 2;
-            shellLength = BytesUtilities.bytes2short(rawLnkContent, LNK_HEADER_SIZE) + lengthMarkerSize;
+            linkTargetIdListLength = BytesUtilities.bytes2int(rawLnkContent, LNK_HEADER_SIZE, 2) + lengthMarkerSize;
         }
 
-        return shellLength;
+        return linkTargetIdListLength;
     }
 
     /**

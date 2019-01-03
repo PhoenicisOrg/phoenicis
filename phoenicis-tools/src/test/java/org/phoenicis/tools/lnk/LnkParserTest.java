@@ -44,4 +44,21 @@ public class LnkParserTest {
     public void testLnkParser_testHasArguments_arguments() {
         assertTrue(game2.isHasArguments());
     }
+
+    @Test
+    public void testLnkParser_fetchArguments_example2() {
+        assertEquals(
+                "-conf \"..\\dosboxTeenagent.conf\" -conf \"..\\dosboxTeenagent_single.conf\" -noconsole -c \"exit\"",
+                game2.getStringData().getCommandLineArguments().get());
+    }
+
+    @Test
+    public void testLnkParser_fetchIconLocation_example2() {
+        assertEquals("c:\\gog games\\teenagent\\goggame-1207658753.ico", game2.getStringData().getIconLocation().get());
+    }
+
+    @Test
+    public void testLnkParser_fetchIconLocation_example1() {
+        assertEquals("C:\\GOG Games\\XIII\\gfw_high.ico", game1.getStringData().getIconLocation().get());
+    }
 }
