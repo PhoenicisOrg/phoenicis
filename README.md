@@ -15,10 +15,9 @@ Supported engines:
 ------------
 
 ## Build and Run
-### Linux
 Dependencies:
-- Java 10+ (OpenJDK recommended)
-- Maven
+* Java 10+
+* Maven
 
 Build
 ```
@@ -29,17 +28,6 @@ Run
 mvn install
 cd phoenicis-javafx/
 mvn exec:java
-```
-
-### OSX
-Build
-```
-mvn clean package install
-```
-Run
-```
-cd phoenicis-javafx
-mvn jfx:native
 ```
 
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
