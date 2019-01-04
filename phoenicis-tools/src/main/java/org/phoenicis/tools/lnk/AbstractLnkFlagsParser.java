@@ -2,7 +2,7 @@ package org.phoenicis.tools.lnk;
 
 /**
  * This class represent a byte flags.
- * It helps to apply a mask and read them
+ * It helps to apply a mask on the byte flags and allows reading them
  */
 class AbstractLnkFlagsParser {
     protected final byte[] rawBytes;
