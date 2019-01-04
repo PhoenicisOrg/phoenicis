@@ -2,7 +2,7 @@ package org.phoenicis.tools.lnk;
 
 /**
  * Parsed data immutable structure.
- * Contains only data
+ * Contains the lnk file data
  */
 public class LnkFile {
     private final boolean isDirectory;

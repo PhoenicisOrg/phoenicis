@@ -3,6 +3,8 @@ package org.phoenicis.tools.lnk;
 /**
  * The LinkFlags structure defines bits that specify which shell link structures are present in the file format after
  * the ShellLinkHeader structure (section 2.1).
+ *
+ * https://msdn.microsoft.com/en-us/library/dd871305.aspx
  */
 class LnkLinkFlagsParser extends AbstractLnkFlagsParser {
     private static final int DATA_FLAG_OFFSET = 20;
