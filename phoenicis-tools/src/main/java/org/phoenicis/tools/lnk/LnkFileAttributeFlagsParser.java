@@ -1,14 +1,16 @@
 package org.phoenicis.tools.lnk;
 
 /**
- * Lnk file attribute flag
+ * The FileAttributesFlags structure defines bits that specify the file attributes of the link target, if the target is
+ * a file system item. File attributes can be used if the link target is not available, or if accessing the target would
+ * be inefficient. It is possible for the target items attributes to be out of sync with this value.
  */
-class LnkFileAttribute extends AbstractLnkFlags {
+class LnkFileAttributeFlagsParser extends AbstractLnkFlagsParser {
     private static final int FILE_ATTRIBUTES_OFFSET = 24;
 
     private final static byte FILE_ATTRIBUTE_DIRECTORY = (byte) 0x10;
 
-    LnkFileAttribute(byte[] rawLnkContent) {
+    LnkFileAttributeFlagsParser(byte[] rawLnkContent) {
         super(new byte[] {
                 rawLnkContent[FILE_ATTRIBUTES_OFFSET],
                 rawLnkContent[FILE_ATTRIBUTES_OFFSET + 1],

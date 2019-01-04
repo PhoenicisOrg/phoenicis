@@ -16,6 +16,8 @@ import java.util.Optional;
 
 /**
  * This file parses .lnk files
+ * LNK is a file extension for a shortcut file used by Microsoft Windows to point to an executable file.
+ *
  * https://msdn.microsoft.com/en-us/library/dd871305.aspx
  */
 @Safe
@@ -49,8 +51,8 @@ public class LnkParser extends FilesManipulator {
      * @return a {@link LnkFile}
      */
     public LnkFile parse(byte[] rawLnkShortcutByteArray) {
-        final LnkFileAttribute fileAttributes = fetchFilesAttributes(rawLnkShortcutByteArray);
-        final LnkDataFlags lnkDataFlag = fetchLnkData(rawLnkShortcutByteArray);
+        final LnkFileAttributeFlagsParser fileAttributes = fetchFilesAttributes(rawLnkShortcutByteArray);
+        final LnkLinkFlagsParser lnkDataFlag = fetchLnkData(rawLnkShortcutByteArray);
 
         final boolean isDirectory = fileAttributes.hasDirMask();
         final boolean hasArguments = lnkDataFlag.hasArguments();
@@ -74,10 +76,10 @@ public class LnkParser extends FilesManipulator {
      *
      * @param rawLnkContentWithoutHeader The byte array content of the sortcut
      * @param lnkDataFlags The lig data flags
-     * @return a {@link LnkDataFlags}
+     * @return a {@link LnkLinkFlagsParser}
      */
     private LnkStringData fetchStringData(byte[] rawLnkContentWithoutHeader,
-            LnkDataFlags lnkDataFlags) {
+            LnkLinkFlagsParser lnkDataFlags) {
         final int numberOfStrings = lnkDataFlags.fetchNumberOfStringData();
         final List<String> stringDatas = fetchStringData(rawLnkContentWithoutHeader, numberOfStrings);
 
@@ -164,14 +166,14 @@ public class LnkParser extends FilesManipulator {
     }
 
     /**
-     * Fetches LnkDataFlags
+     * Fetches LnkLinkFlagsParser
      *
      * @param rawLnkShortcutByteArray Raw lnk file content
      * @return The Data Flags
-     * @see LnkDataFlags
+     * @see LnkLinkFlagsParser
      */
-    private LnkDataFlags fetchLnkData(byte[] rawLnkShortcutByteArray) {
-        return new LnkDataFlags(rawLnkShortcutByteArray);
+    private LnkLinkFlagsParser fetchLnkData(byte[] rawLnkShortcutByteArray) {
+        return new LnkLinkFlagsParser(rawLnkShortcutByteArray);
     }
 
     /**
@@ -230,7 +232,7 @@ public class LnkParser extends FilesManipulator {
      * @param dataFlags The dataflags that will be used to determine if there is a shell section
      * @return The offset where the sortcuts file starts
      */
-    private int fetchFileStart(byte[] rawLnkContent, LnkDataFlags dataFlags) {
+    private int fetchFileStart(byte[] rawLnkContent, LnkLinkFlagsParser dataFlags) {
         return LNK_HEADER_SIZE + fetchLinkTargetIdListLength(rawLnkContent, dataFlags);
     }
 
@@ -238,10 +240,10 @@ public class LnkParser extends FilesManipulator {
      * Fetches shell section length
      *
      * @param rawLnkContent raw .lnk content
-     * @param dataFlags {@link LnkDataFlags to fetch shell}
+     * @param dataFlags {@link LnkLinkFlagsParser to fetch shell}
      * @return the size of the section
      */
-    private int fetchLinkTargetIdListLength(byte[] rawLnkContent, LnkDataFlags dataFlags) {
+    private int fetchLinkTargetIdListLength(byte[] rawLnkContent, LnkLinkFlagsParser dataFlags) {
         int linkTargetIdListLength = 0;
         if (dataFlags.hasLinkTargetIdList()) {
             final int lengthMarkerSize = 2;
@@ -255,9 +257,9 @@ public class LnkParser extends FilesManipulator {
      * Fetches the file attributes
      *
      * @param rawLnkContent raw .lnk content
-     * @return a {@link LnkFileAttribute} property
+     * @return a {@link LnkFileAttributeFlagsParser} property
      */
-    private LnkFileAttribute fetchFilesAttributes(byte[] rawLnkContent) {
-        return new LnkFileAttribute(rawLnkContent);
+    private LnkFileAttributeFlagsParser fetchFilesAttributes(byte[] rawLnkContent) {
+        return new LnkFileAttributeFlagsParser(rawLnkContent);
     }
 }

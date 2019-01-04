@@ -1,10 +1,10 @@
 package org.phoenicis.tools.lnk;
 
 /**
- * Lnk format data flat
- *
+ * The LinkFlags structure defines bits that specify which shell link structures are present in the file format after
+ * the ShellLinkHeader structure (section 2.1).
  */
-class LnkDataFlags extends AbstractLnkFlags {
+class LnkLinkFlagsParser extends AbstractLnkFlagsParser {
     private static final int DATA_FLAG_OFFSET = 20;
 
     private final static byte MASK_HAS_LINK_TARGET_ID_LIST = (byte) 0x01;
@@ -14,7 +14,7 @@ class LnkDataFlags extends AbstractLnkFlags {
     private final static byte MASK_HAS_ARGUMENTS = (byte) 0x20;
     private final static byte MASK_ICON_LOCATION = (byte) 0x40;
 
-    LnkDataFlags(byte[] rawLnkContent) {
+    LnkLinkFlagsParser(byte[] rawLnkContent) {
         super(new byte[] {
                 rawLnkContent[DATA_FLAG_OFFSET],
                 rawLnkContent[DATA_FLAG_OFFSET + 1],

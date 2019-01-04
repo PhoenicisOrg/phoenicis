@@ -1,12 +1,13 @@
 package org.phoenicis.tools.lnk;
 
 /**
- * This class represent a byte flag
+ * This class represent a byte flags.
+ * It helps to apply a mask and read them
  */
-class AbstractLnkFlags {
+class AbstractLnkFlagsParser {
     protected final byte[] rawBytes;
 
-    protected AbstractLnkFlags(byte[] rawBytes) {
+    protected AbstractLnkFlagsParser(byte[] rawBytes) {
         this.rawBytes = rawBytes;
     }
 
