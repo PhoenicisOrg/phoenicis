@@ -68,20 +68,33 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         descriptionLabel.textProperty().bind(description);
         descriptionLabel.setWrapText(true);
 
-        final GridPane gridPane = new GridPane();
-        gridPane.getStyleClass().add("grid");
-
-        ColumnConstraints titleColumn = new ColumnConstraintsWithPercentage(30);
-        ColumnConstraints valueColumn = new ColumnConstraintsWithPercentage(70);
-
-        gridPane.getColumnConstraints().addAll(titleColumn, valueColumn);
-
-        properties.addListener((Observable invalidation) -> updateProperties(gridPane));
-        updateProperties(gridPane);
+        final GridPane propertiesGrid = createPropertiesGrid();
 
         final Region spacer = new Region();
         spacer.getStyleClass().add("detailsButtonSpacer");
 
+        final GridPane controlButtons = createControlButtons();
+
+        return new VBox(descriptionLabel, propertiesGrid, spacer, controlButtons);
+    }
+
+    private GridPane createPropertiesGrid() {
+        final GridPane propertiesGrid = new GridPane();
+        propertiesGrid.getStyleClass().add("grid");
+
+        ColumnConstraints titleColumn = new ColumnConstraintsWithPercentage(30);
+        ColumnConstraints valueColumn = new ColumnConstraintsWithPercentage(70);
+
+        propertiesGrid.getColumnConstraints().addAll(titleColumn, valueColumn);
+
+        // ensure that changes to the properties map result in updates to the GridPane
+        properties.addListener((Observable invalidation) -> updateProperties(propertiesGrid));
+        updateProperties(propertiesGrid);
+
+        return propertiesGrid;
+    }
+
+    private GridPane createControlButtons() {
         final GridPane controlButtons = new GridPane();
         controlButtons.getStyleClass().add("shortcut-control-button-group");
 
@@ -96,23 +109,22 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         runButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutRun())
                 .ifPresent(onShortcutRun -> onShortcutRun.accept(getControl().getShortcut())));
         GridPane.setHalignment(runButton, HPos.CENTER);
-        controlButtons.add(runButton, 0, 0);
 
         final Button stopButton = new Button(tr("Close"));
         stopButton.getStyleClass().addAll("shortcutButton", "stopButton");
         stopButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutStop())
                 .ifPresent(onShortcutStop -> onShortcutStop.accept(getControl().getShortcut())));
         GridPane.setHalignment(stopButton, HPos.CENTER);
-        controlButtons.add(stopButton, 1, 0);
 
         final Button uninstallButton = new Button(tr("Uninstall"));
         uninstallButton.getStyleClass().addAll("shortcutButton", "uninstallButton");
         uninstallButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutUninstall())
                 .ifPresent(onShortcutUninstall -> onShortcutUninstall.accept(getControl().getShortcut())));
         GridPane.setHalignment(uninstallButton, HPos.CENTER);
-        controlButtons.add(uninstallButton, 2, 0);
 
-        return new VBox(descriptionLabel, gridPane, spacer, controlButtons);
+        controlButtons.addRow(0, runButton, stopButton, uninstallButton);
+
+        return controlButtons;
     }
 
     private void updateProperties(final GridPane propertiesGrid) {
@@ -124,11 +136,11 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
             final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
             keyLabel.getStyleClass().add("captionTitle");
             GridPane.setValignment(keyLabel, VPos.TOP);
-            propertiesGrid.add(keyLabel, 0, row);
 
             final Label valueLabel = new Label(entry.getValue().toString());
             valueLabel.setWrapText(true);
-            propertiesGrid.add(valueLabel, 1, row);
+
+            propertiesGrid.addRow(row, keyLabel, valueLabel);
         }
     }
 
