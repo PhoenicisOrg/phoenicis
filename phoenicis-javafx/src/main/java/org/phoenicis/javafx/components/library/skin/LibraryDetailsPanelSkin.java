@@ -30,11 +30,20 @@ import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * {@link DetailsPanelBaseSkin} implementation class used inside the {@link LibraryDetailsPanel}
+ */
 public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetailsPanel, LibraryDetailsPanelSkin> {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryController.class);
 
-    private final ObservableMap<String, Object> properties;
+    /**
+     * The properties of the currently selected {@link ShortcutDTO}
+     */
+    private final ObservableMap<String, Object> shortcutProperties;
 
+    /**
+     * The description of the currently selected {@link ShortcutDTO}
+     */
     private final StringProperty description;
 
     /**
@@ -45,7 +54,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
     public LibraryDetailsPanelSkin(LibraryDetailsPanel control) {
         super(control);
 
-        this.properties = FXCollections.observableHashMap();
+        this.shortcutProperties = FXCollections.observableHashMap();
         this.description = new SimpleStringProperty();
     }
 
@@ -62,6 +71,9 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         updateShortcut();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Node createContent() {
         final Label descriptionLabel = new Label();
@@ -78,6 +90,11 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         return new VBox(descriptionLabel, propertiesGrid, spacer, controlButtons);
     }
 
+    /**
+     * Creates a new {@link GridPane} containing the properties of the selected shortcut
+     *
+     * @return a new {@link GridPane} containing the properties of the selected shortcut
+     */
     private GridPane createPropertiesGrid() {
         final GridPane propertiesGrid = new GridPane();
         propertiesGrid.getStyleClass().add("grid");
@@ -87,13 +104,25 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
 
         propertiesGrid.getColumnConstraints().addAll(titleColumn, valueColumn);
 
-        // ensure that changes to the properties map result in updates to the GridPane
-        properties.addListener((Observable invalidation) -> updateProperties(propertiesGrid));
+        // ensure that changes to the shortcutProperties map result in updates to the GridPane
+        shortcutProperties.addListener((Observable invalidation) -> updateProperties(propertiesGrid));
+        // initialise the properties grid correct
         updateProperties(propertiesGrid);
 
         return propertiesGrid;
     }
 
+    /**
+     * Creates a new {@link GridPane} containing the control buttons for the selected shortcut.
+     * These control buttons consist of:
+     * <ul>
+     * <li>The run button</li>
+     * <li>The stop button</li>
+     * <li>The uninstall button</li>
+     * </ul>
+     *
+     * @return A new {@link GridPane} containing the control buttons for the selected shortcut
+     */
     private GridPane createControlButtons() {
         final GridPane controlButtons = new GridPane();
         controlButtons.getStyleClass().add("shortcut-control-button-group");
@@ -127,10 +156,15 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         return controlButtons;
     }
 
+    /**
+     * Updates the shortcutProperties of the shortcut in the given {@link GridPane propertiesGrid}
+     *
+     * @param propertiesGrid The shortcutProperties grid
+     */
     private void updateProperties(final GridPane propertiesGrid) {
         propertiesGrid.getChildren().clear();
 
-        for (Map.Entry<String, Object> entry : properties.entrySet()) {
+        for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
             final int row = propertiesGrid.getRowCount();
 
             final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
@@ -144,6 +178,9 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
         }
     }
 
+    /**
+     * Updates the shortcut of this {@link LibraryDetailsPanelSkin} instance
+     */
     private void updateShortcut() {
         final ShortcutDTO shortcut = getControl().getShortcut();
 
@@ -157,15 +194,21 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
                             // nothing
                         });
 
-                properties.clear();
-                properties.putAll(shortcutProperties);
+                this.shortcutProperties.clear();
+                this.shortcutProperties.putAll(shortcutProperties);
             } catch (IOException e) {
                 LOGGER.error("An error occurred during a Shortcut update", e);
             }
         }
     }
 
-    private String decamelize(String s) {
-        return StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(s), ' '));
+    /**
+     * Decamelize the given string
+     *
+     * @param string The string to decamelize
+     * @return The decamelized string
+     */
+    private String decamelize(String string) {
+        return StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(string), ' '));
     }
 }
