@@ -9,21 +9,44 @@ import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.function.Consumer;
 
+/**
+ * A details panel for the library tab used to show the details for a selected shortcut
+ */
 public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, LibraryDetailsPanelSkin> {
+    /**
+     * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
+     */
     private final ObjectMapper objectMapper;
 
+    /**
+     * The callback method for when a {@link ShortcutDTO} should be executed
+     */
     private final ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun;
 
+    /**
+     * The callback method for when a {@link ShortcutDTO} should be stopped
+     */
     private final ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop;
 
+    /**
+     * The callback method for when a {@link ShortcutDTO} should be uninstalled
+     */
     private final ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall;
 
+    /**
+     * The currently shown {@link ShortcutDTO} object
+     */
     private final ObjectProperty<ShortcutDTO> shortcut;
 
     /**
      * Constructor
      *
+     * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
+     * @param shortcut The currently shown {@link ShortcutDTO} object
      * @param onClose The callback for close button clicks
+     * @param onShortcutRun The callback method for when a {@link ShortcutDTO} should be executed
+     * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
+     * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
      */
     public LibraryDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Runnable> onClose, ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
@@ -40,12 +63,18 @@ public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, L
 
     /**
      * Constructor
+     *
+     * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
+     * @param shortcut The currently shown {@link ShortcutDTO} object
      */
     public LibraryDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut) {
         this(objectMapper, shortcut, new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
                 new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public LibraryDetailsPanelSkin createSkin() {
         return new LibraryDetailsPanelSkin(this);
