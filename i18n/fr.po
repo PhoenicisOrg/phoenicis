@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-02 12:20+0000\n"
-"PO-Revision-Date: 2019-01-03 09:38\n"
+"PO-Revision-Date: 2019-01-04 18:59\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -200,7 +200,7 @@ msgstr "Choisissez le type de dépôt..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
 msgid "Choose Directory..."
-msgstr ""
+msgstr "Choisissez le répertoire..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
 msgid "Choose the location of the local repository"
@@ -278,7 +278,7 @@ msgstr "Supprimer le conteneur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:118
 msgid "Open in file browser"
-msgstr ""
+msgstr "Ouvrir dans l'explorateur de fichier"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
@@ -291,7 +291,7 @@ msgstr "Exécuter"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable..."
-msgstr ""
+msgstr "Choisissez l'exécutable..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:46
@@ -391,7 +391,7 @@ msgstr "Miniature :"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:141
 msgid "Browse..."
-msgstr ""
+msgstr "Parcourir..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
@@ -495,7 +495,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer le conteneur {0} ?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:180
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr ""
+msgstr "Impossible d’ouvrir le conteneur {0} dans l’explorateur de fichiers"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:204
 msgid "Loading containers failed."
@@ -525,7 +525,7 @@ msgstr "Êtes-vous sûr de vouloir désinstaller {0}?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:95
 #, java-format
 msgid "Error while uninstalling {0}"
-msgstr ""
+msgstr "Erreur lors de la désinstallation de {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:116
 msgid "Error while running script"
@@ -587,7 +587,7 @@ msgstr "Le script s'est terminé de façon inattendue"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
-msgstr ""
+msgstr "Vérification du fichier..."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
@@ -616,5 +616,5 @@ msgstr "{0} n'est pas responsable de ce qui pourrait se produire en utilisant ce
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click Next to start."
-msgstr ""
+msgstr "Cliquer sur \"Suivant\" pour commencer."
 
