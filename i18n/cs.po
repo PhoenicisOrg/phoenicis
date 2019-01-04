@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-02 12:20+0000\n"
-"PO-Revision-Date: 2019-01-04 09:42\n"
+"PO-Revision-Date: 2019-01-04 09:57\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -278,20 +278,20 @@ msgstr "Odstranit kontejner"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:118
 msgid "Open in file browser"
-msgstr ""
+msgstr "Otevřít v prohlížeči souborů"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
 msgid "Tools"
-msgstr ""
+msgstr "Nástroje"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:57
 msgid "Run executable"
-msgstr ""
+msgstr "Otevřít spustitelný soubor"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable..."
-msgstr ""
+msgstr "Vyberte spustitelný soubor..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:46
@@ -300,67 +300,67 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
 msgid "Retry"
-msgstr ""
+msgstr "Opakovat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:61
 #, java-format
 msgid "Reason: {0}"
-msgstr ""
+msgstr "Důvod: {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:85
 msgid "Apps"
-msgstr ""
+msgstr "Aplikace"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:92
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:101
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsSidebar.java:84
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:101
 msgid "Testing"
-msgstr ""
+msgstr "Testování"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:105
 msgid "Patch required"
-msgstr ""
+msgstr "Je potřeba patch"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:109
 msgid "Commercial"
-msgstr ""
+msgstr "Komerční"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:114
 msgid "All Operating Systems"
-msgstr ""
+msgstr "Všechny operační systémy"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsSidebar.java:118
 msgid "Filters"
-msgstr ""
+msgstr "Filtry"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:135
 msgid "Create shortcut"
-msgstr ""
+msgstr "Vytvořit zástupce"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:139
 msgid "Run a script"
-msgstr ""
+msgstr "Spustit skript"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:143
 msgid "Open Script..."
-msgstr ""
+msgstr "Otevřené skript..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:153
 #, java-format
 msgid "{0} console"
-msgstr ""
+msgstr "konzole {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:157
 msgid "Advanced Tools"
-msgstr ""
+msgstr "Pokročilé nástroje"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:73
 msgid "Library"
-msgstr ""
+msgstr "Knihovna"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:98
 msgid "My applications"
@@ -368,75 +368,75 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:86
 msgid "Run"
-msgstr ""
+msgstr "Spustit"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:90
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryPanel.java:94
 msgid "Uninstall"
-msgstr ""
+msgstr "Odinstalovat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:84
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:105
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:102
 msgid "Miniature:"
-msgstr ""
+msgstr "Miniatura:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:112
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:141
 msgid "Browse..."
-msgstr ""
+msgstr "Procházet..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:79
 msgid "Please specify a name!"
-msgstr ""
+msgstr "Zadejte název!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:82
 msgid "Category:"
-msgstr ""
+msgstr "Kategorie:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:90
 msgid "Please specify a category!"
-msgstr ""
+msgstr "Zadejte kategorii!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:93
 msgid "Description:"
-msgstr ""
+msgstr "Popis:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:131
 msgid "Please specify a valid miniature!"
-msgstr ""
+msgstr "Zadejte prosím platnou miniatůru!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:134
 msgid "Executable:"
-msgstr ""
+msgstr "Spustitelný soubor:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:161
 msgid "Please specify a valid executable!"
-msgstr ""
+msgstr "Zadejte platný spustitelný soubor!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:166
 msgid "Create"
-msgstr ""
+msgstr "Vytvořit"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:65
 msgid "Installations"
-msgstr ""
+msgstr "Instalace"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
-msgstr ""
+msgstr "Konzole"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:98
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:70
@@ -445,16 +445,16 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:110
 msgid "Installed"
-msgstr ""
+msgstr "Nainstalované"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:115
 msgid "Not installed"
-msgstr ""
+msgstr "Není nainstalováno"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:73
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
 msgid "Install"
-msgstr ""
+msgstr "Instalovat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:81
 msgid "An error occurred while installing the engine"
@@ -462,7 +462,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:92
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:100
 msgid "An error occurred while deleting the engine"
@@ -484,22 +484,22 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:135
 #, java-format
 msgid "Delete {0} container"
-msgstr ""
+msgstr "Odstranit kontejner {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:136
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
-msgstr ""
+msgstr "Přejete si smazat {0} kontejner?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:168
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:180
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr ""
+msgstr "Nepodařilo se otevřít kontejner {0} v prohlížeči"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:204
 msgid "Loading containers failed."
-msgstr ""
+msgstr "Načtení kontejnerů se nezdařilo."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:98
 #, java-format
@@ -509,7 +509,8 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:49
 msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
-msgstr ""
+msgstr "Připojení k repozitaři se nezdařilo. \n"
+"Zkontrolujte své připojení a akci opakujte."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:89
 #, java-format
