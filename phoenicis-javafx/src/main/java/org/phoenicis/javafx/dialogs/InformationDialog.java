@@ -83,10 +83,7 @@ public class InformationDialog extends Alert {
             dialog.setContentText(message);
             dialog.setResizable(resizable);
 
-            dialog.getDialogPane().getChildren().stream()
-                    .filter(node -> node instanceof Label)
-                    .map(node -> (Label) node)
-                    .forEach(label -> label.setMinHeight(Region.USE_PREF_SIZE));
+            dialog.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 
             return dialog;
         }
