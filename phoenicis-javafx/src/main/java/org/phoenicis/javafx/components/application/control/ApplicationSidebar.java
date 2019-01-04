@@ -2,15 +2,12 @@ package org.phoenicis.javafx.components.application.control;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.application.skin.ApplicationSidebarSkin;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 /**
  * A sidebar implementation for the applications tab
@@ -49,24 +46,21 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     /**
      * Constructor
      *
+     * @param filter The application filter containing all filter properties
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
-     * @param operatingSystemFetcher The operating system fetcher
-     * @param fuzzySearchRatio The fuzzy search ratio
      */
-    public ApplicationSidebar(ObservableList<CategoryDTO> items, ObjectProperty<ListWidgetType> selectedListWidget,
-            OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
-        super(items, selectedListWidget);
+    public ApplicationSidebar(ApplicationFilter filter, ObservableList<CategoryDTO> items,
+            ObjectProperty<ListWidgetType> selectedListWidget) {
+        super(items, filter.filterTextProperty(), selectedListWidget);
 
-        this.filterCategory = new SimpleObjectProperty<>();
-        this.containCommercialApplications = new SimpleBooleanProperty();
-        this.containRequiresPatchApplications = new SimpleBooleanProperty();
-        this.containTestingApplications = new SimpleBooleanProperty();
-        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
+        this.filter = filter;
 
-        this.filter = new ApplicationFilter(operatingSystemFetcher, fuzzySearchRatio, searchTermProperty(),
-                filterCategory, containCommercialApplications, containRequiresPatchApplications,
-                containTestingApplications, containAllOSCompatibleApplications);
+        this.filterCategory = filter.filterCategoryProperty();
+        this.containCommercialApplications = filter.containCommercialApplicationsProperty();
+        this.containRequiresPatchApplications = filter.containRequiresPatchApplicationsProperty();
+        this.containTestingApplications = filter.containTestingApplicationsProperty();
+        this.containAllOSCompatibleApplications = filter.containAllOSCompatibleApplicationsProperty();
     }
 
     /**

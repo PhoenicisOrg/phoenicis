@@ -41,16 +41,6 @@ public abstract class ExtendedSidebarBase<E, C extends ExtendedSidebarBase<E, C,
         this.selectedListWidget = selectedListWidget;
     }
 
-    /**
-     * Constructor
-     *
-     * @param items The items shown inside a toggle button group in the sidebar
-     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
-     */
-    protected ExtendedSidebarBase(ObservableList<E> items, ObjectProperty<ListWidgetType> selectedListWidget) {
-        this(items, new SimpleStringProperty(""), selectedListWidget);
-    }
-
     public String getSearchTerm() {
         return searchTerm.get();
     }

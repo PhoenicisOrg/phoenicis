@@ -1,8 +1,6 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.views.AbstractFilter;
@@ -37,20 +35,18 @@ public class ApplicationFilter extends AbstractFilter {
 
     private final BooleanProperty containAllOSCompatibleApplications;
 
-    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio,
-            StringProperty filterText, ObjectProperty<CategoryDTO> filterCategory,
-            BooleanProperty containCommercialApplications, BooleanProperty containRequiresPatchApplications,
-            BooleanProperty containTestingApplications, BooleanProperty containAllOSCompatibleApplications) {
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
         super();
 
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.fuzzySearchRatio = fuzzySearchRatio;
-        this.filterText = filterText;
-        this.filterCategory = filterCategory;
-        this.containCommercialApplications = containCommercialApplications;
-        this.containRequiresPatchApplications = containRequiresPatchApplications;
-        this.containTestingApplications = containTestingApplications;
-        this.containAllOSCompatibleApplications = containAllOSCompatibleApplications;
+
+        this.filterText = new SimpleStringProperty();
+        this.filterCategory = new SimpleObjectProperty<>();
+        this.containCommercialApplications = new SimpleBooleanProperty();
+        this.containRequiresPatchApplications = new SimpleBooleanProperty();
+        this.containTestingApplications = new SimpleBooleanProperty();
+        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
     }
 
     /**

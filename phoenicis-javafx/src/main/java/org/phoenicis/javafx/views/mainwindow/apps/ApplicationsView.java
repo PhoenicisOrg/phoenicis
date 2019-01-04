@@ -98,9 +98,9 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
         this.selectedListWidget = new SimpleObjectProperty<>();
         this.selectedApplication = new SimpleObjectProperty<>();
 
-        ApplicationSidebar applicationSidebar = createApplicationSidebar();
+        this.filter = new ApplicationFilter(operatingSystemFetcher, javaFxSettingsManager.getFuzzySearchRatio());
 
-        this.filter = applicationSidebar.getFilter();
+        ApplicationSidebar applicationSidebar = createApplicationSidebar();
 
         this.availableApps = createApplicationListWidget();
 
@@ -173,8 +173,7 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        final ApplicationSidebar sidebar = new ApplicationSidebar(sortedCategories, selectedListWidget,
-                operatingSystemFetcher, javaFxSettingsManager.getFuzzySearchRatio());
+        final ApplicationSidebar sidebar = new ApplicationSidebar(filter, sortedCategories, selectedListWidget);
 
         // set the default selection
         sidebar.setSelectedListWidget(javaFxSettingsManager.getAppsListType());
