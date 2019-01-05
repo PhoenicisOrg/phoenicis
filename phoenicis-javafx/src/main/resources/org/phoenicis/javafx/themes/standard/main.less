@@ -248,20 +248,25 @@
 /*******************************************************/
 /*********************** library ***********************/
 /*******************************************************/
-.shortcutButton {
-  -fx-background-color: transparent;
-  -fx-label-padding: 2.5em 0 0 0;
-  -fx-background-size: 3em;
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: top;
-  -fx-cursor: hand;
+.shortcut-control-button-group {
+  -fx-alignment: center;
 
-  &:hover {
+  .shortcutButton {
+    -fx-label-padding: 2.5em 0 0 0;
+    -fx-background-size: 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
-  }
+    -fx-cursor: hand;
 
-  &:pressed {
-    -fx-border-color: #D3D3D3;
+    &:hover {
+      -fx-border-color: transparent;
+    }
+
+    &:pressed {
+      -fx-border-color: #D3D3D3;
+    }
   }
 }
 
