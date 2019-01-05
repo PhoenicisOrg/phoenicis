@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 12:20+0000\n"
-"PO-Revision-Date: 2019-01-04 18:59\n"
+"POT-Creation-Date: 2019-01-05 11:21+0000\n"
+"PO-Revision-Date: 2019-01-05 11:22\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -83,36 +83,43 @@ msgstr "Volgende"
 msgid "Question"
 msgstr "Vraag"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:83
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:97
-msgid "Restore defaults (requires restart)"
-msgstr "Standaardinstellingen herstellen (opnieuw opstarten noodzakelijk)"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:84
+msgid "Restore defaults"
+msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:110
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:88
+msgid "Restored default repositories"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:89
+msgid "Please restart such that the changes can take effect."
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:118
 msgid "Repository Settings"
 msgstr "Repository-instellingen"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:115
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:123
 msgid "Repository:"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:134
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:142
 msgid "Add"
 msgstr "Toevoegen"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:151
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:159
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:180
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:188
 msgid "The value in front of each repository is its priority. The higher the priority is, the more important the scripts inside the repository are."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:192
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:200
 msgid "Fetch updates from the repositories to retrieve latest script versions"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:195
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:203
 msgid "Refresh Repositories"
 msgstr ""
 
@@ -157,6 +164,10 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
 msgid "Scale the user interface"
 msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:97
+msgid "Restore defaults (requires restart)"
+msgstr "Standaardinstellingen herstellen (opnieuw opstarten noodzakelijk)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
 msgid "Git-URL:"
