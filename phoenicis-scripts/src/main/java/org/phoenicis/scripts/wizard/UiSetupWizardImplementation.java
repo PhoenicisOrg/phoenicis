@@ -305,4 +305,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
         return title;
     }
 
+    @Override
+    public BrowserControl createBrowser(String textToShow) {
+        return messageSender.runAndWait(message -> setupUi.showBrowser(message, textToShow));
+    }
 }

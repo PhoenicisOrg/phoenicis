@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <application>
-  <id type="desktop">org.phoenicis.javafx</id>
+  <id type="desktop">org.phoenicis.playonlinux</id>
   <metadata_license>CC0-1.0</metadata_license>
-  <name>Phoenicis</name>
+  <name>Phoenicis PlayOnLinux</name>
   <summary>Install and run Windows software on Linux</summary>
   <summary xml:lang="de">Installiere und starte Windows Software unter Linux</summary>
   <description>
-    <p>Phoenicis is a front-end for Wine.</p>
+    <p>Phoenicis PlayOnLinux is a graphical front-end for Wine.</p>
   </description>
   <description xml:lang="de">
-    <p>Phoenicis ist ein Front-End für Wine.</p>
+    <p>Phoenicis PlayOnLinux ist ein graphisches Front-End für Wine.</p>
   </description>
   <categories>
+    <category>Game</category>
     <category>Utility</category>
   </categories>
   <url type="homepage">https://phoenicis.org/</url>
   <url type="help">https://github.com/PhoenicisOrg/phoenicis/issues</url>
-  <project_license>GPL-3.0</project_license>
+  <url type="translate">https://crowdin.com/project/phoenicis</url>
+  <project_license>LGPL-3.0</project_license>
   <developer_name>PhoenicisOrg</developer_name>
+  <releases>
+    <release version="5.0-alpha-2" type="development" date="2018-12-29"/>
+  </releases>
   <screenshots>
     <screenshot type="default">
-      <caption>Apps tab</caption>
-      <image type="source" width="1.904" height="1.424">https://phoenicis.org/ui/phoenicis_screenshot.png</image>
+      <caption>Browse and install applications</caption>
+      <image type="source" width="850" height="578">https://user-images.githubusercontent.com/3973260/50538511-29159100-0b71-11e9-8afc-2b22b8cf71d1.png</image>
     </screenshot>
   </screenshots>
-    <content_rating type="oars-1.1">
+  <content_rating type="oars-1.1">
     <content_attribute id="violence-cartoon">intense</content_attribute>
     <content_attribute id="violence-fantasy">intense</content_attribute>
     <content_attribute id="violence-realistic">intense</content_attribute>

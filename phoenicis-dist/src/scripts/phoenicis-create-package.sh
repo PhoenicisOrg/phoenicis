@@ -34,7 +34,7 @@ fi
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
 PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
-PHOENICIS_MODULES="java.base,javafx.base,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn"
+PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn"
 PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION")
 
 
@@ -62,7 +62,43 @@ fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     jpackager create-image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"  --linux-bundle-name "phoenicis-playonlinux"
-    jpackager create-installer deb "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}" --linux-package-deps "unzip, wget, xterm | x-terminal-emulator, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind" --linux-deb-maintainer "PlayOnLinux Packaging <packages@playonlinux.com>" --linux-bundle-name "phoenicis-playonlinux"
+
+    packageName="Phoenicis_$VERSION"
+    cd "$PHOENICIS_TARGET"
+    rmdir packages/PhoenicisPlayOnLinux/
+    rm -rf "packages/phoenicis" 2> /dev/null
+    mv packages/Phoenicis\ PlayOnLinux/ packages/phoenicis
+    rm -rf "$packageName" 2> /dev/null
+    mkdir -p "$packageName/DEBIAN/"
+
+    cat << EOF > "$packageName/DEBIAN/control"
+Package: phoenicis-playonlinux
+Version: $VERSION
+Section: misc
+Priority: optional
+Architecture: all
+Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl
+Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
+Description: This program is a front-end for wine.
+ It permits you to install Windows Games and softwares
+ on Linux. It allows you to manage differents virtual hard drive,
+ and several wine versions.
+ Copyright 2011-2019 PlayOnLinux team <contact@playonlinux.com>
+EOF
+
+    mkdir -p $packageName/usr/share/applications
+    mkdir -p $packageName/usr/share/pixmaps
+    mkdir -p $packageName/usr/bin
+
+    cp -a packages/phoenicis $packageName/usr/share/
+    cp -a "$SCRIPT_PATH/../launchers/phoenicis" $packageName/usr/bin/phoenicis
+    chmod +x $packageName/usr/bin/phoenicis
+
+    cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "$packageName/usr/share/applications"
+    cp "$SCRIPT_PATH/../resources/phoenicis.png" "$packageName/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-16.png" "$packageName/usr/share/pixmaps"
+    cp "$SCRIPT_PATH/../resources/phoenicis-32.png" "$packageName/usr/share/pixmaps"
+
+    fakeroot dpkg-deb --build "$packageName"
+    rm -rf deb
 fi
-
-

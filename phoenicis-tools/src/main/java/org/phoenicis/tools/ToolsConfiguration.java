@@ -26,6 +26,7 @@ import org.phoenicis.tools.checksum.ChecksumCalculator;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.files.*;
 import org.phoenicis.tools.http.Downloader;
+import org.phoenicis.tools.lnk.LnkParser;
 import org.phoenicis.tools.system.ArchitectureFetcher;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.SystemConfiguration;
@@ -148,5 +149,10 @@ public class ToolsConfiguration {
     @Bean
     public Opener opener() {
         return new AutomaticOpener(linuxOpener(), macOsOpener(), operatingSystemFetcher());
+    }
+
+    @Bean
+    public LnkParser lnkParser() {
+        return new LnkParser();
     }
 }

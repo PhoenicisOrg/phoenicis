@@ -18,10 +18,10 @@ Required extensions:
 
 ```
 cd phoenicis-dist/src/flatpak/
-flatpak-builder build-dir org.phoenicis.javafx.json --force-clean --user --install
+flatpak-builder build-dir org.phoenicis.playonlinux.json --force-clean --user --install
 ```
 run with:
 ```
-flatpak run org.phoenicis.javafx phoenicis-javafx
+flatpak run org.phoenicis.playonlinux phoenicis-playonlinux
 ```
 **Hint:** If you cannot compile after building the flatpak, remove `build-dir` and `.flatpak-builder`.

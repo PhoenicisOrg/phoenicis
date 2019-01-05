@@ -84,6 +84,12 @@ public interface SetupUi {
     void showProgressBar(Message<ProgressControl> message, String textToShow);
 
     /**
+     * Shows a browser inside the window and returns immediately
+     * @param textToShow The text to show to the user
+     */
+    void showBrowser(Message<BrowserControl> doneCallback, String textToShow);
+
+    /**
      * Shows a presentation step and blocks until a response is given
      * @param textToShow The text to show to the user
      */

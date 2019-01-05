@@ -35,7 +35,7 @@ import java.util.function.Consumer;
 public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
 
-    public ContainerPanel(WinePrefixContainerDTO containerEntity,
+    public ContainerPanel(ContainerDTO containerEntity,
             VerbsManager verbsManager,
             EngineToolsManager engineToolsManager,
             Optional<List<EngineSetting>> engineSettings,
@@ -67,8 +67,8 @@ public class ContainerPanel extends DetailsView {
         tabPane.getTabs().add(toolsTab);
     }
 
-    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
-        this.informationTab.setOnDeletePrefix(onDeletePrefix);
+    public void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
+        this.informationTab.setOnDeleteContainer(onDeleteContainer);
     }
 
     public void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {
