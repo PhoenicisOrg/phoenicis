@@ -1,7 +1,6 @@
 package org.phoenicis.javafx.dialogs;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.stage.Window;
 
