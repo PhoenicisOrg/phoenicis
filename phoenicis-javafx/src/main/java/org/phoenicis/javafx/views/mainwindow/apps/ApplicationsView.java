@@ -65,8 +65,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
     private final ApplicationFilter filter;
 
-    private final OperatingSystemFetcher operatingSystemFetcher;
-
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     private final ObjectProperty<ListWidgetType> selectedListWidget;
@@ -90,13 +88,14 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
             ToolsConfiguration toolsConfiguration, ScriptInterpreter scriptInterpreter) {
         super(tr("Apps"), themeManager);
 
-        this.operatingSystemFetcher = toolsConfiguration.operatingSystemFetcher();
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.scriptInterpreter = scriptInterpreter;
 
         this.categories = FXCollections.observableArrayList();
         this.selectedListWidget = new SimpleObjectProperty<>();
         this.selectedApplication = new SimpleObjectProperty<>();
+
+        final OperatingSystemFetcher operatingSystemFetcher = toolsConfiguration.operatingSystemFetcher();
 
         this.filter = new ApplicationFilter(operatingSystemFetcher, javaFxSettingsManager.getFuzzySearchRatio());
 

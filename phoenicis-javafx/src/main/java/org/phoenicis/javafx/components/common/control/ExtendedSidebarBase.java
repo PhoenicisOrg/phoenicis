@@ -1,7 +1,6 @@
 package org.phoenicis.javafx.components.common.control;
 
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.skin.ExtendedSidebarSkinBase;
