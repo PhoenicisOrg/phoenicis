@@ -67,7 +67,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
 
         // ensure that the content of the details panel changes when the to be shown shortcut changes
         getControl().shortcutProperty().addListener((Observable invalidation) -> updateShortcut());
-        // initialise the content of the details panel correct
+        // initialize the content of the details panel correctly
         updateShortcut();
     }
 
@@ -106,7 +106,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
 
         // ensure that changes to the shortcutProperties map result in updates to the GridPane
         shortcutProperties.addListener((Observable invalidation) -> updateProperties(propertiesGrid));
-        // initialise the properties grid correct
+        // initialize the properties grid correctly
         updateProperties(propertiesGrid);
 
         return propertiesGrid;
@@ -197,7 +197,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
                 this.shortcutProperties.clear();
                 this.shortcutProperties.putAll(shortcutProperties);
             } catch (IOException e) {
-                LOGGER.error("An error occurred during a Shortcut update", e);
+                LOGGER.error("An error occurred during a shortcut update", e);
             }
         }
     }
