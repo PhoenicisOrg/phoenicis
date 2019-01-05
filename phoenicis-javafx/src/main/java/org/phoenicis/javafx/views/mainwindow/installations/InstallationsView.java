@@ -28,9 +28,10 @@ import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.installation.control.InstallationDetailsPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -50,6 +51,8 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     private final ObservableList<InstallationCategoryDTO> categories;
+
+    private final InstallationDetailsPanel installationDetailsPanel;
 
     private CombinedListWidget<InstallationDTO> activeInstallations;
 
@@ -73,6 +76,8 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         this.activeInstallations = createInstallationListWidget();
 
         this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
+
+        this.installationDetailsPanel = createInstallationDetailsPanel();
 
         setSidebar(createInstallationsSidebar());
         setCenter(activeInstallations);
@@ -128,19 +133,25 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         });
     }
 
+    private InstallationDetailsPanel createInstallationDetailsPanel() {
+        final InstallationDetailsPanel detailsPanel = new InstallationDetailsPanel();
+
+        detailsPanel.setOnClose(this::closeDetailsView);
+
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(2));
+
+        return detailsPanel;
+    }
+
     /**
      * shows details of the given installation
      *
      * @param installationDTO
      */
     private void showInstallationDetails(InstallationDTO installationDTO) {
-        final InstallationsPanel installationsPanel = new InstallationsPanel();
+        installationDetailsPanel.setInstallation(installationDTO);
 
-        installationsPanel.setOnClose(this::closeDetailsView);
-        installationsPanel.setInstallationDTO(installationDTO);
-        installationsPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(2));
-
-        showDetailsView(installationsPanel);
+        showDetailsView(installationDetailsPanel);
     }
 
     /**
