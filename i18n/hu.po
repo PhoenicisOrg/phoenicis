@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-06 10:42+0000\n"
-"PO-Revision-Date: 2019-01-06 10:52\n"
+"POT-Creation-Date: 2019-01-06 19:55+0000\n"
+"PO-Revision-Date: 2019-01-06 20:01\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -232,7 +232,7 @@ msgid "Name:"
 msgstr "Név:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:61
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:59
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:171
 msgid "Version:"
 msgstr "Verzió:"
 
@@ -442,7 +442,7 @@ msgid "Console"
 msgstr "Vezérlőpult"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:98
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:70
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:73
 msgid "Engines"
 msgstr "Szolgáltatások"
 
@@ -453,23 +453,6 @@ msgstr "Telepítve"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:115
 msgid "Not installed"
 msgstr "Nincs telepítve"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:73
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
-msgid "Install"
-msgstr "Telepítés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:81
-msgid "An error occurred while installing the engine"
-msgstr "Hiba történt a szolgáltatás telepítése közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:92
-msgid "Delete"
-msgstr "Törlés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:100
-msgid "An error occurred while deleting the engine"
-msgstr "Hiba történt a szolgáltatás törlése közben"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:80
 msgid "Loading engine settings failed."
@@ -539,6 +522,23 @@ msgstr "Biztosan szeretné a(z) {0} kitörlése?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:153
 msgid "Loading engines failed."
 msgstr "Szolgáltatások betöltése nem sikerült."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:118
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
+msgid "Install"
+msgstr "Telepítés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:128
+msgid "An error occurred while installing the engine"
+msgstr "Hiba történt a szolgáltatás telepítése közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:138
+msgid "Delete"
+msgstr "Törlés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:148
+msgid "An error occurred while deleting the engine"
+msgstr "Hiba történt a szolgáltatás törlése közben"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:32
