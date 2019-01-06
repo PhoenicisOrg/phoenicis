@@ -1,12 +1,15 @@
 package org.phoenicis.javafx.components.common.skin;
 
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import org.apache.commons.lang.StringUtils;
+import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
-import org.phoenicis.javafx.collections.AdhocList;
 
 /**
  * A skin for the {@link SidebarGroup} component
@@ -14,7 +17,15 @@ import org.phoenicis.javafx.collections.AdhocList;
  * @param <E> The element type
  */
 public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, SidebarGroupSkin<E>> {
-    private final ObservableList<? extends Node> content;
+    /**
+     * A list containing the title {@link Label} if it contains a nonempty title
+     */
+    private final ObservableList<Label> shownTitle;
+
+    /**
+     * A concatenated list containing all components shown inside this {@link SidebarGroup}
+     */
+    private final ConcatenatedList<Node> components;
 
     /**
      * Constructor
@@ -24,9 +35,8 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
     public SidebarGroupSkin(SidebarGroup<E> control) {
         super(control);
 
-        this.content = getControl().getTitle() != null
-                ? new AdhocList<>(getControl().getComponents(), createTitleLabel())
-                : getControl().getComponents();
+        this.shownTitle = FXCollections.observableArrayList();
+        this.components = ConcatenatedList.create(shownTitle, getControl().getComponents());
     }
 
     /**
@@ -34,12 +44,34 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
      */
     @Override
     public void initialise() {
+        final Label title = createTitleLabel();
+
+        // ensure that the title label is only shown when it contains a nonempty string
+        title.textProperty().addListener((Observable invalidation) -> updateTitleLabelVisibility(title));
+        // ensure that the title label is correctly shown during initialisation
+        updateTitleLabelVisibility(title);
+
         VBox container = new VBox();
         container.getStyleClass().add("sidebarInside");
 
-        Bindings.bindContent(container.getChildren(), content);
+        Bindings.bindContent(container.getChildren(), components);
 
         getChildren().addAll(container);
+    }
+
+    /**
+     * Updates the visibility of the title label based on whether it contains a title text
+     *
+     * @param titleLabel The title label
+     */
+    private void updateTitleLabelVisibility(final Label titleLabel) {
+        final String title = getControl().getTitle();
+
+        if (StringUtils.isEmpty(title)) {
+            shownTitle.clear();
+        } else {
+            shownTitle.setAll(titleLabel);
+        }
     }
 
     /**
@@ -48,11 +80,11 @@ public class SidebarGroupSkin<E extends Node> extends SkinBase<SidebarGroup<E>, 
      * @return The created label
      */
     private Label createTitleLabel() {
-        Label title = new Label();
-        title.getStyleClass().add("sidebarTitle");
+        Label titleLabel = new Label();
+        titleLabel.getStyleClass().add("sidebarTitle");
 
-        title.textProperty().bind(getControl().titleProperty());
+        titleLabel.textProperty().bind(getControl().titleProperty());
 
-        return title;
+        return titleLabel;
     }
 }

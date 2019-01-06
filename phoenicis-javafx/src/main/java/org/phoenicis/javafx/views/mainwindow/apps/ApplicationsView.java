@@ -29,7 +29,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
@@ -132,11 +132,12 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
          * 1. sorting the applications by their name
          * 2. filtering them
          */
-        final FilteredList<ApplicationDTO> filteredApplications = new ExpandedList<>(
-                this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
-                CategoryDTO::getApplications)
-                        .sorted(Comparator.comparing(ApplicationDTO::getName))
-                        .filtered(this.filter::filter);
+        final FilteredList<ApplicationDTO> filteredApplications = ConcatenatedList
+                .create(new MappedList<>(
+                        this.categories.filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
+                        CategoryDTO::getApplications))
+                .sorted(Comparator.comparing(ApplicationDTO::getName))
+                .filtered(this.filter::filter);
 
         filteredApplications.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,

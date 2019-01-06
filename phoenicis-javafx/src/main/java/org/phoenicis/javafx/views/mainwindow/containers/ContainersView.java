@@ -27,12 +27,12 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;
@@ -98,11 +98,12 @@ public class ContainersView extends MainWindowView<ContainersSidebar> {
          * 1. sorting the containers by their name
          * 2. filtering the containers
          */
-        final FilteredList<ContainerDTO> filteredContainers = new ExpandedList<>(
-                this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
-                ContainerCategoryDTO::getContainers)
-                        .sorted(Comparator.comparing(ContainerDTO::getName))
-                        .filtered(this.filter::filter);
+        final FilteredList<ContainerDTO> filteredContainers = ConcatenatedList
+                .create(new MappedList<>(
+                        this.categories.sorted(Comparator.comparing(ContainerCategoryDTO::getName)),
+                        ContainerCategoryDTO::getContainers))
+                .sorted(Comparator.comparing(ContainerDTO::getName))
+                .filtered(this.filter::filter);
 
         filteredContainers.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter, this.filter.searchTermProperty()));

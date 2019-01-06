@@ -35,7 +35,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
@@ -141,10 +141,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private CombinedListWidget<ShortcutDTO> createShortcutListWidget() {
-        final FilteredList<ShortcutDTO> filteredShortcuts = new ExpandedList<>(
-                this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
-                ShortcutCategoryDTO::getShortcuts)
-                        .filtered(this.filter::filter);
+        final FilteredList<ShortcutDTO> filteredShortcuts = ConcatenatedList
+                .create(new MappedList<>(
+                        this.categories.sorted(Comparator.comparing(ShortcutCategoryDTO::getName)),
+                        ShortcutCategoryDTO::getShortcuts))
+                .filtered(this.filter::filter);
 
         filteredShortcuts.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,

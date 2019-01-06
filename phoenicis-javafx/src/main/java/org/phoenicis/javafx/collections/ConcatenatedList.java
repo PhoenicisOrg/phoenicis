@@ -16,24 +16,24 @@ import java.util.stream.IntStream;
  *
  * @param <E> The instance type of the elements in the concatenated lists
  */
-public class ConcatenatedList<E> extends PhoenicisTransformationList<E, ObservableList<E>> {
+public class ConcatenatedList<E> extends PhoenicisTransformationList<E, ObservableList<? extends E>> {
     /**
      * A map linking the created {@link ListChangeListener} instances to their corresponding {@link ObservableList}.
      * This map is required to allow for the removal of the listener when an {@link ObservableList} is removed
      */
-    private final Map<ObservableList<E>, ListChangeListener<E>> innerListeners;
+    private final Map<ObservableList<? extends E>, ListChangeListener<E>> innerListeners;
 
     /**
      * An internal copy of the source list of lists
      */
-    private final List<List<E>> expandedValues;
+    private final List<List<? extends E>> expandedValues;
 
     /**
      * Constructor
      *
      * @param source A list of lists which should be concatenated
      */
-    public ConcatenatedList(ObservableList<? extends ObservableList<E>> source) {
+    public ConcatenatedList(ObservableList<? extends ObservableList<? extends E>> source) {
         super(source);
 
         this.innerListeners = new HashMap<>();
@@ -54,9 +54,9 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * @return A new {@link ConcatenatedList} containing all elements in given list and the prefix values
      */
     @SafeVarargs
-    public static <F> ConcatenatedList<F> createPrefixList(ObservableList<F> list, F... prefixes) {
+    public static <F> ConcatenatedList<F> createPrefixList(ObservableList<? extends F> list, F... prefixes) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(
-                ImmutableList.<ObservableList<F>> builder()
+                ImmutableList.<ObservableList<? extends F>> builder()
                         .add(FXCollections.observableArrayList(prefixes))
                         .add(list).build()));
     }
@@ -72,9 +72,9 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * @return A new {@link ConcatenatedList} containing all elements in given list and the suffix values
      */
     @SafeVarargs
-    public static <F> ConcatenatedList<F> createSuffixList(ObservableList<F> list, F... suffixes) {
+    public static <F> ConcatenatedList<F> createSuffixList(ObservableList<? extends F> list, F... suffixes) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(
-                ImmutableList.<ObservableList<F>> builder()
+                ImmutableList.<ObservableList<? extends F>> builder()
                         .add(list)
                         .add(FXCollections.observableArrayList(suffixes)).build()));
     }
@@ -87,7 +87,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * @return A new {@link ConcatenatedList} containing all elements in the given lists
      */
     @SafeVarargs
-    public static <F> ConcatenatedList<F> create(ObservableList<F>... lists) {
+    public static <F> ConcatenatedList<F> create(ObservableList<? extends F>... lists) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(lists));
     }
 
@@ -99,9 +99,20 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * @return A new {@link ConcatenatedList} containing all elements in the given lists
      */
     @SafeVarargs
-    public static <F> ConcatenatedList<F> create(List<F>... lists) {
+    public static <F> ConcatenatedList<F> create(List<? extends F>... lists) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(
                 Arrays.stream(lists).map(FXCollections::observableArrayList).collect(Collectors.toList())));
+    }
+
+    /**
+     * Creates a new {@link ConcatenatedList} with the given {@link ObservableList} of lists
+     *
+     * @param list The lists, which should be concatenated
+     * @param <F> The instance type of the elements in the to be concatenated lists
+     * @return A new {@link ConcatenatedList} containing all elements in the given lists
+     */
+    public static <F> ConcatenatedList<F> create(ObservableList<? extends List<? extends F>> list) {
+        return new ConcatenatedList<>(new MappedList<>(list, FXCollections::observableArrayList));
     }
 
     /**
@@ -115,7 +126,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         int position = 0;
 
         for (int i = 0; i < sourceIndex; i++) {
-            final List<E> innerList = expandedValues.get(i);
+            final List<? extends E> innerList = expandedValues.get(i);
 
             position += innerList.size();
         }
@@ -134,7 +145,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         int position = 0;
 
         for (int i = 0; i <= sourceIndex; i++) {
-            final List<E> innerList = expandedValues.get(i);
+            final List<? extends E> innerList = expandedValues.get(i);
 
             position += innerList.size();
         }
@@ -154,7 +165,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         int sum = 0;
         int sourceIndex = -1;
 
-        for (List<E> innerList : expandedValues) {
+        for (List<? extends E> innerList : expandedValues) {
             if (index < sum) {
                 break;
             }
@@ -189,7 +200,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         E result = null;
         int start = 0;
 
-        for (List<E> innerList : expandedValues) {
+        for (List<? extends E> innerList : expandedValues) {
             if (start + innerList.size() > index) {
                 result = innerList.get(index - start);
 
@@ -214,7 +225,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * {@inheritDoc}
      */
     @Override
-    protected void permute(ListChangeListener.Change<? extends ObservableList<E>> change) {
+    protected void permute(ListChangeListener.Change<? extends ObservableList<? extends E>> change) {
         final int from = change.getFrom();
         final int to = change.getTo();
 
@@ -222,9 +233,9 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         final int expandedTo = getLastIndexPlusOne(to - 1);
 
         if (to > from) {
-            final List<E> beforePermutation = expandedValues.stream().flatMap(List::stream)
+            final List<? extends E> beforePermutation = expandedValues.stream().flatMap(List::stream)
                     .collect(Collectors.toList());
-            final List<List<E>> valuesClone = new ArrayList<>(expandedValues);
+            final List<List<? extends E>> valuesClone = new ArrayList<>(expandedValues);
 
             for (int i = from; i < to; ++i) {
                 valuesClone.set(i, expandedValues.get(change.getPermutation(i)));
@@ -233,7 +244,8 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
             this.expandedValues.clear();
             this.expandedValues.addAll(valuesClone);
 
-            final List<E> afterPermutation = expandedValues.stream().flatMap(List::stream).collect(Collectors.toList());
+            final List<? extends E> afterPermutation = expandedValues.stream().flatMap(List::stream)
+                    .collect(Collectors.toList());
 
             final int[] perm = beforePermutation.stream()
                     .mapToInt(afterPermutation::indexOf).toArray();
@@ -246,17 +258,17 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * {@inheritDoc}
      */
     @Override
-    protected void update(ListChangeListener.Change<? extends ObservableList<E>> change) {
+    protected void update(ListChangeListener.Change<? extends ObservableList<? extends E>> change) {
         final int from = change.getFrom();
         final int to = change.getTo();
 
         for (int i = from; i < to; i++) {
-            final ObservableList<E> oldValues = change.getRemoved().get(i - from);
+            final ObservableList<? extends E> oldValues = change.getRemoved().get(i - from);
 
             // remove the update listener form the old observable list
             removeUpdateListener(oldValues);
 
-            final ObservableList<E> newValues = change.getAddedSubList().get(i - from);
+            final ObservableList<? extends E> newValues = change.getAddedSubList().get(i - from);
 
             expandedValues.set(i, new ArrayList<>(newValues));
 
@@ -296,13 +308,13 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      * {@inheritDoc}
      */
     @Override
-    protected void addRemove(ListChangeListener.Change<? extends ObservableList<E>> change) {
+    protected void addRemove(ListChangeListener.Change<? extends ObservableList<? extends E>> change) {
         final int from = change.getFrom();
 
         for (int removedIndex = change.getRemovedSize() - 1; removedIndex >= 0; removedIndex--) {
             final int index = from + removedIndex;
 
-            final ObservableList<E> oldValues = change.getRemoved().get(removedIndex);
+            final ObservableList<? extends E> oldValues = change.getRemoved().get(removedIndex);
 
             // remove the update listener form the old observable list
             removeUpdateListener(oldValues);
@@ -315,7 +327,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
         for (int addedIndex = 0; addedIndex < change.getAddedSize(); addedIndex++) {
             final int index = from + addedIndex;
 
-            final ObservableList<E> newValues = change.getAddedSubList().get(addedIndex);
+            final ObservableList<? extends E> newValues = change.getAddedSubList().get(addedIndex);
 
             expandedValues.add(index, new ArrayList<>(newValues));
 
@@ -334,7 +346,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      *
      * @param innerList The {@link ObservableList} to which the {@link ListChangeListener} is added
      */
-    private void addUpdateListener(final ObservableList<E> innerList) {
+    private void addUpdateListener(final ObservableList<? extends E> innerList) {
         final ListChangeListener<E> innerListener = (ListChangeListener.Change<? extends E> change) -> {
             final ObservableList<? extends E> activatorList = change.getList();
 
@@ -370,7 +382,7 @@ public class ConcatenatedList<E> extends PhoenicisTransformationList<E, Observab
      *
      * @param innerList The {@link ObservableList} from which the {@link ListChangeListener} should be removed
      */
-    private void removeUpdateListener(final ObservableList<E> innerList) {
+    private void removeUpdateListener(final ObservableList<? extends E> innerList) {
         final ListChangeListener<E> innerListener = innerListeners.get(innerList);
 
         innerList.removeListener(innerListener);
