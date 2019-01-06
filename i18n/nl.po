@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-06 10:42+0000\n"
-"PO-Revision-Date: 2019-01-06 10:52\n"
+"POT-Creation-Date: 2019-01-06 19:55+0000\n"
+"PO-Revision-Date: 2019-01-06 20:01\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -232,7 +232,7 @@ msgid "Name:"
 msgstr "Naam:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:61
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:59
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:171
 msgid "Version:"
 msgstr "Versie:"
 
@@ -442,7 +442,7 @@ msgid "Console"
 msgstr "Console"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:98
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:70
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:73
 msgid "Engines"
 msgstr ""
 
@@ -453,23 +453,6 @@ msgstr "Geïnstalleerd"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:115
 msgid "Not installed"
 msgstr "Niet geïnstalleerd"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:73
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
-msgid "Install"
-msgstr "Installeren"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:81
-msgid "An error occurred while installing the engine"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:92
-msgid "Delete"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginePanel.java:100
-msgid "An error occurred while deleting the engine"
-msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:80
 msgid "Loading engine settings failed."
@@ -537,6 +520,23 @@ msgstr "Weet u zeker dat u {0} wilt verwijderen?"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:151
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:153
 msgid "Loading engines failed."
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:118
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
+msgid "Install"
+msgstr "Installeren"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:128
+msgid "An error occurred while installing the engine"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:138
+msgid "Delete"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:148
+msgid "An error occurred while deleting the engine"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:32
