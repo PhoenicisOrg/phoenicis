@@ -149,9 +149,9 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO
      */
     private void showInstallationDetails(InstallationDTO installationDTO) {
-        installationDetailsPanel.setInstallation(installationDTO);
+        this.installationDetailsPanel.setInstallation(installationDTO);
 
-        showDetailsView(installationDetailsPanel);
+        showDetailsView(this.installationDetailsPanel);
     }
 
     /**
