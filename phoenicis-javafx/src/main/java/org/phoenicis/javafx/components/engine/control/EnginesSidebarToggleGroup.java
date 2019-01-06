@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.components.engine.skin.EnginesSidebarToggleGroupSkin;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsSidebar;
 
 /**
  * A toggle group component used inside the {@link ApplicationsSidebar}

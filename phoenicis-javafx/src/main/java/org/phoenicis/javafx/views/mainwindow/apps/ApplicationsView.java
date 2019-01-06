@@ -29,14 +29,14 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import me.xdrop.fuzzywuzzy.FuzzySearch;
-import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ExpandedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
+import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -44,6 +44,7 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.ToolsConfiguration;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.Comparator;
 import java.util.List;
@@ -61,9 +62,12 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * <li>An optional details view that contains the information and available scripts for a selected application</li>
  * </ul>
  */
-public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
+public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
     private final ApplicationFilter filter;
+
     private final JavaFxSettingsManager javaFxSettingsManager;
+
+    private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     private final ObservableList<CategoryDTO> categories;
 
@@ -88,23 +92,20 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         this.scriptInterpreter = scriptInterpreter;
 
         this.categories = FXCollections.observableArrayList();
+        this.selectedListWidget = new SimpleObjectProperty<>();
         this.selectedApplication = new SimpleObjectProperty<>();
 
-        this.filter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
-                (filterText, application) -> {
-                    if (StringUtils.isNotEmpty(filterText)) {
-                        return FuzzySearch.partialRatio(application.getName().toLowerCase(),
-                                filterText) > this.javaFxSettingsManager.getFuzzySearchRatio();
-                    } else {
-                        return true;
-                    }
-                });
+        final OperatingSystemFetcher operatingSystemFetcher = toolsConfiguration.operatingSystemFetcher();
+
+        this.filter = new ApplicationFilter(operatingSystemFetcher, javaFxSettingsManager.getFuzzySearchRatio());
+
+        ApplicationSidebar applicationSidebar = createApplicationSidebar();
 
         this.availableApps = createApplicationListWidget();
 
         this.filter.filterCategoryProperty().addListener(invalidation -> this.availableApps.setSelectedElement(null));
 
-        setSidebar(createApplicationsSidebar(this.availableApps));
+        setSidebar(applicationSidebar);
 
         content.rightProperty().bind(createApplicationDetailsPanel());
     }
@@ -149,7 +150,8 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                 filteredApplications,
                 ListWidgetElement::create);
 
-        final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
+        final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries,
+                selectedListWidget);
 
         this.selectedApplication.bind(Bindings.createObjectBinding(() -> {
             final ListWidgetSelection<ApplicationDTO> selection = listWidget.getSelectedElement();
@@ -160,7 +162,7 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
         return listWidget;
     }
 
-    private ApplicationsSidebar createApplicationsSidebar(CombinedListWidget<ApplicationDTO> availableApps) {
+    private ApplicationSidebar createApplicationSidebar() {
         /*
          * initialize the category lists by:
          * 1. filtering by installer categories
@@ -170,8 +172,20 @@ public class ApplicationsView extends MainWindowView<ApplicationsSidebar> {
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        return new ApplicationsSidebar(this.filter, this.javaFxSettingsManager, sortedCategories,
-                availableApps);
+        final ApplicationSidebar sidebar = new ApplicationSidebar(filter, sortedCategories, selectedListWidget);
+
+        // set the default selection
+        sidebar.setSelectedListWidget(javaFxSettingsManager.getAppsListType());
+
+        // save changes to the list widget selection to the hard drive
+        sidebar.selectedListWidgetProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setAppsListType(newValue);
+                javaFxSettingsManager.save();
+            }
+        });
+
+        return sidebar;
     }
 
     /**

@@ -43,7 +43,7 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      * @param elements The elements to be shown inside the sidebar toggle group
      * @param selectedElement The selected element or null if no/all elements have been selected
      */
-    private SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
+    protected SidebarToggleGroupBase(StringProperty title, ObservableList<E> elements,
             ObjectProperty<E> selectedElement) {
         super();
 

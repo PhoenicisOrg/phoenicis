@@ -40,6 +40,16 @@ public class SidebarGroup<E extends Node> extends ControlBase<SidebarGroup<E>, S
      * Constructor
      *
      * @param title The title of the sidebar group
+     * @param components The components located inside the sidebar group
+     */
+    public SidebarGroup(String title, ObservableList<E> components) {
+        this(new SimpleStringProperty(title), components);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param title The title of the sidebar group
      */
     public SidebarGroup(String title) {
         this(new SimpleStringProperty(title), FXCollections.observableArrayList());
