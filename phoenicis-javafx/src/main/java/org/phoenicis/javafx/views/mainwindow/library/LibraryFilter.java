@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.phoenicis.javafx.views.AbstractFilter;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
  *
  * @author Marc Arndt
  */
-public class LibraryFilter extends AbstractFilter {
+public class LibraryFilter {
     /**
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.

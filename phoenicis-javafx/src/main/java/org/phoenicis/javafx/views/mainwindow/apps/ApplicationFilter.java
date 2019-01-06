@@ -3,7 +3,6 @@ package org.phoenicis.javafx.views.mainwindow.apps;
 import javafx.beans.property.*;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.javafx.views.AbstractFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -18,7 +17,7 @@ import java.util.Optional;
  * @author marc
  * @since 29.03.17
  */
-public class ApplicationFilter extends AbstractFilter {
+public class ApplicationFilter {
     private final OperatingSystemFetcher operatingSystemFetcher;
 
     private final double fuzzySearchRatio;

@@ -4,7 +4,6 @@ import javafx.beans.property.*;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
-import org.phoenicis.javafx.views.AbstractFilter;
 
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -28,7 +27,7 @@ import java.util.function.Predicate;
  * @author marc
  * @since 23.04.17
  */
-public class EnginesFilter extends AbstractFilter {
+public class EnginesFilter {
     /**
      * The path to the installed engines
      */
