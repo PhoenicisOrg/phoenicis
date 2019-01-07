@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-06 19:55+0000\n"
-"PO-Revision-Date: 2019-01-06 20:01\n"
+"POT-Creation-Date: 2019-01-07 19:18+0000\n"
+"PO-Revision-Date: 2019-01-07 19:21\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -433,7 +433,7 @@ msgstr "Geef u een geldig uitvoerbaar bestand op, alstublief!"
 msgid "Create"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:65
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:68
 msgid "Installations"
 msgstr "Installaties"
 
