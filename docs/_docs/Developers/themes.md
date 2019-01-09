@@ -1,7 +1,7 @@
 ---
 title: "Themes"
 category: Developers
-order: 3
+order: 6
 toc: true
 ---
 
