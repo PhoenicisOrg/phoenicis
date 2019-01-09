@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-07 19:18+0000\n"
-"PO-Revision-Date: 2019-01-07 19:22\n"
+"PO-Revision-Date: 2019-01-09 15:02\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Czech\n"
 "Language: cs_CZ\n"
@@ -256,7 +256,7 @@ msgstr "Kontejnery"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineSettingsTab.java:35
 msgid "Engine Settings"
-msgstr ""
+msgstr "Nastavení modulu"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:45
@@ -444,7 +444,7 @@ msgstr "Konzole"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:98
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:73
 msgid "Engines"
-msgstr ""
+msgstr "Moduly"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:110
 msgid "Installed"
@@ -456,7 +456,7 @@ msgstr "Není nainstalováno"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:80
 msgid "Loading engine settings failed."
-msgstr ""
+msgstr "Načtení nastavení modulu se nezdařilo."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:92
 msgid "Loading Verbs failed."
@@ -465,7 +465,7 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:104
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:213
 msgid "Loading engine tools failed."
-msgstr ""
+msgstr "Načtení nástrojů modulu se nezdařilo."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:135
 #, java-format
@@ -530,7 +530,7 @@ msgstr "Instalovat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:128
 msgid "An error occurred while installing the engine"
-msgstr ""
+msgstr "Při instalaci modulu došlo k chybě"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:138
 msgid "Delete"
@@ -538,7 +538,7 @@ msgstr "Smazat"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:148
 msgid "An error occurred while deleting the engine"
-msgstr ""
+msgstr "Došlo k chybě při odstraňování modulu"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:32
