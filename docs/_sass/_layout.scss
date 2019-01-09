@@ -381,20 +381,6 @@ h4 svg {
 	}
 }
 
-.changelog {
-	&,
-	> div {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-
-	.date {
-		color: #888;
-		font-style: italic;
-	}
-}
-
 .badge {
 	font-family: "Open Sans", sans-serif;
 	padding: 2px 5px;
