@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-07 19:18+0000\n"
-"PO-Revision-Date: 2019-01-07 19:22\n"
+"PO-Revision-Date: 2019-01-09 15:43\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -85,15 +85,15 @@ msgstr "Kérdés"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:84
 msgid "Restore defaults"
-msgstr ""
+msgstr "Alapértelmezések visszaállítása"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:88
 msgid "Restored default repositories"
-msgstr ""
+msgstr "Alapértelmezett adattárolók visszaállítása"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:89
 msgid "Please restart such that the changes can take effect."
-msgstr ""
+msgstr "A változások érvénybe lépéséhez újra kell indítani."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:118
 msgid "Repository Settings"
@@ -359,7 +359,7 @@ msgstr "Alkalmazásaim"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:179
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:309
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:318
