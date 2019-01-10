@@ -6,7 +6,7 @@
   "sdk-extensions": [
     "org.freedesktop.Sdk.Extension.openjdk11"
   ],
-  "add-build-extensions": {
+  "add-extensions": {
     "org.freedesktop.Platform.Compat.i386": {
       "directory": "lib/i386-linux-gnu",
       "version": "18.08"
@@ -18,8 +18,7 @@
     },
     "org.freedesktop.Platform.GL32": {
       "directory": "lib/i386-linux-gnu/GL",
-      "version": "1.4",
-      "versions": "18.08;1.4",
+      "version": "18.08",
       "subdirectories": true,
       "no-autodownload": true,
       "autodelete": false,
