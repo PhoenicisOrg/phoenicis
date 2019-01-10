@@ -1,7 +1,7 @@
 ---
 title: "IntelliJ IDEA"
 category: Developers
-order: 1
+order: 3
 toc: true
 ---
 

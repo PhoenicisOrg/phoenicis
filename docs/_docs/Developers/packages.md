@@ -1,6 +1,6 @@
 ---
 title: "Packages"
-category: Users
+category: Developers
 order: 2
 ---
 

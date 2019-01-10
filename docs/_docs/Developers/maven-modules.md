@@ -1,7 +1,7 @@
 ---
 title: "Maven Modules"
 category: Developers
-order: 2
+order: 5
 toc: true
 ---
 
