@@ -60,7 +60,7 @@ jobs:
         - flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
-        - flatpak-builder build-dir org.phoenicis.playonlinux.json --force-clean
+        - flatpak-builder build-dir org.phoenicis.playonlinux.yml --force-clean
     - stage: Packages
       name: deb
       os: linux
