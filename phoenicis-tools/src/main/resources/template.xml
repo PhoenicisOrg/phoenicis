@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE magic PUBLIC "-//jmimemagic//DTD magic config 1.0//EN" "magic_1_0.dtd">
+<magic>
+<info>
+<version></version>
+<author></author>
+<description>file</description>
+</info>
+
+<match-list>
+<!--
+<match>
+	<mimetype></mimetype>        # the mime type if matched 
+	<extension></extension>      # the likely extension for this matched stream 
+	<description></description>  # description if matched 
+	<test type="" 
+	      offset="" 
+		  length="" 
+		  bitmask="" 
+		  comparator="">
+	</test>                      # the test which defines this match 
+		# test   - this value may contain a '.', which represents any value
+		#          '.' must be replaced with '\.'.  
+		#          \xNN where N is [0-9] represents a hex value
+		# type   - one of:
+		#			 long        - long, platform byte order
+		#			 lelong      - long, little endian
+		#			 belong      - long, big endian
+		#			 short       - short
+		#			 leshort     - short, little endian
+		#			 beshort     - short, big endian
+		#			 string      - string
+		#			 string-ZZZZ - string with encoding defined by ZZZZ (any 
+		#			               length encoding name)
+		#			 byte        - byte
+		#			 regex       - regular expression in perl 5 style
+		#			 plugin      - call the specified class to determine if
+		#			               the stream is of this mime type
+		# offset     - location match should start from on the stream
+		#              normal offset - n (0-indexed byte position in stream)
+		#              indirect offset - for which types???
+		# length     - this is implicit when data is specified in <test/>, but
+		# 			   for regex and plugin this will limit the amount of data
+		# 			   used for comparison, as if the rest of the stream didn't
+		# 			   exist
+		# bitmask    - a bitmask that should be applied to the stream segment
+		# 			   before it is tested against the value or passed to
+		# 			   regex/plugin
+		# comparator - one of:
+		#                = - equals
+		#				 ! - not equals
+		#				 > - greater than
+		#				 < - less than
+		#				 & - all bits set
+		#				 ^ - all bit cleared
+	
+	<match-list>                    # example sub-match
+		<match>
+		<mimetype></mimetype>       # if submatch has diff mime type
+		<extension></extension>     # if submatch has diff ext 
+		<description 
+			  supplemental="">      # defined if this is a supplemental desc
+		</description>              # description if matched
+		<test offset=""
+			  length=""
+			  type=""
+			  bitmask=""
+			  comparator="">
+		</test>                     # the test which defines this match 
+		</match>
+	</match-list>
+</match>
+
+-->
+<match>
+	<mimetype></mimetype>
+	<extension></extension>
+	<description></description>
+	<test type="" offset="" length="" bitmask="" comparator=""></test>
+	<match-list>
+		<match>
+			<mimetype></mimetype>
+			<extension></extension>
+			<description supplemental=""></description>
+			<test offset="" length="" type="" bitmask="" comparator=""></test>
+		</match>
+		<match>
+			<mimetype></mimetype>
+			<extension></extension>
+			<description supplemental=""></description>
+			<test offset="" length="" type="" bitmask="" comparator=""></test>
+		</match>
+	</match-list>
+</match>
+</match-list>
+</magic>
+

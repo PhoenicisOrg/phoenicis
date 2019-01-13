@@ -65,7 +65,7 @@ public class FileAnalyser {
 
         try {
             byte[] data = Files.readAllBytes(path);
-            return Magic.getMagicMatch(data);
+            return Magic.getMagicMatch(data, true);
         } catch (MagicException | MagicParseException | IOException e) {
             throw new IllegalStateException("Unable to detect mimetype of the file", e);
         }
