@@ -43,10 +43,10 @@ import java.util.Optional;
  *
  * @param <S> Sidebar used by this MainWindowView
  */
-public class MainWindowView<S extends Sidebar> extends Tab {
+public class MainWindowView<S extends Node> extends Tab {
     protected final ThemeManager themeManager;
 
-    private final BorderPane content;
+    protected final BorderPane content;
 
     protected S sidebar;
 

@@ -1,0 +1,207 @@
+package org.phoenicis.javafx.components.engine.skin;
+
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import org.phoenicis.engines.Engine;
+import org.phoenicis.engines.dto.EngineDTO;
+import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
+import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
+/**
+ * {@link DetailsPanelBaseSkin} implementation class used inside the {@link EngineDetailsPanel}
+ */
+public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPanel, EngineDetailsPanelSkin> {
+    private final Logger LOGGER = LoggerFactory.getLogger(EngineDetailsPanelSkin.class);
+
+    /**
+     * The engine version of the shown engine
+     */
+    private final StringProperty engineVersionName;
+
+    /**
+     * The user data of the shown engine
+     */
+    private final ObservableMap<String, String> engineUserData;
+
+    /**
+     * Constructor
+     *
+     * @param control The control belonging to the skin
+     */
+    public EngineDetailsPanelSkin(EngineDetailsPanel control) {
+        super(control);
+
+        this.engineVersionName = new SimpleStringProperty();
+        this.engineUserData = FXCollections.observableHashMap();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void initialise() {
+        super.initialise();
+
+        // ensure that the content of the details panel changes when the to be shown engine changes
+        getControl().engineDTOProperty().addListener((Observable invalidation) -> updateEngine());
+        // initialize the content of the details panel correctly
+        updateEngine();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Node createContent() {
+        final GridPane informationContentPane = new GridPane();
+        informationContentPane.getStyleClass().add("grid");
+
+        engineUserData.addListener((Observable invalidation) -> updateUserData(informationContentPane));
+        updateUserData(informationContentPane);
+
+        final HBox buttonBox = createEngineButtons();
+
+        final Region informationContentSpacer = new Region();
+        informationContentSpacer.getStyleClass().add("engineSpacer");
+
+        final Region buttonBoxSpacer = new Region();
+        buttonBoxSpacer.getStyleClass().add("engineSpacer");
+
+        return new VBox(informationContentPane, informationContentSpacer, buttonBox, buttonBoxSpacer);
+    }
+
+    /**
+     * Creates a new {@link HBox} containing the interaction buttons for selected engine.
+     * The interaction buttons consist of:
+     * <ul>
+     * <li>An install button</li>
+     * <li>An uninstall button</li>
+     * </ul>
+     *
+     * @return A new {@link HBox} containing the interaction buttons for the selected engine
+     */
+    private HBox createEngineButtons() {
+        // binding to check whether the currently selected engine is installed
+        final BooleanBinding engineInstalledProperty = Bindings.createBooleanBinding(() -> {
+            final Engine engine = getControl().getEngine();
+            final EngineDTO engineDTO = getControl().getEngineDTO();
+
+            if (engine == null || engineDTO == null) {
+                return true;
+            }
+
+            return engine.isInstalled(engineDTO.getSubCategory(), engineDTO.getVersion());
+        }, getControl().engineProperty(), getControl().engineDTOProperty());
+
+        // the engine install button
+        final Button installButton = new Button(tr("Install"));
+        installButton.disableProperty().bind(engineInstalledProperty);
+        installButton.setOnMouseClicked(evt -> {
+            try {
+                Optional.ofNullable(getControl().getOnEngineInstall())
+                        .ifPresent(onEngineInstall -> onEngineInstall.accept(getControl().getEngineDTO()));
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("Failed to get engine", e);
+
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("An error occurred while installing the engine"))
+                        .withOwner(getControl().getScene().getWindow())
+                        .withException(e)
+                        .build();
+
+                errorDialog.showAndWait();
+            }
+        });
+
+        // the engine delete button
+        final Button deleteButton = new Button(tr("Delete"));
+        deleteButton.disableProperty().bind(Bindings.not(engineInstalledProperty));
+        deleteButton.setOnMouseClicked(evt -> {
+            try {
+                Optional.ofNullable(getControl().getOnEngineDelete())
+                        .ifPresent(onEngineDelete -> onEngineDelete.accept(getControl().getEngineDTO()));
+            } catch (IllegalArgumentException e) {
+                LOGGER.error("Failed to get engine", e);
+
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("An error occurred while deleting the engine"))
+                        .withOwner(getControl().getScene().getWindow())
+                        .withException(e)
+                        .build();
+
+                errorDialog.showAndWait();
+            }
+        });
+
+        final HBox buttonBox = new HBox(installButton, deleteButton);
+        buttonBox.getStyleClass().add("engineButtons");
+
+        return buttonBox;
+    }
+
+    /**
+     * Updates the user data of the selected engine in the given {@link GridPane userDataGrid}
+     *
+     * @param userDataGrid The user data grid
+     */
+    private void updateUserData(final GridPane userDataGrid) {
+        userDataGrid.getChildren().clear();
+
+        final Text versionLabel = new Text(tr("Version:"));
+        versionLabel.getStyleClass().add("captionTitle");
+
+        final Label name = new Label();
+        name.textProperty().bind(engineVersionName);
+        name.setWrapText(true);
+
+        userDataGrid.addRow(0, versionLabel, name);
+
+        for (Map.Entry<String, String> userData : engineUserData.entrySet()) {
+            final int row = userDataGrid.getRowCount();
+
+            final Text userDataLabel = new Text(tr(userData.getKey()));
+            userDataLabel.getStyleClass().add("captionTitle");
+
+            final Label path = new Label(userData.getValue());
+            path.setWrapText(true);
+
+            userDataGrid.addRow(row, userDataLabel, path);
+        }
+    }
+
+    /**
+     * Updates the {@link Engine} and {@link EngineDTO} of this {@link EngineDetailsPanelSkin} instance
+     */
+    private void updateEngine() {
+        final EngineDTO engine = getControl().getEngineDTO();
+
+        if (engine != null) {
+            title.setValue(engine.getCategory() + " " + engine.getSubCategory());
+            engineVersionName.setValue(engine.getVersion());
+
+            engineUserData.clear();
+            engineUserData.putAll(engine.getUserData());
+        }
+    }
+}

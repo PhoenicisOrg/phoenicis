@@ -29,6 +29,7 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -50,6 +51,8 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     private final ObservableList<EngineCategoryDTO> engineCategories;
 
     private final FilteredList<EngineSubCategoryTab> engineSubCategoryTabs;
+
+    private final EngineDetailsPanel engineDetailsPanel;
 
     private TabPane availableEngines;
 
@@ -81,6 +84,8 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
                         .ifPresent(listener -> listener.accept(this.filter.getSelectedEngineCategory())));
 
         setSidebar(createEnginesSidebar());
+
+        this.engineDetailsPanel = createEngineDetailsPanel();
 
         this.engineSubCategoryTabs = createEngineSubCategoryTabs();
 
@@ -199,20 +204,28 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
     }
 
+    private EngineDetailsPanel createEngineDetailsPanel() {
+        final EngineDetailsPanel detailsPanel = new EngineDetailsPanel();
+
+        detailsPanel.setOnClose(this::closeDetailsView);
+        detailsPanel.setOnEngineInstall(this::installEngine);
+        detailsPanel.setOnEngineDelete(this::deleteEngine);
+
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return detailsPanel;
+    }
+
     /**
      * shows details for a given engine
      *
      * @param engineDTO
      */
     private void showEngineDetails(EngineDTO engineDTO, Engine engine) {
-        final EnginePanel currentEnginePanel = new EnginePanel(engineDTO, engine);
+        engineDetailsPanel.setEngine(engine);
+        engineDetailsPanel.setEngineDTO(engineDTO);
 
-        currentEnginePanel.setOnClose(this::closeDetailsView);
-        currentEnginePanel.setOnEngineInstall(this::installEngine);
-        currentEnginePanel.setOnEngineDelete(this::deleteEngine);
-        currentEnginePanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-
-        showDetailsView(currentEnginePanel);
+        showDetailsView(engineDetailsPanel);
     }
 
     /**

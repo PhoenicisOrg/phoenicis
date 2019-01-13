@@ -18,8 +18,11 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
+import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -40,7 +43,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
     private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
 
-    private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
+    private ObservableList<SettingsSidebarItem> settingsItems;
 
     public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
@@ -58,11 +61,19 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         this.initializeSettingsItems();
 
-        this.sidebar = new SettingsSidebar(this.settingsItems);
-        this.sidebar.setOnSelectSettingsItem(this::setCenter);
+        this.sidebar = createSidebar();
 
-        this.setSidebar(this.sidebar);
+        this.setSidebar(sidebar);
 
+    }
+
+    private SettingsSidebar createSidebar() {
+        final SettingsSidebar sidebar = new SettingsSidebar(this.settingsItems);
+
+        sidebar.selectedItemProperty()
+                .addListener((Observable invalidation) -> setCenter(sidebar.getSelectedItem().getPanel()));
+
+        return sidebar;
     }
 
     private void initializeSettingsItems() {
@@ -71,16 +82,16 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                 this.applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSidebar.SettingsSidebarItem(
+                new SettingsSidebarItem(
                         new UserInterfacePanel(this.javaFxSettingsManager, this.themeManager),
                         "userInterfaceButton", tr("User Interface")),
-                new SettingsSidebar.SettingsSidebarItem(
+                new SettingsSidebarItem(
                         new RepositoriesPanel(this.settingsManager, this.repositoryManager),
                         "repositoriesButton", tr("Repositories")),
-                new SettingsSidebar.SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
+                new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
-                new SettingsSidebar.SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, this.opener), "aboutButton",
+                new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
+                new SettingsSidebarItem(new AboutPanel(buildInformation, this.opener), "aboutButton",
                         tr("About")));
     }
 }

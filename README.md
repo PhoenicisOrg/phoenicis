@@ -15,27 +15,19 @@ Supported engines:
 ------------
 
 ## Build and Run
-### Linux
+Dependencies:
+* Java 10+
+* Maven
+
 Build
 ```
 mvn clean package
 ```
 Run
 ```
-cd phoenicis-dist/target
-unzip phoenicis-dist.zip
-./phoenicis-dist/phoenicis.sh
-```
-
-### OSX
-Build
-```
-mvn clean package install
-```
-Run
-```
-cd phoenicis-javafx
-mvn jfx:native
+mvn install
+cd phoenicis-javafx/
+mvn exec:java
 ```
 
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).

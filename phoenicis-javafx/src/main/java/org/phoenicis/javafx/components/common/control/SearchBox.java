@@ -36,6 +36,15 @@ public class SearchBox extends ControlBase<SearchBox, SearchBoxSkin> {
 
     /**
      * Constructor
+     *
+     * @param searchTerm The submitted search term
+     */
+    public SearchBox(StringProperty searchTerm) {
+        this(searchTerm, new SimpleObjectProperty<>(Duration.seconds(0.5)));
+    }
+
+    /**
+     * Constructor
      */
     public SearchBox() {
         this(new SimpleStringProperty(""), new SimpleObjectProperty<>(Duration.seconds(0.5)));

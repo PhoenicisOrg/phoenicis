@@ -104,15 +104,12 @@ public class ControllerConfiguration {
     @Bean
     public LibraryController libraryController() {
         return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(),
-                libraryConfiguration.libraryManager(), libraryConfiguration.shortcutRunner(),
-                libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter(),
-                repositoryConfiguration.repositoryManager());
+                libraryConfiguration.libraryManager(), repositoryConfiguration.repositoryManager());
     }
 
     @Bean
     public AppsController appsController() {
-        return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager(),
-                scriptsConfiguration.scriptInterpreter());
+        return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager());
     }
 
     @Bean
