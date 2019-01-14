@@ -1,15 +1,16 @@
 package org.phoenicis.javafx.components.common.skin;
 
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import org.phoenicis.javafx.collections.ConcatenatedList;
+import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.behavior.SidebarToggleGroupBehavior;
 import org.phoenicis.javafx.components.common.control.SidebarGroup;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
-import org.phoenicis.javafx.collections.AdhocList;
-import org.phoenicis.javafx.collections.MappedList;
 
 import java.util.Optional;
 
@@ -81,11 +82,12 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
         final ObservableList<ToggleButton> mappedToggleButtons = new MappedList<>(getControl().getElements(),
                 this::convertToToggleButton);
 
-        ToggleButton allToggleButton = createAllButton().orElse(null);
+        final ObservableList<ToggleButton> allToggleButton = createAllButton()
+                .map(FXCollections::singletonObservableList)
+                .orElse(FXCollections.emptyObservableList());
 
-        final ObservableList<ToggleButton> adhocToggleButtons = allToggleButton != null
-                ? new AdhocList<>(mappedToggleButtons, allToggleButton)
-                : new AdhocList<>(mappedToggleButtons);
+        final ConcatenatedList<ToggleButton> adhocToggleButtons = ConcatenatedList.create(allToggleButton,
+                mappedToggleButtons);
 
         Bindings.bindContent(toggleGroup.getToggles(), adhocToggleButtons);
 

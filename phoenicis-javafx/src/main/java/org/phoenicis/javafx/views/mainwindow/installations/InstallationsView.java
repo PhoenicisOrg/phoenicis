@@ -25,7 +25,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
@@ -84,10 +84,11 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
     }
 
     private CombinedListWidget<InstallationDTO> createInstallationListWidget() {
-        final FilteredList<InstallationDTO> filteredInstallations = new ExpandedList<>(
-                this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
-                InstallationCategoryDTO::getInstallations)
-                        .filtered(this.filter::filter);
+        final FilteredList<InstallationDTO> filteredInstallations = ConcatenatedList
+                .create(new MappedList<>(
+                        this.categories.sorted(Comparator.comparing(InstallationCategoryDTO::getName)),
+                        InstallationCategoryDTO::getInstallations))
+                .filtered(this.filter::filter);
 
         filteredInstallations.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,
