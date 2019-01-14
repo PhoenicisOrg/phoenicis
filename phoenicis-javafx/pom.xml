@@ -124,7 +124,18 @@
             <version>jdk-11+23</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.PhoenicisOrg</groupId>
+            <artifactId>javafx-collections</artifactId>
+            <version>eba1407c75</version>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
     <build>
         <resources>
             <resource>
