@@ -57,6 +57,11 @@ public class ExtractorTest {
     }
 
     @Test
+    public void testUncompressTarXzFile() throws IOException, URISyntaxException {
+        testUncompress("test5.tar.xz");
+    }
+
+    @Test
     public void testUncompressZipFile() throws IOException, URISyntaxException {
         testUncompress("test4.zip");
     }

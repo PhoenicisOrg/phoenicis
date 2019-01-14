@@ -16,7 +16,8 @@
   ~ with this program; if not, write to the Free Software Foundation, Inc.,
   ~ 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.phoenicis</groupId>
@@ -59,9 +60,9 @@
             <version>2.6</version>
         </dependency>
         <dependency>
-            <groupId>jmimemagic</groupId>
+            <groupId>net.sf.jmimemagic</groupId>
             <artifactId>jmimemagic</artifactId>
-            <version>0.1.2</version>
+            <version>0.1.5</version>
             <exclusions>
                 <exclusion>
                     <artifactId>log4j</artifactId>
@@ -73,6 +74,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
             <version>1.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.tukaani</groupId>
+            <artifactId>xz</artifactId>
+            <version>1.8</version>
         </dependency>
         <dependency>
             <groupId>commons-lang</groupId>

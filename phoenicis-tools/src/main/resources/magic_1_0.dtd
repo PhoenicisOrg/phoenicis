@@ -1,0 +1,18 @@
+<!ELEMENT magic (info?,match-list)>
+<!ELEMENT info (version?,author?,description?)>
+<!ELEMENT version (#PCDATA)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT match-list (match*)>
+<!ELEMENT match (mimetype,extension,description,test,submatch-list?)>
+<!ELEMENT extension (#PCDATA)>
+<!ELEMENT mimetype (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT test (#PCDATA)>
+<!ATTLIST test offset CDATA "0">
+<!ATTLIST test type CDATA "string">
+<!ATTLIST test bitmask CDATA "">
+<!ATTLIST test comparator CDATA "=">
+<!ELEMENT submatch-list (match+)>
+	       
+               
