@@ -28,7 +28,8 @@ import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
-import org.phoenicis.javafx.collections.ExpandedList;
+import org.phoenicis.javafx.collections.ConcatenatedList;
+import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -132,9 +133,8 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     private FilteredList<EngineSubCategoryTab> createEngineSubCategoryTabs() {
         // initialize the engines sub category tabs
-        final ExpandedList<EngineSubCategoryTab, EngineCategoryDTO> engineSubCategoryTabs = new ExpandedList<>(
-                this.engineCategories,
-                engineCategory -> engineCategory
+        final MappedList<List<EngineSubCategoryTab>, EngineCategoryDTO> engineSubCategoryTabGroups = new MappedList<>(
+                this.engineCategories, engineCategory -> engineCategory
                         .getSubCategories()
                         .stream()
                         .map(engineSubCategory -> {
@@ -149,6 +149,9 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
                             return result;
                         })
                         .collect(Collectors.toList()));
+
+        final ConcatenatedList<EngineSubCategoryTab> engineSubCategoryTabs = ConcatenatedList
+                .create(engineSubCategoryTabGroups);
 
         // sort the engine sub category tabs alphabetically
         // filter the engine sub category tabs, so that only the visible tabs remain
