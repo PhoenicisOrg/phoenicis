@@ -89,5 +89,16 @@
             <artifactId>org.eclipse.jgit</artifactId>
             <version>5.2.1.201812262042-r</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.PhoenicisOrg</groupId>
+            <artifactId>javafx-collections</artifactId>
+            <version>09417a8e6f</version>
+        </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>
