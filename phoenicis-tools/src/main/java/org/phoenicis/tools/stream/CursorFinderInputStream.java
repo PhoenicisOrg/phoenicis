@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * This input stream will takes an input stream, a cursor (a byte-array) and find it
- * before creating a sub input stream that skip all data before the cursor.
+ * This input stream will take an input stream, a cursor (a byte-array) and find it
+ * before creating a sub input stream that skips all data before the cursor.
  * Example:
  * <p>
  * Let's suppose we have an input stream that is sending 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06...
@@ -15,7 +15,10 @@ public class CursorFinderInputStream extends InputStream {
     private final byte[] cursor;
     private final InputStream inputStream;
     private int cursorPosition = 0;
-    private int readPosition = 0; // Once the cursor is found, we need to send it through the input stream.
+    /**
+     * Once the cursor is found, we need to send it through the input stream.
+     */
+    private int readPosition = 0;
 
     /**
      * @param inputStream The input stream source
