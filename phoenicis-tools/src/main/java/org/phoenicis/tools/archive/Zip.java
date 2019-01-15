@@ -26,6 +26,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.ProgressEntity;
+import org.phoenicis.tools.stream.CursorFinderInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ import java.util.function.Consumer;
 @Safe
 public class Zip {
     private static final String ZIP_ERROR_MESSAGE = "Unable to open input stream";
+    private static final byte[] ZIP_MAGICK_BYTE = new byte[] { 0x50, 0x4B, 0x03, 0x04 };
     private final Logger LOGGER = LoggerFactory.getLogger(Zip.class);
 
     List<File> uncompressZipFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
@@ -62,8 +64,9 @@ public class Zip {
     private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
             final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
         final List<File> uncompressedFiles = new LinkedList<>();
-        try (ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("zip",
-                inputStream)) {
+        try (InputStream cursorInputStream = new CursorFinderInputStream(inputStream, ZIP_MAGICK_BYTE);
+                ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("zip",
+                        cursorInputStream)) {
             ZipArchiveEntry entry;
             while ((entry = (ZipArchiveEntry) debInputStream.getNextEntry()) != null) {
                 final File outputFile = new File(outputDir, entry.getName());

@@ -67,6 +67,11 @@ public class ExtractorTest {
     }
 
     @Test
+    public void testUncompressZipExeFile() throws IOException, URISyntaxException {
+        testUncompress("test6.exe");
+    }
+
+    @Test
     public void testUncompressWithSymbolicLinks() throws IOException, URISyntaxException {
         File inputFile = new File(inputUrl.toURI().getPath(), "tarLink.tar.gz");
         final File temporaryDirectory = Files.createTempDir();

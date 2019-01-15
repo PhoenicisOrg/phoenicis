@@ -64,6 +64,7 @@ public class Extractor {
             case "application/x-xz":
                 return tar.uncompressTarXzFile(inputFile, outputDir, onChange);
             case "application/zip":
+            case "application/x-dosexec":
                 return zip.uncompressZipFile(inputFile, outputDir, onChange);
             default:
                 return tar.uncompressTarFile(inputFile, outputDir, onChange);
