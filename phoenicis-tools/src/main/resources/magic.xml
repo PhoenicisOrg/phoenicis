@@ -1995,8 +1995,8 @@
             <test offset="0" type="leshort" comparator="=">0x14c</test>
         </match>
         <match>
-            <mimetype>???</mimetype>
-            <extension>???</extension>
+            <mimetype>application/x-dosexec</mimetype>
+            <extension>exe</extension>
             <description>MS-DOS executable (EXE)</description>
             <test offset="0" type="string" comparator="=">MZ</test>
             <match-list>

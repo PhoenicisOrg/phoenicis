@@ -37,9 +37,8 @@ public class FileAnalyser {
 
     /**
      * Identify which line delimiter is used in a file
-     * 
-     * @param fileContent
-     *            string to analyse
+     *
+     * @param fileContent string to analyse
      * @return the line separator as a string. Null if the file has no line
      *         separator
      */
@@ -81,11 +80,25 @@ public class FileAnalyser {
 
     public String getMimetype(File inputFile) {
         try {
-            return getMatch(inputFile).getMimeType();
+            final MagicMatch match = getMatch(inputFile);
+            final String mimeType = match.getMimeType();
+            if ("???".equals(mimeType)) {
+                return guessMimeTypeFromDescription(match);
+            }
+
+            return mimeType;
         } catch (MagicMatchNotFoundException e) {
             LOGGER.debug("Failed to get Mime Type", e);
             final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
             return mimeTypesMap.getContentType(inputFile);
         }
+    }
+
+    private String guessMimeTypeFromDescription(MagicMatch match) {
+        if ("MS-DOS executable (EXE)".equals(match.getDescription())) {
+            return "application/x-dosexec";
+        }
+
+        return "???";
     }
 }
