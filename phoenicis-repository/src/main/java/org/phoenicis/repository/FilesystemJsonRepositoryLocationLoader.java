@@ -2,6 +2,7 @@ package org.phoenicis.repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.google.common.collect.ImmutableList;
 import org.phoenicis.repository.location.ClasspathRepositoryLocation;
 import org.phoenicis.repository.location.GitRepositoryLocation;
 import org.phoenicis.repository.location.RepositoryLocation;
@@ -15,6 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocationLoader {
@@ -36,6 +38,22 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
     }
 
     @Override
+    public List<RepositoryLocation<? extends Repository>> getDefaultRepositoryLocations() {
+        try {
+            return ImmutableList.<RepositoryLocation<? extends Repository>> builder()
+                    .add(new GitRepositoryLocation.Builder()
+                            .withGitRepositoryUri(new URL(defaultGitUrl).toURI())
+                            .withBranch(defaultGitBranch).build())
+                    .add(new ClasspathRepositoryLocation(defaultClasspath))
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            LOGGER.error("Couldn't create default repository location list", e);
+
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
     public List<RepositoryLocation<? extends Repository>> loadRepositoryLocations() {
         List<RepositoryLocation<? extends Repository>> result = new ArrayList<>();
 
@@ -49,14 +67,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
                 LOGGER.error("Couldn't load repository location list", e);
             }
         } else {
-            try {
-                result.add(new GitRepositoryLocation.Builder()
-                        .withGitRepositoryUri(new URL(defaultGitUrl).toURI())
-                        .withBranch(defaultGitBranch).build());
-                result.add(new ClasspathRepositoryLocation(defaultClasspath));
-            } catch (URISyntaxException | MalformedURLException e) {
-                LOGGER.error("Couldn't create default repository location list", e);
-            }
+            result.addAll(getDefaultRepositoryLocations());
         }
 
         return result;
@@ -70,5 +81,4 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
             LOGGER.error("Couldn't save repository location list", e);
         }
     }
-
 }

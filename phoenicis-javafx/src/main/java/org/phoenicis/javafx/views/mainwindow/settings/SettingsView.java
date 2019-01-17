@@ -19,13 +19,16 @@
 package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.phoenicis.javafx.components.setting.control.RepositoriesPanel;
 import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
+import org.phoenicis.repository.RepositoryLocationLoader;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
@@ -39,6 +42,8 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
     private final String applicationBuildTimestamp;
     private final Opener opener;
 
+    private final RepositoryLocationLoader repositoryLocationLoader;
+
     private SettingsManager settingsManager;
     private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
@@ -47,7 +52,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
     public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-            SettingsManager settingsManager,
+            SettingsManager settingsManager, RepositoryLocationLoader repositoryLocationLoader,
             JavaFxSettingsManager javaFxSettingsManager, RepositoryManager repositoryManager) {
         super(tr("Settings"), themeManager);
         this.applicationName = applicationName;
@@ -56,6 +61,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
         this.applicationBuildTimestamp = applicationBuildTimestamp;
         this.opener = opener;
         this.settingsManager = settingsManager;
+        this.repositoryLocationLoader = repositoryLocationLoader;
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.repositoryManager = repositoryManager;
 
@@ -86,7 +92,9 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                         new UserInterfacePanel(this.javaFxSettingsManager, this.themeManager),
                         "userInterfaceButton", tr("User Interface")),
                 new SettingsSidebarItem(
-                        new RepositoriesPanel(this.settingsManager, this.repositoryManager),
+                        new RepositoriesPanel(repositoryLocationLoader,
+                                FXCollections.observableArrayList(settingsManager.loadRepositoryLocations()),
+                                new SimpleObjectProperty<>()),
                         "repositoriesButton", tr("Repositories")),
                 new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
