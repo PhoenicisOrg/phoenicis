@@ -40,7 +40,7 @@ public class UserInterfacePanelSkin extends SkinBase<UserInterfacePanel, UserInt
         themeGrid.setVgap(10);
 
         // change theme
-        final Text themeLabel = new Text(tr("Theme:"));
+        final Text themeLabel = new Text(tr("Theme"));
         themeLabel.getStyleClass().add("captionTitle");
 
         final ComboBox<Theme> themeSelection = new ComboBox<>();
