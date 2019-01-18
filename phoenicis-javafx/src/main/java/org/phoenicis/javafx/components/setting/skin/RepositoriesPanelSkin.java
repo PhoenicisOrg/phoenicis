@@ -24,6 +24,7 @@ import org.phoenicis.repository.types.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -62,21 +63,11 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
     private TableView<RepositoryLocation<? extends Repository>> createRepositoryLocationTable() {
         final TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable = new TableView<>();
 
-        final TableColumn<RepositoryLocation<? extends Repository>, Integer> priorityColumn = new TableColumn<>(
-                tr("Priority"));
-        priorityColumn.setSortable(false);
-        priorityColumn.setReorderable(false);
-        priorityColumn.setCellValueFactory(cellDataFeatures -> new SimpleObjectProperty<>(
-                getControl().getRepositoryLocations().indexOf(cellDataFeatures.getValue()) + 1));
+        repositoryLocationTable.getColumns().add(createColumn(tr("Priority"),
+                repositoryLocation -> getControl().getRepositoryLocations().indexOf(repositoryLocation) + 1));
 
-        final TableColumn<RepositoryLocation<? extends Repository>, String> nameColumn = new TableColumn<>(
-                tr("Repository name"));
-        nameColumn.setSortable(false);
-        nameColumn.setReorderable(false);
-        nameColumn.setCellValueFactory(
-                cellDataFeatures -> new SimpleObjectProperty<>(cellDataFeatures.getValue().toDisplayString()));
-
-        repositoryLocationTable.getColumns().setAll(priorityColumn, nameColumn);
+        repositoryLocationTable.getColumns().add(createColumn(
+                tr("Repository name"), RepositoryLocation::toDisplayString));
 
         repositoryLocationTable.setRowFactory(tv -> {
             final TableRow<RepositoryLocation<? extends Repository>> row = new TableRow<>();
@@ -86,8 +77,6 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             // ensure that the tooltip is only shown for non empty rows
             row.emptyProperty().addListener((Observable invalidation) -> updateTooltipInstallation(!row.isEmpty(), row,
                     repositoryLocationTooltip));
-            // ensure that the tooltip is correctly initialized
-            updateTooltipInstallation(!row.isEmpty(), row, repositoryLocationTooltip);
 
             row.setOnDragDetected(event -> {
                 if (!row.isEmpty()) {
@@ -114,10 +103,10 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             });
 
             row.setOnDragDropped(event -> {
-                Dragboard db = event.getDragboard();
+                Dragboard dragboard = event.getDragboard();
 
-                if (db.hasContent(repositoryLocationFormat)) {
-                    int draggedIndex = (Integer) db.getContent(repositoryLocationFormat);
+                if (dragboard.hasContent(repositoryLocationFormat)) {
+                    int draggedIndex = (Integer) dragboard.getContent(repositoryLocationFormat);
                     RepositoryLocation<? extends Repository> draggedRepositoryLocation = getControl()
                             .getRepositoryLocations().remove(draggedIndex);
 
@@ -136,6 +125,18 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         Bindings.bindContent(repositoryLocationTable.getItems(), getControl().getRepositoryLocations());
 
         return repositoryLocationTable;
+    }
+
+    private <E> TableColumn<RepositoryLocation<? extends Repository>, E> createColumn(String columnHeader,
+            Function<RepositoryLocation<? extends Repository>, E> converter) {
+        final TableColumn<RepositoryLocation<? extends Repository>, E> column = new TableColumn<>(columnHeader);
+
+        column.setSortable(false);
+        column.setReorderable(false);
+        column.setCellValueFactory(
+                cellDataFeatures -> new SimpleObjectProperty<>(converter.apply(cellDataFeatures.getValue())));
+
+        return column;
     }
 
     private void updateTooltipInstallation(boolean condition, Node component, Tooltip tooltip) {

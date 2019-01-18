@@ -30,6 +30,8 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.RepositoryLocationLoader;
 import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.location.RepositoryLocation;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
@@ -87,13 +89,18 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                 this.applicationName, this.applicationVersion, this.applicationGitRevision,
                 this.applicationBuildTimestamp);
 
+        ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
+                .observableArrayList(settingsManager.loadRepositoryLocations());
+
+        repositoryLocations
+                .addListener((Observable invalidation) -> System.out.println(repositoryLocations.toString()));
+
         this.settingsItems = FXCollections.observableArrayList(
                 new SettingsSidebarItem(
                         new UserInterfacePanel(this.javaFxSettingsManager, this.themeManager),
                         "userInterfaceButton", tr("User Interface")),
                 new SettingsSidebarItem(
-                        new RepositoriesPanel(repositoryLocationLoader,
-                                FXCollections.observableArrayList(settingsManager.loadRepositoryLocations()),
+                        new RepositoriesPanel(repositoryLocationLoader, repositoryLocations,
                                 new SimpleObjectProperty<>()),
                         "repositoriesButton", tr("Repositories")),
                 new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
