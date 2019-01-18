@@ -23,8 +23,10 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
+import org.phoenicis.javafx.components.setting.control.AboutPanel;
 import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
 import org.phoenicis.javafx.components.setting.control.UserInterfacePanel;
+import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
@@ -84,7 +86,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
     }
 
     private void initializeSettingsItems() {
-        AboutPanel.ApplicationBuildInformation buildInformation = new AboutPanel.ApplicationBuildInformation(
+        final ApplicationBuildInformation buildInformation = new ApplicationBuildInformation(
                 this.applicationName, this.applicationVersion, this.applicationGitRevision,
                 this.applicationBuildTimestamp);
 
@@ -97,7 +99,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                 new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
                 new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSidebarItem(new AboutPanel(buildInformation, this.opener), "aboutButton",
+                new SettingsSidebarItem(new AboutPanel(this.opener, buildInformation), "aboutButton",
                         tr("About")));
     }
 
