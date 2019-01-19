@@ -152,7 +152,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             Optional<RepositoryLocation<? extends Repository>> successResult = dialog.showAndWait();
 
             successResult
-                    .ifPresent(repositoryLocation -> getControl().getRepositoryLocations().add(repositoryLocation));
+                    .ifPresent(repositoryLocation -> getControl().getRepositoryLocations().add(0, repositoryLocation));
         });
 
         final Button removeButton = new Button(tr("Remove"));

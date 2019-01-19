@@ -20,12 +20,12 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 
 import javafx.animation.PauseTransition;
 import javafx.beans.Observable;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
-import org.phoenicis.javafx.components.setting.control.*;
 import org.phoenicis.javafx.components.setting.control.RepositoriesPanel;
+import org.phoenicis.javafx.components.setting.control.*;
 import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -39,6 +39,8 @@ import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
+
+import java.util.stream.IntStream;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -96,24 +98,49 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                 this.applicationName, this.applicationVersion, this.applicationGitRevision,
                 this.applicationBuildTimestamp);
 
-        ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
-                .observableArrayList(settingsManager.loadRepositoryLocations());
-
-        repositoryLocations
-                .addListener((Observable invalidation) -> System.out.println(repositoryLocations.toString()));
-
         this.settingsItems = FXCollections.observableArrayList(
                 new SettingsSidebarItem(createUserInterfacePanel(),
                         "userInterfaceButton", tr("User Interface")),
                 new SettingsSidebarItem(
-                        new RepositoriesPanel(repositoryLocationLoader, repositoryLocations,
-                                new SimpleObjectProperty<>()),
+                        createRepositoriesPanel(),
                         "repositoriesButton", tr("Repositories")),
                 new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
                 new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
                 new SettingsSidebarItem(new AboutPanel(this.opener, buildInformation), "aboutButton",
                         tr("About")));
+    }
+
+    private RepositoriesPanel createRepositoriesPanel() {
+        ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
+                .observableArrayList(settingsManager.loadRepositoryLocations());
+
+        final RepositoriesPanel repositoriesPanel = new RepositoriesPanel(repositoryLocationLoader,
+                repositoryLocations);
+
+        // set the initial values
+        repositoriesPanel.setOnRepositoryRefresh(repositoryManager::triggerRepositoryChange);
+
+        // react on changes
+        repositoriesPanel.getRepositoryLocations()
+                .addListener((ListChangeListener.Change<? extends RepositoryLocation<? extends Repository>> change) -> {
+                    while (change.next()) {
+                        final int from = change.getFrom();
+
+                        if (change.wasRemoved()) {
+                            change.getRemoved().forEach(repositoryManager::removeRepositories);
+                        }
+
+                        if (change.wasAdded()) {
+                            IntStream.range(0, change.getAddedSize()).forEach(index -> repositoryManager
+                                    .addRepositories(from + index, change.getAddedSubList().get(index)));
+                        }
+
+                        settingsManager.saveRepositories(repositoryLocations);
+                    }
+                });
+
+        return repositoriesPanel;
     }
 
     private UserInterfacePanel createUserInterfacePanel() {

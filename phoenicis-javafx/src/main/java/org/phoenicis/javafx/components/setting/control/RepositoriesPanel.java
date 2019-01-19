@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.components.setting.control;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.setting.skin.RepositoriesPanelSkin;
@@ -23,6 +24,11 @@ public class RepositoriesPanel extends ControlBase<RepositoriesPanel, Repositori
         this.repositoryLocationLoader = repositoryLocationLoader;
         this.repositoryLocations = repositoryLocations;
         this.onRepositoryRefresh = onRepositoryRefresh;
+    }
+
+    public RepositoriesPanel(RepositoryLocationLoader repositoryLocationLoader,
+            ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        this(repositoryLocationLoader, repositoryLocations, new SimpleObjectProperty<>());
     }
 
     @Override
