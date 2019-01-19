@@ -5,7 +5,6 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
@@ -75,13 +74,20 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             final Tooltip repositoryLocationTooltip = new Tooltip(
                     tr("Move the repository up or down to change its priority"));
             // ensure that the tooltip is only shown for non empty rows
-            row.emptyProperty().addListener((Observable invalidation) -> updateTooltipInstallation(!row.isEmpty(), row,
-                    repositoryLocationTooltip));
+            row.emptyProperty().addListener((Observable invalidation) -> {
+                if (row.isEmpty()) {
+                    Tooltip.uninstall(row, repositoryLocationTooltip);
+                } else {
+                    Tooltip.install(row, repositoryLocationTooltip);
+                }
+            });
 
             row.setOnDragDetected(event -> {
                 if (!row.isEmpty()) {
                     int index = row.getIndex();
                     Dragboard dragboard = row.startDragAndDrop(TransferMode.MOVE);
+
+                    dragboard.setDragView(row.snapshot(null, null));
 
                     ClipboardContent content = new ClipboardContent();
                     content.put(repositoryLocationFormat, index);
@@ -94,11 +100,10 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             row.setOnDragOver(event -> {
                 Dragboard dragboard = event.getDragboard();
 
-                if (dragboard.hasContent(repositoryLocationFormat)) {
-                    if (row.getIndex() != (Integer) dragboard.getContent(repositoryLocationFormat)) {
-                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-                        event.consume();
-                    }
+                if (dragboard.hasContent(repositoryLocationFormat)
+                        && row.getIndex() != (Integer) dragboard.getContent(repositoryLocationFormat)) {
+                    event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    event.consume();
                 }
             });
 
@@ -131,20 +136,11 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             Function<RepositoryLocation<? extends Repository>, E> converter) {
         final TableColumn<RepositoryLocation<? extends Repository>, E> column = new TableColumn<>(columnHeader);
 
+        column.setCellValueFactory(cdf -> new SimpleObjectProperty<>(converter.apply(cdf.getValue())));
         column.setSortable(false);
         column.setReorderable(false);
-        column.setCellValueFactory(
-                cellDataFeatures -> new SimpleObjectProperty<>(converter.apply(cellDataFeatures.getValue())));
 
         return column;
-    }
-
-    private void updateTooltipInstallation(boolean condition, Node component, Tooltip tooltip) {
-        if (condition) {
-            Tooltip.install(component, tooltip);
-        } else {
-            Tooltip.uninstall(component, tooltip);
-        }
     }
 
     private HBox createRepositoryButtons(TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable) {
