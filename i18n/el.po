@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-14 15:49+0000\n"
-"PO-Revision-Date: 2019-01-14 17:57\n"
+"POT-Creation-Date: 2019-01-19 14:40+0000\n"
+"PO-Revision-Date: 2019-01-19 20:42\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -123,50 +123,30 @@ msgstr ""
 msgid "Refresh Repositories"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:52
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:63
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
 msgid "Settings"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:97
 msgid "User Interface"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:90
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
 msgid "Repositories"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:92
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:102
 msgid "File Associations"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:93
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:103
 msgid "Network"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:95
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:47
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:105
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
 msgid "About"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:60
-msgid "User Interface Settings"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:68
-msgid "Theme:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:83
-msgid "View the scripts’ source repository"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:87
-msgid "Scale the user interface"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/UserInterfacePanel.java:97
-msgid "Restore defaults (requires restart)"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
@@ -225,25 +205,6 @@ msgstr ""
 msgid "Choose the location of your classpath repository"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:55
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:53
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
-msgid "Name:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:61
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:171
-msgid "Version:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:67
-msgid "Git Revision:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/AboutPanel.java:91
-msgid "Build Timestamp:"
-msgstr ""
-
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:37
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:49
 msgid "Engine tools"
@@ -261,6 +222,12 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:45
 msgid "Information"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:53
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
+msgid "Name:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:58
@@ -539,6 +506,11 @@ msgstr ""
 msgid "An error occurred while deleting the engine"
 msgstr ""
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:171
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
+msgid "Version:"
+msgstr ""
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:31
@@ -593,6 +565,34 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:249
 msgid "The script ended unexpectedly"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:34
+msgid "User Interface Settings"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:43
+msgid "Theme"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:52
+msgid "View the scripts’ source repository"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:59
+msgid "Scale the user interface"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:68
+msgid "Restore defaults (requires restart)"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
+msgid "Git Revision:"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
+msgid "Build Timestamp:"
 msgstr ""
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
