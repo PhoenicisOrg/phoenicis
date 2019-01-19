@@ -22,6 +22,8 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.setting.control.AboutPanel;
+import org.phoenicis.javafx.components.setting.control.FileAssociationsPanel;
+import org.phoenicis.javafx.components.setting.control.NetworkPanel;
 import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
 import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
