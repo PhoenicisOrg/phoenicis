@@ -74,15 +74,15 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     }
 
     public ObservableList<Theme> getThemes() {
-        return themes;
+        return this.themes;
     }
 
     public Theme getSelectedTheme() {
-        return selectedTheme.get();
+        return this.selectedTheme.get();
     }
 
     public ObjectProperty<Theme> selectedThemeProperty() {
-        return selectedTheme;
+        return this.selectedTheme;
     }
 
     public void setSelectedTheme(Theme selectedTheme) {
@@ -90,11 +90,11 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     }
 
     public boolean isShowScriptSource() {
-        return showScriptSource.get();
+        return this.showScriptSource.get();
     }
 
     public BooleanProperty showScriptSourceProperty() {
-        return showScriptSource;
+        return this.showScriptSource;
     }
 
     public void setShowScriptSource(boolean showScriptSource) {
@@ -102,11 +102,11 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     }
 
     public double getScaling() {
-        return scaling.get();
+        return this.scaling.get();
     }
 
     public DoubleProperty scalingProperty() {
-        return scaling;
+        return this.scaling;
     }
 
     public void setScaling(double scaling) {
@@ -114,11 +114,11 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     }
 
     public Runnable getOnRestoreSettings() {
-        return onRestoreSettings.get();
+        return this.onRestoreSettings.get();
     }
 
     public ObjectProperty<Runnable> onRestoreSettingsProperty() {
-        return onRestoreSettings;
+        return this.onRestoreSettings;
     }
 
     public void setOnRestoreSettings(Runnable onRestoreSettings) {
