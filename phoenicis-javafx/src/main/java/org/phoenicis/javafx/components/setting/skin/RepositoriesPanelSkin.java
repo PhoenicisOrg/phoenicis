@@ -54,22 +54,26 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
 
         final VBox container = new VBox(title, repositoryLocationTable, repositoryButtons, refreshContainer);
 
-        container.getStyleClass().add("containerConfigurationPane");
+        container.getStyleClass().addAll("settings-tab", "repositories-panel");
 
         getChildren().addAll(container);
     }
 
     private TableView<RepositoryLocation<? extends Repository>> createRepositoryLocationTable() {
         final TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable = new TableView<>();
+        repositoryLocationTable.getStyleClass().add("repositories-table");
 
+        // add the priority column
         repositoryLocationTable.getColumns().add(createColumn(tr("Priority"),
                 repositoryLocation -> getControl().getRepositoryLocations().indexOf(repositoryLocation) + 1));
 
+        // add the repository name column
         repositoryLocationTable.getColumns().add(createColumn(
                 tr("Repository name"), RepositoryLocation::toDisplayString));
 
         repositoryLocationTable.setRowFactory(tv -> {
             final TableRow<RepositoryLocation<? extends Repository>> row = new TableRow<>();
+            row.getStyleClass().add("repository-row");
 
             final Tooltip repositoryLocationTooltip = new Tooltip(
                     tr("Move the repository up or down to change its priority"));
@@ -145,6 +149,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
 
     private HBox createRepositoryButtons(TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable) {
         final Button addButton = new Button(tr("Add"));
+        addButton.getStyleClass().add("repositories-add");
         addButton.setOnAction((ActionEvent event) -> {
             AddRepositoryDialog dialog = new AddRepositoryDialog();
             dialog.initOwner(getControl().getScene().getWindow());
@@ -156,6 +161,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         });
 
         final Button removeButton = new Button(tr("Remove"));
+        removeButton.getStyleClass().add("repositories-remove");
         removeButton.setOnAction((ActionEvent event) -> {
             List<RepositoryLocation<? extends Repository>> toRemove = repositoryLocationTable.getSelectionModel()
                     .getSelectedItems();
@@ -164,6 +170,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         });
 
         final Button restoreDefault = new Button(tr("Restore defaults"));
+        restoreDefault.getStyleClass().add("repositories-restore");
         restoreDefault.setOnAction(event -> {
             final ConfirmDialog dialog = ConfirmDialog.builder()
                     .withTitle(tr("Restore default repositories"))
@@ -177,13 +184,17 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             dialog.showAndCallback();
         });
 
-        return new HBox(addButton, removeButton, restoreDefault);
+        final HBox container = new HBox(addButton, removeButton, restoreDefault);
+
+        container.getStyleClass().add("repositories-buttons-container");
+
+        return container;
     }
 
     private HBox createRefreshButtonContainer() {
         final Label refreshRepositoriesLabel = new Label(
                 tr("Fetch updates from the repositories to retrieve latest script versions"));
-        refreshRepositoriesLabel.setWrapText(true);
+        refreshRepositoriesLabel.getStyleClass().add("repositories-refresh-label");
 
         HBox.setHgrow(refreshRepositoriesLabel, Priority.ALWAYS);
 
@@ -191,6 +202,10 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         refreshRepositoriesButton.setOnAction(
                 event -> Optional.ofNullable(getControl().getOnRepositoryRefresh()).ifPresent(Runnable::run));
 
-        return new HBox(refreshRepositoriesLabel, refreshRepositoriesButton);
+        final HBox container = new HBox(refreshRepositoriesLabel, refreshRepositoriesButton);
+
+        container.getStyleClass().add("repositories-refresh-container");
+
+        return container;
     }
 }
