@@ -41,6 +41,7 @@ import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.library.control.LibraryDetailsPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutCreationDetailsPanel;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -76,7 +77,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     private final ShortcutManager shortcutManager;
 
     private LibraryDetailsPanel libraryDetailsPanel;
-    private CreateShortcutPanel createShortcutPanel;
+    private ShortcutCreationDetailsPanel createShortcutPanel;
     private EditShortcutPanel editShortcutPanel;
     private final Tab installedApplicationsTab;
 
@@ -133,8 +134,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         this.libraryDetailsPanel = createLibraryDetailsPanel();
 
-        this.createShortcutPanel = new CreateShortcutPanel(containersPath);
-        this.createShortcutPanel.setOnCreateShortcut(this::createShortcut);
+        this.createShortcutPanel = createShortcutCreationPanel();
 
         this.editShortcutPanel = new EditShortcutPanel(objectMapper);
         this.editShortcutPanel.setOnShortcutChanged(shortcutManager::updateShortcut);
@@ -198,6 +198,19 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                 this.availableShortcuts);
     }
 
+    private ShortcutCreationDetailsPanel createShortcutCreationPanel() {
+        final ShortcutCreationDetailsPanel shortcutCreationDetailsPanel = new ShortcutCreationDetailsPanel();
+
+        shortcutCreationDetailsPanel.setOnClose(this::closeDetailsView);
+
+        shortcutCreationDetailsPanel.setContainersPath(containersPath);
+        shortcutCreationDetailsPanel.setOnCreateShortcut(this::createShortcut);
+
+        shortcutCreationDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return shortcutCreationDetailsPanel;
+    }
+
     private LibraryDetailsPanel createLibraryDetailsPanel() {
         final LibraryDetailsPanel detailsPanel = new LibraryDetailsPanel(objectMapper, selectedShortcut);
 
@@ -229,11 +242,6 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
      * shows a details view which allows to create a new shortcut
      */
     private void showShortcutCreate() {
-        this.createShortcutPanel.setOnClose(this::closeDetailsView);
-        this.createShortcutPanel.setMaxWidth(600);
-        this.createShortcutPanel.prefWidthProperty().bind(this.getTabPane().widthProperty().divide(3));
-        this.createShortcutPanel.populate();
-
         // deselect a currently selected shortcut
         this.availableShortcuts.setSelectedElement(null);
 
