@@ -10,7 +10,8 @@ import org.phoenicis.library.dto.ShortcutCreationDTO;
 
 import java.util.function.Consumer;
 
-public class ShortcutCreationDetailsPanel extends DetailsPanelBase<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
+public class ShortcutCreationDetailsPanel
+        extends DetailsPanelBase<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
     private final StringProperty containersPath;
 
     /**
@@ -19,7 +20,7 @@ public class ShortcutCreationDetailsPanel extends DetailsPanelBase<ShortcutCreat
     private final ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcut;
 
     public ShortcutCreationDetailsPanel(StringProperty containersPath,
-                                        ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcut, ObjectProperty<Runnable> onClose) {
+            ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcut, ObjectProperty<Runnable> onClose) {
         super(onClose);
 
         this.containersPath = containersPath;

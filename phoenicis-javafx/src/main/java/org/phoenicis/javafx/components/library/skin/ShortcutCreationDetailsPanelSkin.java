@@ -17,7 +17,8 @@ import java.net.URI;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
-public class ShortcutCreationDetailsPanelSkin extends DetailsPanelBaseSkin<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
+public class ShortcutCreationDetailsPanelSkin
+        extends DetailsPanelBaseSkin<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
 
     /**
