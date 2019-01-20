@@ -10,15 +10,28 @@ import org.phoenicis.library.dto.ShortcutCreationDTO;
 
 import java.util.function.Consumer;
 
+/**
+ * A details panel used to create a new shortcut in the library tab
+ */
 public class ShortcutCreationDetailsPanel
         extends DetailsPanelBase<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
+    /**
+     * The path leading to the containers directory
+     */
     private final StringProperty containersPath;
 
     /**
-     * Consumer called when a shortcut shall be created
+     * The callback for when a shortcut shall be created
      */
     private final ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcut;
 
+    /**
+     * Constructor
+     *
+     * @param containersPath The path leading to the containers directory
+     * @param onCreateShortcut The callback for when a shortcut shall be created
+     * @param onClose The callback for close button clicks
+     */
     public ShortcutCreationDetailsPanel(StringProperty containersPath,
             ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcut, ObjectProperty<Runnable> onClose) {
         super(onClose);
@@ -27,21 +40,27 @@ public class ShortcutCreationDetailsPanel
         this.onCreateShortcut = onCreateShortcut;
     }
 
+    /**
+     * Constructor
+     */
     public ShortcutCreationDetailsPanel() {
         this(new SimpleStringProperty(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ShortcutCreationDetailsPanelSkin createSkin() {
         return new ShortcutCreationDetailsPanelSkin(this);
     }
 
     public String getContainersPath() {
-        return containersPath.get();
+        return this.containersPath.get();
     }
 
     public StringProperty containersPathProperty() {
-        return containersPath;
+        return this.containersPath;
     }
 
     public void setContainersPath(String containersPath) {
@@ -49,11 +68,11 @@ public class ShortcutCreationDetailsPanel
     }
 
     public Consumer<ShortcutCreationDTO> getOnCreateShortcut() {
-        return onCreateShortcut.get();
+        return this.onCreateShortcut.get();
     }
 
     public ObjectProperty<Consumer<ShortcutCreationDTO>> onCreateShortcutProperty() {
-        return onCreateShortcut;
+        return this.onCreateShortcut;
     }
 
     public void setOnCreateShortcut(Consumer<ShortcutCreationDTO> onCreateShortcut) {

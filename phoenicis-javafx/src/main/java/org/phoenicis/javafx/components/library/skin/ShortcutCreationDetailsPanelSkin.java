@@ -17,6 +17,9 @@ import java.net.URI;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The skin for the {@link ShortcutCreationDetailsPanel} component
+ */
 public class ShortcutCreationDetailsPanelSkin
         extends DetailsPanelBaseSkin<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
@@ -32,6 +35,9 @@ public class ShortcutCreationDetailsPanelSkin
         this.title.setValue(tr("Create a new shortcut"));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Node createContent() {
         final GridPane gridPane = new GridPane();
@@ -42,30 +48,30 @@ public class ShortcutCreationDetailsPanelSkin
 
         gridPane.getColumnConstraints().addAll(labelConstraints, valueConstraints);
 
-        // name
+        // add name input
         final TextField name = addName(gridPane);
 
         final Tooltip nameErrorTooltip = new Tooltip(tr("Please specify a name!"));
 
-        // category
+        // add category input
         final TextField category = addCategory(gridPane);
 
         final Tooltip categoryErrorTooltip = new Tooltip(tr("Please specify a category!"));
 
-        // description
+        // add description input
         final TextArea description = addDescription(gridPane);
 
-        // miniature
+        // add miniature input
         final TextField miniature = addMiniature(gridPane);
 
         final Tooltip miniatureErrorTooltip = new Tooltip(tr("Please specify a valid miniature!"));
 
-        // executable
+        // add executable input
         final TextField executable = addExecutable(gridPane);
 
         final Tooltip executableErrorTooltip = new Tooltip(tr("Please specify a valid executable!"));
 
-        // create button
+        // add create button
         final Button createButton = new Button(tr("Create"));
         createButton.setOnMouseClicked(event -> {
             boolean error = false;
@@ -121,6 +127,12 @@ public class ShortcutCreationDetailsPanelSkin
         return container;
     }
 
+    /**
+     * Adds the shortcut name input to the given {@link GridPane}
+     *
+     * @param gridPane The grid pane to which the shortcut name input should be added
+     * @return The {@link TextField} containing the shortcut name
+     */
     private TextField addName(final GridPane gridPane) {
         final int row = gridPane.getRowCount();
 
@@ -136,6 +148,12 @@ public class ShortcutCreationDetailsPanelSkin
         return name;
     }
 
+    /**
+     * Adds the category input to the given {@link GridPane}
+     *
+     * @param gridPane The grid pane to which the category input should be added
+     * @return The {@link TextField} containing the category
+     */
     private TextField addCategory(final GridPane gridPane) {
         final int row = gridPane.getRowCount();
 
@@ -151,6 +169,12 @@ public class ShortcutCreationDetailsPanelSkin
         return category;
     }
 
+    /**
+     * Adds the description input to the given {@link GridPane}
+     *
+     * @param gridPane The grid pane to which the description input should be added
+     * @return The {@link TextArea} containing the description
+     */
     private TextArea addDescription(final GridPane gridPane) {
         final int row = gridPane.getRowCount();
 
@@ -166,6 +190,12 @@ public class ShortcutCreationDetailsPanelSkin
         return description;
     }
 
+    /**
+     * Adds the miniature selection input to the given {@link GridPane}
+     *
+     * @param gridPane The grid pane to which the miniature selection should be added
+     * @return The {@link TextField} containing the miniature input
+     */
     private TextField addMiniature(final GridPane gridPane) {
         final int row = gridPane.getRowCount();
 
@@ -204,6 +234,12 @@ public class ShortcutCreationDetailsPanelSkin
         return miniature;
     }
 
+    /**
+     * Adds the executable selection input to the given {@link GridPane}
+     *
+     * @param gridPane The grid pane to which the executable selection should be added
+     * @return The {@link TextField} containing the executable input
+     */
     private TextField addExecutable(final GridPane gridPane) {
         final int row = gridPane.getRowCount();
 
