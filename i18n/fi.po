@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-19 14:40+0000\n"
-"PO-Revision-Date: 2019-01-19 20:42\n"
+"POT-Creation-Date: 2019-01-21 19:18+0000\n"
+"PO-Revision-Date: 2019-01-21 19:32\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -29,8 +29,8 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineToolsTab.java:68
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:75
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerVerbsTab.java:65
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:331
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:343
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:339
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:351
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:143
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
@@ -225,7 +225,7 @@ msgid "Information"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:53
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:139
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
 msgid "Name:"
 msgstr ""
@@ -316,11 +316,11 @@ msgstr ""
 msgid "Advanced Tools"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:96
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:97
 msgid "Library"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:127
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:128
 msgid "My applications"
 msgstr ""
 
@@ -328,22 +328,22 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:310
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:319
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:318
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:327
 msgid "Error while creating shortcut"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:356
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:364
 #, java-format
 msgid "Uninstall {0}"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:357
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:365
 #, java-format
 msgid "Are you sure you want to uninstall {0}?"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:362
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:370
 #, java-format
 msgid "Error while uninstalling {0}"
 msgstr ""
@@ -353,51 +353,19 @@ msgid "Save"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:105
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:102
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:202
 msgid "Miniature:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:112
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:109
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:141
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:209
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:253
 msgid "Browse..."
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/EditShortcutPanel.java:115
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:119
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:219
 msgid "Images"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:79
-msgid "Please specify a name!"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:82
-msgid "Category:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:90
-msgid "Please specify a category!"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:93
-msgid "Description:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:131
-msgid "Please specify a valid miniature!"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:134
-msgid "Executable:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:161
-msgid "Please specify a valid executable!"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/CreateShortcutPanel.java:166
-msgid "Create"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:68
@@ -516,6 +484,42 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:31
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:32
 msgid "All"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:35
+msgid "Create a new shortcut"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:54
+msgid "Please specify a name!"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:59
+msgid "Please specify a category!"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:67
+msgid "Please specify a valid miniature!"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:72
+msgid "Please specify a valid executable!"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:75
+msgid "Create"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:160
+msgid "Category:"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:181
+msgid "Description:"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:246
+msgid "Executable:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryDetailsPanelSkin.java:136
