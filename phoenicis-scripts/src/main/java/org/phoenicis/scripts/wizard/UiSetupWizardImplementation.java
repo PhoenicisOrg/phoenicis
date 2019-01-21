@@ -156,7 +156,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
                 + tr("{0} will be installed in: {1}", programName, applicationUserRoot) + "<br><br>"
                 + tr("{0} is not responsible for anything that might happen as a result of using these scripts.",
                         applicationName)
-                + "<br><br>" + tr("Click \"Next\" to start.") + "</body>";
+                + "<br><br>" + tr("Click Next to start.") + "</body>";
         return messageSender.runAndWait(message -> setupUi.showHtmlPresentationStep(message, htmlToShow));
     }
 
@@ -305,4 +305,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
         return title;
     }
 
+    @Override
+    public BrowserControl createBrowser(String textToShow) {
+        return messageSender.runAndWait(message -> setupUi.showBrowser(message, textToShow));
+    }
 }

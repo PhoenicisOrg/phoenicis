@@ -121,7 +121,11 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public void triggerRepositoryChange() {
         this.cachedRepository.clearCache();
+        triggerCallbacks();
+    }
 
+    @Override
+    public void triggerCallbacks() {
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
                 this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));

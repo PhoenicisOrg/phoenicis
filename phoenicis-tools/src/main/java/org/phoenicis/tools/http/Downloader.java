@@ -26,7 +26,7 @@ import org.phoenicis.tools.files.FileSizeUtilities;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -41,6 +41,7 @@ public class Downloader {
 
     /**
      * constructor
+     *
      * @param fileSizeUtilities
      */
     public Downloader(FileSizeUtilities fileSizeUtilities) {
@@ -48,28 +49,117 @@ public class Downloader {
     }
 
     /**
-     * downloads url to localFile, shows progress via onChange
+     * downloads url to localDestination, shows progress via onChange
+     *
      * @param url download URL
-     * @param localFile destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
      * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return the local path of the downloaded file
      */
-    public void get(String url, String localFile, Consumer<ProgressEntity> onChange) {
+    public File get(String url, String localDestination, Consumer<ProgressEntity> onChange) {
         try {
-            get(new URL(url), new File(localFile), onChange);
+            return get(new URL(url), new File(localDestination), onChange);
         } catch (MalformedURLException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }
     }
 
     /**
-     * downloads url to localFile, shows progress via onChange
+     * downloads url to localDestination, shows progress via onChange
+     *
      * @param url download URL
-     * @param localFile destination of the download
+     * @param localDestination destination of the download. Can be a file or a directory
+     * @param headers HTTP headers
      * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return The path of the created local file
      */
-    public void get(URL url, File localFile, Consumer<ProgressEntity> onChange) {
+    public File get(String url, String localDestination, Map<String, String> headers,
+            Consumer<ProgressEntity> onChange) {
         try {
-            get(url, new FileOutputStream(localFile), onChange);
+            return get(new URL(url), new File(localDestination), headers, onChange);
+        } catch (MalformedURLException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
+    /**
+     * downloads url to localDestination, shows progress via onChange
+     *
+     * @param url download URL
+     * @param localDestination destination of the download. Can be a file or a directory
+     * @param headers Headers
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return the path of the local destination file
+     */
+    public File get(URL url, File localDestination, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+        try {
+            if (!localDestination.isDirectory()) {
+                try (FileOutputStream fileOutputStream = new FileOutputStream(localDestination)) {
+                    get(url, fileOutputStream, onChange);
+                    return localDestination;
+                }
+            } else {
+                return getInsideDirectory(url, localDestination, headers, onChange);
+            }
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
+    /**
+     * downloads url to localFile, shows progress via onChange
+     *
+     * @param url download URL
+     * @param localDestination destination of the download. Can be a file or a directory
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     *
+     * @return The path of the created local file
+     */
+    public File get(URL url, File localDestination, Consumer<ProgressEntity> onChange) {
+        try {
+            if (!localDestination.isDirectory()) {
+                try (FileOutputStream fileOutputStream = new FileOutputStream(localDestination)) {
+                    get(url, fileOutputStream, onChange);
+                    return localDestination;
+                }
+            } else {
+                return getInsideDirectory(url, localDestination, null, onChange);
+            }
+        } catch (IOException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+    }
+
+    /**
+     * Downloads a remote file and puts it inside a given directory. Returns the path of the file
+     *
+     * @param url The URL
+     * @param directory The local directory
+     * @param headers Extra headers (optional)
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     * @return The local file
+     */
+    private File getInsideDirectory(URL url,
+            File directory,
+            Map<String, String> headers,
+            Consumer<ProgressEntity> onChange) {
+        try {
+            PhoenicisUrlConnection connection = PhoenicisUrlConnection.fromURL(url);
+
+            if (headers != null) {
+                connection.setHeaders(headers);
+            }
+
+            final String fileName = connection.fetchFileName();
+            final File localFile = new File(directory, fileName);
+            try (FileOutputStream fileOutputStream = new FileOutputStream(
+                    localFile)) {
+                saveConnectionToStream(url, connection, fileOutputStream, onChange);
+                return new File(directory, fileName);
+            }
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }
@@ -77,6 +167,7 @@ public class Downloader {
 
     /**
      * downloads url and returns downloaded content, shows progress via onChange
+     *
      * @param url download URL
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      * @return downloaded content
@@ -93,6 +184,25 @@ public class Downloader {
 
     /**
      * downloads url and returns downloaded content, shows progress via onChange
+     *
+     * @param url download URL
+     * @param headers http headers
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     * @return downloaded content
+     */
+    public String get(String url, Map<String, String> headers, Consumer<ProgressEntity> onChange) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        try {
+            get(new URL(url), outputStream, headers, onChange);
+        } catch (MalformedURLException e) {
+            throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
+        }
+        return outputStream.toString();
+    }
+
+    /**
+     * downloads url and returns downloaded content, shows progress via onChange
+     *
      * @param url download URL
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      * @return downloaded content
@@ -105,6 +215,7 @@ public class Downloader {
 
     /**
      * downloads url and returns downloaded content, shows progress via onChange
+     *
      * @param url download URL
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      * @return downloaded content
@@ -117,13 +228,35 @@ public class Downloader {
 
     /**
      * downloads url to outputStream, shows progress via onChange
+     *
      * @param url download URL
      * @param outputStream file is downloaded to this stream
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
     private void get(URL url, OutputStream outputStream, Consumer<ProgressEntity> onChange) {
+        get(url, outputStream, null, onChange);
+    }
+
+    /**
+     * downloads url to outputStream, shows progress via onChange
+     *
+     * @param url download URL
+     * @param outputStream file is downloaded to this stream
+     * @param headers HTTP headers to append
+     * @param onChange consumer to show the download progress (e.g. a progress bar)
+     */
+    private void get(URL url,
+            OutputStream outputStream,
+            Map<String, String> headers,
+            Consumer<ProgressEntity> onChange) {
         try {
-            URLConnection connection = url.openConnection();
+            PhoenicisUrlConnection connection = PhoenicisUrlConnection.fromURL(url);
+
+            if (headers != null) {
+                connection.setHeaders(headers);
+            }
+
+            connection.connect();
             saveConnectionToStream(url, connection, outputStream, onChange);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
@@ -137,7 +270,9 @@ public class Downloader {
      * @param outputStream file is downloaded to this stream
      * @param onChange consumer to show the download progress (e.g. a progress bar)
      */
-    private void saveConnectionToStream(URL url, URLConnection connection, OutputStream outputStream,
+    private void saveConnectionToStream(URL url,
+            PhoenicisUrlConnection connection,
+            OutputStream outputStream,
             Consumer<ProgressEntity> onChange) {
         float percentage = 0F;
         changeState(ProgressState.READY, percentage, "", onChange);
@@ -177,6 +312,7 @@ public class Downloader {
 
     /**
      * updates the progress indicator
+     *
      * @param state current state (e.g. if download finished)
      * @param percentage progress percentage
      * @param progressText e.g. downloaded x of y bytes
@@ -195,6 +331,7 @@ public class Downloader {
      * checks if the downloadable file has been updated more recently than localFile
      * This can be used to avoid re-downloading existing resources if no new version is available.
      * Note: The last modified date must be set correctly by the server.
+     *
      * @param localFile local file (should have been downloaded from url)
      * @param url download URL
      * @return update for localFile is available
@@ -211,6 +348,7 @@ public class Downloader {
      * checks if the downloadable file has been updated more recently than localFile
      * This can be used to avoid re-downloading existing resources if no new version is available.
      * Note: The last modified date must be set correctly by the server.
+     *
      * @param localFile local file (should have been downloaded from url)
      * @param url download URL
      * @return update for localFile is available
@@ -220,7 +358,7 @@ public class Downloader {
             return true;
         }
         try {
-            URLConnection connection = url.openConnection();
+            PhoenicisUrlConnection connection = PhoenicisUrlConnection.fromURL(url);
             connection.connect();
             long fileLastModified = localFile.lastModified();
             long urlLastModified = connection.getLastModified();

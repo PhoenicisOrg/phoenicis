@@ -29,6 +29,7 @@ import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.scripts.ScriptsConfiguration;
 import org.phoenicis.settings.SettingsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,13 @@ public class ViewsConfiguration {
     @Value("${application.name}")
     private String applicationName;
 
-    @Value("${application.version}:unknown")
+    @Value("${application.version:unknown}")
     private String applicationVersion;
 
-    @Value("${application.gitRevision}:unknown")
+    @Value("${application.gitRevision:unknown}")
     private String applicationGitRevision;
 
-    @Value("${application.buildTimestamp}:unknown")
+    @Value("${application.buildTimestamp:unknown}")
     private String applicationBuildTimestamp;
 
     @Value("${application.user.engines}")
@@ -68,6 +69,9 @@ public class ViewsConfiguration {
     private SettingsConfiguration settingsConfiguration;
 
     @Autowired
+    private ScriptsConfiguration scriptsConfiguration;
+
+    @Autowired
     private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
 
     @Autowired
@@ -77,7 +81,7 @@ public class ViewsConfiguration {
     public ApplicationsView viewApps() {
         return new ApplicationsView(themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager(),
-                toolsConfiguration);
+                toolsConfiguration, scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean

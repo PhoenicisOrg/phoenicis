@@ -87,4 +87,10 @@ public interface RepositoryManager {
      * If an error appeared, the onError callbacks will be called, with the error.
      */
     void triggerRepositoryChange();
+
+    /**
+     * This method triggers all registered callbacks.
+     * In contrast to {@link #triggerRepositoryChange()}, it does not update the repository before.
+     */
+    void triggerCallbacks();
 }

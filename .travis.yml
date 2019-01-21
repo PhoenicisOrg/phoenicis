@@ -3,7 +3,7 @@ language: java
 # avoid double builds on pull requests
 branches:
   only:
-    master
+    - master
 
 jobs:
   include:
@@ -14,35 +14,16 @@ jobs:
       install: true
       script: mvn -Pcheck-formatted validate formatter:validate
 
-    # build + test
-    - stage: Build + test
-      name: Linux OpenJDK 8
-      os: linux
-      dist: trusty
-      jdk: openjdk8
-      sudo: required
-      services:
-        - docker
-      before_install:
-        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
-      install:
-        - docker exec -t ubuntu-18-04 bash -c "apt -qq update;
-                                               apt install -y git;
-                                               apt install -y maven;
-                                               apt install -y openjfx;
-                                               apt install -y gettext"
-      script:
-        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
-                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
-                                               cd phoenicis;
-                                               mvn -B clean package"
+    # Update translations
+    - stage: Basics
+      name: Update translations
+      install: true
+      script: mvn -Pupdate-translations validate
+      after_success:
+        # push translation updates only for master (PR changes must be committed to master before they are taken into account)
+        - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then ./i18n/push_translations.sh; fi
 
     # build + test
-    - stage: Build + test
-      name: Linux Oracle JDK 8
-      os: linux
-      dist: trusty
-      jdk: oraclejdk8
     - stage: Build + test
       name: Linux OpenJDK 10
       os: linux
@@ -59,52 +40,47 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk11
-    - stage: Build + test
-      name: OSX XCode 9.2
-      os: osx
-      osx_image: xcode9.2
 
-    # Build + test packages
+    # packages
     - stage: Packages
       name: Flatpak
       os: linux
-      dist: trusty
+      dist: xenial
       jdk: openjdk11
-      after_script:
+      before_install:
+        - sudo add-apt-repository ppa:alexlarsson/flatpak -y
+        - sudo apt-get update -q
+        - sudo apt-get install -y flatpak flatpak-builder
+      script:
+        - mvn clean package -DskipTests # no need to run tests again
+        - flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        - flatpak --user -y install flathub org.freedesktop.Platform/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
-        - flatpak-builder build-dir org.phoenicis.javafx.json --force-clean
+        - flatpak-builder build-dir org.phoenicis.playonlinux.json --force-clean
     - stage: Packages
       name: deb
       os: linux
-      dist: trusty
+      dist: xenial
       jdk: openjdk11
-      sudo: required
-      services:
-        - docker
       before_install:
-        - docker run -d --name ubuntu-18-04 openjdk:8 tail -f /dev/null
-      install:
-        - docker exec -t ubuntu-18-04 bash -c "dpkg --add-architecture i386;
-                                               apt -qq update;
-                                               apt install -y git;
-                                               apt install -y maven;
-                                               apt install -y gettext"
+        - sudo apt-get update -q
+        - sudo apt-get install -y fakeroot
       script:
-        - docker exec -t ubuntu-18-04 bash -c "cd /travis;
-                                               git clone https://github.com/PhoenicisOrg/phoenicis.git;
-                                               cd phoenicis;
-                                               mvn -B clean package;
-                                               cd phoenicis-dist/target/;
-                                               dpkg -R -i ./;
-                                               apt install -fy"
+        - mvn clean package -DskipTests # no need to run tests again
+        - cd phoenicis-dist/src/scripts
+        - bash phoenicis-create-package.sh
     - stage: Packages
       name: dmg
       os: osx
-      osx_image: xcode9.3
-      after_script:
-        - mvn clean install
-        - cd phoenicis-dist/target/
-        - mvn jfx:native
+      osx_image: xcode10.1
+      script:
+        - mvn clean package # run tests for OSX (doesn't run in 'build + test')
+        - cd phoenicis-dist/src/scripts
+        - bash phoenicis-create-package.sh
 
     # Check GitHub Pages
     - stage: Check GitHub Pages
@@ -116,3 +92,13 @@ jobs:
       script:
         - bundle exec jekyll build
         - bundle exec htmlproofer ./_site --only-4xx --check-favicon --check-html --assume-extension
+
+env:
+  global:
+  # to create secure for travis-ci.com
+  # 1. create personal access token with public_repo permissions
+  # 2. clone this repo (not a fork)
+  # 3. install travis gem (https://github.com/travis-ci/travis.rb)
+  # 4. run in the clone: travis encrypt GH_TOKEN="<access_token>" --pro (GH_TOKEN is the variable which is used e.g. in push_translations.sh)
+  # 5. set output below
+  - secure: "NNFWW2gm1hzMI2vLr8b7EuRz8u+eSk5FGoXDq0UZbdnmcnb/8Isx2sd8j73VSRN4LvRAnqFnZUuouFjVBeX+T8eUv4qL1z8QBz4nqS1ZrbYEwVFKEv/87RB7FfpvA+nqEzJv0Nq9jFLmkgBw2pji5xNkL23RABxm4kFO9zJRrlrWNJCAFxNI2Tzrw8RWuFuG49eH16BPOZfECcMzP16rBcpr0YZjcZ/p+yjUaz+IaOinQyHs/p45oPVF3XxSVLOODVsaVw7kxZxXZRCDz60ssCefTt6XlgR5J5blo6QGX1Y3bks25A2Jeivax+Lv2J5zrOBV8TgDDyj6+XP2HyxM91A7LFnOvA/iXjDZUgh8jGGmBnCpESq8b+Llymhy1i9nfGAAQYedq2/zNaiETOr+vakcgbITk1sPb9YxydB0RIyjnRnlwjxAjWTckxZCWQbFieODYBsGBZN8X9k/4iHsMkIHpEJ41BPGapOxjolIHD8sAqA3XlT0hR1nKjTUM08c/9JHyCZ1BAyiFvbsD/gT9oYFwhe/Im57N/WBBiXzkiElmJ3RogUyFuapKYuwOvCQvgpSP2weDgO0k9Q+Y1g4VH5I5aViR+G44kf4P7Dn2RvvI1n6mLDs9bki94WYWNBMwhRM+cmcrYCtW/dszSIr5W5ZzH0jHd/9VxiLV44mL7k="

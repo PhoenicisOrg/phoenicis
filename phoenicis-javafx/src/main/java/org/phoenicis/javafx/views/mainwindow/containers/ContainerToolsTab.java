@@ -10,7 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.views.common.ErrorMessage;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 
 import java.io.File;
@@ -59,7 +59,7 @@ public class ContainerToolsTab extends Tab {
         runExecutable.setOnMouseClicked(event -> {
             this.lockAll();
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle(tr("Choose executable ..."));
+            fileChooser.setTitle(tr("Choose executable..."));
 
             // open in container directory if it exists
             File containerDir = new File(this.container.getPath());
@@ -70,7 +70,14 @@ public class ContainerToolsTab extends Tab {
             File file = fileChooser.showOpenDialog(this.getContent().getScene().getWindow());
             if (file != null) {
                 containerEngineController.runInContainer(container, file.getAbsolutePath(), this::unlockAll,
-                        e -> Platform.runLater(() -> new ErrorMessage("Error", e).show()));
+                        e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .build();
+
+                            errorDialog.showAndWait();
+                        }));
             } else {
                 // unlock if file chooser is closed
                 this.unlockAll();

@@ -18,10 +18,22 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
+import javafx.animation.PauseTransition;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Duration;
+import org.phoenicis.javafx.components.setting.control.AboutPanel;
+import org.phoenicis.javafx.components.setting.control.FileAssociationsPanel;
+import org.phoenicis.javafx.components.setting.control.NetworkPanel;
+import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
+import org.phoenicis.javafx.components.setting.control.UserInterfacePanel;
+import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
+import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.views.common.themes.Themes;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.settings.SettingsManager;
@@ -30,6 +42,8 @@ import org.phoenicis.tools.system.opener.Opener;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class SettingsView extends MainWindowView<SettingsSidebar> {
+    private final PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+
     private final String applicationName;
     private final String applicationVersion;
     private final String applicationGitRevision;
@@ -40,7 +54,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
     private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
 
-    private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
+    private ObservableList<SettingsSidebarItem> settingsItems;
 
     public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
@@ -58,28 +72,81 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         this.initializeSettingsItems();
 
-        this.sidebar = new SettingsSidebar();
+        this.sidebar = createSidebar();
 
-        this.sidebar.setOnSelectSettingsItem(this::setCenter);
+        this.setSidebar(sidebar);
 
-        this.sidebar.bindSettingsItems(this.settingsItems);
+    }
 
-        this.setSidebar(this.sidebar);
+    private SettingsSidebar createSidebar() {
+        final SettingsSidebar sidebar = new SettingsSidebar(this.settingsItems);
+
+        sidebar.selectedItemProperty()
+                .addListener((Observable invalidation) -> setCenter(sidebar.getSelectedItem().getPanel()));
+
+        return sidebar;
     }
 
     private void initializeSettingsItems() {
-        AboutPanel.ApplicationBuildInformation buildInformation = new AboutPanel.ApplicationBuildInformation(
-                applicationName, applicationVersion, applicationGitRevision, applicationBuildTimestamp);
+        final ApplicationBuildInformation buildInformation = new ApplicationBuildInformation(
+                this.applicationName, this.applicationVersion, this.applicationGitRevision,
+                this.applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSidebar.SettingsSidebarItem(new UserInterfacePanel(javaFxSettingsManager, themeManager),
+                new SettingsSidebarItem(createUserInterfacePanel(),
                         "userInterfaceButton", tr("User Interface")),
-                new SettingsSidebar.SettingsSidebarItem(new RepositoriesPanel(settingsManager, repositoryManager),
+                new SettingsSidebarItem(
+                        new RepositoriesPanel(this.settingsManager, this.repositoryManager),
                         "repositoriesButton", tr("Repositories")),
-                new SettingsSidebar.SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
+                new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
-                new SettingsSidebar.SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, opener), "aboutButton",
+                new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
+                new SettingsSidebarItem(new AboutPanel(this.opener, buildInformation), "aboutButton",
                         tr("About")));
+    }
+
+    private UserInterfacePanel createUserInterfacePanel() {
+        final UserInterfacePanel userInterfacePanel = new UserInterfacePanel(
+                FXCollections.observableArrayList(Themes.all()));
+
+        // set the initial values
+        userInterfacePanel.setScaling(javaFxSettingsManager.getScale());
+        userInterfacePanel.setSelectedTheme(
+                Themes.fromShortName(javaFxSettingsManager.getTheme()).orElse(Themes.STANDARD));
+        userInterfacePanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
+
+        userInterfacePanel.setOnRestoreSettings(javaFxSettingsManager::restoreDefault);
+
+        // react on changes
+        userInterfacePanel.scalingProperty().addListener((Observable invalidation) -> {
+            final double scaling = userInterfacePanel.getScaling();
+
+            this.pause.setOnFinished(event -> {
+                getTabPane().getScene().getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", scaling));
+
+                javaFxSettingsManager.setScale(userInterfacePanel.getScaling());
+                javaFxSettingsManager.save();
+            });
+
+            this.pause.playFromStart();
+        });
+
+        userInterfacePanel.selectedThemeProperty().addListener((Observable invalidation) -> {
+            final Theme selectedTheme = userInterfacePanel.getSelectedTheme();
+
+            themeManager.setCurrentTheme(selectedTheme);
+
+            javaFxSettingsManager.setTheme(selectedTheme.getShortName());
+            javaFxSettingsManager.save();
+        });
+
+        userInterfacePanel.showScriptSourceProperty().addListener((Observable invalidation) -> {
+            final boolean showScriptSource = userInterfacePanel.isShowScriptSource();
+
+            javaFxSettingsManager.setViewScriptSource(showScriptSource);
+            javaFxSettingsManager.save();
+        });
+
+        return userInterfacePanel;
     }
 }

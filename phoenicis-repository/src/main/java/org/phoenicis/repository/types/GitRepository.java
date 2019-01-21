@@ -112,23 +112,36 @@ public class GitRepository implements Repository {
         }
         Git gitRepository = null;
 
-        try {
-            /*
-             * if the repository folder previously didn't exist, clone the
-             * repository now and checkout the correct branch
-             */
-            if (!folderExists) {
-                LOGGER.info("Cloning " + this);
+        /*
+         * if the repository folder previously didn't exist, clone the
+         * repository now and checkout the correct branch
+         */
+        if (!folderExists) {
+            LOGGER.info("Cloning " + this);
 
+            try {
                 gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
                         .setDirectory(this.localFolder)
                         .setBranch(this.branch).call();
+            } catch (GitAPIException e) {
+                throw new RepositoryException(
+                        String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
+            } finally {
+                // close repository to free resources
+                if (gitRepository != null) {
+                    gitRepository.close();
+                }
             }
-            /*
-             * otherwise open the folder and pull the newest updates from the
-             * repository
-             */
-            else {
+        }
+        /*
+         * otherwise open the folder and pull the newest updates from the
+         * repository
+         */
+        else {
+            // if anything doesn't work here, we still have our local checkout
+            // e.g. could be that the git repository cannot be accessed, there is not Internet connection etc.
+            // TODO: it might make sense to ensure that our local checkout is not empty / a valid git repository
+            try {
                 LOGGER.info("Opening " + this);
 
                 gitRepository = Git.open(localFolder);
@@ -136,16 +149,8 @@ public class GitRepository implements Repository {
                 LOGGER.info("Pulling new commits from " + this);
 
                 gitRepository.pull().call();
-            }
-        } catch (RepositoryNotFoundException | GitAPIException e) {
-            throw new RepositoryException(
-                    String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
-        } catch (IOException e) {
-            throw new RepositoryException("An unknown error occurred", e);
-        } finally {
-            // close repository to free resources
-            if (gitRepository != null) {
-                gitRepository.close();
+            } catch (Exception e) {
+                LOGGER.warn("Could not update {0}. Local checkout will be used.", e);
             }
         }
     }

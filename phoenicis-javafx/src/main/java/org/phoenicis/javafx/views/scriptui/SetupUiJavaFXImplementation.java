@@ -19,10 +19,7 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.scripts.ui.MenuItem;
-import org.phoenicis.scripts.ui.Message;
-import org.phoenicis.scripts.ui.ProgressControl;
-import org.phoenicis.scripts.ui.SetupUi;
+import org.phoenicis.scripts.ui.*;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
@@ -132,6 +129,13 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
         StepRepresentationProgressBar stepProgressBar = new StepRepresentationProgressBar(this, message, textToShow);
         stepProgressBar.installStep();
         message.send(stepProgressBar);
+    }
+
+    @Override
+    public void showBrowser(Message<BrowserControl> message, String textToShow) {
+        StepRepresentationBrowser stepBrowser = new StepRepresentationBrowser(this, message, textToShow);
+        stepBrowser.installStep();
+        message.send(stepBrowser);
     }
 
     @Override

@@ -1,8 +1,11 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.views.AbstractFilter;
 
 import java.util.Optional;
 
@@ -11,18 +14,18 @@ import java.util.Optional;
  *
  * @author Marc Arndt
  */
-public class ContainersFilter extends AbstractFilter {
+public class ContainersFilter {
     /**
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private Optional<String> searchTerm;
+    private StringProperty searchTerm;
 
     /**
      * The selected container category.
      * If no container category has been selected, this value is {@link Optional#empty()}.
      */
-    private Optional<ContainerCategoryDTO> selectedContainerCategory;
+    private ObjectProperty<ContainerCategoryDTO> selectedContainerCategory;
 
     /**
      * Constructor
@@ -31,68 +34,46 @@ public class ContainersFilter extends AbstractFilter {
     public ContainersFilter() {
         super();
 
-        this.searchTerm = Optional.empty();
-        this.selectedContainerCategory = Optional.empty();
-    }
-
-    /**
-     * Sets the search term to the given string.
-     *
-     * @param searchTerm The new search term
-     */
-    public void setSearchTerm(String searchTerm) {
-        this.searchTerm = Optional.of(searchTerm);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Clears the search term
-     */
-    public void clearSearchTerm() {
-        this.searchTerm = Optional.empty();
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Sets the selected container category
-     * @param containerCategory The container category, that has been selected
-     */
-    public void setSelectedContainerCategory(ContainerCategoryDTO containerCategory) {
-        this.selectedContainerCategory = Optional.ofNullable(containerCategory);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Clears both the search term and the selected container category
-     */
-    public void clear() {
-        this.searchTerm = Optional.empty();
-        this.selectedContainerCategory = Optional.empty();
+        this.searchTerm = new SimpleStringProperty();
+        this.selectedContainerCategory = new SimpleObjectProperty<>();
     }
 
     /**
      * Filters a given container category
+     *
      * @param containerCategory The to be filtered container category
      * @return True if the container category should be shown, false otherwise
      */
     public boolean filter(ContainerCategoryDTO containerCategory) {
-        return searchTerm.map(searchTerm -> containerCategory.getContainers().stream().anyMatch(this::filter))
+        return Optional.ofNullable(searchTerm.getValueSafe())
+                .map(searchTerm -> containerCategory.getContainers().stream().anyMatch(this::filter))
                 .orElse(true);
     }
 
     /**
      * Filters a given container
+     *
      * @param installation The to be filtered container
      * @return True if the container should be shown, false otherwise
      */
     public boolean filter(ContainerDTO installation) {
-        return searchTerm.map(searchTerm -> installation.getName().toLowerCase().contains(searchTerm.toLowerCase()))
-                .orElse(true) &&
-                selectedContainerCategory.map(
+        final boolean searchTermConstraint = Optional.ofNullable(searchTerm.getValueSafe())
+                .map(searchTerm -> installation.getName().toLowerCase().contains(searchTerm.toLowerCase()))
+                .orElse(true);
+
+        final boolean selectedContainerCategoryConstraint = Optional.ofNullable(selectedContainerCategory.getValue())
+                .map(
                         selectedContainerCategory -> selectedContainerCategory.getContainers().contains(installation))
-                        .orElse(true);
+                .orElse(true);
+
+        return searchTermConstraint && selectedContainerCategoryConstraint;
+    }
+
+    public StringProperty searchTermProperty() {
+        return searchTerm;
+    }
+
+    public ObjectProperty<ContainerCategoryDTO> selectedContainerCategoryProperty() {
+        return selectedContainerCategory;
     }
 }

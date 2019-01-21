@@ -10,6 +10,7 @@ import javafx.geometry.VPos;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+import org.phoenicis.javafx.dialogs.InformationDialog;
 import org.phoenicis.javafx.views.common.TextWithStyle;
 import org.phoenicis.javafx.views.mainwindow.settings.addrepository.AddRepositoryDialog;
 import org.phoenicis.repository.RepositoryManager;
@@ -80,9 +81,16 @@ public class RepositoriesPanel extends StackPane {
         this.initializeRefreshCallback();
 
         // restore default
-        ToggleButton restoreDefault = new ToggleButton(tr("Restore defaults (requires restart)"));
+        ToggleButton restoreDefault = new ToggleButton(tr("Restore defaults"));
         restoreDefault.setOnAction(event -> {
             this.settingsManager.restoreDefaultRepositories();
+            final InformationDialog dialog = InformationDialog.builder()
+                    .withTitle(tr("Restored default repositories"))
+                    .withMessage(tr("Please restart such that the changes can take effect."))
+                    .withOwner(getParent().getScene().getWindow())
+                    .withResizable(true)
+                    .build();
+            dialog.show();
         });
 
         this.vBox.getChildren().setAll(this.title, this.repositoryGrid, this.priorityHint, this.refreshLayout,

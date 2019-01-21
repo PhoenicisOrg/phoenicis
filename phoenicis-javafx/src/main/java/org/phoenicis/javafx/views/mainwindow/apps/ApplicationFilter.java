@@ -1,7 +1,8 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.property.*;
-import org.phoenicis.javafx.views.AbstractFilter;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -9,7 +10,6 @@ import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
-import java.util.function.BiPredicate;
 
 /**
  * A filter implementation for the "Apps" tab.
@@ -17,101 +17,35 @@ import java.util.function.BiPredicate;
  * @author marc
  * @since 29.03.17
  */
-public class ApplicationFilter extends AbstractFilter {
+public class ApplicationFilter {
     private final OperatingSystemFetcher operatingSystemFetcher;
 
-    private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
+    private final double fuzzySearchRatio;
 
-    private Optional<String> filterText;
-    private Optional<CategoryDTO> filterCategory;
+    private final StringProperty filterText;
 
-    private BooleanProperty containCommercialApplications;
+    private final ObjectProperty<CategoryDTO> filterCategory;
 
-    private BooleanProperty containRequiresPatchApplications;
+    private final BooleanProperty containCommercialApplications;
 
-    private BooleanProperty containTestingApplications;
+    private final BooleanProperty containRequiresPatchApplications;
 
-    private BooleanProperty containAllOSCompatibleApplications;
+    private final BooleanProperty containTestingApplications;
 
-    /**
-     * Constructor
-     *
-     * @param filterTextMatcher The matcher function for the filter text
-     */
-    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
-            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+    private final BooleanProperty containAllOSCompatibleApplications;
+
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
         super();
 
         this.operatingSystemFetcher = operatingSystemFetcher;
-        this.filterTextMatcher = filterTextMatcher;
+        this.fuzzySearchRatio = fuzzySearchRatio;
 
-        this.filterText = Optional.empty();
-        this.filterCategory = Optional.empty();
-
+        this.filterText = new SimpleStringProperty();
+        this.filterCategory = new SimpleObjectProperty<>();
         this.containCommercialApplications = new SimpleBooleanProperty();
-        this.containCommercialApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
-        this.containRequiresPatchApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containTestingApplications = new SimpleBooleanProperty();
-        this.containTestingApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
-        this.containAllOSCompatibleApplications
-                .addListener((observableValue, oldValue, newValue) -> this.triggerFilterChanged());
-    }
-
-    /**
-     * Sets the filter text inside the filter and triggers a filter update
-     *
-     * @param filterText The new entered filter text
-     */
-    public void setFilterText(String filterText) {
-        this.filterText = Optional.ofNullable(filterText);
-
-        this.triggerFilterChanged();
-    }
-
-    /**
-     * Sets the selected category inside the filter and triggers a filter update
-     *
-     * @param category The new selected category, or null if no/all category has been selected
-     */
-    public void setFilterCategory(CategoryDTO category) {
-        this.filterCategory = Optional.ofNullable(category);
-
-        this.triggerFilterChanged();
-    }
-
-    public BooleanProperty containCommercialApplicationsProperty() {
-        return this.containCommercialApplications;
-    }
-
-    public BooleanProperty containRequiresPatchApplicationsProperty() {
-        return this.containRequiresPatchApplications;
-    }
-
-    public BooleanProperty containTestingApplicationsProperty() {
-        return this.containTestingApplications;
-    }
-
-    public BooleanProperty containAllOSCompatibleApplications() {
-        return this.containAllOSCompatibleApplications;
-    }
-
-    /**
-     * Clears the <code>filterText</code> and the <code>filterCategory</code>.
-     * Afterwards a filter update gets triggered
-     */
-    public void clearAll() {
-        this.filterText = Optional.empty();
-        this.filterCategory = Optional.empty();
-
-        this.triggerFilterChanged();
     }
 
     /**
@@ -124,7 +58,8 @@ public class ApplicationFilter extends AbstractFilter {
         /*
          * A category can be shown, if it contains at least one visible application
          */
-        return category.getApplications().stream().anyMatch(application -> filter(application, true));
+        return category.getApplications().stream().anyMatch(
+                application -> filter(application, true));
     }
 
     /**
@@ -146,16 +81,23 @@ public class ApplicationFilter extends AbstractFilter {
      * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */
     private boolean filter(ApplicationDTO application, boolean ignoreFilterCategoryTest) {
+        final boolean matchesFilterCategory = ignoreFilterCategoryTest || Optional.ofNullable(filterCategory.getValue())
+                .map(category -> category.getApplications().contains(application)).orElse(true);
+
+        final boolean matchesAtLeastOneScript = application.getScripts().stream().anyMatch(this::filter);
+
+        final boolean matchesApplicationName = Optional.ofNullable(filterText.getValue())
+                .map(filterText -> StringUtils.isEmpty(filterText) || FuzzySearch
+                        .partialRatio(application.getName().toLowerCase(), filterText) > fuzzySearchRatio)
+                .orElse(true);
+
         /*
          * An application can be shown, if:
          * - it belongs to the filter category, if such a category is set
          * - it contains at least one visible script
          * - its text matches the filter text
          */
-        return (ignoreFilterCategoryTest
-                || filterCategory.map(category -> category.getApplications().contains(application)).orElse(true))
-                && application.getScripts().stream().anyMatch(script -> filter(script))
-                && filterText.map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
+        return matchesFilterCategory && matchesApplicationName && matchesAtLeastOneScript;
     }
 
     /**
@@ -170,28 +112,28 @@ public class ApplicationFilter extends AbstractFilter {
         /*
          * If "commercial" is not selected, don't show commercial games
          */
-        if (!containCommercialApplications.getValue()) {
+        if (!isContainCommercialApplications()) {
             result &= script.isFree();
         }
 
         /*
          * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
          */
-        if (containRequiresPatchApplications.getValue()) {
+        if (isContainRequiresPatchApplications()) {
             result &= !script.isRequiresPatch();
         }
 
         /*
          * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
-        if (!containTestingApplications.getValue()) {
+        if (!isContainTestingApplications()) {
             result &= CollectionUtils.isEmpty(script.getTestingOperatingSystems());
         }
 
         /*
          * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
-        if (!containAllOSCompatibleApplications.getValue()) {
+        if (!isContainAllOSCompatibleApplications()) {
             result &= Optional.ofNullable(script.getCompatibleOperatingSystems())
                     .map(compatibleOperatingSystems -> compatibleOperatingSystems
                             .contains(operatingSystemFetcher.fetchCurrentOperationSystem()))
@@ -201,4 +143,51 @@ public class ApplicationFilter extends AbstractFilter {
         return result;
     }
 
+    public String getFilterText() {
+        return filterText.get();
+    }
+
+    public StringProperty filterTextProperty() {
+        return filterText;
+    }
+
+    public CategoryDTO getFilterCategory() {
+        return filterCategory.get();
+    }
+
+    public ObjectProperty<CategoryDTO> filterCategoryProperty() {
+        return filterCategory;
+    }
+
+    public boolean isContainCommercialApplications() {
+        return containCommercialApplications.get();
+    }
+
+    public BooleanProperty containCommercialApplicationsProperty() {
+        return containCommercialApplications;
+    }
+
+    public boolean isContainRequiresPatchApplications() {
+        return containRequiresPatchApplications.get();
+    }
+
+    public BooleanProperty containRequiresPatchApplicationsProperty() {
+        return containRequiresPatchApplications;
+    }
+
+    public boolean isContainTestingApplications() {
+        return containTestingApplications.get();
+    }
+
+    public BooleanProperty containTestingApplicationsProperty() {
+        return containTestingApplications;
+    }
+
+    public boolean isContainAllOSCompatibleApplications() {
+        return containAllOSCompatibleApplications.get();
+    }
+
+    public BooleanProperty containAllOSCompatibleApplicationsProperty() {
+        return containAllOSCompatibleApplications;
+    }
 }

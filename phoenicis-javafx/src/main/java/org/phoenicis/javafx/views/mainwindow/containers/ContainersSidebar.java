@@ -1,21 +1,16 @@
 package org.phoenicis.javafx.views.mainwindow.containers;
 
 import javafx.beans.binding.Bindings;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.components.control.ContainersSidebarToggleGroup;
-import org.phoenicis.javafx.components.control.ListWidgetSelector;
-import org.phoenicis.javafx.components.control.SearchBox;
+import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
+import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
+import org.phoenicis.javafx.components.common.control.SearchBox;
+import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.DelayedFilterTextConsumer;
-import org.phoenicis.javafx.views.common.lists.PhoenicisFilteredList;
-import org.phoenicis.javafx.views.common.widgets.lists.CombinedListWidget;
 import org.phoenicis.javafx.views.mainwindow.ui.Sidebar;
-import org.phoenicis.javafx.views.mainwindow.ui.SidebarScrollPane;
-
-import java.util.function.Consumer;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -38,27 +33,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainersSidebar extends Sidebar {
     private final ContainersFilter filter;
 
-    // the search bar used for filtering
-    private SearchBox searchBar;
-
-    // container for the center content of this sidebar
-    private SidebarScrollPane centerContent;
-
-    private ObservableList<ContainerCategoryDTO> containerCategories;
-    private PhoenicisFilteredList<ContainerCategoryDTO> filteredContainerCategories;
-
-    // a button group containing a button for each installed container
-    private ContainersSidebarToggleGroup categoryView;
-
-    // widget to switch between the different list widgets in the center view
-    private ListWidgetSelector listWidgetSelector;
-
-    // consumer called when a container is selected
-    private Runnable onAllCategorySelection;
-    private Consumer<ContainerCategoryDTO> onCategorySelection = container -> {
-    };
-
     private final JavaFxSettingsManager javaFxSettingsManager;
+
+    private final ObservableList<ContainerCategoryDTO> containerCategories;
 
     /**
      * Constructor
@@ -66,55 +43,56 @@ public class ContainersSidebar extends Sidebar {
      * @param availableContainers The list widget to be managed by the ListWidgetChooser in the sidebar
      * @param javaFxSettingsManager The settings manager for the JavaFX GUI
      */
-    public ContainersSidebar(CombinedListWidget<ContainerDTO> availableContainers, ContainersFilter filter,
-            JavaFxSettingsManager javaFxSettingsManager) {
+    public ContainersSidebar(ContainersFilter filter, JavaFxSettingsManager javaFxSettingsManager,
+            ObservableList<ContainerCategoryDTO> containerCategories,
+            CombinedListWidget<ContainerDTO> availableContainers) {
         super();
 
         this.filter = filter;
         this.javaFxSettingsManager = javaFxSettingsManager;
+        this.containerCategories = containerCategories;
 
-        this.populateSearchBar();
-        this.populateCategories();
-        this.populateListWidgetChooser(availableContainers);
-
-        this.centerContent = new SidebarScrollPane(categoryView);
-
-        this.setTop(searchBar);
-        this.setCenter(centerContent);
-        this.setBottom(listWidgetSelector);
+        initialise(availableContainers);
     }
 
-    /**
-     * This method takes an {@link ObservableList} of container categories and binds it to the container categories
-     * button group
-     *
-     * @param categories The list of container categories
-     */
-    public void bindCategories(ObservableList<ContainerCategoryDTO> categories) {
-        Bindings.bindContent(this.containerCategories, categories);
+    private void initialise(CombinedListWidget<ContainerDTO> availableContainers) {
+        SearchBox searchBox = createSearchBox();
+        ContainersSidebarToggleGroup sidebarToggleGroup = createSidebarToggleGroup();
+        ListWidgetSelector createListWidgetSelector = createListWidgetSelector(availableContainers);
+
+        setTop(searchBox);
+        setCenter(createScrollPane(sidebarToggleGroup));
+        setBottom(createListWidgetSelector);
     }
 
     /**
      * This method populates the searchbar
      */
-    private void populateSearchBar() {
-        this.searchBar = new SearchBox(new DelayedFilterTextConsumer(this::search), this::clearSearch);
+    private SearchBox createSearchBox() {
+        SearchBox searchBox = new SearchBox();
+
+        filter.searchTermProperty().bind(searchBox.searchTermProperty());
+
+        return searchBox;
     }
 
     /**
      * This method populates the button group showing all installed containers
      */
-    private void populateCategories() {
-        this.containerCategories = FXCollections.observableArrayList();
-        this.filteredContainerCategories = new PhoenicisFilteredList<>(this.containerCategories, filter::filter);
-        this.filter.addOnFilterChanged(filteredContainerCategories::trigger);
+    private ContainersSidebarToggleGroup createSidebarToggleGroup() {
+        FilteredList<ContainerCategoryDTO> filteredContainerCategories = containerCategories.filtered(filter::filter);
 
-        this.categoryView = new ContainersSidebarToggleGroup(tr("Containers"));
+        filteredContainerCategories.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> filter::filter,
+                        filter.searchTermProperty(),
+                        filter.selectedContainerCategoryProperty()));
 
-        this.categoryView.setOnAllCategorySelection(() -> onAllCategorySelection.run());
-        this.categoryView.setOnCategorySelection(container -> onCategorySelection.accept(container));
+        ContainersSidebarToggleGroup sidebarToggleGroup = new ContainersSidebarToggleGroup(tr("Containers"),
+                filteredContainerCategories);
 
-        Bindings.bindContent(categoryView.getElements(), filteredContainerCategories);
+        filter.selectedContainerCategoryProperty().bind(sidebarToggleGroup.selectedElementProperty());
+
+        return sidebarToggleGroup;
     }
 
     /**
@@ -122,48 +100,20 @@ public class ContainersSidebar extends Sidebar {
      *
      * @param availableContainers The managed CombinedListWidget
      */
-    private void populateListWidgetChooser(CombinedListWidget<ContainerDTO> availableContainers) {
-        this.listWidgetSelector = new ListWidgetSelector();
-        this.listWidgetSelector.setSelected(this.javaFxSettingsManager.getContainersListType());
-        this.listWidgetSelector.setOnSelect(type -> {
-            availableContainers.showList(type);
+    private ListWidgetSelector createListWidgetSelector(CombinedListWidget<ContainerDTO> availableContainers) {
+        ListWidgetSelector listWidgetSelector = new ListWidgetSelector();
 
-            this.javaFxSettingsManager.setContainersListType(type);
-            this.javaFxSettingsManager.save();
+        availableContainers.selectedListWidgetProperty().bind(listWidgetSelector.selectedProperty());
+
+        listWidgetSelector.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setContainersListType(newValue);
+                javaFxSettingsManager.save();
+            }
         });
-    }
 
-    /**
-     * Filters the containers for a given search term
-     *
-     * @param searchTerm The keyword to search for
-     */
-    public void search(String searchTerm) {
-        this.filter.setSearchTerm(searchTerm);
-    }
+        listWidgetSelector.setSelected(javaFxSettingsManager.getContainersListType());
 
-    /**
-     * Clears the search term of the filter function
-     */
-    public void clearSearch() {
-        this.filter.clearSearchTerm();
-    }
-
-    /**
-     * This method sets the consumer, that is called after a category has been selected
-     *
-     * @param onAllCategorySelection The new consumer to be used
-     */
-    public void setOnAllCategorySelection(Runnable onAllCategorySelection) {
-        this.onAllCategorySelection = onAllCategorySelection;
-    }
-
-    /**
-     * This method updates the consumer, that is called when a container is selected
-     *
-     * @param onCategorySelection The new consumer to be called
-     */
-    public void setOnCategorySelection(Consumer<ContainerCategoryDTO> onCategorySelection) {
-        this.onCategorySelection = onCategorySelection;
+        return listWidgetSelector;
     }
 }

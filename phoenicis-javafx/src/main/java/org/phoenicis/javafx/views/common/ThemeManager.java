@@ -102,6 +102,10 @@ public class ThemeManager {
         this.refreshTheme();
     }
 
+    public StringProperty webEngineStylesheetProperty() {
+        return webEngineStylesheet;
+    }
+
     public void refreshTheme() {
         LOGGER.info("Refreshing currently shown theme");
 
