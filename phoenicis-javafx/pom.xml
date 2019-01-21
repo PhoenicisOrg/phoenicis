@@ -127,7 +127,7 @@
         <dependency>
             <groupId>com.github.PhoenicisOrg</groupId>
             <artifactId>javafx-collections</artifactId>
-            <version>eba1407c75</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
     <repositories>
