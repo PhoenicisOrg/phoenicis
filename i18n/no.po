@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-21 19:18+0000\n"
-"PO-Revision-Date: 2019-01-21 19:32\n"
+"POT-Creation-Date: 2019-01-22 16:54+0000\n"
+"PO-Revision-Date: 2019-01-22 17:21\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Norwegian\n"
 "Language: no_NO\n"
@@ -609,13 +609,17 @@ msgid "Installation wizard for {0}"
 msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
-#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
-msgid "Installation script by {0}"
+msgid "Program by {0}"
 msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
+msgstr ""
+
+#: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
+#, java-format
+msgid "Installation script by {0}"
 msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
