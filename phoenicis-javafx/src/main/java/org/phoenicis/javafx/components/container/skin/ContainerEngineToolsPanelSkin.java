@@ -1,7 +1,6 @@
 package org.phoenicis.javafx.components.container.skin;
 
 import javafx.application.Platform;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
