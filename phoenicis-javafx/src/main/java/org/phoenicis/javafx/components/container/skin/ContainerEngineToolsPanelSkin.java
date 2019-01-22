@@ -61,8 +61,6 @@ public class ContainerEngineToolsPanelSkin extends SkinBase<ContainerEngineTools
 
             return toolButton;
         });
-
-        toolButtons.addListener((Observable invalidation) -> System.out.println(toolButtons.size()));
     }
 
     /**
