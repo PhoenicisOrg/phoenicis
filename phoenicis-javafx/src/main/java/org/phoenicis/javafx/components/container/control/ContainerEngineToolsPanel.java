@@ -101,11 +101,11 @@ public class ContainerEngineToolsPanel extends ControlBase<ContainerEngineToolsP
     }
 
     public ContainerDTO getContainer() {
-        return container.get();
+        return this.container.get();
     }
 
     public ObjectProperty<ContainerDTO> containerProperty() {
-        return container;
+        return this.container;
     }
 
     public void setContainer(ContainerDTO container) {
@@ -113,11 +113,11 @@ public class ContainerEngineToolsPanel extends ControlBase<ContainerEngineToolsP
     }
 
     public ApplicationDTO getEngineTools() {
-        return engineTools.get();
+        return this.engineTools.get();
     }
 
     public ObjectProperty<ApplicationDTO> engineToolsProperty() {
-        return engineTools;
+        return this.engineTools;
     }
 
     public void setEngineTools(ApplicationDTO engineTools) {
@@ -125,15 +125,15 @@ public class ContainerEngineToolsPanel extends ControlBase<ContainerEngineToolsP
     }
 
     public ObservableList<ScriptDTO> getEngineToolScripts() {
-        return engineToolScripts;
+        return this.engineToolScripts;
     }
 
     public EngineToolsManager getEngineToolsManager() {
-        return engineToolsManager.get();
+        return this.engineToolsManager.get();
     }
 
     public ObjectProperty<EngineToolsManager> engineToolsManagerProperty() {
-        return engineToolsManager;
+        return this.engineToolsManager;
     }
 
     public void setEngineToolsManager(EngineToolsManager engineToolsManager) {
@@ -141,11 +141,11 @@ public class ContainerEngineToolsPanel extends ControlBase<ContainerEngineToolsP
     }
 
     public boolean isLockTools() {
-        return lockTools.get();
+        return this.lockTools.get();
     }
 
     public BooleanProperty lockToolsProperty() {
-        return lockTools;
+        return this.lockTools;
     }
 
     public void setLockTools(boolean lockTools) {
