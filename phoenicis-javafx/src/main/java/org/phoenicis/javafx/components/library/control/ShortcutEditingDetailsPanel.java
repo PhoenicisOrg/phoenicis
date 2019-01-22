@@ -64,15 +64,15 @@ public class ShortcutEditingDetailsPanel
     }
 
     public ObjectMapper getObjectMapper() {
-        return objectMapper;
+        return this.objectMapper;
     }
 
     public ShortcutDTO getShortcut() {
-        return shortcut.get();
+        return this.shortcut.get();
     }
 
     public ObjectProperty<ShortcutDTO> shortcutProperty() {
-        return shortcut;
+        return this.shortcut;
     }
 
     public void setShortcut(ShortcutDTO shortcut) {
@@ -80,11 +80,11 @@ public class ShortcutEditingDetailsPanel
     }
 
     public Consumer<ShortcutDTO> getOnShortcutChanged() {
-        return onShortcutChanged.get();
+        return this.onShortcutChanged.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutChangedProperty() {
-        return onShortcutChanged;
+        return this.onShortcutChanged;
     }
 
     public void setOnShortcutChanged(Consumer<ShortcutDTO> onShortcutChanged) {
