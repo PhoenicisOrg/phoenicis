@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
-import org.phoenicis.javafx.components.library.skin.LibraryDetailsPanelSkin;
+import org.phoenicis.javafx.components.library.skin.ShortcutDetailsPanelSkin;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.function.Consumer;
@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 /**
  * A details panel for the library tab used to show the details for a selected shortcut
  */
-public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, LibraryDetailsPanelSkin> {
+public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel, ShortcutDetailsPanelSkin> {
     /**
      * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
@@ -48,7 +48,7 @@ public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, L
      * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
      * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
      */
-    public LibraryDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+    public ShortcutDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Runnable> onClose, ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall) {
@@ -67,7 +67,7 @@ public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, L
      * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      * @param shortcut The currently shown {@link ShortcutDTO} object
      */
-    public LibraryDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut) {
+    public ShortcutDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut) {
         this(objectMapper, shortcut, new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
                 new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
@@ -76,8 +76,8 @@ public class LibraryDetailsPanel extends DetailsPanelBase<LibraryDetailsPanel, L
      * {@inheritDoc}
      */
     @Override
-    public LibraryDetailsPanelSkin createSkin() {
-        return new LibraryDetailsPanelSkin(this);
+    public ShortcutDetailsPanelSkin createSkin() {
+        return new ShortcutDetailsPanelSkin(this);
     }
 
     public ObjectMapper getObjectMapper() {

@@ -40,7 +40,7 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
-import org.phoenicis.javafx.components.library.control.LibraryDetailsPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutDetailsPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutCreationDetailsPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPanel;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
@@ -77,7 +77,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
     private final ShortcutManager shortcutManager;
 
-    private LibraryDetailsPanel libraryDetailsPanel;
+    private ShortcutDetailsPanel shortcutDetailsPanel;
     private ShortcutCreationDetailsPanel createShortcutPanel;
     private ShortcutEditingDetailsPanel editShortcutPanel;
     private final Tab installedApplicationsTab;
@@ -133,7 +133,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         setCenter(this.libraryTabs);
 
-        this.libraryDetailsPanel = createLibraryDetailsPanel();
+        this.shortcutDetailsPanel = createLibraryDetailsPanel();
 
         this.createShortcutPanel = createShortcutCreationPanel();
 
@@ -223,8 +223,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         return shortcutEditingDetailsPanel;
     }
 
-    private LibraryDetailsPanel createLibraryDetailsPanel() {
-        final LibraryDetailsPanel detailsPanel = new LibraryDetailsPanel(objectMapper, selectedShortcut);
+    private ShortcutDetailsPanel createLibraryDetailsPanel() {
+        final ShortcutDetailsPanel detailsPanel = new ShortcutDetailsPanel(objectMapper, selectedShortcut);
 
         detailsPanel.setOnClose(this::closeDetailsView);
 
@@ -247,7 +247,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private void showShortcutDetails() {
-        showDetailsView(this.libraryDetailsPanel);
+        showDetailsView(this.shortcutDetailsPanel);
     }
 
     /**
