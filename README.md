@@ -30,7 +30,14 @@ cd phoenicis-javafx/
 mvn exec:java
 ```
 
+For more details on installing on various linux distro's [Install/Build](https://phoenicisorg.github.io/phoenicis/Developers/build/)
+
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+
+## Flatpak Install
+
+Installing from [Flathub](https://flathub.org/apps/details/org.phoenicis.playonlinux)
+Issues while running Flatpak version: https://github.com/flathub/org.phoenicis.playonlinux/issues
 
 ## Scripts
 To add or update scripts, please make pull requests to this repository: https://github.com/PhoenicisOrg/scripts
