@@ -111,11 +111,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public EngineCategoryDTO getEngineCategory() {
-        return engineCategory.get();
+        return this.engineCategory.get();
     }
 
     public ObjectProperty<EngineCategoryDTO> engineCategoryProperty() {
-        return engineCategory;
+        return this.engineCategory;
     }
 
     public void setEngineCategory(EngineCategoryDTO engineCategory) {
@@ -123,11 +123,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public EngineSubCategoryDTO getEngineSubCategory() {
-        return engineSubCategory.get();
+        return this.engineSubCategory.get();
     }
 
     public ObjectProperty<EngineSubCategoryDTO> engineSubCategoryProperty() {
-        return engineSubCategory;
+        return this.engineSubCategory;
     }
 
     public void setEngineSubCategory(EngineSubCategoryDTO engineSubCategory) {
@@ -135,11 +135,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public String getEnginesPath() {
-        return enginesPath.get();
+        return this.enginesPath.get();
     }
 
     public StringProperty enginesPathProperty() {
-        return enginesPath;
+        return this.enginesPath;
     }
 
     public void setEnginesPath(String enginesPath) {
@@ -147,11 +147,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public Engine getEngine() {
-        return engine.get();
+        return this.engine.get();
     }
 
     public ObjectProperty<Engine> engineProperty() {
-        return engine;
+        return this.engine;
     }
 
     public void setEngine(Engine engine) {
@@ -159,11 +159,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public EnginesFilter getFilter() {
-        return filter.get();
+        return this.filter.get();
     }
 
     public ObjectProperty<EnginesFilter> filterProperty() {
-        return filter;
+        return this.filter;
     }
 
     public void setFilter(EnginesFilter filter) {
@@ -171,11 +171,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public ListWidgetType getSelectedListWidget() {
-        return selectedListWidget.get();
+        return this.selectedListWidget.get();
     }
 
     public ObjectProperty<ListWidgetType> selectedListWidgetProperty() {
-        return selectedListWidget;
+        return this.selectedListWidget;
     }
 
     public void setSelectedListWidget(ListWidgetType selectedListWidget) {
@@ -183,11 +183,11 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     public BiConsumer<EngineDTO, Engine> getOnEngineSelect() {
-        return onEngineSelect.get();
+        return this.onEngineSelect.get();
     }
 
     public ObjectProperty<BiConsumer<EngineDTO, Engine>> onEngineSelectProperty() {
-        return onEngineSelect;
+        return this.onEngineSelect;
     }
 
     public void setOnEngineSelect(BiConsumer<EngineDTO, Engine> onEngineSelect) {
