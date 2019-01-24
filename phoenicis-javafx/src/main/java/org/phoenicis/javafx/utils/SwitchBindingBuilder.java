@@ -13,6 +13,21 @@ import java.util.Map;
 
 /**
  * A builder class for <code>switch</code> like {@link ObjectBinding}s
+ * <p>
+ * Example:
+ * 
+ * <pre>
+ * {@code
+ * ObjectProperty<SomeEnum> value = new SimpleObjectProperty<>();
+ *
+ * ObjectBinding<X> binding = new SwitchBindingBuilder<SomeEnum, X>(value)
+ *    .withCase(SomeEnum.A, a)
+ *    .withCase(SomeEnum.B, b)
+ *    .withCase(SomeEnum.C, c)
+ *    .withDefaultCase(default)
+ *    .build();
+ * }
+ * </pre>
  *
  * @param <E> The type of the analysed {@link ObjectProperty}
  * @param <T> The target type
