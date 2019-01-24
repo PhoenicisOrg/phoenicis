@@ -17,7 +17,7 @@ public class ShortcutEditingDetailsPanel
     /**
      * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
-    private final ObjectMapper objectMapper;
+    private final ObjectProperty<ObjectMapper> objectMapper;
 
     /**
      * The currently shown {@link ShortcutDTO} object
@@ -37,7 +37,7 @@ public class ShortcutEditingDetailsPanel
      * @param onShortcutChanged The consumer which is called when a shortcut changed
      * @param onClose The callback for close button clicks
      */
-    public ShortcutEditingDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+    public ShortcutEditingDetailsPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutChanged, ObjectProperty<Runnable> onClose) {
         super(onClose);
 
@@ -48,11 +48,10 @@ public class ShortcutEditingDetailsPanel
 
     /**
      * Constructor
-     *
-     * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
-    public ShortcutEditingDetailsPanel(ObjectMapper objectMapper) {
-        this(objectMapper, new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+    public ShortcutEditingDetailsPanel() {
+        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
+                new SimpleObjectProperty<>());
     }
 
     /**
@@ -64,7 +63,15 @@ public class ShortcutEditingDetailsPanel
     }
 
     public ObjectMapper getObjectMapper() {
+        return this.objectMapper.get();
+    }
+
+    public ObjectProperty<ObjectMapper> objectMapperProperty() {
         return this.objectMapper;
+    }
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper.set(objectMapper);
     }
 
     public ShortcutDTO getShortcut() {

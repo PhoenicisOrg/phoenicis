@@ -203,8 +203,9 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         shortcutCreationDetailsPanel.setOnClose(this::closeDetailsView);
 
-        shortcutCreationDetailsPanel.setContainersPath(containersPath);
         shortcutCreationDetailsPanel.setOnCreateShortcut(this::createShortcut);
+
+        shortcutCreationDetailsPanel.setContainersPath(containersPath);
 
         shortcutCreationDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
@@ -212,11 +213,13 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private ShortcutEditingDetailsPanel createShortcutEditingPanel() {
-        final ShortcutEditingDetailsPanel shortcutEditingDetailsPanel = new ShortcutEditingDetailsPanel(objectMapper);
+        final ShortcutEditingDetailsPanel shortcutEditingDetailsPanel = new ShortcutEditingDetailsPanel();
 
         shortcutEditingDetailsPanel.setOnClose(this::closeDetailsView);
 
         shortcutEditingDetailsPanel.setOnShortcutChanged(shortcutManager::updateShortcut);
+
+        shortcutEditingDetailsPanel.setObjectMapper(objectMapper);
 
         shortcutEditingDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
@@ -224,17 +227,20 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private ShortcutDetailsPanel createLibraryDetailsPanel() {
-        final ShortcutDetailsPanel detailsPanel = new ShortcutDetailsPanel(objectMapper, selectedShortcut);
+        final ShortcutDetailsPanel shortcutDetailsPanel = new ShortcutDetailsPanel();
 
-        detailsPanel.setOnClose(this::closeDetailsView);
+        shortcutDetailsPanel.setOnClose(this::closeDetailsView);
 
-        detailsPanel.setOnShortcutRun(this::runShortcut);
-        detailsPanel.setOnShortcutStop(this::stopShortcut);
-        detailsPanel.setOnShortcutUninstall(this::uninstallShortcut);
+        shortcutDetailsPanel.setOnShortcutRun(this::runShortcut);
+        shortcutDetailsPanel.setOnShortcutStop(this::stopShortcut);
+        shortcutDetailsPanel.setOnShortcutUninstall(this::uninstallShortcut);
 
-        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+        shortcutDetailsPanel.setObjectMapper(objectMapper);
+        shortcutDetailsPanel.shortcutProperty().bind(selectedShortcut);
 
-        return detailsPanel;
+        shortcutDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return shortcutDetailsPanel;
     }
 
     public void populate(List<ShortcutCategoryDTO> categories) {

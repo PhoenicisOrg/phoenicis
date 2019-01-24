@@ -16,7 +16,7 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
     /**
      * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
-    private final ObjectMapper objectMapper;
+    private final ObjectProperty<ObjectMapper> objectMapper;
 
     /**
      * The callback method for when a {@link ShortcutDTO} should be executed
@@ -48,7 +48,7 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
      * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
      * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
      */
-    public ShortcutDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+    public ShortcutDetailsPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Runnable> onClose, ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall) {
@@ -63,13 +63,10 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
 
     /**
      * Constructor
-     *
-     * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
-     * @param shortcut The currently shown {@link ShortcutDTO} object
      */
-    public ShortcutDetailsPanel(ObjectMapper objectMapper, ObjectProperty<ShortcutDTO> shortcut) {
-        this(objectMapper, shortcut, new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+    public ShortcutDetailsPanel() {
+        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
+                new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
     /**
@@ -81,15 +78,23 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
     }
 
     public ObjectMapper getObjectMapper() {
-        return objectMapper;
+        return this.objectMapper.get();
+    }
+
+    public ObjectProperty<ObjectMapper> objectMapperProperty() {
+        return this.objectMapper;
+    }
+
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper.set(objectMapper);
     }
 
     public Consumer<ShortcutDTO> getOnShortcutRun() {
-        return onShortcutRun.get();
+        return this.onShortcutRun.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutRunProperty() {
-        return onShortcutRun;
+        return this.onShortcutRun;
     }
 
     public void setOnShortcutRun(Consumer<ShortcutDTO> onShortcutRun) {
@@ -97,11 +102,11 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
     }
 
     public Consumer<ShortcutDTO> getOnShortcutStop() {
-        return onShortcutStop.get();
+        return this.onShortcutStop.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutStopProperty() {
-        return onShortcutStop;
+        return this.onShortcutStop;
     }
 
     public void setOnShortcutStop(Consumer<ShortcutDTO> onShortcutStop) {
