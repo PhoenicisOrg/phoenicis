@@ -47,7 +47,7 @@ import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPan
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.utils.SwitchBindingBuilder;
+import org.phoenicis.javafx.utils.SwitchBinding;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.ShortcutManager;
@@ -171,7 +171,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         this.setCenter(this.libraryTabs);
 
-        this.content.rightProperty().bind(new SwitchBindingBuilder<LibraryDetailsPanels, Node>(selectedDetailsPanel)
+        this.content.rightProperty().bind(SwitchBinding.<LibraryDetailsPanels, Node> builder(selectedDetailsPanel)
                 .withCase(LibraryDetailsPanels.ShortcutDetails, shortcutDetailsPanel)
                 .withCase(LibraryDetailsPanels.ShortcutCreation, shortcutCreationDetailsPanel)
                 .withCase(LibraryDetailsPanels.ShortcutEditing, shortcutEditingDetailsPanel)
