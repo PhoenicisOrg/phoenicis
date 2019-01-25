@@ -135,7 +135,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     private ObservableList<Tab> createEngineSubCategoryTabs() {
         // initialize the engines sub category panels
-        final MappedList<List<EngineSubCategoryPanel>, EngineCategoryDTO> engineSubCategoryTabGroups = new MappedList<>(
+        final MappedList<List<EngineSubCategoryPanel>, EngineCategoryDTO> engineSubCategoryPanelGroups = new MappedList<>(
                 this.engineCategories, engineCategory -> engineCategory.getSubCategories().stream()
                         .map(engineSubCategory -> {
                             final EngineSubCategoryPanel engineSubCategoryPanel = new EngineSubCategoryPanel();
@@ -154,24 +154,24 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
                             return engineSubCategoryPanel;
                         }).collect(Collectors.toList()));
 
-        final ConcatenatedList<EngineSubCategoryPanel> engineSubCategoryTabs = ConcatenatedList
-                .create(engineSubCategoryTabGroups);
+        final ConcatenatedList<EngineSubCategoryPanel> engineSubCategoryPanels = ConcatenatedList
+                .create(engineSubCategoryPanelGroups);
 
-        final FilteredList<EngineSubCategoryPanel> filteredEngineSubTabs = engineSubCategoryTabs
+        final FilteredList<EngineSubCategoryPanel> filteredEngineSubCategoryPanels = engineSubCategoryPanels
                 // sort the engine sub category panels alphabetically
                 .sorted(Comparator
-                        .comparing(engineSubCategoryTab -> engineSubCategoryTab.getEngineSubCategory().getName()))
+                        .comparing(engineSubCategoryPanel -> engineSubCategoryPanel.getEngineSubCategory().getName()))
                 // filter the engine sub category panels, so that only the visible panels remain
                 .filtered(this.filter::filter);
 
-        filteredEngineSubTabs.predicateProperty().bind(
+        filteredEngineSubCategoryPanels.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,
                         this.filter.searchTermProperty(),
                         this.filter.showInstalledProperty(),
                         this.filter.showNotInstalledProperty()));
 
         // map the panels to tabs
-        return new MappedList<>(filteredEngineSubTabs,
+        return new MappedList<>(filteredEngineSubCategoryPanels,
                 engineSubCategoryPanel -> new Tab(engineSubCategoryPanel.getEngineSubCategory().getDescription(),
                         engineSubCategoryPanel));
     }
