@@ -58,13 +58,14 @@ class ControlledThreadPoolExecutorDebuggerWatcher implements Runnable {
 
                 final long deltaNumberOfTasks = numberOfTasks - lastNumberOfTasks.get(executorServiceToWatch);
 
-                logger.info(String.format("[ %10s ] Done: %20s, Running: %20s, Queue: %10s, Avg: %6s t/s, Speed: %6s t/s",
-                        pool.getName(),
-                        numberOfTasks,
-                        pool.getActiveCount(),
-                        String.format("%s / %s", numberOfItems, queueSize),
-                        deltaStartTime == 0 ? 0 : numberOfTasks / deltaStartTime,
-                        deltaLastTime == 0 ? 0 : deltaNumberOfTasks / deltaLastTime));
+                logger.info(
+                        String.format("[ %10s ] Done: %20s, Running: %20s, Queue: %10s, Avg: %6s t/s, Speed: %6s t/s",
+                                pool.getName(),
+                                numberOfTasks,
+                                pool.getActiveCount(),
+                                String.format("%s / %s", numberOfItems, queueSize),
+                                deltaStartTime == 0 ? 0 : numberOfTasks / deltaStartTime,
+                                deltaLastTime == 0 ? 0 : deltaNumberOfTasks / deltaLastTime));
 
                 lastTime.put(executorServiceToWatch, System.currentTimeMillis());
                 lastNumberOfTasks.put(executorServiceToWatch, numberOfTasks);
