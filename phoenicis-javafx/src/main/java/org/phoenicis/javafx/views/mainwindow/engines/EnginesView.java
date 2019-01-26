@@ -23,6 +23,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
@@ -31,6 +32,7 @@ import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
+import org.phoenicis.javafx.components.engine.control.EngineSubCategoryPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -51,7 +53,7 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
     private final Map<String, Engine> engines;
     private final ObservableList<EngineCategoryDTO> engineCategories;
 
-    private final FilteredList<EngineSubCategoryTab> engineSubCategoryTabs;
+    private final ObservableList<Tab> engineSubCategoryTabs;
 
     private final EngineDetailsPanel engineDetailsPanel;
 
@@ -131,42 +133,47 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         return availableEngines;
     }
 
-    private FilteredList<EngineSubCategoryTab> createEngineSubCategoryTabs() {
-        // initialize the engines sub category tabs
-        final MappedList<List<EngineSubCategoryTab>, EngineCategoryDTO> engineSubCategoryTabGroups = new MappedList<>(
-                this.engineCategories, engineCategory -> engineCategory
-                        .getSubCategories()
-                        .stream()
+    private ObservableList<Tab> createEngineSubCategoryTabs() {
+        // initialize the engines sub category panels
+        final MappedList<List<EngineSubCategoryPanel>, EngineCategoryDTO> engineSubCategoryPanelGroups = new MappedList<>(
+                this.engineCategories, engineCategory -> engineCategory.getSubCategories().stream()
                         .map(engineSubCategory -> {
-                            final EngineSubCategoryTab result = new EngineSubCategoryTab(engineCategory,
-                                    engineSubCategory,
-                                    this.enginesPath, this.filter,
-                                    this.engines.get(engineCategory.getName().toLowerCase()),
-                                    this.sidebar.selectedListWidgetProperty());
+                            final EngineSubCategoryPanel engineSubCategoryPanel = new EngineSubCategoryPanel();
 
-                            result.setOnSelectEngine(this::showEngineDetails);
+                            engineSubCategoryPanel.setEngineCategory(engineCategory);
+                            engineSubCategoryPanel.setEngineSubCategory(engineSubCategory);
+                            engineSubCategoryPanel.setEnginesPath(this.enginesPath);
+                            engineSubCategoryPanel.setFilter(this.filter);
+                            engineSubCategoryPanel.setEngine(this.engines.get(engineCategory.getName().toLowerCase()));
 
-                            return result;
-                        })
-                        .collect(Collectors.toList()));
+                            engineSubCategoryPanel.selectedListWidgetProperty()
+                                    .bind(this.sidebar.selectedListWidgetProperty());
 
-        final ConcatenatedList<EngineSubCategoryTab> engineSubCategoryTabs = ConcatenatedList
-                .create(engineSubCategoryTabGroups);
+                            engineSubCategoryPanel.setOnEngineSelect(this::showEngineDetails);
 
-        // sort the engine sub category tabs alphabetically
-        // filter the engine sub category tabs, so that only the visible tabs remain
-        final FilteredList<EngineSubCategoryTab> filteredEngineSubTabs = engineSubCategoryTabs
+                            return engineSubCategoryPanel;
+                        }).collect(Collectors.toList()));
+
+        final ConcatenatedList<EngineSubCategoryPanel> engineSubCategoryPanels = ConcatenatedList
+                .create(engineSubCategoryPanelGroups);
+
+        final FilteredList<EngineSubCategoryPanel> filteredEngineSubCategoryPanels = engineSubCategoryPanels
+                // sort the engine sub category panels alphabetically
                 .sorted(Comparator
-                        .comparing(engineSubCategoryTab -> engineSubCategoryTab.getEngineSubCategory().getName()))
+                        .comparing(engineSubCategoryPanel -> engineSubCategoryPanel.getEngineSubCategory().getName()))
+                // filter the engine sub category panels, so that only the visible panels remain
                 .filtered(this.filter::filter);
 
-        filteredEngineSubTabs.predicateProperty().bind(
+        filteredEngineSubCategoryPanels.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,
                         this.filter.searchTermProperty(),
                         this.filter.showInstalledProperty(),
                         this.filter.showNotInstalledProperty()));
 
-        return filteredEngineSubTabs;
+        // map the panels to tabs
+        return new MappedList<>(filteredEngineSubCategoryPanels,
+                engineSubCategoryPanel -> new Tab(engineSubCategoryPanel.getEngineSubCategory().getDescription(),
+                        engineSubCategoryPanel));
     }
 
     private EnginesSidebar createEnginesSidebar() {
