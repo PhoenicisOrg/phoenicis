@@ -9,8 +9,7 @@ import javax.annotation.PreDestroy;
 import java.util.concurrent.ExecutorService;
 
 /**
- * This class allows to run a debugger that will show indications about
- * It will print out the following information
+ * This class allows to run a debugger that will show indications about the thread pools
  */
 @Safe
 public class ControlledThreadPoolExecutorDebugger implements AutoCloseable {
