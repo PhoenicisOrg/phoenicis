@@ -22,6 +22,14 @@ class ControlledThreadPoolExecutorDebuggerWatcher implements Runnable {
     private final Map<ExecutorService, Long> lastNumberOfTasks = new HashMap<>();
     private final Map<ExecutorService, Long> lastTime = new HashMap<>();
 
+    /**
+     * Constructor
+     *
+     * @param running A mutable boolean that tells if the watcher is running
+     * @param poolsToObserve The list of pools to watch
+     * @param logger The logger to send the result to
+     * @param sleepTime The amount time between when the observation is made
+     */
     ControlledThreadPoolExecutorDebuggerWatcher(MutableBoolean running,
             ExecutorService[] poolsToObserve,
             Logger logger,
