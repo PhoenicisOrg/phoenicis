@@ -741,42 +741,6 @@
             </match-list>
         </match>
         <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mimetype>
-            <extension>docx</extension>
-            <description>Microsoft Office Open XML Document</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.wordprocessingml.document</mimetype>
-            <extension>docm</extension>
-            <description>Microsoft Office Open XML Document</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mimetype>
-            <extension>xlsx</extension>
-            <description>Microsoft Office Open XML Workbook</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</mimetype>
-            <extension>xlsm</extension>
-            <description>Microsoft Office Open XML Workbook</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.presentationml.presentation</mimetype>
-            <extension>pptx</extension>
-            <description>Microsoft Office Open XML Workbook</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
-            <mimetype>application/vnd.openxmlformats-officedocument.presentationml.presentation</mimetype>
-            <extension>pptm</extension>
-            <description>Microsoft Office Open XML Workbook</description>
-            <test offset="0" type="string" comparator="=">PK\003\004</test>
-        </match>
-        <match>
             <mimetype>???</mimetype>
             <extension>???</extension>
             <description>Standard MIDI data</description>
