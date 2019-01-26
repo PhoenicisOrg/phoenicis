@@ -59,15 +59,14 @@
             <version>2.6</version>
         </dependency>
         <dependency>
-            <groupId>net.sf.jmimemagic</groupId>
+            <groupId>com.github.PhoenicisOrg</groupId>
             <artifactId>jmimemagic</artifactId>
-            <version>0.1.5</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-            </exclusions>
+            <version>0.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.PhoenicisOrg</groupId>
+            <artifactId>lnk-parser</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
