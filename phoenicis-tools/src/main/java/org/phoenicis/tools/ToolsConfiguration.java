@@ -153,6 +153,6 @@ public class ToolsConfiguration {
 
     @Bean
     public LnkParser lnkParser() {
-        return new LnkParser();
+        return new LnkParser(new org.phoenicis.lnk.LnkParser());
     }
 }
