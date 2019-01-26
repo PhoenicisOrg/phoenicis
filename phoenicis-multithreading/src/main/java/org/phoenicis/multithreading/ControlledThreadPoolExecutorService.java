@@ -109,4 +109,8 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
     public String getName() {
         return name;
     }
+
+    public long getProcessed() {
+        return processed.get();
+    }
 }
