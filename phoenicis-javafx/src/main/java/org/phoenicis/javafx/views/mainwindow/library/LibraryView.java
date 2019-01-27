@@ -59,6 +59,7 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -298,8 +299,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         final String pathInContainers = executablePath.replace(containersPath, "");
         final String[] split = pathInContainers.split("/");
         final String engineContainer = split[0];
-        final String engine = (Character.toUpperCase(engineContainer.charAt(0)) + engineContainer.substring(1))
-                .replace("prefix", "");
+        final String engine = StringUtils.capitalize(engineContainer).replace("prefix", "");
         // TODO: better way to get engine ID
         final String engineId = engine.toLowerCase();
         final String container = split[1];
