@@ -18,8 +18,12 @@
 
 package org.phoenicis.multithreading;
 
+import org.phoenicis.multithreading.debug.ControlledThreadPoolExecutorDebugger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Configuration
 public class MultithreadingConfiguration {
@@ -42,5 +46,16 @@ public class MultithreadingConfiguration {
     public ControlledThreadPoolExecutorServiceCloser controllerThreadPoolExecutorServiceCloser() {
         return new ControlledThreadPoolExecutorServiceCloser(appsExecutorService(), containersExecutorService(),
                 scriptExecutorService());
+    }
+
+    @Bean
+    public ExecutorService debugExecutorService() {
+        return Executors.newSingleThreadExecutor();
+    }
+
+    @Bean
+    public ControlledThreadPoolExecutorDebugger controlledThreadPoolExecutorDebugger() {
+        return new ControlledThreadPoolExecutorDebugger(debugExecutorService(), scriptExecutorService(),
+                appsExecutorService(), containersExecutorService());
     }
 }

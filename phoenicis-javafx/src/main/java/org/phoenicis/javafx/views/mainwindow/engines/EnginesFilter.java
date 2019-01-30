@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.engines.dto.EngineVersionDTO;
+import org.phoenicis.javafx.components.engine.control.EngineSubCategoryPanel;
 
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -148,14 +149,15 @@ public class EnginesFilter {
     /**
      * Checks if a given engine sub category tab fulfills this filter
      *
-     * @param engineSubCategoryTab The engine sub category tab
+     * @param engineSubCategoryPanel The engine sub category tab
      * @return True if the given engine sub category tab fulfills the filter, false otherwise
      */
-    public boolean filter(EngineSubCategoryTab engineSubCategoryTab) {
-        final boolean tabNotEmpty = engineSubCategoryTab.notEmpty();
+    public boolean filter(EngineSubCategoryPanel engineSubCategoryPanel) {
+        final boolean tabNotEmpty = engineSubCategoryPanel.notEmpty(this);
 
         final boolean selectedEngineCategoryConstraint = Optional.ofNullable(selectedEngineCategory.getValue())
-                .map(selectedEngineCategory -> selectedEngineCategory.equals(engineSubCategoryTab.getEngineCategory()))
+                .map(selectedEngineCategory -> selectedEngineCategory
+                        .equals(engineSubCategoryPanel.getEngineCategory()))
                 .orElse(true);
 
         return tabNotEmpty && selectedEngineCategoryConstraint;

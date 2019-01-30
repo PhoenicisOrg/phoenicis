@@ -124,6 +124,11 @@
             <version>jdk-11+23</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.PhoenicisOrg</groupId>
+            <artifactId>javafx-collections</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <resources>

@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -25,12 +26,15 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
@@ -59,8 +63,16 @@ public class ContainerPanel extends DetailsView {
             tabPane.getTabs().add(verbsTab);
         }
         if (engineTools.isPresent()) {
-            ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
-                    engineTools.get());
+            final ContainerEngineToolsPanel containerEngineToolsPanel = new ContainerEngineToolsPanel();
+
+            containerEngineToolsPanel.setContainer(containerEntity);
+            containerEngineToolsPanel.setEngineTools(engineTools.get());
+            containerEngineToolsPanel.setEngineToolsManager(engineToolsManager);
+
+            final Tab engineToolsTab = new Tab(tr("Engine tools"), containerEngineToolsPanel);
+
+            engineToolsTab.setClosable(false);
+
             tabPane.getTabs().add(engineToolsTab);
         }
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
