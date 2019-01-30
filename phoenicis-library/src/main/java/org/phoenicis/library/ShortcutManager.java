@@ -19,7 +19,6 @@
 package org.phoenicis.library;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -122,9 +121,11 @@ public class ShortcutManager {
 
         interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("uninstall");
+                    /*
+                     * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
+                     * shortcutReader.callMember("of", shortcutDTO);
+                     * shortcutReader.callMember("uninstall");
+                     */
                 }, errorCallback), errorCallback);
     }
 

@@ -19,7 +19,6 @@
 package org.phoenicis.javafx.controller.library;
 
 import javafx.application.Platform;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -150,21 +149,23 @@ public class LibraryController {
         final String engineId = engine.toLowerCase();
         final String container = split[1];
 
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
-                    final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
-                    shortcutObject.callMember("name", shortcutCreationDTO.getName());
-                    shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
-                    shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
-                    shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
-                    shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
-                    shortcutObject.callMember("prefix", container);
-                    shortcutObject.callMember("create");
-                }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
-                e -> this.showErrorMessage(e, tr("Error while creating shortcut")));
+        /*
+         * final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+         * 
+         * interactiveScriptSession.eval(
+         * "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId + "\"]);",
+         * ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
+         * final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
+         * shortcutObject.callMember("name", shortcutCreationDTO.getName());
+         * shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
+         * shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
+         * shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
+         * shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
+         * shortcutObject.callMember("prefix", container);
+         * shortcutObject.callMember("create");
+         * }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
+         * e -> this.showErrorMessage(e, tr("Error while creating shortcut")));
+         */
     }
 
     private void runShortcut(ShortcutDTO shortcutDTO) {

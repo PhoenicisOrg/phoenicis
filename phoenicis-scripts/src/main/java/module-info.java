@@ -6,7 +6,6 @@ module org.phoenicis.scripts {
     opens org.phoenicis.scripts;
     opens org.phoenicis.scripts.wizard;
     requires java.scripting;
-    requires jdk.scripting.nashorn;
     requires org.apache.commons.io;
     requires org.phoenicis.configuration;
     requires org.phoenicis.entities;

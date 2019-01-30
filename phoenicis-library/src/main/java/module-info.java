@@ -4,7 +4,7 @@ module org.phoenicis.library {
     opens org.phoenicis.library;
     requires com.fasterxml.jackson.databind;
     requires commons.lang;
-    requires jdk.scripting.nashorn;
+    requires java.scripting;
     requires org.apache.commons.io;
     requires org.phoenicis.configuration;
     requires org.phoenicis.multithreading;

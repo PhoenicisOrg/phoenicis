@@ -4,7 +4,6 @@ module org.phoenicis.containers {
     opens org.phoenicis.containers;
     requires com.fasterxml.jackson.core;
     requires com.fasterxml.jackson.databind;
-    requires jdk.scripting.nashorn;
     requires org.phoenicis.configuration;
     requires org.phoenicis.engines;
     requires org.phoenicis.library;

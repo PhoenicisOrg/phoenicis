@@ -80,6 +80,11 @@
                 <artifactId>gettext-commons</artifactId>
                 <version>0.9.8</version>
             </dependency>
+            <dependency>
+                <groupId>org.graalvm</groupId>
+                <artifactId>graal-sdk</artifactId>
+                <version>1.0.0-rc7</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
     <build>

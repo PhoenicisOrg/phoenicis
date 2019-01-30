@@ -44,7 +44,6 @@ module org.phoenicis.javafx {
     requires javafx.base;
     requires javafx.controls;
     requires javafx.web;
-    requires jdk.scripting.nashorn;
     requires org.phoenicis.configuration;
     requires org.phoenicis.containers;
     requires org.phoenicis.engines;
