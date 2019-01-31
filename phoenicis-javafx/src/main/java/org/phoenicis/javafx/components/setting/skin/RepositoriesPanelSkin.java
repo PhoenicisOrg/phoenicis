@@ -5,7 +5,11 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.event.ActionEvent;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DataFormat;
 import javafx.scene.input.Dragboard;
@@ -13,6 +17,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.setting.control.RepositoriesPanel;
@@ -27,7 +32,13 @@ import java.util.function.Function;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * A skin implementation for the {@link RepositoriesPanel} component
+ */
 public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, RepositoriesPanelSkin> {
+    /**
+     * A {@link DataFormat} for dragged row indices
+     */
     private static final DataFormat repositoryLocationFormat = new DataFormat("application/x-java-serialized-object");
 
     /**
@@ -39,6 +50,9 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         super(control);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final Text title = new Text(tr("Repository Settings"));
@@ -59,6 +73,11 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         getChildren().addAll(container);
     }
 
+    /**
+     * Creates a {@link TableView} containing the {@link RepositoryLocation} objects
+     *
+     * @return A {@link TableView} containing the {@link RepositoryLocation} objects
+     */
     private TableView<RepositoryLocation<? extends Repository>> createRepositoryLocationTable() {
         final TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable = new TableView<>();
         repositoryLocationTable.getStyleClass().add("repositories-table");
@@ -88,12 +107,16 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
 
             row.setOnDragDetected(event -> {
                 if (!row.isEmpty()) {
-                    int index = row.getIndex();
-                    Dragboard dragboard = row.startDragAndDrop(TransferMode.MOVE);
+                    final int index = row.getIndex();
+                    final Dragboard dragboard = row.startDragAndDrop(TransferMode.MOVE);
 
-                    dragboard.setDragView(row.snapshot(null, null));
+                    // create a preview image
+                    final RepositoryLocation<? extends Repository> repositoryLocation = getControl()
+                            .getRepositoryLocations().get(index);
+                    dragboard.setDragView(createPreviewImage(repositoryLocation));
 
-                    ClipboardContent content = new ClipboardContent();
+                    // save the dragged repository index
+                    final ClipboardContent content = new ClipboardContent();
                     content.put(repositoryLocationFormat, index);
                     dragboard.setContent(content);
 
@@ -102,7 +125,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             });
 
             row.setOnDragOver(event -> {
-                Dragboard dragboard = event.getDragboard();
+                final Dragboard dragboard = event.getDragboard();
 
                 if (dragboard.hasContent(repositoryLocationFormat)
                         && row.getIndex() != (Integer) dragboard.getContent(repositoryLocationFormat)) {
@@ -112,14 +135,14 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
             });
 
             row.setOnDragDropped(event -> {
-                Dragboard dragboard = event.getDragboard();
+                final Dragboard dragboard = event.getDragboard();
 
                 if (dragboard.hasContent(repositoryLocationFormat)) {
-                    int draggedIndex = (Integer) dragboard.getContent(repositoryLocationFormat);
-                    RepositoryLocation<? extends Repository> draggedRepositoryLocation = getControl()
+                    final int draggedIndex = (Integer) dragboard.getContent(repositoryLocationFormat);
+                    final RepositoryLocation<? extends Repository> draggedRepositoryLocation = getControl()
                             .getRepositoryLocations().remove(draggedIndex);
 
-                    int dropIndex = row.isEmpty() ? getControl().getRepositoryLocations().size() : row.getIndex();
+                    final int dropIndex = row.isEmpty() ? getControl().getRepositoryLocations().size() : row.getIndex();
 
                     getControl().getRepositoryLocations().add(dropIndex, draggedRepositoryLocation);
 
@@ -136,6 +159,33 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         return repositoryLocationTable;
     }
 
+    /**
+     * Creates an {@link Image} object visualizing a dragged repository location
+     *
+     * @param repositoryLocation The dragged repository location
+     * @return An {@link Image} object visualizing a dragged repository location
+     */
+    private Image createPreviewImage(RepositoryLocation<? extends Repository> repositoryLocation) {
+        final Text text = new Text(repositoryLocation.toDisplayString());
+
+        // force the layout to be able to create a snapshot
+        new Scene(new Group(text));
+
+        final SnapshotParameters snapshotParameters = new SnapshotParameters();
+        snapshotParameters.setFill(Color.TRANSPARENT);
+
+        return text.snapshot(snapshotParameters, null);
+    }
+
+    /**
+     * Creates a new {@link TableColumn} object for the given {@link String columnHeader}
+     *
+     * @param columnHeader The column header text
+     * @param converter A converter function used to convert a {@link RepositoryLocation} object to the type of the
+     *            column
+     * @param <E> The type of the column
+     * @return A new {@link TableColumn} object for the given {@link String columnHeader}
+     */
     private <E> TableColumn<RepositoryLocation<? extends Repository>, E> createColumn(String columnHeader,
             Function<RepositoryLocation<? extends Repository>, E> converter) {
         final TableColumn<RepositoryLocation<? extends Repository>, E> column = new TableColumn<>(columnHeader);
@@ -147,14 +197,24 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         return column;
     }
 
+    /**
+     * Creates a new container for the repository buttons.
+     * These buttons consist of:
+     * - an add button
+     * - a delete button
+     * - a restore defaults button
+     *
+     * @param repositoryLocationTable The repository location table
+     * @return A new container for the repository buttons
+     */
     private HBox createRepositoryButtons(TableView<RepositoryLocation<? extends Repository>> repositoryLocationTable) {
         final Button addButton = new Button(tr("Add"));
         addButton.getStyleClass().add("repositories-add");
         addButton.setOnAction((ActionEvent event) -> {
-            AddRepositoryDialog dialog = new AddRepositoryDialog();
+            final AddRepositoryDialog dialog = new AddRepositoryDialog();
             dialog.initOwner(getControl().getScene().getWindow());
 
-            Optional<RepositoryLocation<? extends Repository>> successResult = dialog.showAndWait();
+            final Optional<RepositoryLocation<? extends Repository>> successResult = dialog.showAndWait();
 
             successResult
                     .ifPresent(repositoryLocation -> getControl().getRepositoryLocations().add(0, repositoryLocation));
@@ -163,8 +223,8 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         final Button removeButton = new Button(tr("Remove"));
         removeButton.getStyleClass().add("repositories-remove");
         removeButton.setOnAction((ActionEvent event) -> {
-            List<RepositoryLocation<? extends Repository>> toRemove = repositoryLocationTable.getSelectionModel()
-                    .getSelectedItems();
+            final List<RepositoryLocation<? extends Repository>> toRemove = repositoryLocationTable
+                    .getSelectionModel().getSelectedItems();
 
             getControl().getRepositoryLocations().removeAll(toRemove);
         });
@@ -191,6 +251,11 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         return container;
     }
 
+    /**
+     * Creates a container for the refresh button
+     *
+     * @return A container with the refresh button
+     */
     private HBox createRefreshButtonContainer() {
         final Label refreshRepositoriesLabel = new Label(
                 tr("Fetch updates from the repositories to retrieve latest script versions"));

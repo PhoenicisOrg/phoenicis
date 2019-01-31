@@ -115,11 +115,12 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
         ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
                 .observableArrayList(settingsManager.loadRepositoryLocations());
 
-        final RepositoriesPanel repositoriesPanel = new RepositoriesPanel(repositoryLocationLoader,
-                repositoryLocations);
+        final RepositoriesPanel repositoriesPanel = new RepositoriesPanel(repositoryLocations);
 
         // set the initial values
         repositoriesPanel.setOnRepositoryRefresh(repositoryManager::triggerRepositoryChange);
+
+        repositoriesPanel.setRepositoryLocationLoader(repositoryLocationLoader);
 
         // react on changes
         repositoriesPanel.getRepositoryLocations()
