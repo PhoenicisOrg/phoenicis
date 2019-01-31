@@ -651,6 +651,17 @@
   -fx-cursor: hand;
 }
 
+/**
+ * The scroll-panes should use the background color of their parent component
+ */
+.scroll-pane {
+  -fx-background-color: transparent;
+
+  &> .viewport {
+    -fx-background-color: transparent;
+  }
+}
+
 /*******************************************************/
 /************************ icons ************************/
 /*******************************************************/
