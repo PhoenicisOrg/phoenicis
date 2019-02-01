@@ -38,7 +38,7 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         title.getStyleClass().add("title");
 
         final GridPane verbs = new GridPane();
-        verbs.getStyleClass().add("grid");
+        verbs.getStyleClass().add("verb-grid");
         // ensure that the shown verbs are always up to date
         getControl().getVerbScripts().addListener((Observable invalidation) -> updateVerbs(verbs));
         // ensure that the shown verbs are correctly initialized
@@ -51,9 +51,10 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         VBox.setVgrow(verbScrollPanel, Priority.ALWAYS);
 
         final HBox verbManagementButtons = createVerbManagementButtons(verbs);
+        verbManagementButtons.getStyleClass().add("verb-management-button-container");
 
         final VBox container = new VBox(title, verbScrollPanel, verbManagementButtons);
-        container.getStyleClass().add("containerConfigurationPane");
+        container.getStyleClass().addAll("container-details-panel", "container-verbs-panel");
 
         getChildren().setAll(container);
     }
@@ -97,9 +98,7 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
                 // deselect the checkboxes
                 .forEach(verbCheckBox -> verbCheckBox.setSelected(false)));
 
-        final HBox container = new HBox(installButton, clearButton);
-
-        return container;
+        return new HBox(installButton, clearButton);
     }
 
     private void updateVerbs(final GridPane verbs) {
