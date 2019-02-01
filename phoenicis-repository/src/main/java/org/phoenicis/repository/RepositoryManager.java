@@ -53,6 +53,13 @@ public interface RepositoryManager {
     void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex);
 
     /**
+     * This method updates the repositories list maintained by this {@link RepositoryManager}
+     *
+     * @param repositoryLocations The new repository locations
+     */
+    void updateRepositories(final List<RepositoryLocation<? extends Repository>> repositoryLocations);
+
+    /**
      * This method adds a number of given repositories to this manager. This is done by inserting the repositories at
      * the given position.
      * After this method has been called {@link #triggerRepositoryChange()} will be called once.

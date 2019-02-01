@@ -24,7 +24,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
-import org.phoenicis.javafx.components.setting.control.RepositoriesPanel;
 import org.phoenicis.javafx.components.setting.control.*;
 import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
@@ -39,8 +38,6 @@ import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
-
-import java.util.stream.IntStream;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -122,23 +119,12 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
         repositoriesPanel.setRepositoryLocationLoader(repositoryLocationLoader);
 
-        // react on changes
+        // react to changes
         repositoriesPanel.getRepositoryLocations()
                 .addListener((ListChangeListener.Change<? extends RepositoryLocation<? extends Repository>> change) -> {
-                    while (change.next()) {
-                        final int from = change.getFrom();
+                    repositoryManager.updateRepositories(repositoryLocations);
 
-                        if (change.wasRemoved()) {
-                            change.getRemoved().forEach(repositoryManager::removeRepositories);
-                        }
-
-                        if (change.wasAdded()) {
-                            IntStream.range(0, change.getAddedSize()).forEach(index -> repositoryManager
-                                    .addRepositories(from + index, change.getAddedSubList().get(index)));
-                        }
-
-                        settingsManager.saveRepositories(repositoryLocations);
-                    }
+                    settingsManager.saveRepositories(repositoryLocations);
                 });
 
         return repositoriesPanel;

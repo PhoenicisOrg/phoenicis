@@ -26,6 +26,8 @@ import org.phoenicis.javafx.views.mainwindow.settings.addrepository.AddRepositor
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.Repository;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -139,12 +141,18 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
 
                 if (dragboard.hasContent(repositoryLocationFormat)) {
                     final int draggedIndex = (Integer) dragboard.getContent(repositoryLocationFormat);
-                    final RepositoryLocation<? extends Repository> draggedRepositoryLocation = getControl()
-                            .getRepositoryLocations().remove(draggedIndex);
 
-                    final int dropIndex = row.isEmpty() ? getControl().getRepositoryLocations().size() : row.getIndex();
+                    final List<RepositoryLocation<? extends Repository>> workingCopy = new ArrayList<>(
+                            getControl().getRepositoryLocations());
 
-                    getControl().getRepositoryLocations().add(dropIndex, draggedRepositoryLocation);
+                    final RepositoryLocation<? extends Repository> draggedRepositoryLocation = workingCopy
+                            .remove(draggedIndex);
+
+                    final int dropIndex = row.isEmpty() ? workingCopy.size() : row.getIndex();
+
+                    workingCopy.add(dropIndex, draggedRepositoryLocation);
+
+                    getControl().getRepositoryLocations().setAll(workingCopy);
 
                     event.setDropCompleted(true);
                     event.consume();
