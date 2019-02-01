@@ -68,6 +68,15 @@ public class VerbsManager {
                 }, errorCallback), errorCallback);
     }
 
+    /**
+     * Installs a list of Verbs in a given container
+     *
+     * @param engineId ID of the engine which provides the Verbs (e.g. "Wine")
+     * @param container name of the container
+     * @param verbIds A list of verb ids
+     * @param doneCallback callback executed after the scripts ran
+     * @param errorCallback callback executed in case of an error
+     */
     public void installVerbs(String engineId, String container, List<String> verbIds, Runnable doneCallback,
             Consumer<Exception> errorCallback) {
         if (verbIds.isEmpty()) {
