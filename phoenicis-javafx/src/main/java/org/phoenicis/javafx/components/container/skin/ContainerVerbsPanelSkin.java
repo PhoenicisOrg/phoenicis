@@ -22,9 +22,12 @@ import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * A skin implementation for the {@link ContainerVerbsPanel} component
+ */
 public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, ContainerVerbsPanelSkin> {
     /**
-     * Constructor for all SkinBase instances
+     * Constructor
      *
      * @param control The control belonging to the skin
      */
@@ -32,6 +35,9 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         super(control);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialise() {
         final Text title = new Text(tr("Verbs"));
@@ -59,6 +65,14 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         getChildren().setAll(container);
     }
 
+    /**
+     * Creates a container with the buttons for the verb selection management. These buttons consist of:
+     * - a button to install all selected verbs
+     * - a button to clear/reset the selection
+     *
+     * @param verbs The {@link GridPane} containing the visual verb installation components
+     * @return A container with the buttons for the verb selection management
+     */
     private HBox createVerbManagementButtons(final GridPane verbs) {
         final Button installButton = new Button(tr("Install selected"));
         installButton.disableProperty().bind(getControl().lockVerbsProperty());
@@ -101,6 +115,11 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         return new HBox(installButton, clearButton);
     }
 
+    /**
+     * Updates the verbs in the given {@link GridPane verbs}
+     *
+     * @param verbs The GridPane containing the visual verb installation components
+     */
     private void updateVerbs(final GridPane verbs) {
         verbs.getChildren().clear();
 

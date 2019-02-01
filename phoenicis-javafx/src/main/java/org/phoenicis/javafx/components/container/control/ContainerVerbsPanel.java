@@ -14,15 +14,27 @@ import org.phoenicis.javafx.components.container.skin.ContainerVerbsPanelSkin;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
+/**
+ * A component used to install verbs in an existing container
+ */
 public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, ContainerVerbsPanelSkin> {
+    /**
+     * The container
+     */
     private final ObjectProperty<ContainerDTO> container;
 
+    /**
+     * The verbs manager
+     */
     private final ObjectProperty<VerbsManager> verbsManager;
 
+    /**
+     * The application containing the verbs
+     */
     private final ObjectProperty<ApplicationDTO> verbs;
 
     /**
-     * A list of all tool scripts
+     * A list of all verbs
      */
     private final ObservableList<ScriptDTO> verbScripts;
 
@@ -31,6 +43,14 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
      */
     private final BooleanProperty lockVerbs;
 
+    /**
+     * Constructor
+     *
+     * @param container The container
+     * @param verbsManager The verbs manager
+     * @param verbs The application containing the verbs
+     * @param lockVerbs A boolean signifying whether all verb buttons should be locked
+     */
     public ContainerVerbsPanel(ObjectProperty<ContainerDTO> container, ObjectProperty<VerbsManager> verbsManager,
             ObjectProperty<ApplicationDTO> verbs, BooleanProperty lockVerbs) {
         super();
@@ -43,6 +63,9 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
         this.verbScripts = createVerbScripts();
     }
 
+    /**
+     * Constructor
+     */
     public ContainerVerbsPanel() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
                 new SimpleBooleanProperty());
@@ -69,17 +92,20 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
         return verbScripts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ContainerVerbsPanelSkin createSkin() {
         return new ContainerVerbsPanelSkin(this);
     }
 
     public ContainerDTO getContainer() {
-        return container.get();
+        return this.container.get();
     }
 
     public ObjectProperty<ContainerDTO> containerProperty() {
-        return container;
+        return this.container;
     }
 
     public void setContainer(ContainerDTO container) {
@@ -87,11 +113,11 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     }
 
     public VerbsManager getVerbsManager() {
-        return verbsManager.get();
+        return this.verbsManager.get();
     }
 
     public ObjectProperty<VerbsManager> verbsManagerProperty() {
-        return verbsManager;
+        return this.verbsManager;
     }
 
     public void setVerbsManager(VerbsManager verbsManager) {
@@ -99,11 +125,11 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     }
 
     public ApplicationDTO getVerbs() {
-        return verbs.get();
+        return this.verbs.get();
     }
 
     public ObjectProperty<ApplicationDTO> verbsProperty() {
-        return verbs;
+        return this.verbs;
     }
 
     public void setVerbs(ApplicationDTO verbs) {
@@ -111,7 +137,7 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     }
 
     public ObservableList<ScriptDTO> getVerbScripts() {
-        return verbScripts;
+        return this.verbScripts;
     }
 
     public boolean isLockVerbs() {
@@ -119,7 +145,7 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     }
 
     public BooleanProperty lockVerbsProperty() {
-        return lockVerbs;
+        return this.lockVerbs;
     }
 
     public void setLockVerbs(boolean lockVerbs) {
