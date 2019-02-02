@@ -21,13 +21,10 @@ package org.phoenicis.javafx.views.mainwindow.settings;
 import javafx.animation.PauseTransition;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.util.Duration;
-import org.phoenicis.javafx.components.setting.control.AboutPanel;
-import org.phoenicis.javafx.components.setting.control.FileAssociationsPanel;
-import org.phoenicis.javafx.components.setting.control.NetworkPanel;
-import org.phoenicis.javafx.components.setting.control.SettingsSidebar;
-import org.phoenicis.javafx.components.setting.control.UserInterfacePanel;
+import org.phoenicis.javafx.components.setting.control.*;
 import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -35,7 +32,10 @@ import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.common.themes.Theme;
 import org.phoenicis.javafx.views.common.themes.Themes;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
+import org.phoenicis.repository.RepositoryLocationLoader;
 import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.location.RepositoryLocation;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
@@ -50,6 +50,8 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
     private final String applicationBuildTimestamp;
     private final Opener opener;
 
+    private final RepositoryLocationLoader repositoryLocationLoader;
+
     private SettingsManager settingsManager;
     private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
@@ -58,7 +60,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
     public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-            SettingsManager settingsManager,
+            SettingsManager settingsManager, RepositoryLocationLoader repositoryLocationLoader,
             JavaFxSettingsManager javaFxSettingsManager, RepositoryManager repositoryManager) {
         super(tr("Settings"), themeManager);
         this.applicationName = applicationName;
@@ -67,6 +69,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
         this.applicationBuildTimestamp = applicationBuildTimestamp;
         this.opener = opener;
         this.settingsManager = settingsManager;
+        this.repositoryLocationLoader = repositoryLocationLoader;
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.repositoryManager = repositoryManager;
 
@@ -96,13 +99,35 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
                 new SettingsSidebarItem(createUserInterfacePanel(),
                         "userInterfaceButton", tr("User Interface")),
                 new SettingsSidebarItem(
-                        new RepositoriesPanel(this.settingsManager, this.repositoryManager),
+                        createRepositoriesPanel(),
                         "repositoriesButton", tr("Repositories")),
                 new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
                 new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
                 new SettingsSidebarItem(new AboutPanel(this.opener, buildInformation), "aboutButton",
                         tr("About")));
+    }
+
+    private RepositoriesPanel createRepositoriesPanel() {
+        ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
+                .observableArrayList(settingsManager.loadRepositoryLocations());
+
+        final RepositoriesPanel repositoriesPanel = new RepositoriesPanel(repositoryLocations);
+
+        // set the initial values
+        repositoriesPanel.setOnRepositoryRefresh(repositoryManager::triggerRepositoryChange);
+
+        repositoriesPanel.setRepositoryLocationLoader(repositoryLocationLoader);
+
+        // react to changes
+        repositoriesPanel.getRepositoryLocations()
+                .addListener((ListChangeListener.Change<? extends RepositoryLocation<? extends Repository>> change) -> {
+                    repositoryManager.updateRepositories(repositoryLocations);
+
+                    settingsManager.saveRepositories(repositoryLocations);
+                });
+
+        return repositoriesPanel;
     }
 
     private UserInterfacePanel createUserInterfacePanel() {

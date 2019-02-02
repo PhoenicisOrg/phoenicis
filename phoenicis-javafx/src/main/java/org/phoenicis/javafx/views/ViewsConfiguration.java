@@ -109,6 +109,7 @@ public class ViewsConfiguration {
                 applicationGitRevision, applicationBuildTimestamp,
                 toolsConfiguration.opener(),
                 settingsConfiguration.settingsManager(),
+                repositoryConfiguration.repositoryLocationLoader(),
                 javaFxSettingsConfiguration.javaFxSettingsManager(),
                 repositoryConfiguration.repositoryManager());
     }

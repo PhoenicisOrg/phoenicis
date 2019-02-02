@@ -81,6 +81,40 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
+    public void updateRepositories(final List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        LOGGER.info(String.format("Updating repositories list to %s", repositoryLocations.toString()));
+
+        final Map<RepositoryLocation<? extends Repository>, Repository> copy = new HashMap<>(this.repositoryMap);
+
+        // delete the old repositories
+        copy.forEach((repositoryLocation, repository) -> {
+            this.multipleRepository.removeRepository(repository);
+
+            if (!repositoryLocations.contains(repositoryLocation)) {
+                this.repositoryMap.remove(repositoryLocation);
+
+                repository.onDelete();
+            }
+        });
+
+        // add the new repositories
+        repositoryLocations.forEach(repositoryLocation -> {
+            if (!this.repositoryMap.containsKey(repositoryLocation)) {
+                final Repository repository = repositoryLocation.createRepository(cacheDirectoryPath,
+                        localRepositoryFactory,
+                        classPathRepositoryFactory, fileUtilities);
+
+                this.repositoryMap.put(repositoryLocation, repository);
+            }
+
+            this.multipleRepository.addRepository(this.repositoryMap.get(repositoryLocation));
+        });
+
+        // trigger a repository changed event
+        this.triggerRepositoryChange();
+    }
+
+    @Override
     public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
 
