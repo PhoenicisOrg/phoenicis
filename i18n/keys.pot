@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-27 11:44+0000\n"
+"POT-Creation-Date: 2019-02-02 20:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,70 +84,28 @@ msgstr ""
 msgid "Question"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:84
-msgid "Restore defaults"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:88
-msgid "Restored default repositories"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:89
-msgid "Please restart such that the changes can take effect."
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:118
-msgid "Repository Settings"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:123
-msgid "Repository:"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:142
-msgid "Add"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:159
-msgid "Remove"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:188
-msgid ""
-"The value in front of each repository is its priority. The higher the "
-"priority is, the more important the scripts inside the repository are."
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:200
-msgid "Fetch updates from the repositories to retrieve latest script versions"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/RepositoriesPanel.java:203
-msgid "Refresh Repositories"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:63
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:65
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
 msgid "Settings"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:97
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
 msgid "User Interface"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:103
 msgid "Repositories"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:102
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:105
 msgid "File Associations"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:103
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:106
 msgid "Network"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:105
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:108
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
 msgid "About"
 msgstr ""
@@ -593,6 +551,50 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:68
 msgid "Restore defaults (requires restart)"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:59
+msgid "Repository Settings"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
+msgid "Priority"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
+msgid "Repository name"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
+msgid "Move the repository up or down to change its priority"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
+msgid "Add"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:230
+msgid "Remove"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:239
+msgid "Restore defaults"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
+msgid "Restore default repositories"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
+msgid "Are you sure you want to restore the default repositories?"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
+msgid "Fetch updates from the repositories to retrieve latest script versions"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:273
+msgid "Refresh Repositories"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
