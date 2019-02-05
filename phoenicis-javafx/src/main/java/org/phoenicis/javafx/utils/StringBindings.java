@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 /**
- * An utility class containing functions to more map {@link ObservableValue} objects to {@link StringBinding} objects
+ * A utility class containing functions to map {@link ObservableValue} objects to {@link StringBinding} objects
  */
 public final class StringBindings {
     /**

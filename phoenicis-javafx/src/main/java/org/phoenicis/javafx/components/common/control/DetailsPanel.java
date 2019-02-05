@@ -57,11 +57,11 @@ public class DetailsPanel extends ControlBase<DetailsPanel, DetailsPanelSkin> {
     }
 
     public String getTitle() {
-        return title.get();
+        return this.title.get();
     }
 
     public StringProperty titleProperty() {
-        return title;
+        return this.title;
     }
 
     public void setTitle(String title) {
@@ -69,11 +69,11 @@ public class DetailsPanel extends ControlBase<DetailsPanel, DetailsPanelSkin> {
     }
 
     public Node getContent() {
-        return content.get();
+        return this.content.get();
     }
 
     public ObjectProperty<Node> contentProperty() {
-        return content;
+        return this.content;
     }
 
     public void setContent(Node content) {
@@ -81,11 +81,11 @@ public class DetailsPanel extends ControlBase<DetailsPanel, DetailsPanelSkin> {
     }
 
     public Runnable getOnClose() {
-        return onClose.get();
+        return this.onClose.get();
     }
 
     public ObjectProperty<Runnable> onCloseProperty() {
-        return onClose;
+        return this.onClose;
     }
 
     public void setOnClose(Runnable onClose) {
