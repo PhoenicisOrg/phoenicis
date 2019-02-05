@@ -2,8 +2,8 @@ package org.phoenicis.javafx.components.application.control;
 
 import javafx.beans.property.*;
 import javafx.scene.web.WebView;
-import org.phoenicis.javafx.components.application.skin.ApplicationDetailsPanelSkin;
-import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
+import org.phoenicis.javafx.components.application.skin.ApplicationInformationPanelSkin;
+import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -11,7 +11,8 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 /**
  * A details panel for the applications tab used to show the details for a selected application
  */
-public class ApplicationDetailsPanel extends DetailsPanelBase<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
+public class ApplicationInformationPanel
+        extends ControlBase<ApplicationInformationPanel, ApplicationInformationPanelSkin> {
     /**
      * The script interpreter to execute installation scripts
      */
@@ -45,12 +46,11 @@ public class ApplicationDetailsPanel extends DetailsPanelBase<ApplicationDetails
      * @param application The shown application
      * @param showScriptSource Boolean flag to decide whether the script sources should be shown
      * @param webEngineStylesheet The stylesheet for the {@link WebView}
-     * @param onClose The callback for close button clicks
      */
-    public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
+    public ApplicationInformationPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
             ObjectProperty<ApplicationDTO> application, BooleanProperty showScriptSource,
-            StringProperty webEngineStylesheet, ObjectProperty<Runnable> onClose) {
-        super(onClose);
+            StringProperty webEngineStylesheet) {
+        super();
 
         this.scriptInterpreter = scriptInterpreter;
         this.filter = filter;
@@ -66,18 +66,17 @@ public class ApplicationDetailsPanel extends DetailsPanelBase<ApplicationDetails
      * @param filter The filter settings to be used to filter the installation scripts
      * @param application The shown application
      */
-    public ApplicationDetailsPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
+    public ApplicationInformationPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
             ObjectProperty<ApplicationDTO> application) {
-        this(scriptInterpreter, filter, application, new SimpleBooleanProperty(), new SimpleStringProperty(),
-                new SimpleObjectProperty<>());
+        this(scriptInterpreter, filter, application, new SimpleBooleanProperty(), new SimpleStringProperty());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ApplicationDetailsPanelSkin createSkin() {
-        return new ApplicationDetailsPanelSkin(this);
+    public ApplicationInformationPanelSkin createSkin() {
+        return new ApplicationInformationPanelSkin(this);
     }
 
     public ScriptInterpreter getScriptInterpreter() {

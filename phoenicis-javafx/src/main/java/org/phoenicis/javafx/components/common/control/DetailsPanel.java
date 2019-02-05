@@ -1,6 +1,8 @@
 package org.phoenicis.javafx.components.common.control;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import org.phoenicis.javafx.components.common.skin.DetailsPanelSkin;
@@ -37,6 +39,13 @@ public class DetailsPanel extends ControlBase<DetailsPanel, DetailsPanelSkin> {
         this.title = title;
         this.content = content;
         this.onClose = onClose;
+    }
+
+    /**
+     * Constructor
+     */
+    public DetailsPanel() {
+        this(new SimpleStringProperty(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
     /**
