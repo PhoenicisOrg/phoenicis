@@ -120,14 +120,14 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
 
         applicationPanel.webEngineStylesheetProperty().bind(themeManager.webEngineStylesheetProperty());
 
-        applicationPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
-
         final DetailsPanel detailsPanel = new DetailsPanel();
 
         detailsPanel.titleProperty().bind(StringBindings.map(selectedApplication, ApplicationDTO::getName));
         detailsPanel.setContent(applicationPanel);
 
         detailsPanel.setOnClose(this::closeDetailsView);
+
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
         return Bindings.when(Bindings.isNotNull(selectedApplication))
                 .then(detailsPanel)
