@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-23 19:15+0000\n"
-"PO-Revision-Date: 2019-02-04 20:52\n"
+"PO-Revision-Date: 2019-02-05 20:52\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -134,7 +134,7 @@ msgstr "Interfaccia utente"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
 msgid "Repositories"
-msgstr ""
+msgstr "Repository"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:102
 msgid "File Associations"
@@ -586,7 +586,7 @@ msgstr "Mostra repository del codice sorgente degli script"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:59
 msgid "Scale the user interface"
-msgstr ""
+msgstr "Ridimensiona interfaccia utente"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:68
 msgid "Restore defaults (requires restart)"
