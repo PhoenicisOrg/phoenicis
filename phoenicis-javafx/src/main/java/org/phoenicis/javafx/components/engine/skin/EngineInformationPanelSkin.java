@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -18,7 +17,8 @@ import javafx.scene.text.Text;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
-import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.engine.control.EngineInformationPanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +29,10 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * {@link DetailsPanelBaseSkin} implementation class used inside the {@link EngineDetailsPanel}
+ * {@link DetailsPanelBaseSkin} implementation class used inside the {@link EngineInformationPanel}
  */
-public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPanel, EngineDetailsPanelSkin> {
-    private final Logger LOGGER = LoggerFactory.getLogger(EngineDetailsPanelSkin.class);
+public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel, EngineInformationPanelSkin> {
+    private final Logger LOGGER = LoggerFactory.getLogger(EngineInformationPanelSkin.class);
 
     /**
      * The engine version of the shown engine
@@ -49,7 +49,7 @@ public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPa
      *
      * @param control The control belonging to the skin
      */
-    public EngineDetailsPanelSkin(EngineDetailsPanel control) {
+    public EngineInformationPanelSkin(EngineInformationPanel control) {
         super(control);
 
         this.engineVersionName = new SimpleStringProperty();
@@ -61,19 +61,6 @@ public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPa
      */
     @Override
     public void initialise() {
-        super.initialise();
-
-        // ensure that the content of the details panel changes when the to be shown engine changes
-        getControl().engineDTOProperty().addListener((Observable invalidation) -> updateEngine());
-        // initialize the content of the details panel correctly
-        updateEngine();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Node createContent() {
         final GridPane informationContentPane = new GridPane();
         informationContentPane.getStyleClass().add("grid");
 
@@ -88,7 +75,14 @@ public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPa
         final Region buttonBoxSpacer = new Region();
         buttonBoxSpacer.getStyleClass().add("engineSpacer");
 
-        return new VBox(informationContentPane, informationContentSpacer, buttonBox, buttonBoxSpacer);
+        final VBox container = new VBox(informationContentPane, informationContentSpacer, buttonBox, buttonBoxSpacer);
+
+        getChildren().add(container);
+
+        // ensure that the content of the details panel changes when the to be shown engine changes
+        getControl().engineDTOProperty().addListener((Observable invalidation) -> updateEngine());
+        // initialize the content of the details panel correctly
+        updateEngine();
     }
 
     /**
@@ -191,13 +185,12 @@ public class EngineDetailsPanelSkin extends DetailsPanelBaseSkin<EngineDetailsPa
     }
 
     /**
-     * Updates the {@link Engine} and {@link EngineDTO} of this {@link EngineDetailsPanelSkin} instance
+     * Updates the {@link Engine} and {@link EngineDTO} of this {@link EngineInformationPanelSkin} instance
      */
     private void updateEngine() {
         final EngineDTO engine = getControl().getEngineDTO();
 
         if (engine != null) {
-            title.setValue(engine.getCategory() + " " + engine.getSubCategory());
             engineVersionName.setValue(engine.getVersion());
 
             engineUserData.clear();

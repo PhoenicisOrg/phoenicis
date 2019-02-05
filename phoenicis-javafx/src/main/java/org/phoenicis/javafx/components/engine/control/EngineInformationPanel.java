@@ -4,15 +4,15 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineDTO;
-import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
-import org.phoenicis.javafx.components.engine.skin.EngineDetailsPanelSkin;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.engine.skin.EngineInformationPanelSkin;
 
 import java.util.function.Consumer;
 
 /**
  * A details panel for the engine tab used to show the details for a selected engine
  */
-public class EngineDetailsPanel extends DetailsPanelBase<EngineDetailsPanel, EngineDetailsPanelSkin> {
+public class EngineInformationPanel extends ControlBase<EngineInformationPanel, EngineInformationPanelSkin> {
     /**
      * The {@link Engine} object providing some utility functions to check
      * whether a specific engine version has been installed
@@ -39,14 +39,13 @@ public class EngineDetailsPanel extends DetailsPanelBase<EngineDetailsPanel, Eng
      *
      * @param engine The {@link Engine} object
      * @param engineDTO The {@link EngineDTO} object
-     * @param onClose The callback for close button clicks
      * @param onEngineInstall The callback for install button clicks
      * @param onEngineDelete The callback for delete/uninstall button clicks
      */
-    protected EngineDetailsPanel(ObjectProperty<Engine> engine, ObjectProperty<EngineDTO> engineDTO,
-            ObjectProperty<Runnable> onClose, ObjectProperty<Consumer<EngineDTO>> onEngineInstall,
+    private EngineInformationPanel(ObjectProperty<Engine> engine, ObjectProperty<EngineDTO> engineDTO,
+            ObjectProperty<Consumer<EngineDTO>> onEngineInstall,
             ObjectProperty<Consumer<EngineDTO>> onEngineDelete) {
-        super(onClose);
+        super();
 
         this.engine = engine;
         this.engineDTO = engineDTO;
@@ -57,17 +56,17 @@ public class EngineDetailsPanel extends DetailsPanelBase<EngineDetailsPanel, Eng
     /**
      * Constructor
      */
-    public EngineDetailsPanel() {
+    public EngineInformationPanel() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+                new SimpleObjectProperty<>());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public EngineDetailsPanelSkin createSkin() {
-        return new EngineDetailsPanelSkin(this);
+    public EngineInformationPanelSkin createSkin() {
+        return new EngineInformationPanelSkin(this);
     }
 
     public Engine getEngine() {
