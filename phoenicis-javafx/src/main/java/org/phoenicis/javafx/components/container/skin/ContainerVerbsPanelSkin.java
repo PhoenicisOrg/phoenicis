@@ -127,32 +127,15 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
             final int row = verbs.getRowCount();
 
             final CheckBox verbCheck = new CheckBox();
+            verbCheck.disableProperty().bind(getControl().lockVerbsProperty());
 
             final Label verbName = new Label(verb.getScriptName());
+            // select the associated checkbox if the label has been clicked
+            verbName.setOnMouseClicked(event -> verbCheck.fire());
 
             GridPane.setHgrow(verbName, Priority.ALWAYS);
 
-            final Button verbInstall = new Button(tr("Install"));
-            verbInstall.disableProperty().bind(getControl().lockVerbsProperty());
-
-            verbInstall.setOnAction(event -> {
-                getControl().setLockVerbs(true);
-
-                final ContainerDTO container = getControl().getContainer();
-
-                // TODO: find a better way to get the engine ID
-                getControl().getVerbsManager().installVerb(container.getEngine().toLowerCase(), container.getName(),
-                        verb.getId(), () -> getControl().setLockVerbs(false), e -> Platform.runLater(() -> {
-                            final ErrorDialog errorDialog = ErrorDialog.builder()
-                                    .withMessage(tr("Error installing Verb {0}", verb.getScriptName()))
-                                    .withException(e)
-                                    .build();
-
-                            errorDialog.showAndWait();
-                        }));
-            });
-
-            verbs.addRow(row, verbCheck, verbName, verbInstall);
+            verbs.addRow(row, verbCheck, verbName);
         }
     }
 }

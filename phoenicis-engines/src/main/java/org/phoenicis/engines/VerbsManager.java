@@ -82,20 +82,13 @@ public class VerbsManager {
         if (verbIds.isEmpty()) {
             doneCallback.run();
         } else {
-            final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
             final String verbId = verbIds.get(0);
 
-            interactiveScriptSession.eval(
-                    "include([\"engines\", \"" + engineId + "\", \"verbs\", \"" + verbId + "\"]);",
-                    ignored -> interactiveScriptSession.eval("new Verb()", output -> {
-                        final Verb verb = (Verb) output;
-                        verb.install(container);
+            final List<String> remainingVerbIds = verbIds.subList(1, verbIds.size());
 
-                        // recursively install the other verbs in the list
-                        installVerbs(engineId, container, verbIds.subList(1, verbIds.size()),
-                                doneCallback, errorCallback);
-                    }, errorCallback), errorCallback);
+            installVerb(engineId, container, verbId, () ->
+            // recursively install the remaining verbs in the list
+            installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback), errorCallback);
         }
     }
 
