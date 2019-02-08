@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-02 20:52+0000\n"
+"POT-Creation-Date: 2019-02-08 16:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -246,7 +246,7 @@ msgstr ""
 msgid "Reason: {0}"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/apps/ApplicationsView.java:91
 msgid "Apps"
 msgstr ""
 
@@ -309,7 +309,7 @@ msgstr ""
 msgid "Error while uninstalling {0}"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:68
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:74
 msgid "Installations"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgid "Console"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesSidebar.java:98
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:76
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:84
 msgid "Engines"
 msgstr ""
 
@@ -399,24 +399,24 @@ msgstr ""
 msgid "Loading engines failed."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:118
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:195
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:112
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
 msgid "Install"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:128
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:122
 msgid "An error occurred while installing the engine"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:138
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:132
 msgid "Delete"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:148
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:142
 msgid "An error occurred while deleting the engine"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineDetailsPanelSkin.java:171
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:165
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 msgid "Version:"
 msgstr ""
@@ -516,20 +516,20 @@ msgstr ""
 msgid "Filters"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:141
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:127
 msgid "Installers"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:191
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:183
 #, java-format
 msgid "Source: {0}"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:201
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:193
 msgid "Error while trying to download the installer"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationDetailsPanelSkin.java:249
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:241
 msgid "The script ended unexpectedly"
 msgstr ""
 
