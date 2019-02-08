@@ -21,16 +21,20 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
-import org.phoenicis.javafx.components.installation.control.InstallationDetailsPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.utils.ObjectBindings;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
@@ -52,7 +56,9 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
     private final ObservableList<InstallationCategoryDTO> categories;
 
-    private final InstallationDetailsPanel installationDetailsPanel;
+    private final DetailsPanel installationDetailsPanel;
+
+    private final ObjectProperty<InstallationDTO> installation;
 
     private CombinedListWidget<InstallationDTO> activeInstallations;
 
@@ -70,6 +76,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.filter = new InstallationsFilter();
         this.categories = FXCollections.observableArrayList();
+        this.installation = new SimpleObjectProperty<>();
 
         this.getStyleClass().add("mainWindowScene");
 
@@ -134,8 +141,11 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
         });
     }
 
-    private InstallationDetailsPanel createInstallationDetailsPanel() {
-        final InstallationDetailsPanel detailsPanel = new InstallationDetailsPanel();
+    private DetailsPanel createInstallationDetailsPanel() {
+        final DetailsPanel detailsPanel = new DetailsPanel();
+
+        detailsPanel.titleProperty().bind(StringBindings.map(installation, InstallationDTO::getName));
+        detailsPanel.contentProperty().bind(ObjectBindings.map(installation, InstallationDTO::getNode));
 
         detailsPanel.setOnClose(this::closeDetailsView);
 
@@ -150,7 +160,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
      * @param installationDTO
      */
     private void showInstallationDetails(InstallationDTO installationDTO) {
-        this.installationDetailsPanel.setInstallation(installationDTO);
+        this.installation.setValue(installationDTO);
 
         showDetailsView(this.installationDetailsPanel);
     }

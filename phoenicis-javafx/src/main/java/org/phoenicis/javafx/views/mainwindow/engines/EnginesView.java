@@ -20,6 +20,8 @@ package org.phoenicis.javafx.views.mainwindow.engines;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -31,9 +33,11 @@ import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.engine.control.EngineDetailsPanel;
+import org.phoenicis.javafx.components.common.control.DetailsPanel;
+import org.phoenicis.javafx.components.engine.control.EngineInformationPanel;
 import org.phoenicis.javafx.components.engine.control.EngineSubCategoryPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
@@ -55,7 +59,11 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
 
     private final ObservableList<Tab> engineSubCategoryTabs;
 
-    private final EngineDetailsPanel engineDetailsPanel;
+    private final DetailsPanel engineDetailsPanel;
+
+    private final ObjectProperty<EngineDTO> engineDTO;
+
+    private final ObjectProperty<Engine> engine;
 
     private TabPane availableEngines;
 
@@ -81,6 +89,9 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         this.filter = new EnginesFilter(enginesPath);
         this.engines = new HashMap<>();
         this.engineCategories = FXCollections.observableArrayList();
+
+        this.engineDTO = new SimpleObjectProperty<>();
+        this.engine = new SimpleObjectProperty<>();
 
         this.filter.selectedEngineCategoryProperty()
                 .addListener(invalidation -> Optional.ofNullable(onSelectEngineCategory)
@@ -214,12 +225,22 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
         });
     }
 
-    private EngineDetailsPanel createEngineDetailsPanel() {
-        final EngineDetailsPanel detailsPanel = new EngineDetailsPanel();
+    private DetailsPanel createEngineDetailsPanel() {
+        final EngineInformationPanel engineInformationPanel = new EngineInformationPanel();
+
+        engineInformationPanel.engineDTOProperty().bind(engineDTO);
+        engineInformationPanel.engineProperty().bind(engine);
+
+        engineInformationPanel.setOnEngineInstall(this::installEngine);
+        engineInformationPanel.setOnEngineDelete(this::deleteEngine);
+
+        final DetailsPanel detailsPanel = new DetailsPanel();
+
+        detailsPanel.titleProperty().bind(StringBindings
+                .map(engineDTO, engine -> engine.getCategory() + " " + engine.getSubCategory()));
+        detailsPanel.setContent(engineInformationPanel);
 
         detailsPanel.setOnClose(this::closeDetailsView);
-        detailsPanel.setOnEngineInstall(this::installEngine);
-        detailsPanel.setOnEngineDelete(this::deleteEngine);
 
         detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
@@ -232,8 +253,8 @@ public class EnginesView extends MainWindowView<EnginesSidebar> {
      * @param engineDTO
      */
     private void showEngineDetails(EngineDTO engineDTO, Engine engine) {
-        engineDetailsPanel.setEngine(engine);
-        engineDetailsPanel.setEngineDTO(engineDTO);
+        this.engineDTO.setValue(engineDTO);
+        this.engine.setValue(engine);
 
         showDetailsView(engineDetailsPanel);
     }

@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -17,8 +16,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
-import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
+import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -29,10 +28,10 @@ import java.net.URI;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * The skin for the {@link ApplicationDetailsPanel} component
+ * The skin for the {@link ApplicationInformationPanel} component
  */
-public class ApplicationDetailsPanelSkin
-        extends DetailsPanelBaseSkin<ApplicationDetailsPanel, ApplicationDetailsPanelSkin> {
+public class ApplicationInformationPanelSkin
+        extends SkinBase<ApplicationInformationPanel, ApplicationInformationPanelSkin> {
     /**
      * The preferred height for the application miniature images
      */
@@ -63,7 +62,7 @@ public class ApplicationDetailsPanelSkin
      *
      * @param control The control belonging to the skin
      */
-    public ApplicationDetailsPanelSkin(ApplicationDetailsPanel control) {
+    public ApplicationInformationPanelSkin(ApplicationInformationPanel control) {
         super(control);
 
         this.miniatureHeight = new SimpleDoubleProperty();
@@ -118,19 +117,6 @@ public class ApplicationDetailsPanelSkin
      */
     @Override
     public void initialise() {
-        super.initialise();
-
-        // ensure that the content of the details panel changes when the to be shown application changes
-        getControl().applicationProperty().addListener((Observable invalidation) -> updateApplication());
-        // initialise the content of the details panel correct
-        updateApplication();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Node createContent() {
         final WebView appDescription = new WebView();
         appDescription.getEngine().userStyleSheetLocationProperty().bind(getControl().webEngineStylesheetProperty());
         VBox.setVgrow(appDescription, Priority.ALWAYS);
@@ -157,7 +143,14 @@ public class ApplicationDetailsPanelSkin
 
         miniatureHeight.bind(miniaturesPaneWrapper.heightProperty().multiply(0.8));
 
-        return new VBox(appDescription, installers, scriptGrid, miniaturesPaneWrapper);
+        final VBox container = new VBox(appDescription, installers, scriptGrid, miniaturesPaneWrapper);
+
+        getChildren().add(container);
+
+        // ensure that the content of the details panel changes when the to be shown application changes
+        getControl().applicationProperty().addListener((Observable invalidation) -> updateApplication());
+        // initialise the content of the details panel correct
+        updateApplication();
     }
 
     /**
@@ -167,7 +160,6 @@ public class ApplicationDetailsPanelSkin
         final ApplicationDTO application = getControl().getApplication();
 
         if (application != null) {
-            title.setValue(application.getName());
             scripts.setAll(application.getScripts());
             miniatureUris.setAll(application.getMiniatures());
         }

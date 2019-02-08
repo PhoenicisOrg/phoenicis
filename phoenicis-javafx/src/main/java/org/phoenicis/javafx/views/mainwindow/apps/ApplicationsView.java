@@ -31,13 +31,15 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.application.control.ApplicationDetailsPanel;
+import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
+import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -110,20 +112,26 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
         content.rightProperty().bind(createApplicationDetailsPanel());
     }
 
-    private ObjectBinding<ApplicationDetailsPanel> createApplicationDetailsPanel() {
-        final ApplicationDetailsPanel applicationPanel = new ApplicationDetailsPanel(scriptInterpreter, filter,
+    private ObjectBinding<DetailsPanel> createApplicationDetailsPanel() {
+        final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel(scriptInterpreter, filter,
                 selectedApplication);
 
         applicationPanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
-        applicationPanel.setOnClose(this::closeDetailsView);
 
         applicationPanel.webEngineStylesheetProperty().bind(themeManager.webEngineStylesheetProperty());
 
-        applicationPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+        final DetailsPanel detailsPanel = new DetailsPanel();
+
+        detailsPanel.titleProperty().bind(StringBindings.map(selectedApplication, ApplicationDTO::getName));
+        detailsPanel.setContent(applicationPanel);
+
+        detailsPanel.setOnClose(this::closeDetailsView);
+
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
         return Bindings.when(Bindings.isNotNull(selectedApplication))
-                .then(applicationPanel)
-                .otherwise((ApplicationDetailsPanel) null);
+                .then(detailsPanel)
+                .otherwise(new SimpleObjectProperty<>());
     }
 
     private CombinedListWidget<ApplicationDTO> createApplicationListWidget() {
