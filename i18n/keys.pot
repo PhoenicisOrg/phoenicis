@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-09 10:26+0000\n"
+"POT-Creation-Date: 2019-02-09 17:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -170,10 +170,6 @@ msgstr ""
 msgid "Containers"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerEngineSettingsTab.java:35
-msgid "Engine Settings"
-msgstr ""
-
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:34
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerInformationTab.java:45
 msgid "Information"
@@ -226,12 +222,17 @@ msgstr ""
 msgid "Choose executable..."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:67
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:59
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:39
+msgid "Engine Settings"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:43
 msgid "Verbs"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:80
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:85
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:70
 msgid "Engine tools"
 msgstr ""
