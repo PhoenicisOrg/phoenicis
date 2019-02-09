@@ -141,7 +141,7 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     }
 
     public boolean isLockVerbs() {
-        return lockVerbs.get();
+        return this.lockVerbs.get();
     }
 
     public BooleanProperty lockVerbsProperty() {
