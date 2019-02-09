@@ -25,6 +25,7 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.components.container.control.ContainerEngineSettingsPanel;
 import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
 import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
@@ -39,12 +40,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
 
-    public ContainerPanel(ContainerDTO containerEntity,
-            VerbsManager verbsManager,
-            EngineToolsManager engineToolsManager,
-            Optional<List<EngineSetting>> engineSettings,
-            Optional<ApplicationDTO> verbs,
-            Optional<ApplicationDTO> engineTools,
+    public ContainerPanel(ContainerDTO containerEntity, VerbsManager verbsManager,
+            EngineToolsManager engineToolsManager, Optional<List<EngineSetting>> engineSettings,
+            Optional<ApplicationDTO> verbs, Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
         TabPane tabPane = new TabPane();
         this.setTitle(containerEntity.getName());
@@ -53,9 +51,16 @@ public class ContainerPanel extends DetailsView {
         this.informationTab = new ContainerInformationTab(containerEntity);
         tabPane.getTabs().add(this.informationTab);
         if (engineSettings.isPresent()) {
-            ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
-                    engineSettings.get());
-            tabPane.getTabs().add(settingsTab);
+            final ContainerEngineSettingsPanel containerEngineSettingsPanel = new ContainerEngineSettingsPanel();
+
+            containerEngineSettingsPanel.setContainer(containerEntity);
+            containerEngineSettingsPanel.getEngineSettings().setAll(engineSettings.get());
+
+            final Tab engineSettingsTab = new Tab(tr(tr("Engine Settings")), containerEngineSettingsPanel);
+
+            engineSettingsTab.setClosable(false);
+
+            tabPane.getTabs().add(engineSettingsTab);
         }
         if (verbs.isPresent()) {
             final ContainerVerbsPanel containerVerbsPanel = new ContainerVerbsPanel();
