@@ -22,11 +22,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
+import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
@@ -58,8 +58,16 @@ public class ContainerPanel extends DetailsView {
             tabPane.getTabs().add(settingsTab);
         }
         if (verbs.isPresent()) {
-            ContainerVerbsTab verbsTab = new ContainerVerbsTab(containerEntity, verbsManager,
-                    verbs.get());
+            final ContainerVerbsPanel containerVerbsPanel = new ContainerVerbsPanel();
+
+            containerVerbsPanel.setContainer(containerEntity);
+            containerVerbsPanel.setVerbs(verbs.get());
+            containerVerbsPanel.setVerbsManager(verbsManager);
+
+            final Tab verbsTab = new Tab(tr(tr("Verbs")), containerVerbsPanel);
+
+            verbsTab.setClosable(false);
+
             tabPane.getTabs().add(verbsTab);
         }
         if (engineTools.isPresent()) {

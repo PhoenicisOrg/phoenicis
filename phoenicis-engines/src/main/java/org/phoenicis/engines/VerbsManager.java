@@ -39,6 +39,7 @@ public class VerbsManager {
 
     /**
      * constructor
+     *
      * @param scriptInterpreter
      */
     public VerbsManager(ScriptInterpreter scriptInterpreter) {
@@ -47,6 +48,7 @@ public class VerbsManager {
 
     /**
      * installs a Verb in a given container
+     *
      * @param engineId ID of the engine which provides the Verb (e.g. "Wine")
      * @param container name of the container
      * @param verbId ID of the Verb
@@ -67,7 +69,32 @@ public class VerbsManager {
     }
 
     /**
+     * Installs a list of Verbs in a given container
+     *
+     * @param engineId ID of the engine which provides the Verbs (e.g. "Wine")
+     * @param container name of the container
+     * @param verbIds A list of verb ids
+     * @param doneCallback callback executed after the scripts ran
+     * @param errorCallback callback executed in case of an error
+     */
+    public void installVerbs(String engineId, String container, List<String> verbIds, Runnable doneCallback,
+            Consumer<Exception> errorCallback) {
+        if (verbIds.isEmpty()) {
+            doneCallback.run();
+        } else {
+            final String verbId = verbIds.get(0);
+
+            final List<String> remainingVerbIds = verbIds.subList(1, verbIds.size());
+
+            installVerb(engineId, container, verbId, () ->
+            // recursively install the remaining verbs in the list
+            installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback), errorCallback);
+        }
+    }
+
+    /**
      * fetches the available Verbs
+     *
      * @param repositoryDTO
      * @param callback
      */
