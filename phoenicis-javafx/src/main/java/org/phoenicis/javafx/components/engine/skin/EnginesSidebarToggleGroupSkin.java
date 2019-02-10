@@ -4,7 +4,6 @@ import javafx.scene.control.ToggleButton;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.javafx.components.engine.control.EnginesSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.engines.EnginesSidebar;
 
 import java.util.Optional;
 
