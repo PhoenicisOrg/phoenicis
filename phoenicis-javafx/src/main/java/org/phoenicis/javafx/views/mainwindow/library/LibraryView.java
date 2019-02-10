@@ -46,7 +46,7 @@ import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPan
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.ShortcutRunner;

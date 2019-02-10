@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.common;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 
 public class PhoenicisScene extends Scene {
     public PhoenicisScene(Parent parent, ThemeManager themeManager, JavaFxSettingsManager javaFxSettingsManager) {

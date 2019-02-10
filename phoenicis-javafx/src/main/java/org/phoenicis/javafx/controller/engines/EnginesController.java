@@ -27,7 +27,7 @@ import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;

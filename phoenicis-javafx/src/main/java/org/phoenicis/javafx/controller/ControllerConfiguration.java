@@ -29,7 +29,7 @@ import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;

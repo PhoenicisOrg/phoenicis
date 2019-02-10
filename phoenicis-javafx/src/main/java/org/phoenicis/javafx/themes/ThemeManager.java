@@ -1,12 +1,10 @@
-package org.phoenicis.javafx.views.common;
+package org.phoenicis.javafx.themes;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.views.common.themes.Theme;
-import org.phoenicis.javafx.views.common.themes.Themes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

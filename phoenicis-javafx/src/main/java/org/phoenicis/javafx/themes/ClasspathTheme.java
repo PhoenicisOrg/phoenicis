@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.themes;
+package org.phoenicis.javafx.themes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

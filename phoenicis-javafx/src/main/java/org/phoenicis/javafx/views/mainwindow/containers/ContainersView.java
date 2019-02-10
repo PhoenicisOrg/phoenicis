@@ -32,7 +32,7 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.Comparator;

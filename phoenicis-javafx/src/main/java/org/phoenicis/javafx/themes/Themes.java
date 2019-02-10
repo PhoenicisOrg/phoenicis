@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.themes;
+package org.phoenicis.javafx.themes;
 
 import java.util.Arrays;
 import java.util.Optional;
