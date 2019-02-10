@@ -32,6 +32,8 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.components.installation.control.InstallationSidebar;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.utils.ObjectBindings;
 import org.phoenicis.javafx.utils.StringBindings;
@@ -50,13 +52,15 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * <p>
  * This includes applications as well as engines.
  */
-public class InstallationsView extends MainWindowView<InstallationsSidebar> {
+public class InstallationsView extends MainWindowView<InstallationSidebar> {
     private final InstallationsFilter filter;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     private final ObservableList<InstallationCategoryDTO> categories;
 
     private final DetailsPanel installationDetailsPanel;
+
+    private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     private final ObjectProperty<InstallationDTO> installation;
 
@@ -75,6 +79,7 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.filter = new InstallationsFilter();
+        this.selectedListWidget = new SimpleObjectProperty<>();
         this.categories = FXCollections.observableArrayList();
         this.installation = new SimpleObjectProperty<>();
 
@@ -86,7 +91,9 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
 
         this.installationDetailsPanel = createInstallationDetailsPanel();
 
-        setSidebar(createInstallationsSidebar());
+        final InstallationSidebar installationSidebar = createInstallationsSidebar();
+
+        setSidebar(installationSidebar);
         setCenter(activeInstallations);
     }
 
@@ -116,15 +123,32 @@ public class InstallationsView extends MainWindowView<InstallationsSidebar> {
             }
         });
 
+        combinedListWidget.selectedListWidgetProperty().bind(this.selectedListWidget);
+
         return combinedListWidget;
     }
 
-    private InstallationsSidebar createInstallationsSidebar() {
+    private InstallationSidebar createInstallationsSidebar() {
         final SortedList<InstallationCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(InstallationCategoryDTO::getName));
 
-        return new InstallationsSidebar(this.filter, this.javaFxSettingsManager, sortedCategories,
-                this.activeInstallations);
+        final InstallationSidebar sidebar = new InstallationSidebar(this.filter, sortedCategories,
+                this.selectedListWidget);
+
+        sidebar.setJavaFxSettingsManager(this.javaFxSettingsManager);
+
+        // set the default selection
+        sidebar.setSelectedListWidget(javaFxSettingsManager.getInstallationsListType());
+
+        // save changes to the list widget selection to the hard drive
+        sidebar.selectedListWidgetProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setInstallationsListType(newValue);
+                javaFxSettingsManager.save();
+            }
+        });
+
+        return sidebar;
     }
 
     /**
