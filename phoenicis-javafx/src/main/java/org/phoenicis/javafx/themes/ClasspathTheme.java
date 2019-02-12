@@ -35,8 +35,8 @@ public class ClasspathTheme extends Theme {
      */
     @Override
     public URI getResourceUrl(String resource) {
-        final String resourcePath = this.classpathToTheme.endsWith("/") ? classpathToTheme + resource
-                : classpathToTheme + "/" + resource;
+        final String resourcePath = this.classpathToTheme.endsWith("/") ? this.classpathToTheme + resource
+                : this.classpathToTheme + "/" + resource;
 
         try {
             return getClass().getResource(resourcePath).toURI();

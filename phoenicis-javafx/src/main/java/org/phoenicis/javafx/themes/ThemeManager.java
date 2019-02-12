@@ -60,13 +60,15 @@ public class ThemeManager {
         this.defaultCategoryIconsStylesheets = FXCollections.observableArrayList();
         this.defaultEngineIconsStylesheets = FXCollections.observableArrayList();
 
-        final ObservableList<String> fallbackStylesheets = FXCollections
+        // the base stylesheets
+        final ObservableList<String> baseStylesheets = FXCollections
                 .observableList(getStylesheets(Themes.STANDARD));
+        // the currently selected stylesheets (empty if the the selected theme is the standard theme)
         final ObservableList<String> currentStylesheets = CollectionBindings
                 .mapToList(currentTheme, this::getNonStandardStylesheets);
 
         this.stylesheets = ConcatenatedList.create(defaultCategoryIconsStylesheets, defaultEngineIconsStylesheets,
-                fallbackStylesheets, currentStylesheets);
+                baseStylesheets, currentStylesheets);
     }
 
     /**
@@ -105,7 +107,7 @@ public class ThemeManager {
     }
 
     public StringBinding webEngineStylesheetProperty() {
-        return webEngineStylesheet;
+        return this.webEngineStylesheet;
     }
 
     public ObservableList<String> getStylesheets() {
