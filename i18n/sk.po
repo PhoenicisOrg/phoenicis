@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-10 13:43+0000\n"
-"PO-Revision-Date: 2019-02-10 14:12\n"
+"PO-Revision-Date: 2019-02-12 14:14\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -40,7 +40,7 @@ msgstr "Chyba"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:12
 msgid "Standard theme"
-msgstr ""
+msgstr "Štandardné téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/common/themes/Themes.java:14
 msgid "Dark theme"
@@ -150,7 +150,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
 msgid "Choose Directory..."
-msgstr ""
+msgstr "Vybrať adresár..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
 msgid "Choose the location of the local repository"
@@ -219,7 +219,7 @@ msgstr "Spustiť exe"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
 msgid "Choose executable..."
-msgstr ""
+msgstr "Zvolí spustiteľný súbor..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:59
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:39
@@ -229,7 +229,7 @@ msgstr "Nastavenia nástroja"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:43
 msgid "Verbs"
-msgstr ""
+msgstr "Slovesá"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:85
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:70
@@ -265,7 +265,7 @@ msgstr "Spustiť skript"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:143
 msgid "Open Script..."
-msgstr ""
+msgstr "Otvoriť skript..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibrarySidebar.java:153
 #, java-format
@@ -286,7 +286,7 @@ msgstr "Moje aplikácie"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:181
 msgid "Edit"
-msgstr ""
+msgstr "Upraviť"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:327
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:336
@@ -480,7 +480,7 @@ msgstr "Miniatúra:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:253
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingDetailsPanelSkin.java:163
 msgid "Browse..."
-msgstr ""
+msgstr "Prehľadávať..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:219
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingDetailsPanelSkin.java:169
@@ -513,7 +513,7 @@ msgstr "Skúšobné"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:58
 msgid "Patch required"
-msgstr ""
+msgstr "Vyžaduje patch"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:61
 msgid "Commercial"
@@ -525,7 +525,7 @@ msgstr "Všetky operačné systémy"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
 msgid "Filters"
-msgstr ""
+msgstr "Filtre"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:127
 msgid "Installers"
@@ -570,11 +570,11 @@ msgstr "Nastavenie repozitára"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
 msgid "Repository name"
-msgstr ""
+msgstr "Názov repozitára"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
 msgid "Move the repository up or down to change its priority"
@@ -590,7 +590,7 @@ msgstr "Odstrániť"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:239
 msgid "Restore defaults"
-msgstr ""
+msgstr "Obnoviť predvolené"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
@@ -618,7 +618,7 @@ msgstr ""
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
-msgstr ""
+msgstr "Overovanie súboru..."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
