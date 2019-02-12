@@ -118,7 +118,7 @@ public class ShortcutEditingDetailsPanelSkin
     }
 
     /**
-     * Updates the shortcut of this {@link LibraryDetailsPanelSkin} instance
+     * Updates the shortcut of this {@link ShortcutDetailsPanelSkin} instance
      */
     private void updateShortcut() {
         final ShortcutDTO shortcut = getControl().getShortcut();
