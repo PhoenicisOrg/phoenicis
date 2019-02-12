@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-10 13:43+0000\n"
-"PO-Revision-Date: 2019-02-11 14:12\n"
+"PO-Revision-Date: 2019-02-12 14:14\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -441,7 +441,7 @@ msgstr "Alle"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:35
 msgid "Create a new shortcut"
-msgstr ""
+msgstr "Een nieuwe snelkoppeling aanmaken"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:54
 msgid "Please specify a name!"
@@ -461,7 +461,7 @@ msgstr "Geef u een geldig uitvoerbaar bestand op, alstublief!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:75
 msgid "Create"
-msgstr ""
+msgstr "Aanmaken"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationDetailsPanelSkin.java:160
 msgid "Category:"
@@ -534,11 +534,11 @@ msgstr "Installatieprogrammas"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:183
 #, java-format
 msgid "Source: {0}"
-msgstr ""
+msgstr "Bron: {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:193
 msgid "Error while trying to download the installer"
-msgstr ""
+msgstr "Fout tijdens het downloaden van de installer"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:241
 msgid "The script ended unexpectedly"
@@ -550,15 +550,15 @@ msgstr "Gebruikersinterface instellingen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:43
 msgid "Theme"
-msgstr ""
+msgstr "Thema"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:52
 msgid "View the scripts’ source repository"
-msgstr ""
+msgstr "De scripts bron repository bekijken"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:59
 msgid "Scale the user interface"
-msgstr ""
+msgstr "Schaal de gebruikersinterface"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:68
 msgid "Restore defaults (requires restart)"
@@ -570,7 +570,7 @@ msgstr "Repository-instellingen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteit"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
 msgid "Repository name"
@@ -578,7 +578,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
 msgid "Move the repository up or down to change its priority"
-msgstr ""
+msgstr "Verplaats de repository omhoog of omlaag om zijn prioriteit te wijzigen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
 msgid "Add"
@@ -594,11 +594,11 @@ msgstr "Standaardinstellingen herstellen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
-msgstr ""
+msgstr "Standaard pakketbronnen herstellen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
 msgid "Are you sure you want to restore the default repositories?"
-msgstr ""
+msgstr "Weet u zeker dat u de standaard repositories wilt herstellen?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
 msgid "Fetch updates from the repositories to retrieve latest script versions"
@@ -628,7 +628,7 @@ msgstr ""
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "Program by {0}"
-msgstr ""
+msgstr "Programma door {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
@@ -637,7 +637,7 @@ msgstr "Voor meer informatie over dit programma, kunt u bezoek:"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
 msgid "Installation script by {0}"
-msgstr ""
+msgstr "Installatiescript door {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
 #, java-format
