@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;

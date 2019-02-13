@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.scripts.ui.*;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import javafx.scene.Node;

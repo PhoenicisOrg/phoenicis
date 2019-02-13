@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.mainwindow.library;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;

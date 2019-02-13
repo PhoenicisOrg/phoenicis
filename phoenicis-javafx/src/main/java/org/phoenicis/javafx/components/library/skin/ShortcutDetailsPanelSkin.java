@@ -17,7 +17,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
-import org.phoenicis.javafx.components.library.control.LibraryDetailsPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutDetailsPanel;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -31,9 +31,9 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * {@link DetailsPanelBaseSkin} implementation class used inside the {@link LibraryDetailsPanel}
+ * {@link DetailsPanelBaseSkin} implementation class used inside the {@link ShortcutDetailsPanel}
  */
-public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetailsPanel, LibraryDetailsPanelSkin> {
+public class ShortcutDetailsPanelSkin extends DetailsPanelBaseSkin<ShortcutDetailsPanel, ShortcutDetailsPanelSkin> {
     private final Logger LOGGER = LoggerFactory.getLogger(LibraryController.class);
 
     /**
@@ -51,7 +51,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
      *
      * @param control The control belonging to the skin
      */
-    public LibraryDetailsPanelSkin(LibraryDetailsPanel control) {
+    public ShortcutDetailsPanelSkin(ShortcutDetailsPanel control) {
         super(control);
 
         this.shortcutProperties = FXCollections.observableHashMap();
@@ -179,7 +179,7 @@ public class LibraryDetailsPanelSkin extends DetailsPanelBaseSkin<LibraryDetails
     }
 
     /**
-     * Updates the shortcut of this {@link LibraryDetailsPanelSkin} instance
+     * Updates the shortcut of this {@link ShortcutDetailsPanelSkin} instance
      */
     private void updateShortcut() {
         final ShortcutDTO shortcut = getControl().getShortcut();

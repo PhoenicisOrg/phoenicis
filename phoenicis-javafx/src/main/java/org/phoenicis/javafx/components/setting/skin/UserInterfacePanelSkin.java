@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.setting.control.UserInterfacePanel;
-import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.themes.Theme;
 
 import java.util.Optional;
 
