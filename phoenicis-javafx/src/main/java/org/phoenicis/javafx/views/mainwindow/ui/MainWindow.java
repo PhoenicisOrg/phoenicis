@@ -24,7 +24,7 @@ import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;

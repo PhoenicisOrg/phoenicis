@@ -47,8 +47,8 @@ import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPan
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.utils.SwitchBinding;
-import org.phoenicis.javafx.views.common.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.ShortcutRunner;
@@ -61,6 +61,7 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;

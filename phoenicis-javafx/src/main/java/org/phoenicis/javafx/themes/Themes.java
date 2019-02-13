@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.views.common.themes;
+package org.phoenicis.javafx.themes;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -6,7 +6,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * Created by marc on 23.05.17.
+ * A collection of all builtin themes
  */
 public class Themes {
     public static final Theme STANDARD = new ClasspathTheme(tr("Standard theme"), "standard",
@@ -19,10 +19,22 @@ public class Themes {
     public static final Theme MINT_X = new ClasspathTheme(tr("Mint-X theme"), "mint-x",
             "/org/phoenicis/javafx/themes/mint-x/");
 
+    /**
+     * Gets an array containing all builtin themes
+     *
+     * @return An array containing all builtin themes
+     */
     public static Theme[] all() {
         return new Theme[] { STANDARD, DARK, BREEZE_DARK, UNITY, MINT_X };
     }
 
+    /**
+     * Searches for the builtin theme with the given <code>shortName</code>.
+     * If no such builtin theme exists {@link Optional#empty()} is returned
+     *
+     * @param shortName The short name of the searched theme
+     * @return The builtin theme with the given short name or {@link Optional#empty()} if no such theme exists
+     */
     public static Optional<Theme> fromShortName(String shortName) {
         return Arrays.stream(all()).filter(theme -> theme.getShortName().equals(shortName)).findAny();
     }

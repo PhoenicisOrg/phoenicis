@@ -41,7 +41,7 @@ import org.phoenicis.javafx.components.engine.control.EngineSidebar;
 import org.phoenicis.javafx.components.engine.control.EngineSubCategoryPanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.utils.StringBindings;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 
 import java.util.*;
