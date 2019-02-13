@@ -42,7 +42,7 @@ public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
     // file name of the icon for a type or category
     private static final String ICON_NAME = "icon.png";
-    private static final String ID_REGEX = "[^a-zA-Z0-9_]";
+    private static final String ID_REGEX = "[^a-zA-Z0-9_.]";
 
     private final File repositoryDirectory;
     private final ObjectMapper objectMapper;

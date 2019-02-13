@@ -48,7 +48,7 @@ public class ClasspathRepository implements Repository {
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
     private final ObjectMapper objectMapper;
-    private static final String ID_REGEX = "[^a-zA-Z0-9_]";
+    private static final String ID_REGEX = "[^a-zA-Z0-9_.]";
 
     public ClasspathRepository(String packagePath, ResourcePatternResolver resourceResolver,
             ObjectMapper objectMapper) {
@@ -331,9 +331,9 @@ public class ClasspathRepository implements Repository {
 
             if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
                 if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
-                    scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll("[^a-zA-Z0-9_]", ""));
+                    scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll("[^a-zA-Z0-9_.]", ""));
                 } else {
-                    scriptDTOBuilder.withId(scriptFileName.replaceAll("[^a-zA-Z0-9_]", ""));
+                    scriptDTOBuilder.withId(scriptFileName.replaceAll("[^a-zA-Z0-9_.]", ""));
                 }
             }
 

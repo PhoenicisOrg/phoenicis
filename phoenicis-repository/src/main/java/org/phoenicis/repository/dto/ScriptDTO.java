@@ -57,12 +57,12 @@ public class ScriptDTO {
         this.categoryId = builder.categoryId;
         this.applicationId = builder.applicationId;
         if (builder.id != null) {
-            if (builder.id.matches("^[a-zA-Z0-9_]+$")) {
+            if (builder.id.matches("^[a-zA-Z0-9_.]+$")) {
                 this.id = builder.id;
             } else {
                 LOGGER.warn(String.format("Script ID (%s) contains invalid characters, will remove them.",
                         builder.id));
-                this.id = builder.id.replaceAll("[^a-zA-Z0-9_]", "");
+                this.id = builder.id.replaceAll("[^a-zA-Z0-9_.]", "");
             }
         } else {
             this.id = null;

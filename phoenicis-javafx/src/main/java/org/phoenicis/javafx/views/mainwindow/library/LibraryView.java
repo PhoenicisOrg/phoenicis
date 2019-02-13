@@ -35,6 +35,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
@@ -59,7 +60,6 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import org.apache.commons.lang.StringUtils;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -306,8 +306,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        final String scriptInclude = "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId
-                + "\"]);";
+        final String scriptInclude = "include(\"engines." + engineId + "\".shortcuts." + engineId + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
@@ -343,7 +342,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private void runShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.run(shortcut, Collections.emptyList(), e -> {
+        shortcutRunner.run(shortcut, Collections.emptyList(), e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -351,11 +350,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void stopShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.stop(shortcut, e -> {
+        shortcutRunner.stop(shortcut, e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -363,7 +362,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void uninstallShortcut(ShortcutDTO shortcut) {
