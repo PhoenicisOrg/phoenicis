@@ -41,6 +41,8 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.components.library.control.LibrarySidebar;
 import org.phoenicis.javafx.components.library.control.ShortcutCreationDetailsPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutDetailsPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPanel;
@@ -81,6 +83,10 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
     private final ShortcutManager shortcutManager;
 
+    private final ObjectProperty<ListWidgetType> selectedListWidget;
+
+    private final ObjectProperty<Runnable> onOpenConsole;
+
     private final ObservableList<ShortcutCategoryDTO> categories;
 
     private final ObjectProperty<LibraryDetailsPanels> selectedDetailsPanel;
@@ -106,6 +112,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.shortcutManager = shortcutManager;
 
         this.categories = FXCollections.observableArrayList();
+        this.selectedListWidget = new SimpleObjectProperty<>();
+        this.onOpenConsole = new SimpleObjectProperty<>();
         this.selectedShortcut = new SimpleObjectProperty<>();
         this.selectedDetailsPanel = new SimpleObjectProperty<>();
 
@@ -167,7 +175,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
             shortcutEditingDetailsPanel.setShortcut(shortcut);
         });
 
-        final LibrarySidebar sidebar = createLibrarySidebar(availableShortcuts);
+        final LibrarySidebar sidebar = createLibrarySidebar();
 
         this.setSidebar(sidebar);
 
@@ -198,19 +206,36 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         final ObservableList<ListWidgetElement<ShortcutDTO>> listWidgetEntries = new MappedList<>(sortedShortcuts,
                 ListWidgetElement::create);
 
-        return new CombinedListWidget<>(listWidgetEntries);
+        final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
+
+        combinedListWidget.selectedListWidgetProperty().bind(this.selectedListWidget);
+
+        return combinedListWidget;
     }
 
-    private LibrarySidebar createLibrarySidebar(CombinedListWidget<ShortcutDTO> availableShortcuts) {
+    private LibrarySidebar createLibrarySidebar() {
         final SortedList<ShortcutCategoryDTO> sortedCategories = this.categories
                 .sorted(Comparator.comparing(ShortcutCategoryDTO::getName));
 
-        final LibrarySidebar librarySidebar = new LibrarySidebar(this.applicationName, this.filter,
-                this.javaFxSettingsManager, sortedCategories, availableShortcuts);
+        final LibrarySidebar sidebar = new LibrarySidebar(this.filter, sortedCategories, selectedListWidget);
 
-        librarySidebar.setOnCreateShortcut(this::showShortcutCreate);
+        sidebar.setApplicationName(this.applicationName);
 
-        return librarySidebar;
+        sidebar.setOnCreateShortcut(this::showShortcutCreate);
+        sidebar.onOpenConsoleProperty().bind(this.onOpenConsole);
+
+        // set the default selection
+        sidebar.setSelectedListWidget(javaFxSettingsManager.getLibraryListType());
+
+        // save changes to the list widget selection to the hard drive
+        sidebar.selectedListWidgetProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                javaFxSettingsManager.setLibraryListType(newValue);
+                javaFxSettingsManager.save();
+            }
+        });
+
+        return sidebar;
     }
 
     private ShortcutCreationDetailsPanel createShortcutCreationPanel() {
@@ -389,7 +414,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     public void setOnOpenConsole(Runnable onOpenConsole) {
-        this.sidebar.setOnOpenConsole(onOpenConsole);
+        this.onOpenConsole.setValue(onOpenConsole);
     }
 
     private enum LibraryDetailsPanels {
