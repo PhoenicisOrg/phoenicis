@@ -4,7 +4,6 @@ import javafx.collections.ObservableList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.javafx.components.container.skin.ContainersSidebarToggleGroupSkin;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersSidebar;
 
 /**
  * A toggle group component used inside the {@link ContainersSidebar}
