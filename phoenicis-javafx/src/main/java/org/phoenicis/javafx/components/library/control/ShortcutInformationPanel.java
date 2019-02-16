@@ -47,7 +47,7 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
      * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
      * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
      */
-    public ShortcutInformationPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+    private ShortcutInformationPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall) {

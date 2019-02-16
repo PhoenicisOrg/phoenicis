@@ -35,7 +35,7 @@ public class ShortcutEditingPanel extends ControlBase<ShortcutEditingPanel, Shor
      * @param shortcut The currently shown {@link ShortcutDTO} object
      * @param onShortcutChanged The consumer which is called when a shortcut changed
      */
-    public ShortcutEditingPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+    private ShortcutEditingPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutChanged) {
         super();
 
