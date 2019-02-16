@@ -14,7 +14,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.library.control.ShortcutInformationPanel;
 import org.phoenicis.javafx.utils.StringBindings;
@@ -30,7 +29,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * {@link DetailsPanelBaseSkin} implementation class used inside the {@link ShortcutInformationPanel}
+ * A skin implementation class used inside the {@link ShortcutInformationPanel}
  */
 public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPanel, ShortcutInformationPanelSkin> {
     private final Logger LOGGER = LoggerFactory.getLogger(ShortcutInformationPanelSkin.class);
