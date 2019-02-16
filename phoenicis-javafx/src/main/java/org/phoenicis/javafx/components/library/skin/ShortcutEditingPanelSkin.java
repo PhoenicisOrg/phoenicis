@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.Observable;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -17,8 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
-import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPanel;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.library.control.ShortcutEditingPanel;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.slf4j.Logger;
@@ -33,11 +32,10 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A skin implementation for the {@link ShortcutEditingDetailsPanel} component
+ * A skin implementation for the {@link ShortcutEditingPanel} component
  */
-public class ShortcutEditingDetailsPanelSkin
-        extends DetailsPanelBaseSkin<ShortcutEditingDetailsPanel, ShortcutEditingDetailsPanelSkin> {
-    private final Logger LOGGER = LoggerFactory.getLogger(ShortcutEditingDetailsPanelSkin.class);
+public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, ShortcutEditingPanelSkin> {
+    private final Logger LOGGER = LoggerFactory.getLogger(ShortcutEditingPanelSkin.class);
 
     /**
      * The properties of the currently selected {@link ShortcutDTO}
@@ -47,18 +45,19 @@ public class ShortcutEditingDetailsPanelSkin
     /**
      * The description of the currently selected {@link ShortcutDTO}
      */
-    private final StringProperty description;
+    private final StringBinding description;
 
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    public ShortcutEditingDetailsPanelSkin(ShortcutEditingDetailsPanel control) {
+    public ShortcutEditingPanelSkin(ShortcutEditingPanel control) {
         super(control);
 
         this.shortcutProperties = FXCollections.observableHashMap();
-        this.description = new SimpleStringProperty();
+        this.description = StringBindings.map(getControl().shortcutProperty(),
+                shortcut -> shortcut.getInfo().getDescription());
     }
 
     /**
@@ -66,19 +65,6 @@ public class ShortcutEditingDetailsPanelSkin
      */
     @Override
     public void initialise() {
-        super.initialise();
-
-        // ensure that the content of the details panel changes when the to be shown shortcut changes
-        getControl().shortcutProperty().addListener((Observable invalidation) -> updateShortcut());
-        // initialize the content of the details panel correctly
-        updateShortcut();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected Node createContent() {
         final Label descriptionLabel = new Label();
         descriptionLabel.textProperty().bind(description);
         descriptionLabel.setWrapText(true);
@@ -92,7 +78,14 @@ public class ShortcutEditingDetailsPanelSkin
         saveButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutChanged()).ifPresent(
                 onShortcutChanged -> onShortcutChanged.accept(getControl().getShortcut())));
 
-        return new VBox(descriptionLabel, propertiesGrid, spacer, saveButton);
+        final VBox container = new VBox(descriptionLabel, propertiesGrid, spacer, saveButton);
+
+        getChildren().setAll(container);
+
+        // ensure that the content of the details panel changes when the to be shown shortcut changes
+        getControl().shortcutProperty().addListener((Observable invalidation) -> updateShortcut());
+        // initialize the content of the details panel correctly
+        updateShortcut();
     }
 
     /**
@@ -118,15 +111,12 @@ public class ShortcutEditingDetailsPanelSkin
     }
 
     /**
-     * Updates the shortcut of this {@link ShortcutDetailsPanelSkin} instance
+     * Updates the shortcut of this {@link ShortcutInformationPanelSkin} instance
      */
     private void updateShortcut() {
         final ShortcutDTO shortcut = getControl().getShortcut();
 
         if (shortcut != null) {
-            title.setValue(shortcut.getInfo().getName());
-            description.setValue(shortcut.getInfo().getDescription());
-
             try {
                 final Map<String, Object> shortcutProperties = getControl().getObjectMapper()
                         .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
