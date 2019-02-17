@@ -1,6 +1,9 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -22,7 +25,7 @@ public class ApplicationFilter {
 
     private final double fuzzySearchRatio;
 
-    private final StringProperty filterText;
+    private final StringProperty searchTerm;
 
     private final ObjectProperty<CategoryDTO> filterCategory;
 
@@ -40,12 +43,26 @@ public class ApplicationFilter {
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.fuzzySearchRatio = fuzzySearchRatio;
 
-        this.filterText = new SimpleStringProperty();
+        this.searchTerm = new SimpleStringProperty();
         this.filterCategory = new SimpleObjectProperty<>();
         this.containCommercialApplications = new SimpleBooleanProperty();
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
         this.containTestingApplications = new SimpleBooleanProperty();
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
+    }
+
+    public ObservableList<CategoryDTO> createFilteredList(ObservableList<CategoryDTO> inputList) {
+        final FilteredList<CategoryDTO> filteredCategories = inputList.filtered(this::filter);
+
+        filteredCategories.predicateProperty().bind(
+                Bindings.createObjectBinding(() -> this::filter,
+                        searchTermProperty(),
+                        containAllOSCompatibleApplicationsProperty(),
+                        containCommercialApplicationsProperty(),
+                        containRequiresPatchApplicationsProperty(),
+                        containTestingApplicationsProperty()));
+
+        return filteredCategories;
     }
 
     /**
@@ -86,7 +103,7 @@ public class ApplicationFilter {
 
         final boolean matchesAtLeastOneScript = application.getScripts().stream().anyMatch(this::filter);
 
-        final boolean matchesApplicationName = Optional.ofNullable(filterText.getValue())
+        final boolean matchesApplicationName = Optional.ofNullable(searchTerm.getValue())
                 .map(filterText -> StringUtils.isEmpty(filterText) || FuzzySearch
                         .partialRatio(application.getName().toLowerCase(), filterText) > fuzzySearchRatio)
                 .orElse(true);
@@ -143,12 +160,12 @@ public class ApplicationFilter {
         return result;
     }
 
-    public String getFilterText() {
-        return filterText.get();
+    public String getSearchTerm() {
+        return searchTerm.get();
     }
 
-    public StringProperty filterTextProperty() {
-        return filterText;
+    public StringProperty searchTermProperty() {
+        return searchTerm;
     }
 
     public CategoryDTO getFilterCategory() {

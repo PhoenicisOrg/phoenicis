@@ -1,11 +1,14 @@
 package org.phoenicis.javafx.utils;
 
 import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.function.Function;
 
 /**
@@ -37,6 +40,29 @@ public class CollectionBindings {
                 result.clear();
             }
         });
+
+        return result;
+    }
+
+    public static <I, O> ObservableList<O> mapToObservableList(ObservableValue<I> property,
+            Function<I, ? extends ObservableList<O>> converter) {
+        final ObservableList<O> result = FXCollections.observableArrayList();
+
+        final ObjectBinding<? extends ObservableList<O>> mapping = ObjectBindings.map(property, converter);
+
+        mapping.addListener((observable, oldList, newList) -> {
+            if (oldList != null) {
+                Bindings.unbindContent(result, oldList);
+            }
+
+            if (newList != null) {
+                Bindings.bindContent(result, newList);
+            } else {
+                result.clear();
+            }
+        });
+
+        Optional.ofNullable(mapping.getValue()).ifPresent(newList -> Bindings.bindContent(result, newList));
 
         return result;
     }

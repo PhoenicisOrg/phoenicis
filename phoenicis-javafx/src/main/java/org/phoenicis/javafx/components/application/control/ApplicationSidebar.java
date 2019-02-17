@@ -56,7 +56,7 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
      */
     private ApplicationSidebar(ObjectProperty<ApplicationFilter> filter, ObservableList<CategoryDTO> items,
             ObjectProperty<ListWidgetType> selectedListWidget) {
-        super(items, StringBindings.mutableMap(filter, ApplicationFilter::filterTextProperty), selectedListWidget);
+        super(items, StringBindings.mutableMap(filter, ApplicationFilter::searchTermProperty), selectedListWidget);
 
         this.filter = filter;
 

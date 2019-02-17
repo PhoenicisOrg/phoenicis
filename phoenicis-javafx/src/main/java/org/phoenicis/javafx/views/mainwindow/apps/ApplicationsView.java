@@ -149,7 +149,7 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
 
         filteredApplications.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> this.filter::filter,
-                        this.filter.filterTextProperty(), this.filter.filterCategoryProperty(),
+                        this.filter.searchTermProperty(), this.filter.filterCategoryProperty(),
                         this.filter.containAllOSCompatibleApplicationsProperty(),
                         this.filter.containCommercialApplicationsProperty(),
                         this.filter.containRequiresPatchApplicationsProperty(),
