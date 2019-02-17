@@ -37,6 +37,7 @@ finish-args:
   - --allow=multiarch
   - --share=ipc
   - --socket=x11
+  - --socket=pulseaudio
   - --share=network
   - --device=dri
 modules:
