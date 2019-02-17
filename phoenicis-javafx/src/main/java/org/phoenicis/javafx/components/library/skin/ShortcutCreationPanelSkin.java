@@ -2,13 +2,12 @@ package org.phoenicis.javafx.components.library.skin;
 
 import javafx.css.PseudoClass;
 import javafx.geometry.VPos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
-import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
-import org.phoenicis.javafx.components.library.control.ShortcutCreationDetailsPanel;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
+import org.phoenicis.javafx.components.library.control.ShortcutCreationPanel;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
 
@@ -18,10 +17,10 @@ import java.net.URI;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * The skin for the {@link ShortcutCreationDetailsPanel} component
+ * The skin for the {@link ShortcutCreationPanel} component
  */
-public class ShortcutCreationDetailsPanelSkin
-        extends DetailsPanelBaseSkin<ShortcutCreationDetailsPanel, ShortcutCreationDetailsPanelSkin> {
+public class ShortcutCreationPanelSkin
+        extends SkinBase<ShortcutCreationPanel, ShortcutCreationPanelSkin> {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
 
     /**
@@ -29,17 +28,15 @@ public class ShortcutCreationDetailsPanelSkin
      *
      * @param control The control belonging to the skin
      */
-    public ShortcutCreationDetailsPanelSkin(ShortcutCreationDetailsPanel control) {
+    public ShortcutCreationPanelSkin(ShortcutCreationPanel control) {
         super(control);
-
-        this.title.setValue(tr("Create a new shortcut"));
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected Node createContent() {
+    public void initialise() {
         final GridPane gridPane = new GridPane();
         gridPane.getStyleClass().add("shortcut-information-grid");
 
@@ -124,7 +121,7 @@ public class ShortcutCreationDetailsPanelSkin
         final VBox container = new VBox(gridPane, createButton);
         container.getStyleClass().addAll("library-details-panel-content", "create-shortcut-panel-content");
 
-        return container;
+        getChildren().setAll(container);
     }
 
     /**
