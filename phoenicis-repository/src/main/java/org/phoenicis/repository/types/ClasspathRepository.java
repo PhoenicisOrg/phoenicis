@@ -48,7 +48,8 @@ public class ClasspathRepository implements Repository {
     private final String packagePath;
     private final ResourcePatternResolver resourceResolver;
     private final ObjectMapper objectMapper;
-    private static final String ID_REGEX = "[^a-zA-Z0-9_.]";
+
+    private static final String INVALID_ID_CHARS_REGEX = "[^a-zA-Z0-9_.]";
 
     public ClasspathRepository(String packagePath, ResourcePatternResolver resourceResolver,
             ObjectMapper objectMapper) {
@@ -95,9 +96,9 @@ public class ClasspathRepository implements Repository {
 
                 if (StringUtils.isBlank(typeDTO.getId())) {
                     if (!StringUtils.isBlank(typeDTO.getName())) {
-                        typeDTOBuilder.withId(typeDTO.getName().replaceAll(ID_REGEX, ""));
+                        typeDTOBuilder.withId(typeDTO.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     } else {
-                        typeDTOBuilder.withId(typeFileName.replaceAll(ID_REGEX, ""));
+                        typeDTOBuilder.withId(typeFileName.replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     }
                 }
 
@@ -154,9 +155,9 @@ public class ClasspathRepository implements Repository {
 
                 if (StringUtils.isBlank(categoryDTO.getId())) {
                     if (!StringUtils.isBlank(categoryDTO.getName())) {
-                        categoryDTOBuilder.withId(categoryDTO.getName().replaceAll(ID_REGEX, ""));
+                        categoryDTOBuilder.withId(categoryDTO.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     } else {
-                        categoryDTOBuilder.withId(categoryFileName.replaceAll(ID_REGEX, ""));
+                        categoryDTOBuilder.withId(categoryFileName.replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     }
                 }
 
@@ -222,9 +223,10 @@ public class ClasspathRepository implements Repository {
 
             if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
                 if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
-                    applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll(ID_REGEX, ""));
+                    applicationDTOBuilder
+                            .withId(applicationDTOBuilder.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                 } else {
-                    applicationDTOBuilder.withId(applicationFileName.replaceAll(ID_REGEX, ""));
+                    applicationDTOBuilder.withId(applicationFileName.replaceAll(INVALID_ID_CHARS_REGEX, ""));
                 }
             }
 
@@ -331,9 +333,9 @@ public class ClasspathRepository implements Repository {
 
             if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
                 if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
-                    scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll("[^a-zA-Z0-9_.]", ""));
+                    scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                 } else {
-                    scriptDTOBuilder.withId(scriptFileName.replaceAll("[^a-zA-Z0-9_.]", ""));
+                    scriptDTOBuilder.withId(scriptFileName.replaceAll(INVALID_ID_CHARS_REGEX, ""));
                 }
             }
 
