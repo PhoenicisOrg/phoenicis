@@ -112,15 +112,15 @@ public final class StringBindings {
 
         mapping.addListener((observable, oldValue, newValue) -> {
             if (oldValue != null) {
-                oldValue.unbindBidirectional(result);
+                result.unbindBidirectional(oldValue);
             }
 
             if (newValue != null) {
-                newValue.bindBidirectional(result);
+                result.bindBidirectional(newValue);
             }
         });
 
-        Optional.ofNullable(mapping.getValue()).ifPresent(newValue -> newValue.bindBidirectional(result));
+        Optional.ofNullable(mapping.getValue()).ifPresent(result::bindBidirectional);
 
         return result;
     }

@@ -44,13 +44,10 @@ public class CollectionBindings {
         return result;
     }
 
-    public static <I, O> ObservableList<O> mapToObservableList(ObservableValue<I> property,
-            Function<I, ? extends ObservableList<O>> converter) {
+    public static <O> ObservableList<O> flatMap(ObservableValue<? extends ObservableList<O>> property) {
         final ObservableList<O> result = FXCollections.observableArrayList();
 
-        final ObjectBinding<? extends ObservableList<O>> mapping = ObjectBindings.map(property, converter);
-
-        mapping.addListener((observable, oldList, newList) -> {
+        property.addListener((observable, oldList, newList) -> {
             if (oldList != null) {
                 Bindings.unbindContent(result, oldList);
             }
@@ -62,7 +59,7 @@ public class CollectionBindings {
             }
         });
 
-        Optional.ofNullable(mapping.getValue()).ifPresent(newList -> Bindings.bindContent(result, newList));
+        Optional.ofNullable(property.getValue()).ifPresent(newList -> Bindings.bindContent(result, newList));
 
         return result;
     }
