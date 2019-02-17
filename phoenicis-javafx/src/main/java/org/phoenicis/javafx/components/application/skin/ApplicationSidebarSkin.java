@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.components.application.skin;
 
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.transformation.FilteredList;
@@ -41,6 +42,7 @@ public class ApplicationSidebarSkin
 
         filteredCategories.predicateProperty().bind(
                 Bindings.createObjectBinding(() -> getControl().getFilter()::filter,
+                        getControl().filterProperty(),
                         getControl().searchTermProperty(),
                         getControl().containAllOSCompatibleApplicationsProperty(),
                         getControl().containCommercialApplicationsProperty(),

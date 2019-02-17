@@ -2,10 +2,14 @@ package org.phoenicis.javafx.components.application.control;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.application.skin.ApplicationSidebarSkin;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.utils.BooleanBindings;
+import org.phoenicis.javafx.utils.ObjectBindings;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.CategoryDTO;
 
@@ -41,7 +45,7 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     /**
      * An application filter utility class
      */
-    private final ApplicationFilter filter;
+    private final ObjectProperty<ApplicationFilter> filter;
 
     /**
      * Constructor
@@ -50,17 +54,25 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
-    public ApplicationSidebar(ApplicationFilter filter, ObservableList<CategoryDTO> items,
+    private ApplicationSidebar(ObjectProperty<ApplicationFilter> filter, ObservableList<CategoryDTO> items,
             ObjectProperty<ListWidgetType> selectedListWidget) {
-        super(items, filter.filterTextProperty(), selectedListWidget);
+        super(items, StringBindings.mutableMap(filter, ApplicationFilter::filterTextProperty), selectedListWidget);
 
         this.filter = filter;
 
-        this.filterCategory = filter.filterCategoryProperty();
-        this.containCommercialApplications = filter.containCommercialApplicationsProperty();
-        this.containRequiresPatchApplications = filter.containRequiresPatchApplicationsProperty();
-        this.containTestingApplications = filter.containTestingApplicationsProperty();
-        this.containAllOSCompatibleApplications = filter.containAllOSCompatibleApplicationsProperty();
+        this.filterCategory = ObjectBindings.mutableMap(filter, ApplicationFilter::filterCategoryProperty);
+        this.containCommercialApplications = BooleanBindings.mutableMap(filter,
+                ApplicationFilter::containCommercialApplicationsProperty);
+        this.containRequiresPatchApplications = BooleanBindings.mutableMap(filter,
+                ApplicationFilter::containRequiresPatchApplicationsProperty);
+        this.containTestingApplications = BooleanBindings.mutableMap(filter,
+                ApplicationFilter::containTestingApplicationsProperty);
+        this.containAllOSCompatibleApplications = BooleanBindings.mutableMap(filter,
+                ApplicationFilter::containAllOSCompatibleApplicationsProperty);
+    }
+
+    public ApplicationSidebar(ObservableList<CategoryDTO> items) {
+        this(new SimpleObjectProperty<>(), items, new SimpleObjectProperty<>());
     }
 
     /**
@@ -132,6 +144,14 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public ApplicationFilter getFilter() {
+        return filter.get();
+    }
+
+    public ObjectProperty<ApplicationFilter> filterProperty() {
         return filter;
+    }
+
+    public void setFilter(ApplicationFilter filter) {
+        this.filter.set(filter);
     }
 }

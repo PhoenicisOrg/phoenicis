@@ -181,7 +181,11 @@ public class ApplicationsView extends MainWindowView<ApplicationSidebar> {
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        final ApplicationSidebar sidebar = new ApplicationSidebar(filter, sortedCategories, selectedListWidget);
+        final ApplicationSidebar sidebar = new ApplicationSidebar(sortedCategories);
+
+        sidebar.setFilter(filter);
+
+        sidebar.selectedListWidgetProperty().bindBidirectional(selectedListWidget);
 
         // set the default selection
         sidebar.setSelectedListWidget(javaFxSettingsManager.getAppsListType());
