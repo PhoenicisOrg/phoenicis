@@ -38,7 +38,7 @@ finish-args:
   - --share=ipc
   - --socket=x11
   - --share=network
-  - --device=dri
+  - --device=all
 modules:
   - name: openjdk
     buildsystem: simple
