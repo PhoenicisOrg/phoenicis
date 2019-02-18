@@ -39,7 +39,7 @@ finish-args:
   - --socket=x11
   - --socket=pulseaudio
   - --share=network
-  - --device=dri
+  - --device=all
 modules:
   - name: openjdk
     buildsystem: simple
