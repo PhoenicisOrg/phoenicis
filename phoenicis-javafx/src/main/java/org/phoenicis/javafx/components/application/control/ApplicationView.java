@@ -1,0 +1,174 @@
+package org.phoenicis.javafx.components.application.control;
+
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.phoenicis.javafx.components.application.skin.ApplicationViewSkin;
+import org.phoenicis.javafx.components.common.control.PhoenicisView;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.themes.ThemeManager;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
+import org.phoenicis.repository.dto.ApplicationDTO;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+
+/**
+ * The component shown inside the Phoenicis "Applications" tab
+ */
+public class ApplicationView extends PhoenicisView<ApplicationView, ApplicationViewSkin> {
+    /**
+     * The theme manager
+     */
+    private final ObjectProperty<ThemeManager> themeManager;
+
+    /**
+     * The applications filter
+     */
+    private final ObjectProperty<ApplicationFilter> filter;
+
+    /**
+     * The JavaFX settings manager
+     */
+    private final ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager;
+
+    /**
+     * The currently selected list widget
+     */
+    private final ObjectProperty<ListWidgetType> selectedListWidget;
+
+    /**
+     * The shown application categories
+     */
+    private final ObservableList<CategoryDTO> categories;
+
+    /**
+     * The script interpreter
+     */
+    private final ObjectProperty<ScriptInterpreter> scriptInterpreter;
+
+    /**
+     * The currently selected application
+     */
+    private final ObjectProperty<ApplicationDTO> selectedApplication;
+
+    /**
+     * Constructor
+     *
+     * @param themeManager The theme manager
+     * @param filter The applications filter
+     * @param javaFxSettingsManager The JavaFX settings manager
+     * @param selectedListWidget The currently selected list widget
+     * @param categories The shown application categories
+     * @param scriptInterpreter The script interpreter
+     * @param selectedApplication The currently selected application
+     */
+    public ApplicationView(ObjectProperty<ThemeManager> themeManager, ObjectProperty<ApplicationFilter> filter,
+            ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager,
+            ObjectProperty<ListWidgetType> selectedListWidget, ObservableList<CategoryDTO> categories,
+            ObjectProperty<ScriptInterpreter> scriptInterpreter, ObjectProperty<ApplicationDTO> selectedApplication) {
+        super();
+
+        this.themeManager = themeManager;
+        this.filter = filter;
+        this.javaFxSettingsManager = javaFxSettingsManager;
+        this.selectedListWidget = selectedListWidget;
+        this.categories = categories;
+        this.scriptInterpreter = scriptInterpreter;
+        this.selectedApplication = selectedApplication;
+    }
+
+    /**
+     * Constructor
+     */
+    public ApplicationView() {
+        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
+                new SimpleObjectProperty<>(), FXCollections.observableArrayList(), new SimpleObjectProperty<>(),
+                new SimpleObjectProperty<>());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ApplicationViewSkin createSkin() {
+        return new ApplicationViewSkin(this);
+    }
+
+    public ThemeManager getThemeManager() {
+        return this.themeManager.get();
+    }
+
+    public ObjectProperty<ThemeManager> themeManagerProperty() {
+        return this.themeManager;
+    }
+
+    public void setThemeManager(ThemeManager themeManager) {
+        this.themeManager.set(themeManager);
+    }
+
+    public ApplicationFilter getFilter() {
+        return this.filter.get();
+    }
+
+    public ObjectProperty<ApplicationFilter> filterProperty() {
+        return this.filter;
+    }
+
+    public void setFilter(ApplicationFilter filter) {
+        this.filter.set(filter);
+    }
+
+    public JavaFxSettingsManager getJavaFxSettingsManager() {
+        return this.javaFxSettingsManager.get();
+    }
+
+    public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
+        return this.javaFxSettingsManager;
+    }
+
+    public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {
+        this.javaFxSettingsManager.set(javaFxSettingsManager);
+    }
+
+    public ListWidgetType getSelectedListWidget() {
+        return this.selectedListWidget.get();
+    }
+
+    public ObjectProperty<ListWidgetType> selectedListWidgetProperty() {
+        return this.selectedListWidget;
+    }
+
+    public void setSelectedListWidget(ListWidgetType selectedListWidget) {
+        this.selectedListWidget.set(selectedListWidget);
+    }
+
+    public ObservableList<CategoryDTO> getCategories() {
+        return this.categories;
+    }
+
+    public ScriptInterpreter getScriptInterpreter() {
+        return this.scriptInterpreter.get();
+    }
+
+    public ObjectProperty<ScriptInterpreter> scriptInterpreterProperty() {
+        return this.scriptInterpreter;
+    }
+
+    public void setScriptInterpreter(ScriptInterpreter scriptInterpreter) {
+        this.scriptInterpreter.set(scriptInterpreter);
+    }
+
+    public ApplicationDTO getSelectedApplication() {
+        return this.selectedApplication.get();
+    }
+
+    public ObjectProperty<ApplicationDTO> selectedApplicationProperty() {
+        return this.selectedApplication;
+    }
+
+    public void setSelectedApplication(ApplicationDTO selectedApplication) {
+        this.selectedApplication.set(selectedApplication);
+    }
+}
