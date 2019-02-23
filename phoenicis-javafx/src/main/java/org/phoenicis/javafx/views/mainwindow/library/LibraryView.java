@@ -345,8 +345,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        final String scriptInclude = "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId
-                + "\"]);";
+        final String scriptInclude = "include(\"engines." + engineId + "\".shortcuts." + engineId + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
@@ -382,7 +381,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private void runShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.run(shortcut, Collections.emptyList(), e -> {
+        shortcutRunner.run(shortcut, Collections.emptyList(), e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -390,11 +389,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void stopShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.stop(shortcut, e -> {
+        shortcutRunner.stop(shortcut, e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -402,7 +401,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void uninstallShortcut(ShortcutDTO shortcut) {

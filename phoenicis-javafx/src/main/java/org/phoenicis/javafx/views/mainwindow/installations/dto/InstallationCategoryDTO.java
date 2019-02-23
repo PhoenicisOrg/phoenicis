@@ -48,15 +48,18 @@ public class InstallationCategoryDTO {
     private final List<InstallationDTO> installations;
     private URI icon;
 
+    private static final String ID_REGEX = "^[a-zA-Z0-9_.]+$";
+    private static final String INVALID_ID_CHARS_REGEX = "[^a-zA-Z0-9_.]";
+
     private InstallationCategoryDTO(Builder builder) {
         if (builder.id != null) {
-            if (builder.id.matches("^[a-zA-Z0-9]+$")) {
+            if (builder.id.matches(ID_REGEX)) {
                 this.id = builder.id;
             } else {
                 LOGGER.warn(
                         String.format("Installation category ID (%s) contains invalid characters, will remove them.",
                                 builder.id));
-                this.id = builder.id.replaceAll("[^a-zA-Z0-9_]", "");
+                this.id = builder.id.replaceAll(INVALID_ID_CHARS_REGEX, "");
             }
         } else {
             this.id = null;

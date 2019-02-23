@@ -48,7 +48,8 @@ public class ContainerEngineToolsPanelSkin extends SkinBase<ContainerEngineTools
 
                 // TODO: find a better way to get the engine ID
                 getControl().getEngineToolsManager().runTool(container.getEngine().toLowerCase(), container.getName(),
-                        tool.getId(), () -> getControl().setLockTools(false), e -> Platform.runLater(() -> {
+                        tool.getId().replaceAll("^.*\\.", ""), () -> getControl().setLockTools(false),
+                        e -> Platform.runLater(() -> {
                             final ErrorDialog errorDialog = ErrorDialog.builder()
                                     .withMessage(tr("Error"))
                                     .withException(e)
