@@ -77,6 +77,7 @@ public class ControllerConfiguration {
                 containersController(),
                 installationsController(),
                 settingsController(),
+                repositoryConfiguration.repositoryManager(),
                 themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }
@@ -105,13 +106,13 @@ public class ControllerConfiguration {
         return new LibraryController(viewsConfiguration.viewLibrary(), consoleController(),
                 libraryConfiguration.libraryManager(), libraryConfiguration.shortcutRunner(),
                 libraryConfiguration.shortcutManager(), scriptsConfiguration.scriptInterpreter(),
-                repositoryConfiguration.repositoryManager(), themeConfiguration.themeManager());
+                repositoryConfiguration.repositoryManager());
     }
 
     @Bean
     public AppsController appsController() {
         return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager(),
-                scriptsConfiguration.scriptInterpreter(), themeConfiguration.themeManager());
+                scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean

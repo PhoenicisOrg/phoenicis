@@ -2,14 +2,16 @@ package org.phoenicis.javafx.components.common.widgets.compact.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListElement;
 import org.phoenicis.javafx.components.common.widgets.compact.control.CompactListWidget;
-import org.phoenicis.javafx.components.common.skin.SkinBase;
-import org.phoenicis.javafx.views.common.widgets.lists.ListElementListCell;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
+
+import java.util.Optional;
 
 /**
  * The skin for the {@link CompactListWidget} component
@@ -51,27 +53,69 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         container.setPrefWidth(0);
         container.setPrefHeight(0);
 
-        container.setCellFactory(param -> new ListElementListCell<>());
+        // ensure that empty rows have the same height as non-empty ones
+        container.setCellFactory(param -> {
+            final ListCell<CompactListElement<E>> listCell = new ListCell<CompactListElement<E>>() {
+                @Override
+                public void updateItem(CompactListElement<E> item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (!empty && item != null) {
+                        setGraphic(item);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
+            };
 
-        // ensure that updates to the selected element property are automatically reflected in the view
-        getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
-            // deselect the old element
-            if (oldValue != null) {
-                final int oldValueIndex = getControl().getElements().indexOf(oldValue.getSelection());
+            listCell.getStyleClass().addAll("compactListElement");
 
-                container.getSelectionModel().clearSelection(oldValueIndex);
-            }
-
-            // select the new element
-            if (newValue != null) {
-                final int newValueIndex = getControl().getElements().indexOf(newValue.getSelection());
-
-                container.getSelectionModel().select(newValueIndex);
-            }
+            return listCell;
         });
 
         Bindings.bindContent(container.getItems(), mappedElements);
 
+        // ensure that updates to the selected element property are automatically reflected in the view
+        getControl().selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            // deselect the old element
+            updateOldSelection(container, oldValue);
+
+            // select the new element
+            updateNewSelection(container, newValue);
+        });
+
+        // initialise selection at startup
+        updateNewSelection(container, getControl().getSelectedElement());
+
         getChildren().addAll(container);
+    }
+
+    /**
+     * Deselect the old/previous selection
+     *
+     * @param container The list view in which the selection should be updated
+     * @param oldSelection The old/previous selection
+     */
+    private void updateOldSelection(ListView<CompactListElement<E>> container, ListWidgetSelection<E> oldSelection) {
+        // deselect the old element
+        Optional.ofNullable(oldSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
+            final int oldValueIndex = getControl().getElements().indexOf(selection);
+
+            container.getSelectionModel().clearSelection(oldValueIndex);
+        });
+    }
+
+    /**
+     * Select the current/new selection
+     *
+     * @param container The list view in which the selection should be updated
+     * @param newSelection The current/new selection
+     */
+    private void updateNewSelection(ListView<CompactListElement<E>> container, ListWidgetSelection<E> newSelection) {
+        // select the new element
+        Optional.ofNullable(newSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
+            final int newValueIndex = getControl().getElements().indexOf(selection);
+
+            container.getSelectionModel().select(newValueIndex);
+        });
     }
 }
