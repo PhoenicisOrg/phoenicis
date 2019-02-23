@@ -18,15 +18,19 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.container.control.ContainerEngineSettingsPanel;
 import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
+import org.phoenicis.javafx.components.container.control.ContainerOverviewPanel;
 import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -38,22 +42,32 @@ import java.util.function.Consumer;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ContainerPanel extends DetailsView {
-    private ContainerInformationTab informationTab;
+    private final ObjectProperty<WinePrefixContainerDTO> container;
+
+    private final ObjectProperty<Consumer<ContainerDTO>> onDeleteContainer;
+
+    private final ObjectProperty<Consumer<ContainerDTO>> onOpenFileBrowser;
 
     public ContainerPanel(ContainerDTO containerEntity, VerbsManager verbsManager,
             EngineToolsManager engineToolsManager, Optional<List<EngineSetting>> engineSettings,
             Optional<ApplicationDTO> verbs, Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
-        TabPane tabPane = new TabPane();
+        super();
+
         this.setTitle(containerEntity.getName());
+        this.container = new SimpleObjectProperty<>((WinePrefixContainerDTO) containerEntity);
+        this.onDeleteContainer = new SimpleObjectProperty<>();
+        this.onOpenFileBrowser = new SimpleObjectProperty<>();
+
+        TabPane tabPane = new TabPane();
         this.setCenter(tabPane);
 
-        this.informationTab = new ContainerInformationTab(containerEntity);
-        tabPane.getTabs().add(this.informationTab);
+        tabPane.getTabs().add(createContainerOverviewTab());
+
         if (engineSettings.isPresent()) {
             final ContainerEngineSettingsPanel containerEngineSettingsPanel = new ContainerEngineSettingsPanel();
 
-            containerEngineSettingsPanel.setContainer(containerEntity);
+            containerEngineSettingsPanel.containerProperty().bind(this.container);
             containerEngineSettingsPanel.getEngineSettings().setAll(engineSettings.get());
 
             final Tab engineSettingsTab = new Tab(tr(tr("Engine Settings")), containerEngineSettingsPanel);
@@ -62,10 +76,11 @@ public class ContainerPanel extends DetailsView {
 
             tabPane.getTabs().add(engineSettingsTab);
         }
+
         if (verbs.isPresent()) {
             final ContainerVerbsPanel containerVerbsPanel = new ContainerVerbsPanel();
 
-            containerVerbsPanel.setContainer(containerEntity);
+            containerVerbsPanel.containerProperty().bind(this.container);
             containerVerbsPanel.setVerbs(verbs.get());
             containerVerbsPanel.setVerbsManager(verbsManager);
 
@@ -75,10 +90,11 @@ public class ContainerPanel extends DetailsView {
 
             tabPane.getTabs().add(verbsTab);
         }
+
         if (engineTools.isPresent()) {
             final ContainerEngineToolsPanel containerEngineToolsPanel = new ContainerEngineToolsPanel();
 
-            containerEngineToolsPanel.setContainer(containerEntity);
+            containerEngineToolsPanel.containerProperty().bind(this.container);
             containerEngineToolsPanel.setEngineTools(engineTools.get());
             containerEngineToolsPanel.setEngineToolsManager(engineToolsManager);
 
@@ -88,15 +104,30 @@ public class ContainerPanel extends DetailsView {
 
             tabPane.getTabs().add(engineToolsTab);
         }
+
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
         tabPane.getTabs().add(toolsTab);
     }
 
+    private Tab createContainerOverviewTab() {
+        final ContainerOverviewPanel containerOverviewPanel = new ContainerOverviewPanel();
+
+        containerOverviewPanel.containerProperty().bind(this.container);
+        containerOverviewPanel.onDeleteContainerProperty().bind(this.onDeleteContainer);
+        containerOverviewPanel.onOpenFileBrowserProperty().bind(this.onOpenFileBrowser);
+
+        final Tab containerOverviewTab = new Tab(tr("Information"), containerOverviewPanel);
+
+        containerOverviewTab.setClosable(false);
+
+        return containerOverviewTab;
+    }
+
     public void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
-        this.informationTab.setOnDeleteContainer(onDeleteContainer);
+        this.onDeleteContainer.setValue(onDeleteContainer);
     }
 
     public void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {
-        this.informationTab.setOnOpenFileBrowser(onOpenFileBrowser);
+        this.onOpenFileBrowser.setValue(onOpenFileBrowser);
     }
 }
