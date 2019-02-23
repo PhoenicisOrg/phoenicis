@@ -37,6 +37,17 @@ public class CombinedListWidget<E> extends ListWidgetBase<E, CombinedListWidget<
      * Constructor
      *
      * @param elements The elements shown in this list widget
+     * @param selectedListWidget The selected/shown inner list widget
+     */
+    public CombinedListWidget(ObservableList<ListWidgetElement<E>> elements,
+            ObjectProperty<ListWidgetType> selectedListWidget) {
+        this(elements, new SimpleObjectProperty<>(), selectedListWidget);
+    }
+
+    /**
+     * Constructor
+     *
+     * @param elements The elements shown in this list widget
      */
     public CombinedListWidget(ObservableList<ListWidgetElement<E>> elements) {
         this(elements, new SimpleObjectProperty<>(), new SimpleObjectProperty<>());

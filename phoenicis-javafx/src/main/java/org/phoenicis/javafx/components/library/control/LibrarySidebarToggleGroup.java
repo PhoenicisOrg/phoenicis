@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.library.control;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
 import org.phoenicis.javafx.components.library.skin.LibrarySidebarToggleGroupSkin;
-import org.phoenicis.javafx.views.mainwindow.library.LibrarySidebar;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 /**

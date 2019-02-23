@@ -18,13 +18,16 @@
 
 package org.phoenicis.javafx.views.mainwindow.containers;
 
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.components.container.control.ContainerEngineSettingsPanel;
+import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
+import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
@@ -32,15 +35,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class ContainerPanel extends DetailsView {
     private ContainerInformationTab informationTab;
 
-    public ContainerPanel(WinePrefixContainerDTO containerEntity,
-            VerbsManager verbsManager,
-            EngineToolsManager engineToolsManager,
-            Optional<List<EngineSetting>> engineSettings,
-            Optional<ApplicationDTO> verbs,
-            Optional<ApplicationDTO> engineTools,
+    public ContainerPanel(ContainerDTO containerEntity, VerbsManager verbsManager,
+            EngineToolsManager engineToolsManager, Optional<List<EngineSetting>> engineSettings,
+            Optional<ApplicationDTO> verbs, Optional<ApplicationDTO> engineTools,
             ContainerEngineController containerEngineController) {
         TabPane tabPane = new TabPane();
         this.setTitle(containerEntity.getName());
@@ -49,26 +51,49 @@ public class ContainerPanel extends DetailsView {
         this.informationTab = new ContainerInformationTab(containerEntity);
         tabPane.getTabs().add(this.informationTab);
         if (engineSettings.isPresent()) {
-            ContainerEngineSettingsTab settingsTab = new ContainerEngineSettingsTab(containerEntity,
-                    engineSettings.get());
-            tabPane.getTabs().add(settingsTab);
+            final ContainerEngineSettingsPanel containerEngineSettingsPanel = new ContainerEngineSettingsPanel();
+
+            containerEngineSettingsPanel.setContainer(containerEntity);
+            containerEngineSettingsPanel.getEngineSettings().setAll(engineSettings.get());
+
+            final Tab engineSettingsTab = new Tab(tr(tr("Engine Settings")), containerEngineSettingsPanel);
+
+            engineSettingsTab.setClosable(false);
+
+            tabPane.getTabs().add(engineSettingsTab);
         }
         if (verbs.isPresent()) {
-            ContainerVerbsTab verbsTab = new ContainerVerbsTab(containerEntity, verbsManager,
-                    verbs.get());
+            final ContainerVerbsPanel containerVerbsPanel = new ContainerVerbsPanel();
+
+            containerVerbsPanel.setContainer(containerEntity);
+            containerVerbsPanel.setVerbs(verbs.get());
+            containerVerbsPanel.setVerbsManager(verbsManager);
+
+            final Tab verbsTab = new Tab(tr(tr("Verbs")), containerVerbsPanel);
+
+            verbsTab.setClosable(false);
+
             tabPane.getTabs().add(verbsTab);
         }
         if (engineTools.isPresent()) {
-            ContainerEngineToolsTab engineToolsTab = new ContainerEngineToolsTab(containerEntity, engineToolsManager,
-                    engineTools.get());
+            final ContainerEngineToolsPanel containerEngineToolsPanel = new ContainerEngineToolsPanel();
+
+            containerEngineToolsPanel.setContainer(containerEntity);
+            containerEngineToolsPanel.setEngineTools(engineTools.get());
+            containerEngineToolsPanel.setEngineToolsManager(engineToolsManager);
+
+            final Tab engineToolsTab = new Tab(tr("Engine tools"), containerEngineToolsPanel);
+
+            engineToolsTab.setClosable(false);
+
             tabPane.getTabs().add(engineToolsTab);
         }
         ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
         tabPane.getTabs().add(toolsTab);
     }
 
-    public void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
-        this.informationTab.setOnDeletePrefix(onDeletePrefix);
+    public void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
+        this.informationTab.setOnDeleteContainer(onDeleteContainer);
     }
 
     public void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {

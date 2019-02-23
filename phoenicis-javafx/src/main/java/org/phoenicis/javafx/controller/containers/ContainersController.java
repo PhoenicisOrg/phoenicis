@@ -121,7 +121,7 @@ public class ContainersController {
             // TODO: better way to get engine ID
             final String engineId = containerDTO.getEngine().toLowerCase();
             final ContainerPanel panel = new ContainerPanel(
-                    (WinePrefixContainerDTO) containerDTO,
+                    containerDTO,
                     verbsManager,
                     engineToolsManager,
                     Optional.ofNullable(engineSettings.get(engineId)),
@@ -129,7 +129,7 @@ public class ContainersController {
                     Optional.ofNullable(engineTools.get(engineId)),
                     containerEngineController);
 
-            panel.setOnDeletePrefix(
+            panel.setOnDeleteContainer(
                     containerToDelete -> {
                         final ConfirmDialog confirmMessage = ConfirmDialog.builder()
                                 .withTitle(tr("Delete {0} container", containerToDelete.getName()))

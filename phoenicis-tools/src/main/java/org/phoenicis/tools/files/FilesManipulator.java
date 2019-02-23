@@ -26,7 +26,7 @@ import java.io.File;
 import static java.lang.String.format;
 
 @Safe
-class FilesManipulator {
+public class FilesManipulator {
     @Value("${application.user.root}")
     private String userRoot;
 
@@ -35,7 +35,7 @@ class FilesManipulator {
                 && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
-    void assertInDirectory(File file) {
+    protected void assertInDirectory(File file) {
         if (!isInSubDirectory(new File(userRoot), file)) {
             throw new IllegalArgumentException(
                     format("The file (%s) must be in the Phoenicis root directory (%s)", file, userRoot));

@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.javafx.UiMessageSenderJavaFXImplementation;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.scripts.ui.SetupUiFactory;
 import org.phoenicis.scripts.ui.UiConfiguration;
 import org.phoenicis.scripts.ui.UiMessageSender;

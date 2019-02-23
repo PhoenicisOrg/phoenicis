@@ -248,20 +248,25 @@
 /*******************************************************/
 /*********************** library ***********************/
 /*******************************************************/
-.shortcutButton {
-  -fx-background-color: transparent;
-  -fx-label-padding: 2.5em 0 0 0;
-  -fx-background-size: 3em;
-  -fx-background-repeat: no-repeat;
-  -fx-background-position: top;
-  -fx-cursor: hand;
+.shortcut-control-button-group {
+  -fx-alignment: center;
 
-  &:hover {
+  .shortcutButton {
+    -fx-label-padding: 2.5em 0 0 0;
+    -fx-background-size: 3em;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: top;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
-  }
+    -fx-cursor: hand;
 
-  &:pressed {
-    -fx-border-color: #D3D3D3;
+    &:hover {
+      -fx-border-color: transparent;
+    }
+
+    &:pressed {
+      -fx-border-color: #D3D3D3;
+    }
   }
 }
 
@@ -316,6 +321,35 @@
 /*******************************************************/
 .containerConfigurationPane {
   -fx-padding: 1em;
+}
+
+.container-details-panel {
+  -fx-padding: 1em;
+  -fx-spacing: 0.5em;
+
+  &.container-engine-settings-panel {
+    .engine-settings-grid {
+      -fx-padding: 0.1em 0.5em 0.1em 0.5em;
+      -fx-hgap: 0.75em;
+      -fx-vgap: 0.25em;
+
+      .engine-setting-combo-box {
+        -fx-max-width: infinity;
+      }
+    }
+  }
+
+  &.container-verbs-panel {
+    .verb-grid {
+      -fx-padding: 0.1em 0.5em 0.1em 0.5em;
+      -fx-hgap: 0.75em;
+      -fx-vgap: 0.25em;
+    }
+
+    .verb-management-button-container {
+      -fx-spacing: 0.5em;
+    }
+  }
 }
 
 /*******************************************************/
@@ -596,6 +630,48 @@
 /*********************** settings **********************/
 /*******************************************************/
 
+.settings-tab {
+  -fx-padding: 1em;
+  -fx-spacing: 0.1em;
+
+  &.repositories-panel {
+    .repositories-table {
+      .repository-row {
+        // nothing yet
+      }
+    }
+
+    .repositories-buttons-container {
+      -fx-spacing: 0.1em;
+
+      .repositories-add {
+        // nothing yet
+      }
+
+      .repositories-remove {
+        // nothing yet
+      }
+
+      .repositories-restore {
+        // nothing yet
+      }
+    }
+
+    .repositories-refresh-container {
+      -fx-alignment: center-left;
+      -fx-spacing: 0.1em;
+
+      .repositories-refresh-label {
+        -fx-wrap-text: true;
+      }
+
+      .repositories-refresh-button {
+        // nothing yet
+      }
+    }
+  }
+}
+
 /*************** repository type selection *************/
 #repositoryTypeSelection {
   -fx-alignment: center-left;
@@ -644,6 +720,17 @@
   -fx-background-repeat: no-repeat;
   -fx-background-position: left;
   -fx-cursor: hand;
+}
+
+/**
+ * The scroll-panes should use the background color of their parent component
+ */
+.scroll-pane {
+  -fx-background-color: transparent;
+
+  &> .viewport {
+    -fx-background-color: transparent;
+  }
 }
 
 /*******************************************************/
@@ -717,6 +804,23 @@
 }
 
 /*********************** library ***********************/
+.library-details-panel-content {
+  -fx-spacing: 0.1em;
+
+  &.create-shortcut-panel-content {
+    .shortcut-information-grid {
+      -fx-padding: 0.5em;
+      -fx-hgap: 0.5em;
+      -fx-vgap: 0.5em;
+      -fx-spacing: 0.5em;
+    }
+  }
+
+  .file-selection-container {
+    -fx-spacing: 0.2em;
+  }
+}
+
 .detailsButtonSpacer {
   -fx-pref-height: 40;
 }
