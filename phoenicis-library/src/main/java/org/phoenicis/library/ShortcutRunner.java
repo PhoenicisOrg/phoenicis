@@ -49,7 +49,7 @@ public class ShortcutRunner {
         ScriptEngineManager m = new ScriptEngineManager();
         ScriptEngine engine = m.getEngineByName("graal.js");
         Invocable inv = (Invocable) engine;
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
+        interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                     final Object shortcutReader = (Object) output;
                     try {
@@ -66,7 +66,7 @@ public class ShortcutRunner {
     public void stop(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
+        interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                     /*
                      * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
