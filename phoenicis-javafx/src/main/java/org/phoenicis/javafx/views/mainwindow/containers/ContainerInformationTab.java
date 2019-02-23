@@ -27,13 +27,13 @@ class ContainerInformationTab extends Tab {
 
     private final WinePrefixContainerDTO container;
 
-    private Consumer<ContainerDTO> onDeletePrefix;
+    private Consumer<ContainerDTO> onDeleteContainer;
     private Consumer<ContainerDTO> onOpenFileBrowser;
 
-    ContainerInformationTab(WinePrefixContainerDTO container) {
+    ContainerInformationTab(ContainerDTO container) {
         super(tr("Information"));
 
-        this.container = container;
+        this.container = (WinePrefixContainerDTO) container; // TODO: use generic container
 
         this.setClosable(false);
 
@@ -109,7 +109,7 @@ class ContainerInformationTab extends Tab {
          */
 
         Button deleteButton = new Button(tr("Delete container"));
-        deleteButton.setOnMouseClicked(event -> this.onDeletePrefix.accept(container));
+        deleteButton.setOnMouseClicked(event -> this.onDeleteContainer.accept(container));
 
         Region buttonSpacer = new Region();
         buttonSpacer.setPrefHeight(20);
@@ -123,8 +123,8 @@ class ContainerInformationTab extends Tab {
         this.setContent(informationPane);
     }
 
-    protected void setOnDeletePrefix(Consumer<ContainerDTO> onDeletePrefix) {
-        this.onDeletePrefix = onDeletePrefix;
+    protected void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
+        this.onDeleteContainer = onDeleteContainer;
     }
 
     protected void setOnOpenFileBrowser(Consumer<ContainerDTO> onOpenFileBrowser) {

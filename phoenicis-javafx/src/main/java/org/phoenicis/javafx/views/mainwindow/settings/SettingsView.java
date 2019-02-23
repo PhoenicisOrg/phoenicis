@@ -18,33 +18,49 @@
 
 package org.phoenicis.javafx.views.mainwindow.settings;
 
+import javafx.animation.PauseTransition;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.util.Duration;
+import org.phoenicis.javafx.components.setting.control.*;
+import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
+import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
+import org.phoenicis.javafx.themes.Theme;
+import org.phoenicis.javafx.themes.Themes;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
+import org.phoenicis.repository.RepositoryLocationLoader;
 import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.location.RepositoryLocation;
+import org.phoenicis.repository.types.Repository;
 import org.phoenicis.settings.SettingsManager;
 import org.phoenicis.tools.system.opener.Opener;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class SettingsView extends MainWindowView<SettingsSidebar> {
+    private final PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+
     private final String applicationName;
     private final String applicationVersion;
     private final String applicationGitRevision;
     private final String applicationBuildTimestamp;
     private final Opener opener;
 
+    private final RepositoryLocationLoader repositoryLocationLoader;
+
     private SettingsManager settingsManager;
     private JavaFxSettingsManager javaFxSettingsManager;
     private RepositoryManager repositoryManager;
 
-    private ObservableList<SettingsSidebar.SettingsSidebarItem> settingsItems;
+    private ObservableList<SettingsSidebarItem> settingsItems;
 
     public SettingsView(ThemeManager themeManager, String applicationName, String applicationVersion,
             String applicationGitRevision, String applicationBuildTimestamp, Opener opener,
-            SettingsManager settingsManager,
+            SettingsManager settingsManager, RepositoryLocationLoader repositoryLocationLoader,
             JavaFxSettingsManager javaFxSettingsManager, RepositoryManager repositoryManager) {
         super(tr("Settings"), themeManager);
         this.applicationName = applicationName;
@@ -53,34 +69,109 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
         this.applicationBuildTimestamp = applicationBuildTimestamp;
         this.opener = opener;
         this.settingsManager = settingsManager;
+        this.repositoryLocationLoader = repositoryLocationLoader;
         this.javaFxSettingsManager = javaFxSettingsManager;
         this.repositoryManager = repositoryManager;
 
         this.initializeSettingsItems();
 
-        this.sidebar = new SettingsSidebar(this.settingsItems);
-        this.sidebar.setOnSelectSettingsItem(this::setCenter);
+        this.sidebar = createSidebar();
 
-        this.setSidebar(this.sidebar);
+        this.setSidebar(sidebar);
 
     }
 
+    private SettingsSidebar createSidebar() {
+        final SettingsSidebar sidebar = new SettingsSidebar(this.settingsItems);
+
+        sidebar.selectedItemProperty()
+                .addListener((Observable invalidation) -> setCenter(sidebar.getSelectedItem().getPanel()));
+
+        return sidebar;
+    }
+
     private void initializeSettingsItems() {
-        AboutPanel.ApplicationBuildInformation buildInformation = new AboutPanel.ApplicationBuildInformation(
+        final ApplicationBuildInformation buildInformation = new ApplicationBuildInformation(
                 this.applicationName, this.applicationVersion, this.applicationGitRevision,
                 this.applicationBuildTimestamp);
 
         this.settingsItems = FXCollections.observableArrayList(
-                new SettingsSidebar.SettingsSidebarItem(
-                        new UserInterfacePanel(this.javaFxSettingsManager, this.themeManager),
+                new SettingsSidebarItem(createUserInterfacePanel(),
                         "userInterfaceButton", tr("User Interface")),
-                new SettingsSidebar.SettingsSidebarItem(
-                        new RepositoriesPanel(this.settingsManager, this.repositoryManager),
+                new SettingsSidebarItem(
+                        createRepositoriesPanel(),
                         "repositoriesButton", tr("Repositories")),
-                new SettingsSidebar.SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
+                new SettingsSidebarItem(new FileAssociationsPanel(), "settingsButton",
                         tr("File Associations")),
-                new SettingsSidebar.SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
-                new SettingsSidebar.SettingsSidebarItem(new AboutPanel(buildInformation, this.opener), "aboutButton",
+                new SettingsSidebarItem(new NetworkPanel(), "networkButton", tr("Network")),
+                new SettingsSidebarItem(new AboutPanel(this.opener, buildInformation), "aboutButton",
                         tr("About")));
+    }
+
+    private RepositoriesPanel createRepositoriesPanel() {
+        ObservableList<RepositoryLocation<? extends Repository>> repositoryLocations = FXCollections
+                .observableArrayList(settingsManager.loadRepositoryLocations());
+
+        final RepositoriesPanel repositoriesPanel = new RepositoriesPanel(repositoryLocations);
+
+        // set the initial values
+        repositoriesPanel.setOnRepositoryRefresh(repositoryManager::triggerRepositoryChange);
+
+        repositoriesPanel.setRepositoryLocationLoader(repositoryLocationLoader);
+
+        // react to changes
+        repositoriesPanel.getRepositoryLocations()
+                .addListener((ListChangeListener.Change<? extends RepositoryLocation<? extends Repository>> change) -> {
+                    repositoryManager.updateRepositories(repositoryLocations);
+
+                    settingsManager.saveRepositories(repositoryLocations);
+                });
+
+        return repositoriesPanel;
+    }
+
+    private UserInterfacePanel createUserInterfacePanel() {
+        final UserInterfacePanel userInterfacePanel = new UserInterfacePanel(
+                FXCollections.observableArrayList(Themes.all()));
+
+        // set the initial values
+        userInterfacePanel.setScaling(javaFxSettingsManager.getScale());
+        userInterfacePanel.setSelectedTheme(
+                Themes.fromShortName(javaFxSettingsManager.getTheme()).orElse(Themes.STANDARD));
+        userInterfacePanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
+
+        userInterfacePanel.setOnRestoreSettings(javaFxSettingsManager::restoreDefault);
+
+        // react on changes
+        userInterfacePanel.scalingProperty().addListener((Observable invalidation) -> {
+            final double scaling = userInterfacePanel.getScaling();
+
+            this.pause.setOnFinished(event -> {
+                getTabPane().getScene().getRoot().setStyle(String.format("-fx-font-size: %.2fpt;", scaling));
+
+                javaFxSettingsManager.setScale(userInterfacePanel.getScaling());
+                javaFxSettingsManager.save();
+            });
+
+            this.pause.playFromStart();
+        });
+
+        userInterfacePanel.selectedThemeProperty().addListener((Observable invalidation) -> {
+            final Theme selectedTheme = userInterfacePanel.getSelectedTheme();
+
+            themeManager.setCurrentTheme(selectedTheme);
+
+            javaFxSettingsManager.setTheme(selectedTheme.getShortName());
+            javaFxSettingsManager.save();
+        });
+
+        userInterfacePanel.showScriptSourceProperty().addListener((Observable invalidation) -> {
+            final boolean showScriptSource = userInterfacePanel.isShowScriptSource();
+
+            javaFxSettingsManager.setViewScriptSource(showScriptSource);
+            javaFxSettingsManager.save();
+        });
+
+        return userInterfacePanel;
     }
 }

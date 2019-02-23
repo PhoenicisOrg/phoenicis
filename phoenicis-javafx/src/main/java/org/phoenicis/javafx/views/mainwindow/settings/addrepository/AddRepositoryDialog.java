@@ -3,6 +3,7 @@ package org.phoenicis.javafx.views.mainwindow.settings.addrepository;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.layout.Region;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.Repository;
 
@@ -38,7 +39,6 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
         super();
 
         this.setResizable(true);
-        this.getDialogPane().setPrefSize(550, 200);
         this.setTitle(tr("Add a new Repository"));
 
         this.chooseRepositoryTypePanel = new ChooseRepositoryTypePanel();
@@ -61,5 +61,6 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
 
         this.getDialogPane().getButtonTypes().setAll(ButtonType.CANCEL);
         this.getDialogPane().setContent(chooseRepositoryTypePanel);
+        this.getDialogPane().setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
     }
 }

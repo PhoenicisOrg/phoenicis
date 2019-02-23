@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.scripts.ui.InstallationType;

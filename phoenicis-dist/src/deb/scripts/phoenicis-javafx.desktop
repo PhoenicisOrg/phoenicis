@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Phoenicis PlayOnLinux (JavaFX)
-Type=Application
-Exec=phoenicis-javafx
-Icon=phoenicis
-Comment=Graphical front-end for Wine
-Categories=Game;Utility;
-StartupNotify=true

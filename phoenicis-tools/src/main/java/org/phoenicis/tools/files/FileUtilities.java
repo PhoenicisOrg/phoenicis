@@ -159,6 +159,19 @@ public class FileUtilities extends FilesManipulator {
         return file;
     }
 
+    /**
+     * creates temporary directory
+     * @return the path of the directory created
+     * @throws IOException if any error occurs
+     */
+    public File createTmpDir() throws IOException {
+        final File tmpDirectoryFile = new File(tmpDirectory);
+        tmpDirectoryFile.mkdirs();
+        final File file = Files.createTempDirectory(tmpDirectoryFile.toPath(), "phoenicis").toFile();
+        file.deleteOnExit();
+        return file;
+    }
+
     private Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
         Set<PosixFilePermission> permissions = new HashSet<>(9);
 

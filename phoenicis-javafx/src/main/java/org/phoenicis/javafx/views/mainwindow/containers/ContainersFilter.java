@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.views.AbstractFilter;
 
 import java.util.Optional;
 
@@ -15,7 +14,7 @@ import java.util.Optional;
  *
  * @author Marc Arndt
  */
-public class ContainersFilter extends AbstractFilter {
+public class ContainersFilter {
     /**
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.

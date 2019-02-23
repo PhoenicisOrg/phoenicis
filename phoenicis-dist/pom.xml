@@ -58,145 +58,26 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.vafer</groupId>
-                <artifactId>jdeb</artifactId>
-                <version>1.7</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
+                        <id>distribution</id>
                         <phase>package</phase>
                         <goals>
-                            <goal>jdeb</goal>
+                            <goal>single</goal>
                         </goals>
                         <configuration>
-                            <deb>${project.build.directory}/phoenicis-playonlinux~${version}~ubuntu18.04.deb</deb>
-                            <dataSet>
-                                <data>
-                                    <src>${basedir}/src/scripts/copyright</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/doc/phoenicis-playonlinux</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/scripts/phoenicis-javafx</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/bin</prefix>
-                                        <filemode>755</filemode>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/scripts/phoenicis-javafx.desktop</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/applications</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/scripts/phoenicis-cli</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/bin</prefix>
-                                        <filemode>755</filemode>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${basedir}/src/deb/scripts/phoenicis-cli.desktop</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/applications</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${project.build.directory}/lib</src>
-                                    <type>directory</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/phoenicis-playonlinux</prefix>
-                                    </mapper>
-                                </data>
-                                <data>
-                                    <src>${project.basedir}/../phoenicis-javafx/src/main/resources/org/phoenicis/javafx/views/common/phoenicis.png</src>
-                                    <type>file</type>
-                                    <mapper>
-                                        <type>perm</type>
-                                        <prefix>/usr/share/pixmaps</prefix>
-                                    </mapper>
-                                </data>
-                            </dataSet>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>phoenicis-flatpak</finalName>
+                            <descriptors>
+                                <descriptor>src/flatpak/distribution.xml</descriptor>
+                            </descriptors>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-    <profiles>
-        <profile>
-            <id>jdk10+</id>
-            <activation>
-                <jdk>[10,)</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <id>distribution</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                                <configuration>
-                                    <appendAssemblyId>false</appendAssemblyId>
-                                    <finalName>phoenicis</finalName>
-                                    <descriptors>
-                                        <descriptor>src/assembly/distribution.xml</descriptor>
-                                    </descriptors>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>jdk8</id>
-            <activation>
-                <jdk>1.8</jdk>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <id>distribution</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>single</goal>
-                                </goals>
-                                <configuration>
-                                    <appendAssemblyId>false</appendAssemblyId>
-                                    <finalName>phoenicis</finalName>
-                                    <descriptors>
-                                        <descriptor>src/assembly/distribution-java8.xml</descriptor>
-                                    </descriptors>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

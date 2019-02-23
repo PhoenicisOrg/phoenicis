@@ -58,7 +58,7 @@ public class EngineToolsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"tools\", \"" + toolId + "\"]);",
+                "include(\"engines." + engineId + ".tools." + toolId + "\");",
                 ignored -> interactiveScriptSession.eval("new Tool()", output -> {
                     final EngineTool toolObject = (EngineTool) output;
                     toolObject.run(container);
@@ -82,8 +82,8 @@ public class EngineToolsManager {
         }
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("tools")) {
-                    tools.put(engine.getId(), applicationDTO);
+                if (applicationDTO.getId().equals(engine.getId() + ".tools")) {
+                    tools.put(engine.getId().replaceAll("^.*\\.", ""), applicationDTO);
                 }
             }
         }

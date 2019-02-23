@@ -1,7 +1,7 @@
 ---
 title: "Test plan"
 category: Developers
-order: 6
+order: 9
 toc: true
 ---
 

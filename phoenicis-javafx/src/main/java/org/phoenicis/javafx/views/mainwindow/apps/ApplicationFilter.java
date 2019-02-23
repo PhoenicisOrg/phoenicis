@@ -1,7 +1,8 @@
 package org.phoenicis.javafx.views.mainwindow.apps;
 
 import javafx.beans.property.*;
-import org.phoenicis.javafx.views.AbstractFilter;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
@@ -9,7 +10,6 @@ import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
-import java.util.function.BiPredicate;
 
 /**
  * A filter implementation for the "Apps" tab.
@@ -17,66 +17,35 @@ import java.util.function.BiPredicate;
  * @author marc
  * @since 29.03.17
  */
-public class ApplicationFilter extends AbstractFilter {
+public class ApplicationFilter {
     private final OperatingSystemFetcher operatingSystemFetcher;
 
-    private final BiPredicate<String, ApplicationDTO> filterTextMatcher;
+    private final double fuzzySearchRatio;
 
-    private StringProperty filterText;
+    private final StringProperty filterText;
 
-    private ObjectProperty<CategoryDTO> filterCategory;
+    private final ObjectProperty<CategoryDTO> filterCategory;
 
-    private BooleanProperty containCommercialApplications;
+    private final BooleanProperty containCommercialApplications;
 
-    private BooleanProperty containRequiresPatchApplications;
+    private final BooleanProperty containRequiresPatchApplications;
 
-    private BooleanProperty containTestingApplications;
+    private final BooleanProperty containTestingApplications;
 
-    private BooleanProperty containAllOSCompatibleApplications;
+    private final BooleanProperty containAllOSCompatibleApplications;
 
-    /**
-     * Constructor
-     *
-     * @param filterTextMatcher The matcher function for the filter text
-     */
-    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher,
-            BiPredicate<String, ApplicationDTO> filterTextMatcher) {
+    public ApplicationFilter(OperatingSystemFetcher operatingSystemFetcher, double fuzzySearchRatio) {
         super();
 
         this.operatingSystemFetcher = operatingSystemFetcher;
-        this.filterTextMatcher = filterTextMatcher;
+        this.fuzzySearchRatio = fuzzySearchRatio;
 
-        this.filterText = new SimpleStringProperty("");
+        this.filterText = new SimpleStringProperty();
         this.filterCategory = new SimpleObjectProperty<>();
-
         this.containCommercialApplications = new SimpleBooleanProperty();
         this.containRequiresPatchApplications = new SimpleBooleanProperty();
         this.containTestingApplications = new SimpleBooleanProperty();
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
-    }
-
-    public StringProperty filterTextProperty() {
-        return this.filterText;
-    }
-
-    public ObjectProperty<CategoryDTO> filterCategoryProperty() {
-        return this.filterCategory;
-    }
-
-    public BooleanProperty containCommercialApplicationsProperty() {
-        return this.containCommercialApplications;
-    }
-
-    public BooleanProperty containRequiresPatchApplicationsProperty() {
-        return this.containRequiresPatchApplications;
-    }
-
-    public BooleanProperty containTestingApplicationsProperty() {
-        return this.containTestingApplications;
-    }
-
-    public BooleanProperty containAllOSCompatibleApplicationsProperty() {
-        return this.containAllOSCompatibleApplications;
     }
 
     /**
@@ -112,18 +81,23 @@ public class ApplicationFilter extends AbstractFilter {
      * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */
     private boolean filter(ApplicationDTO application, boolean ignoreFilterCategoryTest) {
+        final boolean matchesFilterCategory = ignoreFilterCategoryTest || Optional.ofNullable(filterCategory.getValue())
+                .map(category -> category.getApplications().contains(application)).orElse(true);
+
+        final boolean matchesAtLeastOneScript = application.getScripts().stream().anyMatch(this::filter);
+
+        final boolean matchesApplicationName = Optional.ofNullable(filterText.getValue())
+                .map(filterText -> StringUtils.isEmpty(filterText) || FuzzySearch
+                        .partialRatio(application.getName().toLowerCase(), filterText) > fuzzySearchRatio)
+                .orElse(true);
+
         /*
          * An application can be shown, if:
          * - it belongs to the filter category, if such a category is set
          * - it contains at least one visible script
          * - its text matches the filter text
          */
-        return (ignoreFilterCategoryTest
-                || Optional.ofNullable(filterCategory.getValue())
-                        .map(category -> category.getApplications().contains(application)).orElse(true))
-                && application.getScripts().stream().anyMatch(this::filter)
-                && Optional.ofNullable(filterText.getValue())
-                        .map(filterText -> filterTextMatcher.test(filterText, application)).orElse(true);
+        return matchesFilterCategory && matchesApplicationName && matchesAtLeastOneScript;
     }
 
     /**
@@ -138,28 +112,28 @@ public class ApplicationFilter extends AbstractFilter {
         /*
          * If "commercial" is not selected, don't show commercial games
          */
-        if (!containCommercialApplications.getValue()) {
+        if (!isContainCommercialApplications()) {
             result &= script.isFree();
         }
 
         /*
          * If "Requires patch" is selected, show show games that require a patch to run (e.g. no CD)
          */
-        if (containRequiresPatchApplications.getValue()) {
+        if (isContainRequiresPatchApplications()) {
             result &= !script.isRequiresPatch();
         }
 
         /*
          * If "Testing" is not selected, don't show games that are currently in a testing stage
          */
-        if (!containTestingApplications.getValue()) {
+        if (!isContainTestingApplications()) {
             result &= CollectionUtils.isEmpty(script.getTestingOperatingSystems());
         }
 
         /*
          * If "All Operating Systems" is not selected, show only applications that fit to the used operating system
          */
-        if (!containAllOSCompatibleApplications.getValue()) {
+        if (!isContainAllOSCompatibleApplications()) {
             result &= Optional.ofNullable(script.getCompatibleOperatingSystems())
                     .map(compatibleOperatingSystems -> compatibleOperatingSystems
                             .contains(operatingSystemFetcher.fetchCurrentOperationSystem()))
@@ -169,4 +143,51 @@ public class ApplicationFilter extends AbstractFilter {
         return result;
     }
 
+    public String getFilterText() {
+        return filterText.get();
+    }
+
+    public StringProperty filterTextProperty() {
+        return filterText;
+    }
+
+    public CategoryDTO getFilterCategory() {
+        return filterCategory.get();
+    }
+
+    public ObjectProperty<CategoryDTO> filterCategoryProperty() {
+        return filterCategory;
+    }
+
+    public boolean isContainCommercialApplications() {
+        return containCommercialApplications.get();
+    }
+
+    public BooleanProperty containCommercialApplicationsProperty() {
+        return containCommercialApplications;
+    }
+
+    public boolean isContainRequiresPatchApplications() {
+        return containRequiresPatchApplications.get();
+    }
+
+    public BooleanProperty containRequiresPatchApplicationsProperty() {
+        return containRequiresPatchApplications;
+    }
+
+    public boolean isContainTestingApplications() {
+        return containTestingApplications.get();
+    }
+
+    public BooleanProperty containTestingApplicationsProperty() {
+        return containTestingApplications;
+    }
+
+    public boolean isContainAllOSCompatibleApplications() {
+        return containAllOSCompatibleApplications.get();
+    }
+
+    public BooleanProperty containAllOSCompatibleApplicationsProperty() {
+        return containAllOSCompatibleApplications;
+    }
 }
