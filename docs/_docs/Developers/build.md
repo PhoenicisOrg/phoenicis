@@ -5,49 +5,91 @@ order: 1
 toc: true
 ---
 
-## Ubuntu 18.04/18.10 and Linux Mint 19
+## Ubuntu 18.04/18.10
+*Updated by [kreyren](https://github.com/Kreyren) at 24.02.2019*
 
-* Install the dependencies:
-```
-sudo apt update
-sudo apt install git maven openjdk-11-jdk fakeroot
-```
+Fork https://github.com/PhoenicisOrg/phoenicis on github before building.
 
-* Optional: if your distribution does not support Java 10+ **or** if you need to create packages, grab the latest JDK 
+#### Dependencies:
+- git
+- maven
+- java11+
+- fakeroot
+
+#### Building:
 ```bash
- # Linux/x86 (https://jdk.java.net/11/)
- ## Download OpenJDK-11 build and extract to tmpfs
- wget https://download.java.net/java/GA/jdk11/28/GPL/openjdk-11+28_linux-x64_bin.tar.gz -O /tmp/openjdk-11+28_linux-x64_bin.tar.gz
- ## Extract OpenJDK-11 to /usr/bin/jvm
- sudo tar xfvz /tmp/openjdk-11+28_linux-x64_bin.tar.gz --directory /usr/lib/jvm
- ## Export JAVA_HOME variable
- export JAVA_HOME="/usr/lib/jvm/jdk-11"
-```
- 
+# Update repository 
+sudo apt update
 
-* Clone the repository from GitHub:
-```
-git clone https://github.com/PhoenicisOrg/phoenicis.git
-```
+# Install dependencies
+sudo apt install git maven openjdk-11-jdk fakeroot
 
-* Set the Java version:
-```
-export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
-```
+# Clone your phoenicis repository
+git clone https://github.com/<YOUR_GITHUB_FORK_REPO>/phoenicis.git
 
-* Build Phoenicis:
-```
-cd phoenicis
+# Sanity-check your JAVA_HOME variable
+echo JAVA_HOME
+export JAVA_HOME=PATH # if needed, should be set automatically.
+
+# Build phoenicis
 mvn clean package
-```
 
-* Create packages 
-```
+# Create packages
 cd phoenicis-dist/src/scripts
 bash phoenicis-create-package.sh
 ```
 
-## Arch Linux
+#### OPTIONAL: Copypasta method
+```bash
+echo "INPUT: Enter your github repository URI
+eg. https://github.com/Kreyren/phoenicis.git" && read KREYRENNN && sudo apt update && sudo apt install git maven openjdk-11-jdk fakeroot && cd $HOME && git clone $KREYRENNN && cd phoenicis && mvn clean package && cd phoenicis-dist/src/scripts && bash phoenicis-create-package.sh
+```
+
+---
+
+## Gentoo Linux
+*Updated by [kreyren](https://github.com/Kreyren) at 24.02.2019*
+
+Fork https://github.com/PhoenicisOrg/phoenicis on github before building.
+
+#### Dependencies:
+- git
+- maven
+- java11+
+- fakeroot
+
+#### Building:
+```bash 
+# Update repository
+emerge --sync
+
+# Install dependencies
+emerge git maven openjdk fakeroot
+
+# Clone your phoenicis repository 
+git clone git clone https://github.com/<YOUR_GITHUB_FORK_REPO>/phoenicis.git
+
+# Sanity-check your JAVA_HOME variable
+echo JAVA_HOME
+export JAVA_HOME=PATH # if needed, should be set automatically.
+
+# Build phoenicis
+mvn clean package
+
+# Create packages
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
+```
+
+#### OPTIONAL: Copypasta method
+```bash
+echo "INPUT: Enter your github repository URI
+eg. https://github.com/Kreyren/phoenicis.git" && read KREYRENNN && emerge --sync && emerge git maven openjdk fakeroot && cd $HOME && git clone $KREYRENNN && cd phoenicis && mvn clean package && cd phoenicis-dist/src/scripts && bash phoenicis-create-package.sh
+```
+
+---
+
+## Arch GNU/Linux
 
 * Install the dependencies.
   * git
@@ -65,6 +107,8 @@ git clone https://github.com/PhoenicisOrg/phoenicis.git
 cd phoenicis
 mvn clean package
 ```
+
+---
 
 ## Fedora >= 29
 
@@ -96,6 +140,8 @@ cd phoenicis-dist/src/scripts
 bash phoenicis-create-package.sh
 ```
 
+---
+
 ## TrueOS
 
 * Install the dependencies:
@@ -115,6 +161,64 @@ application.name = Phoenicis PlayOnBSD
 ```
 Note : As there is not FreeBSD wine at the moment, the linux wine package will be displayed in the engine window.
 
+---
+
+## Linux From Source
+*Updated by [kreyren](https://github.com/Kreyren) at 24.02.2019*
+
+*May the process be painless and successful for you, amen*
+
+#### Dependencies:
+- git
+- maven
+- java 11+
+- fakeroot
+
+Install dependencies
+
+#### HINT: OpenJDK Compiltion
+```bash
+## OpenJDK 11 Linux/x86 (https://hg.openjdk.java.net/jdk-updates/jdk11u/) based on https://hg.openjdk.java.net/jdk-updates/jdk11u/file/cd1c042181e9/doc/building.md
+# Download source (86.1 MiB)
+wget https://hg.openjdk.java.net/jdk-updates/jdk11u/archive/tip.tar.bz2 -O /tmp/OpenJDK_KREY
+
+# Extract OpenJDK 11
+tar -xpf /tmp/OpenJDK_KREY/tip.tar.bz2 -C /tmp/OpenJDK_KREY/
+
+# Configure OpenJDK
+bash configure
+
+# Compilation
+make images
+
+# Verify your newly build java
+./build/*/images/jdk/bin/java -version`
+
+# Run basic tests 
+make run-test-tier1
+```
+
+#### HINT: OpenJDK precompiled
+OpenJDK 11.0.1_p13 Linux/x86 (https://github.com/AdoptOpenJDK/openjdk11-binaries) based on https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-java/openjdk-bin/openjdk-bin-11.0.1_p13.ebuild
+
+#### Building:
+```bash
+# Clone your phoenicis repository 
+git clone git clone https://github.com/<YOUR_GITHUB_FORK_REPO>/phoenicis.git
+
+# Sanity-check your JAVA_HOME variable
+echo JAVA_HOME
+export JAVA_HOME=PATH # if needed, should be set automatically.
+
+# Build phoenicis
+mvn clean package
+
+# Create packages
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
+```
+
+---
 
 ## Troubleshooting
 
