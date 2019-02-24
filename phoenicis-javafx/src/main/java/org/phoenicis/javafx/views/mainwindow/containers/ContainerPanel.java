@@ -28,10 +28,7 @@ import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
-import org.phoenicis.javafx.components.container.control.ContainerEngineSettingsPanel;
-import org.phoenicis.javafx.components.container.control.ContainerEngineToolsPanel;
-import org.phoenicis.javafx.components.container.control.ContainerOverviewPanel;
-import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
+import org.phoenicis.javafx.components.container.control.*;
 import org.phoenicis.javafx.views.common.widgets.lists.DetailsView;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
@@ -43,6 +40,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ContainerPanel extends DetailsView {
     private final ObjectProperty<WinePrefixContainerDTO> container;
+
+    private final ObjectProperty<ContainerEngineController> containerEngineController;
 
     private final ObjectProperty<Consumer<ContainerDTO>> onDeleteContainer;
 
@@ -56,11 +55,11 @@ public class ContainerPanel extends DetailsView {
 
         this.setTitle(containerEntity.getName());
         this.container = new SimpleObjectProperty<>((WinePrefixContainerDTO) containerEntity);
+        this.containerEngineController = new SimpleObjectProperty<>(containerEngineController);
         this.onDeleteContainer = new SimpleObjectProperty<>();
         this.onOpenFileBrowser = new SimpleObjectProperty<>();
 
-        TabPane tabPane = new TabPane();
-        this.setCenter(tabPane);
+        final TabPane tabPane = new TabPane();
 
         tabPane.getTabs().add(createContainerOverviewTab());
 
@@ -105,8 +104,9 @@ public class ContainerPanel extends DetailsView {
             tabPane.getTabs().add(engineToolsTab);
         }
 
-        ContainerToolsTab toolsTab = new ContainerToolsTab(containerEntity, containerEngineController);
-        tabPane.getTabs().add(toolsTab);
+        tabPane.getTabs().add(createContainerToolsTab());
+
+        this.setCenter(tabPane);
     }
 
     private Tab createContainerOverviewTab() {
@@ -121,6 +121,19 @@ public class ContainerPanel extends DetailsView {
         containerOverviewTab.setClosable(false);
 
         return containerOverviewTab;
+    }
+
+    private Tab createContainerToolsTab() {
+        final ContainerToolsPanel containerToolsPanel = new ContainerToolsPanel();
+
+        containerToolsPanel.containerProperty().bind(this.container);
+        containerToolsPanel.containerEngineControllerProperty().bind(this.containerEngineController);
+
+        final Tab containerToolsTab = new Tab(tr("Tools"), containerToolsPanel);
+
+        containerToolsTab.setClosable(false);
+
+        return containerToolsTab;
     }
 
     public void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
