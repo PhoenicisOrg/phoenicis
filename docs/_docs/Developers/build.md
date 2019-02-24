@@ -14,9 +14,13 @@ sudo apt install git maven openjdk-11-jdk fakeroot
 ```
 
 * Optional: if your distribution does not support Java 10+ **or** if you need to create packages, grab the latest JDK 
-```
+```bash
+ # Linux/x86 (https://jdk.java.net/11/)
+ ## Download OpenJDK-11 build and extract to tmpfs
  wget https://download.java.net/java/GA/jdk11/28/GPL/openjdk-11+28_linux-x64_bin.tar.gz -O /tmp/openjdk-11+28_linux-x64_bin.tar.gz
+ ## Extract OpenJDK-11 to /usr/bin/jvm
  sudo tar xfvz /tmp/openjdk-11+28_linux-x64_bin.tar.gz --directory /usr/lib/jvm
+ ## Export JAVA_HOME variable
  export JAVA_HOME="/usr/lib/jvm/jdk-11"
 ```
  
