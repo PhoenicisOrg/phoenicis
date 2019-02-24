@@ -3,8 +3,8 @@ package org.phoenicis.javafx.components.library.control;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.phoenicis.javafx.components.common.control.DetailsPanelBase;
-import org.phoenicis.javafx.components.library.skin.ShortcutDetailsPanelSkin;
+import org.phoenicis.javafx.components.common.control.ControlBase;
+import org.phoenicis.javafx.components.library.skin.ShortcutInformationPanelSkin;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.function.Consumer;
@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 /**
  * A details panel for the library tab used to show the details for a selected shortcut
  */
-public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel, ShortcutDetailsPanelSkin> {
+public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPanel, ShortcutInformationPanelSkin> {
     /**
      * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
@@ -43,16 +43,15 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
      *
      * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      * @param shortcut The currently shown {@link ShortcutDTO} object
-     * @param onClose The callback for close button clicks
      * @param onShortcutRun The callback method for when a {@link ShortcutDTO} should be executed
      * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
      * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
      */
-    public ShortcutDetailsPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
-            ObjectProperty<Runnable> onClose, ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
+    private ShortcutInformationPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
+            ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop,
             ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall) {
-        super(onClose);
+        super();
 
         this.objectMapper = objectMapper;
         this.shortcut = shortcut;
@@ -64,17 +63,17 @@ public class ShortcutDetailsPanel extends DetailsPanelBase<ShortcutDetailsPanel,
     /**
      * Constructor
      */
-    public ShortcutDetailsPanel() {
+    public ShortcutInformationPanel() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+                new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ShortcutDetailsPanelSkin createSkin() {
-        return new ShortcutDetailsPanelSkin(this);
+    public ShortcutInformationPanelSkin createSkin() {
+        return new ShortcutInformationPanelSkin(this);
     }
 
     public ObjectMapper getObjectMapper() {

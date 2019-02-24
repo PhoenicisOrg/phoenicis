@@ -60,7 +60,7 @@ public class VerbsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"verbs\", \"" + verbId + "\"]);",
+                "include(\"" + verbId + "\");",
                 ignored -> interactiveScriptSession.eval("new Verb()", output -> {
                     final Verb verbObject = (Verb) output;
                     verbObject.install(container);
@@ -109,8 +109,8 @@ public class VerbsManager {
         }
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("verbs")) {
-                    verbs.put(engine.getId(), applicationDTO);
+                if (applicationDTO.getId().equals(engine.getId() + ".verbs")) {
+                    verbs.put(engine.getId().replaceAll("^.*\\.", ""), applicationDTO);
                 }
             }
         }

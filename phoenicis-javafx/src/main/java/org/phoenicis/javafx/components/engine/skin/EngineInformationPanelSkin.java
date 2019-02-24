@@ -16,7 +16,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.phoenicis.engines.Engine;
 import org.phoenicis.engines.dto.EngineDTO;
-import org.phoenicis.javafx.components.common.skin.DetailsPanelBaseSkin;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.engine.control.EngineInformationPanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -29,7 +28,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * {@link DetailsPanelBaseSkin} implementation class used inside the {@link EngineInformationPanel}
+ * A skin implementation class used inside the {@link EngineInformationPanel}
  */
 public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel, EngineInformationPanelSkin> {
     private final Logger LOGGER = LoggerFactory.getLogger(EngineInformationPanelSkin.class);

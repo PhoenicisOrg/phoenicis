@@ -48,11 +48,11 @@
         <project.settings>${project.root}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
         <surefire.version>3.0.0-M3</surefire.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.12</junit.version>
-        <mockito.version>2.24.0</mockito.version>
+        <mockito.version>2.24.5</mockito.version>
         <spring.version>5.1.5.RELEASE</spring.version>
         <formatter-maven-plugin.version>2.8.1</formatter-maven-plugin.version>
     </properties>

@@ -36,20 +36,23 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.components.library.control.LibrarySidebar;
-import org.phoenicis.javafx.components.library.control.ShortcutCreationDetailsPanel;
-import org.phoenicis.javafx.components.library.control.ShortcutDetailsPanel;
-import org.phoenicis.javafx.components.library.control.ShortcutEditingDetailsPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutCreationPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutEditingPanel;
+import org.phoenicis.javafx.components.library.control.ShortcutInformationPanel;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.utils.SwitchBinding;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.library.ShortcutManager;
@@ -63,8 +66,6 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -164,16 +165,9 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.libraryTabs.getStyleClass().add("rightPane");
         this.libraryTabs.getTabs().add(installedApplicationsTab);
 
-        final ShortcutDetailsPanel shortcutDetailsPanel = createShortcutDetailsPanel();
-        final ShortcutCreationDetailsPanel shortcutCreationDetailsPanel = createShortcutCreationPanel();
-        final ShortcutEditingDetailsPanel shortcutEditingDetailsPanel = createShortcutEditingPanel();
-
-        this.selectedShortcut.addListener((Observable invalidation) -> {
-            final ShortcutDTO shortcut = selectedShortcut.getValue();
-
-            shortcutDetailsPanel.setShortcut(shortcut);
-            shortcutEditingDetailsPanel.setShortcut(shortcut);
-        });
+        final DetailsPanel shortcutInformationPanel = createShortcutInformationDetailsPanel();
+        final DetailsPanel shortcutCreationPanel = createShortcutCreationDetailsPanel();
+        final DetailsPanel shortcutEditingPanel = createShortcutEditingDetailsPanel();
 
         final LibrarySidebar sidebar = createLibrarySidebar();
 
@@ -182,9 +176,9 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         this.setCenter(this.libraryTabs);
 
         this.content.rightProperty().bind(SwitchBinding.<LibraryDetailsPanels, Node> builder(selectedDetailsPanel)
-                .withCase(LibraryDetailsPanels.ShortcutDetails, shortcutDetailsPanel)
-                .withCase(LibraryDetailsPanels.ShortcutCreation, shortcutCreationDetailsPanel)
-                .withCase(LibraryDetailsPanels.ShortcutEditing, shortcutEditingDetailsPanel)
+                .withCase(LibraryDetailsPanels.ShortcutDetails, shortcutInformationPanel)
+                .withCase(LibraryDetailsPanels.ShortcutCreation, shortcutCreationPanel)
+                .withCase(LibraryDetailsPanels.ShortcutEditing, shortcutEditingPanel)
                 .withCase(LibraryDetailsPanels.Closed, new SimpleObjectProperty<>())
                 .build());
     }
@@ -238,48 +232,68 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         return sidebar;
     }
 
-    private ShortcutCreationDetailsPanel createShortcutCreationPanel() {
-        final ShortcutCreationDetailsPanel shortcutCreationDetailsPanel = new ShortcutCreationDetailsPanel();
+    private DetailsPanel createShortcutCreationDetailsPanel() {
+        final ShortcutCreationPanel shortcutCreationPanel = new ShortcutCreationPanel();
 
-        shortcutCreationDetailsPanel.setOnClose(this::closeDetailsView);
+        shortcutCreationPanel.setOnCreateShortcut(this::createShortcut);
 
-        shortcutCreationDetailsPanel.setOnCreateShortcut(this::createShortcut);
+        shortcutCreationPanel.setContainersPath(containersPath);
 
-        shortcutCreationDetailsPanel.setContainersPath(containersPath);
+        final DetailsPanel detailsPanel = new DetailsPanel();
 
-        shortcutCreationDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+        detailsPanel.setTitle(tr("Create a new shortcut"));
+        detailsPanel.setContent(shortcutCreationPanel);
+        detailsPanel.setOnClose(this::closeDetailsView);
 
-        return shortcutCreationDetailsPanel;
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return detailsPanel;
     }
 
-    private ShortcutEditingDetailsPanel createShortcutEditingPanel() {
-        final ShortcutEditingDetailsPanel shortcutEditingDetailsPanel = new ShortcutEditingDetailsPanel();
+    private DetailsPanel createShortcutEditingDetailsPanel() {
+        final ShortcutEditingPanel shortcutEditingPanel = new ShortcutEditingPanel();
 
-        shortcutEditingDetailsPanel.setOnClose(this::closeDetailsView);
+        shortcutEditingPanel.setOnShortcutChanged(shortcutManager::updateShortcut);
+        shortcutEditingPanel.setObjectMapper(objectMapper);
 
-        shortcutEditingDetailsPanel.setOnShortcutChanged(shortcutManager::updateShortcut);
+        this.selectedShortcut.addListener((Observable invalidation) -> {
+            final ShortcutDTO shortcut = selectedShortcut.getValue();
 
-        shortcutEditingDetailsPanel.setObjectMapper(objectMapper);
+            shortcutEditingPanel.setShortcut(shortcut);
+        });
 
-        shortcutEditingDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+        final DetailsPanel detailsPanel = new DetailsPanel();
 
-        return shortcutEditingDetailsPanel;
+        detailsPanel.titleProperty()
+                .bind(StringBindings.map(this.selectedShortcut, shortcut -> shortcut.getInfo().getName()));
+        detailsPanel.setContent(shortcutEditingPanel);
+        detailsPanel.setOnClose(this::closeDetailsView);
+
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return detailsPanel;
     }
 
-    private ShortcutDetailsPanel createShortcutDetailsPanel() {
-        final ShortcutDetailsPanel shortcutDetailsPanel = new ShortcutDetailsPanel();
+    private DetailsPanel createShortcutInformationDetailsPanel() {
+        final ShortcutInformationPanel shortcutInformationPanel = new ShortcutInformationPanel();
 
-        shortcutDetailsPanel.setOnClose(this::closeDetailsView);
+        shortcutInformationPanel.shortcutProperty().bind(this.selectedShortcut);
+        shortcutInformationPanel.setObjectMapper(objectMapper);
 
-        shortcutDetailsPanel.setOnShortcutRun(this::runShortcut);
-        shortcutDetailsPanel.setOnShortcutStop(this::stopShortcut);
-        shortcutDetailsPanel.setOnShortcutUninstall(this::uninstallShortcut);
+        shortcutInformationPanel.setOnShortcutRun(this::runShortcut);
+        shortcutInformationPanel.setOnShortcutStop(this::stopShortcut);
+        shortcutInformationPanel.setOnShortcutUninstall(this::uninstallShortcut);
 
-        shortcutDetailsPanel.setObjectMapper(objectMapper);
+        final DetailsPanel detailsPanel = new DetailsPanel();
 
-        shortcutDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+        detailsPanel.titleProperty()
+                .bind(StringBindings.map(this.selectedShortcut, shortcut -> shortcut.getInfo().getName()));
+        detailsPanel.setContent(shortcutInformationPanel);
+        detailsPanel.setOnClose(this::closeDetailsView);
 
-        return shortcutDetailsPanel;
+        detailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
+
+        return detailsPanel;
     }
 
     public void populate(List<ShortcutCategoryDTO> categories) {
@@ -331,8 +345,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        final String scriptInclude = "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId
-                + "\"]);";
+        final String scriptInclude = "include(\"engines." + engineId + "\".shortcuts." + engineId + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
@@ -368,7 +381,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     }
 
     private void runShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.run(shortcut, Collections.emptyList(), e -> {
+        shortcutRunner.run(shortcut, Collections.emptyList(), e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -376,11 +389,11 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void stopShortcut(ShortcutDTO shortcut) {
-        shortcutRunner.stop(shortcut, e -> {
+        shortcutRunner.stop(shortcut, e -> Platform.runLater(() -> {
             final ErrorDialog errorDialog = ErrorDialog.builder()
                     .withMessage(tr("Error"))
                     .withException(e)
@@ -388,7 +401,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                     .build();
 
             errorDialog.showAndWait();
-        });
+        }));
     }
 
     private void uninstallShortcut(ShortcutDTO shortcut) {

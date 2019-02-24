@@ -72,6 +72,11 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
+    public ScriptDTO getScript(String id) {
+        return this.cachedRepository.getScript(id);
+    }
+
+    @Override
     public void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
 

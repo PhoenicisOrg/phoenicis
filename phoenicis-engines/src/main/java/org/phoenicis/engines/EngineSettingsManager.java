@@ -53,7 +53,7 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"settings\", \"" + settingId + "\"]); new Setting();",
+                "include(\"engines." + engineId + ".settings." + settingId + "\"); new Setting();",
                 output -> {
                     final EngineSetting setting = (EngineSetting) output;
                     doneCallback.accept(setting);
@@ -91,12 +91,12 @@ public class EngineSettingsManager {
         script.append("(function () {\n");
         script.append("var settings = {};\n");
         for (CategoryDTO engine : categoryDTOS) {
-            final String engineId = engine.getId();
+            final String engineId = engine.getId().replaceAll("^.*\\.", "");
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("settings")) {
+                if (applicationDTO.getId().equals("engines." + engineId + ".settings")) {
                     for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                        script.append("include([\"engines\", \"" + engineId + "\", \"settings\", \"" + scriptDTO.getId()
-                                + "\"]);\n");
+                        script.append("include(\"engines." + engineId + ".settings."
+                                + scriptDTO.getId().replaceAll("^.*\\.", "") + "\");\n");
                         script.append("if (!(\"" + engineId + "\" in settings))\n");
                         script.append("{\n");
                         script.append("settings[\"" + engineId + "\"] = new java.util.ArrayList();\n");
