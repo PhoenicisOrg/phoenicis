@@ -31,12 +31,12 @@ public class ContainerToolsPanel extends ControlBase<ContainerToolsPanel, Contai
     /**
      * Constructor
      *
-     * @param container                 The container
+     * @param container The container
      * @param containerEngineController The container engine controller used to execute a tool inside a container
-     * @param lockTools                 A boolean signifying whether all tool buttons should be locked
+     * @param lockTools A boolean signifying whether all tool buttons should be locked
      */
     public ContainerToolsPanel(ObjectProperty<ContainerDTO> container,
-                               ObjectProperty<ContainerEngineController> containerEngineController, BooleanProperty lockTools) {
+            ObjectProperty<ContainerEngineController> containerEngineController, BooleanProperty lockTools) {
         super();
 
         this.container = container;
