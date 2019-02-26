@@ -11,7 +11,7 @@ import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
-import org.phoenicis.javafx.components.application.control.ApplicationView;
+import org.phoenicis.javafx.components.application.control.ApplicationsView;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.PhoenicisViewSkin;
@@ -29,15 +29,15 @@ import java.util.Comparator;
 import java.util.Optional;
 
 /**
- * A skin implementation for the {@link ApplicationView} component
+ * A skin implementation for the {@link ApplicationsView} component
  */
-public class ApplicationViewSkin extends PhoenicisViewSkin<ApplicationView, ApplicationViewSkin> {
+public class ApplicationsViewSkin extends PhoenicisViewSkin<ApplicationsView, ApplicationsViewSkin> {
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    public ApplicationViewSkin(ApplicationView control) {
+    public ApplicationsViewSkin(ApplicationsView control) {
         super(control);
     }
 

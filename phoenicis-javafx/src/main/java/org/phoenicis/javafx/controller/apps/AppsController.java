@@ -19,7 +19,7 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.components.application.control.ApplicationView;
+import org.phoenicis.javafx.components.application.control.ApplicationsView;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -30,12 +30,12 @@ import java.util.List;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
-    private final ApplicationView view;
+    private final ApplicationsView view;
 
     private Runnable onAppLoaded = () -> {
     };
 
-    public AppsController(ApplicationView view, RepositoryManager repositoryManager) {
+    public AppsController(ApplicationsView view, RepositoryManager repositoryManager) {
         this.view = view;
 
         repositoryManager.addCallbacks(this::populate, this::showError);
@@ -45,7 +45,7 @@ public class AppsController {
         this.onAppLoaded = onAppLoaded;
     }
 
-    public ApplicationView getView() {
+    public ApplicationsView getView() {
         return view;
     }
 

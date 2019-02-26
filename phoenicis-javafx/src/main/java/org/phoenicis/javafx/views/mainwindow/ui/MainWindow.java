@@ -23,7 +23,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
-import org.phoenicis.javafx.components.application.control.ApplicationView;
+import org.phoenicis.javafx.components.application.control.ApplicationsView;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
@@ -42,7 +42,7 @@ public class MainWindow extends Stage {
 
     public MainWindow(String applicationName,
             LibraryView library,
-            ApplicationView apps,
+            ApplicationsView apps,
             EnginesView engines,
             ContainersView containers,
             InstallationsView installations,
@@ -74,7 +74,7 @@ public class MainWindow extends Stage {
         this.show();
     }
 
-    private Tab createApplicationsTab(ApplicationView apps) {
+    private Tab createApplicationsTab(ApplicationsView apps) {
         final Tab applicationsTab = new Tab(tr("Apps"), apps);
 
         applicationsTab.setClosable(false);

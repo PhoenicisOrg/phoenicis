@@ -4,7 +4,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.application.skin.ApplicationViewSkin;
+import javafx.scene.control.Tab;
+import org.phoenicis.javafx.components.application.skin.ApplicationsViewSkin;
 import org.phoenicis.javafx.components.common.control.PhoenicisView;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
@@ -15,9 +16,22 @@ import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 /**
- * The component shown inside the Phoenicis "Applications" tab
+ * The {@link ApplicationsView} is the core component of the Phoenicis JavaFX GUI.
+ * <p>
+ * It encloses common functionality (e.g. the library) inside a {@link Tab} which is presented in the main menu.
+ * Every {@link ApplicationsView} is split into three basic components: a sidebar, the content and an optional details
+ * panel.
+ * <p>
+ * The Sidebar is shown on the left side. It shall allow for a quick navigation in the categories which structure the
+ * content.
+ * <p>
+ * The content is the main content which presents the functionality of this particular {@link ApplicationsView}.
+ * <p>
+ * The details panel is an optional panel on the right side which can be opened to show details about currently selected
+ * items
+ * in the content section.
  */
-public class ApplicationView extends PhoenicisView<ApplicationView, ApplicationViewSkin> {
+public class ApplicationsView extends PhoenicisView<ApplicationsView, ApplicationsViewSkin> {
     /**
      * The theme manager
      */
@@ -55,45 +69,25 @@ public class ApplicationView extends PhoenicisView<ApplicationView, ApplicationV
 
     /**
      * Constructor
-     *
-     * @param themeManager The theme manager
-     * @param filter The applications filter
-     * @param javaFxSettingsManager The JavaFX settings manager
-     * @param selectedListWidget The currently selected list widget
-     * @param categories The shown application categories
-     * @param scriptInterpreter The script interpreter
-     * @param selectedApplication The currently selected application
      */
-    public ApplicationView(ObjectProperty<ThemeManager> themeManager, ObjectProperty<ApplicationFilter> filter,
-            ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager,
-            ObjectProperty<ListWidgetType> selectedListWidget, ObservableList<CategoryDTO> categories,
-            ObjectProperty<ScriptInterpreter> scriptInterpreter, ObjectProperty<ApplicationDTO> selectedApplication) {
+    public ApplicationsView() {
         super();
 
-        this.themeManager = themeManager;
-        this.filter = filter;
-        this.javaFxSettingsManager = javaFxSettingsManager;
-        this.selectedListWidget = selectedListWidget;
-        this.categories = categories;
-        this.scriptInterpreter = scriptInterpreter;
-        this.selectedApplication = selectedApplication;
-    }
-
-    /**
-     * Constructor
-     */
-    public ApplicationView() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), FXCollections.observableArrayList(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>());
+        this.themeManager = new SimpleObjectProperty<>();
+        this.filter = new SimpleObjectProperty<>();
+        this.javaFxSettingsManager = new SimpleObjectProperty<>();
+        this.selectedListWidget = new SimpleObjectProperty<>();
+        this.categories = FXCollections.observableArrayList();
+        this.scriptInterpreter = new SimpleObjectProperty<>();
+        this.selectedApplication = new SimpleObjectProperty<>();
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public ApplicationViewSkin createSkin() {
-        return new ApplicationViewSkin(this);
+    public ApplicationsViewSkin createSkin() {
+        return new ApplicationsViewSkin(this);
     }
 
     public ThemeManager getThemeManager() {

@@ -18,7 +18,7 @@
 
 package org.phoenicis.javafx.views;
 
-import org.phoenicis.javafx.components.application.control.ApplicationView;
+import org.phoenicis.javafx.components.application.control.ApplicationsView;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
@@ -79,20 +79,20 @@ public class ViewsConfiguration {
     private RepositoryConfiguration repositoryConfiguration;
 
     @Bean
-    public ApplicationView viewApps() {
-        final ApplicationView applicationView = new ApplicationView();
+    public ApplicationsView viewApps() {
+        final ApplicationsView applicationsView = new ApplicationsView();
 
-        applicationView.setThemeManager(themeConfiguration.themeManager());
-        applicationView.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
-        applicationView.setScriptInterpreter(scriptsConfiguration.scriptInterpreter());
+        applicationsView.setThemeManager(themeConfiguration.themeManager());
+        applicationsView.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
+        applicationsView.setScriptInterpreter(scriptsConfiguration.scriptInterpreter());
 
         // TODO: remove the ApplicationFilter class
         final ApplicationFilter applicationFilter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
                 javaFxSettingsConfiguration.javaFxSettingsManager().getFuzzySearchRatio());
 
-        applicationView.setFilter(applicationFilter);
+        applicationsView.setFilter(applicationFilter);
 
-        return applicationView;
+        return applicationsView;
     }
 
     @Bean
