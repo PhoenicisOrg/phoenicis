@@ -1,17 +1,16 @@
 package org.phoenicis.javafx.themes;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.lang.builder.ToStringBuilder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Optional;
 
 /**
  * A theme located inside the classpath of Phoenicis
  */
 public class ClasspathTheme extends Theme {
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClasspathTheme.class);
-
     /**
      * The classpath to the theme
      */
@@ -34,17 +33,19 @@ public class ClasspathTheme extends Theme {
      * {@inheritDoc}
      */
     @Override
-    public URI getResourceUrl(String resource) {
+    public Optional<URI> getResourceUri(String resource) {
         final String resourcePath = this.classpathToTheme.endsWith("/") ? this.classpathToTheme + resource
                 : this.classpathToTheme + "/" + resource;
 
-        try {
-            return getClass().getResource(resourcePath).toURI();
-        } catch (URISyntaxException e) {
-            LOGGER.error(String.format("Couldn't find resource '%s'", resourcePath), e);
+        final URL resourceUrl = getClass().getResource(resourcePath);
 
-            return null;
-        }
+        return Optional.ofNullable(resourceUrl).map(url -> {
+            try {
+                return url.toURI();
+            } catch (URISyntaxException e) {
+                return null;
+            }
+        });
     }
 
     /**
@@ -52,6 +53,10 @@ public class ClasspathTheme extends Theme {
      */
     @Override
     public String toString() {
-        return getName();
+        return new ToStringBuilder(this)
+                .append("name", getName())
+                .append("shortName", getShortName())
+                .append("classpathToTheme", this.classpathToTheme)
+                .toString();
     }
 }
