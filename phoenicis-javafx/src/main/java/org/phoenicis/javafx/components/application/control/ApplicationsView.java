@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Tab;
 import org.phoenicis.javafx.components.application.skin.ApplicationsViewSkin;
 import org.phoenicis.javafx.components.common.control.PhoenicisView;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
@@ -16,20 +15,7 @@ import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 /**
- * The {@link ApplicationsView} is the core component of the Phoenicis JavaFX GUI.
- * <p>
- * It encloses common functionality (e.g. the library) inside a {@link Tab} which is presented in the main menu.
- * Every {@link ApplicationsView} is split into three basic components: a sidebar, the content and an optional details
- * panel.
- * <p>
- * The Sidebar is shown on the left side. It shall allow for a quick navigation in the categories which structure the
- * content.
- * <p>
- * The content is the main content which presents the functionality of this particular {@link ApplicationsView}.
- * <p>
- * The details panel is an optional panel on the right side which can be opened to show details about currently selected
- * items
- * in the content section.
+ * The component shown inside the Phoenicis "Applications" tab
  */
 public class ApplicationsView extends PhoenicisView<ApplicationsView, ApplicationsViewSkin> {
     /**
