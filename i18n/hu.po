@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-23 19:50+0000\n"
-"PO-Revision-Date: 2019-02-24 19:02\n"
+"POT-Creation-Date: 2019-02-26 16:38+0000\n"
+"PO-Revision-Date: 2019-02-26 22:13\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -26,7 +26,6 @@ msgid "Stack trace:"
 msgstr "Veremkiíratás:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:156
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:75
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:386
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:398
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:143
@@ -35,6 +34,7 @@ msgstr "Veremkiíratás:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:74
 msgid "Error"
 msgstr "Hiba"
 
@@ -149,30 +149,17 @@ msgstr "Válassza ki a helyet az osztályútvonal adattárolót"
 msgid "Containers"
 msgstr "Tárolók"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
-msgid "Tools"
-msgstr "Eszközök"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:57
-msgid "Run executable"
-msgstr "Végrehajtható fájlfuttatás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
-msgid "Choose executable..."
-msgstr "Végrehajtható fájlválasztás…"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:73
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:39
 msgid "Engine Settings"
 msgstr "Szolgáltatás beállításai"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:86
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:43
 msgid "Verbs"
 msgstr "Igék"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:101
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:100
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
 msgid "Engine tools"
 msgstr "Szolgáltatás eszközök"
@@ -181,6 +168,11 @@ msgstr "Szolgáltatás eszközök"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
 msgid "Information"
 msgstr "Tudnivalók"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:132
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:35
+msgid "Tools"
+msgstr "Eszközök"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
 msgid "Retry"
@@ -408,6 +400,14 @@ msgstr "Hiba történt az igék telepítése közben"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:105
 msgid "Clear selection"
 msgstr "Kijelölés törlése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:55
+msgid "Run executable"
+msgstr "Végrehajtható fájlfuttatás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:61
+msgid "Choose executable..."
+msgstr "Végrehajtható fájlválasztás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
