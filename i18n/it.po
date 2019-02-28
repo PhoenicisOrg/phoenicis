@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-23 19:50+0000\n"
-"PO-Revision-Date: 2019-02-25 22:12\n"
+"POT-Creation-Date: 2019-02-26 16:38+0000\n"
+"PO-Revision-Date: 2019-02-28 03:21\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -26,7 +26,6 @@ msgid "Stack trace:"
 msgstr "Stack trace:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:156
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:75
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:386
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:398
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:143
@@ -35,6 +34,7 @@ msgstr "Stack trace:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:74
 msgid "Error"
 msgstr "Errore"
 
@@ -149,30 +149,17 @@ msgstr "Scegliere la posizione del tuo repository di classpath"
 msgid "Containers"
 msgstr "Containers"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:36
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:48
-msgid "Tools"
-msgstr "Strumenti"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:57
-msgid "Run executable"
-msgstr "Eseguire l'eseguibile"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerToolsTab.java:62
-msgid "Choose executable..."
-msgstr "Scegliere il file eseguibile..."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:73
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:72
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:39
 msgid "Engine Settings"
 msgstr "Impostazioni motore"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:86
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:43
 msgid "Verbs"
 msgstr "Verbi"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:101
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:100
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
 msgid "Engine tools"
 msgstr "Strumenti motore"
@@ -181,6 +168,11 @@ msgstr "Strumenti motore"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
 msgid "Information"
 msgstr "Informazioni"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/containers/ContainerPanel.java:132
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:35
+msgid "Tools"
+msgstr "Strumenti"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
 msgid "Retry"
@@ -408,6 +400,14 @@ msgstr "Errore durante l'installazione dei verbi"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:105
 msgid "Clear selection"
 msgstr "Cancella selezione"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:55
+msgid "Run executable"
+msgstr "Eseguire l'eseguibile"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:61
+msgid "Choose executable..."
+msgstr "Scegliere il file eseguibile..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
