@@ -27,8 +27,8 @@ sudo apt install git maven openjdk-11-jdk fakeroot
 git clone https://github.com/<YOUR_GITHUB_FORK_REPO>/phoenicis.git
 
 # Sanity-check your JAVA_HOME variable
-echo JAVA_HOME
-export JAVA_HOME=PATH # if needed, should be set automatically.
+echo $JAVA_HOME
+export JAVA_HOME=<path_to_java> # if needed, should be set automatically
 
 # Build phoenicis
 mvn clean package
@@ -62,8 +62,8 @@ emerge git maven openjdk fakeroot
 git clone git clone https://github.com/<YOUR_GITHUB_FORK_REPO>/phoenicis.git
 
 # Sanity-check your JAVA_HOME variable
-echo JAVA_HOME
-export JAVA_HOME=PATH # if needed, should be set automatically.
+echo $JAVA_HOME
+export JAVA_HOME=<path_to_java> # if needed, should be set automatically
 
 # Build phoenicis
 mvn clean package
