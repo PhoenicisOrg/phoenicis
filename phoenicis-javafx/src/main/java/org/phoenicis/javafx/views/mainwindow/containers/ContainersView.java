@@ -25,12 +25,12 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
@@ -77,21 +77,30 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
 
     private final ObjectProperty<ContainerEngineController> containerEngineController;
 
-    private final ObservableList<EngineSetting> engineSettings;
-
     private final ObjectProperty<VerbsManager> verbsManager;
 
-    private final ObjectProperty<ApplicationDTO> verbs;
-
     private final ObjectProperty<EngineToolsManager> engineToolsManager;
-
-    private final ObjectProperty<ApplicationDTO> engineTools;
 
     private final ObjectProperty<Consumer<ContainerDTO>> onDeleteContainer;
 
     private final ObjectProperty<Consumer<ContainerDTO>> onOpenFileBrowser;
 
     private final ObjectProperty<Consumer<ContainerDTO>> onSelectContainer;
+
+    /**
+     * The engine settings per engine
+     */
+    private final ObservableMap<String, List<EngineSetting>> engineSettings;
+
+    /**
+     * The verbs per engine
+     */
+    private final ObservableMap<String, ApplicationDTO> verbs;
+
+    /**
+     * The engine tools per engine
+     */
+    private final ObservableMap<String, ApplicationDTO> engineTools;
 
     private final CombinedListWidget<ContainerDTO> availableContainers;
 
@@ -110,11 +119,11 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
         this.categories = FXCollections.observableArrayList();
         this.container = new SimpleObjectProperty<>();
         this.containerEngineController = new SimpleObjectProperty<>();
-        this.engineSettings = FXCollections.observableArrayList();
+        this.engineSettings = FXCollections.observableHashMap();
         this.verbsManager = new SimpleObjectProperty<>();
-        this.verbs = new SimpleObjectProperty<>();
+        this.verbs = FXCollections.observableHashMap();
         this.engineToolsManager = new SimpleObjectProperty<>();
-        this.engineTools = new SimpleObjectProperty<>();
+        this.engineTools = FXCollections.observableHashMap();
 
         this.onDeleteContainer = new SimpleObjectProperty<>();
         this.onOpenFileBrowser = new SimpleObjectProperty<>();
@@ -193,14 +202,25 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
 
         containerInformationPanel.containerProperty().bind(containerProperty());
         containerInformationPanel.containerEngineControllerProperty().bind(containerEngineControllerProperty());
-        Bindings.bindContent(containerInformationPanel.getEngineSettings(), getEngineSettings());
         containerInformationPanel.verbsManagerProperty().bind(verbsManagerProperty());
-        containerInformationPanel.verbsProperty().bind(verbsProperty());
         containerInformationPanel.engineToolsManagerProperty().bind(engineToolsManagerProperty());
-        containerInformationPanel.engineToolsProperty().bind(engineToolsProperty());
 
         containerInformationPanel.onDeleteContainerProperty().bind(onDeleteContainerProperty());
         containerInformationPanel.onOpenFileBrowserProperty().bind(onOpenFileBrowserProperty());
+
+        getEngineSettings().addListener((Observable invalidation) -> updateEngineSettings(containerInformationPanel));
+        getVerbs().addListener((Observable invalidation) -> updateVerbs(containerInformationPanel));
+        getEngineTools().addListener((Observable invalidation) -> updateEngineTools(containerInformationPanel));
+
+        containerProperty().addListener((Observable invalidation) -> {
+            updateEngineSettings(containerInformationPanel);
+            updateVerbs(containerInformationPanel);
+            updateEngineTools(containerInformationPanel);
+        });
+
+        updateEngineSettings(containerInformationPanel);
+        updateVerbs(containerInformationPanel);
+        updateEngineTools(containerInformationPanel);
 
         final DetailsPanel containerDetailsPanel = new DetailsPanel();
 
@@ -211,6 +231,40 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
         containerDetailsPanel.prefWidthProperty().bind(content.widthProperty().divide(3));
 
         return containerDetailsPanel;
+    }
+
+    private void updateEngineSettings(final ContainerInformationPanel containerInformationPanel) {
+        ObservableMap<String, List<EngineSetting>> engineSettings = getEngineSettings();
+        ContainerDTO container = getContainer();
+
+        if (container != null && engineSettings.containsKey(container.getEngine().toLowerCase())) {
+            containerInformationPanel.getEngineSettings()
+                    .setAll(engineSettings.get(container.getEngine().toLowerCase()));
+        } else {
+            containerInformationPanel.getEngineSettings().clear();
+        }
+    }
+
+    private void updateVerbs(final ContainerInformationPanel containerInformationPanel) {
+        ObservableMap<String, ApplicationDTO> verbs = getVerbs();
+        ContainerDTO container = getContainer();
+
+        if (container != null && verbs.containsKey(container.getEngine().toLowerCase())) {
+            containerInformationPanel.setVerbs(verbs.get(container.getEngine().toLowerCase()));
+        } else {
+            containerInformationPanel.setVerbs(null);
+        }
+    }
+
+    private void updateEngineTools(final ContainerInformationPanel containerInformationPanel) {
+        ObservableMap<String, ApplicationDTO> engineTools = getEngineTools();
+        ContainerDTO container = getContainer();
+
+        if (container != null && engineTools.containsKey(container.getEngine().toLowerCase())) {
+            containerInformationPanel.setEngineTools(engineTools.get(container.getEngine().toLowerCase()));
+        } else {
+            containerInformationPanel.setEngineTools(null);
+        }
     }
 
     /**
@@ -244,7 +298,7 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
         // TODO: separate details panel and controller
         Optional.ofNullable(getOnSelectContainer()).ifPresent(consumer -> consumer.accept(container));
 
-        setContainer((WinePrefixContainerDTO) container);
+        setContainer(container);
     }
 
     /**
@@ -254,6 +308,22 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
      */
     public void setOnSelectContainer(Consumer<ContainerDTO> onSelectContainer) {
         this.onSelectContainer.setValue(onSelectContainer);
+    }
+
+    public ListWidgetType getSelectedListWidget() {
+        return this.selectedListWidget.get();
+    }
+
+    public ObjectProperty<ListWidgetType> selectedListWidgetProperty() {
+        return this.selectedListWidget;
+    }
+
+    public void setSelectedListWidget(ListWidgetType selectedListWidget) {
+        this.selectedListWidget.set(selectedListWidget);
+    }
+
+    public ObservableList<ContainerCategoryDTO> getCategories() {
+        return this.categories;
     }
 
     public ContainerDTO getContainer() {
@@ -280,10 +350,6 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
         this.containerEngineController.set(containerEngineController);
     }
 
-    public ObservableList<EngineSetting> getEngineSettings() {
-        return this.engineSettings;
-    }
-
     public VerbsManager getVerbsManager() {
         return this.verbsManager.get();
     }
@@ -296,18 +362,6 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
         this.verbsManager.set(verbsManager);
     }
 
-    public ApplicationDTO getVerbs() {
-        return this.verbs.get();
-    }
-
-    public ObjectProperty<ApplicationDTO> verbsProperty() {
-        return this.verbs;
-    }
-
-    public void setVerbs(ApplicationDTO verbs) {
-        this.verbs.set(verbs);
-    }
-
     public EngineToolsManager getEngineToolsManager() {
         return this.engineToolsManager.get();
     }
@@ -318,18 +372,6 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
 
     public void setEngineToolsManager(EngineToolsManager engineToolsManager) {
         this.engineToolsManager.set(engineToolsManager);
-    }
-
-    public ApplicationDTO getEngineTools() {
-        return this.engineTools.get();
-    }
-
-    public ObjectProperty<ApplicationDTO> engineToolsProperty() {
-        return this.engineTools;
-    }
-
-    public void setEngineTools(ApplicationDTO engineTools) {
-        this.engineTools.set(engineTools);
     }
 
     public Consumer<ContainerDTO> getOnDeleteContainer() {
@@ -362,5 +404,17 @@ public class ContainersView extends MainWindowView<ContainerSidebar> {
 
     public ObjectProperty<Consumer<ContainerDTO>> onSelectContainerProperty() {
         return this.onSelectContainer;
+    }
+
+    public ObservableMap<String, List<EngineSetting>> getEngineSettings() {
+        return this.engineSettings;
+    }
+
+    public ObservableMap<String, ApplicationDTO> getVerbs() {
+        return this.verbs;
+    }
+
+    public ObservableMap<String, ApplicationDTO> getEngineTools() {
+        return this.engineTools;
     }
 }

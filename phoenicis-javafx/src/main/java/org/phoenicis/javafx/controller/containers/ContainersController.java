@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller.containers;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableMap;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.engines.EngineSetting;
@@ -35,9 +36,7 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -49,27 +48,12 @@ public class ContainersController {
     private final EngineToolsManager engineToolsManager;
     private final VerbsManager verbsManager;
 
-    /**
-     * The engine settings per engine
-     */
-    private Map<String, List<EngineSetting>> engineSettings;
-
-    /**
-     * The verbs per engine
-     */
-    private Map<String, ApplicationDTO> verbs;
-
-    /**
-     * The engine tools per engine
-     */
-    private Map<String, ApplicationDTO> engineTools;
-
     private boolean firstViewSelection = true;
 
     public ContainersController(ContainersView containersView, ContainersManager containersManager,
             ContainerEngineController containerEngineController, RepositoryManager repositoryManager,
-            EngineSettingsManager engineSettingsManager,
-            VerbsManager verbsManager, EngineToolsManager engineToolsManager) {
+            EngineSettingsManager engineSettingsManager, VerbsManager verbsManager,
+            EngineToolsManager engineToolsManager) {
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
@@ -79,7 +63,6 @@ public class ContainersController {
         this.containersView.setOnSelectionChanged(event -> {
             if (this.containersView.isSelected()) {
                 if (this.firstViewSelection) {
-                    this.engineSettings = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateEngineSettings,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -91,7 +74,6 @@ public class ContainersController {
                                 errorDialog.showAndWait();
                             }));
 
-                    this.verbs = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateVerbs,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -103,7 +85,6 @@ public class ContainersController {
                                 errorDialog.showAndWait();
                             }));
 
-                    this.engineTools = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateEngineTools,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -132,9 +113,6 @@ public class ContainersController {
             final String engineId = container.getEngine().toLowerCase();
 
             this.containersView.setContainer(container);
-            this.containersView.getEngineSettings().setAll(engineSettings.getOrDefault(engineId, List.of()));
-            this.containersView.setVerbs(verbs.get(engineId));
-            this.containersView.setEngineTools(engineTools.get(engineId));
         });
 
         this.containersView.setOnDeleteContainer(container -> {
@@ -208,7 +186,13 @@ public class ContainersController {
 
     private void updateEngineSettings(RepositoryDTO repositoryDTO) {
         this.engineSettingsManager.fetchAvailableEngineSettings(repositoryDTO,
-                engineSettings -> Platform.runLater(() -> this.engineSettings = engineSettings),
+                engineSettings -> Platform.runLater(() -> {
+                    final ObservableMap<String, List<EngineSetting>> engineSettingsMap = this.containersView
+                            .getEngineSettings();
+
+                    engineSettingsMap.clear();
+                    engineSettingsMap.putAll(engineSettings);
+                }),
                 e -> Platform.runLater(() -> {
                     final ErrorDialog errorDialog = ErrorDialog.builder()
                             .withMessage(tr("Loading engine tools failed."))
@@ -221,12 +205,20 @@ public class ContainersController {
     }
 
     private void updateVerbs(RepositoryDTO repositoryDTO) {
-        this.verbsManager.fetchAvailableVerbs(repositoryDTO,
-                verbs -> this.verbs = verbs);
+        this.verbsManager.fetchAvailableVerbs(repositoryDTO, verbs -> Platform.runLater(() -> {
+            final ObservableMap<String, ApplicationDTO> verbsMap = this.containersView.getVerbs();
+
+            verbsMap.clear();
+            verbsMap.putAll(verbs);
+        }));
     }
 
     private void updateEngineTools(RepositoryDTO repositoryDTO) {
-        this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
-                engineTools -> this.engineTools = engineTools);
+        this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO, engineTools -> Platform.runLater(() -> {
+            final ObservableMap<String, ApplicationDTO> engineToolsMap = this.containersView.getEngineTools();
+
+            engineToolsMap.clear();
+            engineToolsMap.putAll(engineTools);
+        }));
     }
 }

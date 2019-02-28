@@ -24,27 +24,6 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class ContainerInformationPanelSkin extends SkinBase<ContainerInformationPanel, ContainerInformationPanelSkin> {
     /**
-     * The binding for the engine settings tab.
-     * This field is required to handle the {@link java.lang.ref.WeakReference} instances used by the {@link Bindings}
-     * methods correctly
-     */
-    private final ObjectBinding<Tab> engineSettingsBinding;
-
-    /**
-     * The binding for the verbs tab.
-     * This field is required to handle the {@link java.lang.ref.WeakReference} instances used by the {@link Bindings}
-     * methods correctly
-     */
-    private final ObjectBinding<Tab> verbsBinding;
-
-    /**
-     * The binding for the engine tools tab.
-     * This field is required to handle the {@link java.lang.ref.WeakReference} instances used by the {@link Bindings}
-     * methods correctly
-     */
-    private final ObjectBinding<Tab> engineToolsBinding;
-
-    /**
      * An {@link ObservableList} containing all shown tabs.
      * This field is required to handle the {@link java.lang.ref.WeakReference} instances used by the {@link Bindings}
      * methods correctly
@@ -59,23 +38,27 @@ public class ContainerInformationPanelSkin extends SkinBase<ContainerInformation
     public ContainerInformationPanelSkin(ContainerInformationPanel control) {
         super(control);
 
+        // initialise the "Overview" tab
         final ObservableList<Tab> overviewTab = FXCollections.singletonObservableList(createContainerOverviewTab());
 
-        this.engineSettingsBinding = Bindings.when(Bindings.isNotEmpty(getControl().getEngineSettings()))
+        // initialise the "Engine settings" tab
+        final ObjectBinding<Tab> engineSettingsBinding = Bindings
+                .when(Bindings.isNotEmpty(getControl().getEngineSettings()))
                 .then(createContainerEngineSettingsTab()).otherwise(new SimpleObjectProperty<>());
         final ObservableList<Tab> engineSettingsTab = CollectionBindings.mapToList(engineSettingsBinding,
                 engineSettings -> Optional.ofNullable(engineSettings).map(List::of).orElse(List.of()));
 
-        this.verbsBinding = Bindings.when(Bindings.isNotNull(getControl().verbsProperty()))
-                .then(createContainerVerbsTab()).otherwise(new SimpleObjectProperty<>());
-        final ObservableList<Tab> verbsTab = CollectionBindings.mapToList(verbsBinding,
-                verbs -> Optional.ofNullable(verbs).map(List::of).orElse(List.of()));
+        // initialise the "Verbs" tab
+        final Tab verbsTabInstance = createContainerVerbsTab();
+        final ObservableList<Tab> verbsTab = CollectionBindings.mapToList(getControl().verbsProperty(),
+                verbs -> verbs != null ? List.of(verbsTabInstance) : List.of());
 
-        this.engineToolsBinding = Bindings.when(Bindings.isNotNull(getControl().engineToolsProperty()))
-                .then(createContainerEngineToolsTab()).otherwise(new SimpleObjectProperty<>());
-        final ObservableList<Tab> engineToolsTab = CollectionBindings.mapToList(engineToolsBinding,
-                engineTools -> Optional.ofNullable(engineTools).map(List::of).orElse(List.of()));
+        // initialise the "Engine tools" tab
+        final Tab engineToolsTabInstance = createContainerEngineToolsTab();
+        final ObservableList<Tab> engineToolsTab = CollectionBindings.mapToList(getControl().engineToolsProperty(),
+                engineTools -> engineTools != null ? List.of(engineToolsTabInstance) : List.of());
 
+        // initialise the "Tools" tab
         final ObservableList<Tab> toolsTab = FXCollections.singletonObservableList(createContainerToolsTab());
 
         this.concatenatedTabs = ConcatenatedList.create(overviewTab, engineSettingsTab, verbsTab, engineToolsTab,
@@ -88,6 +71,7 @@ public class ContainerInformationPanelSkin extends SkinBase<ContainerInformation
     @Override
     public void initialise() {
         final TabPane container = new TabPane();
+        container.getStyleClass().add("container-information-panel");
 
         Bindings.bindContent(container.getTabs(), this.concatenatedTabs);
 
