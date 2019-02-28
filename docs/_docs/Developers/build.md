@@ -39,12 +39,6 @@ cd phoenicis-dist/src/scripts
 bash phoenicis-create-package.sh
 ```
 
-#### OPTIONAL: Copypasta method
-```bash
-echo "INPUT: Enter your github repository URI
-eg. https://github.com/Kreyren/phoenicis.git" && read KREYRENNN && sudo apt update && sudo apt install git maven openjdk-11-jdk fakeroot && cd $HOME && git clone $KREYRENNN && cd phoenicis && mvn clean package && cd phoenicis-dist/src/scripts && bash phoenicis-create-package.sh
-```
-
 ---
 
 ## Gentoo Linux
@@ -79,12 +73,6 @@ mvn clean package
 # Create packages
 cd phoenicis-dist/src/scripts
 bash phoenicis-create-package.sh
-```
-
-#### OPTIONAL: Copypasta method
-```bash
-echo "INPUT: Enter your github repository URI
-eg. https://github.com/Kreyren/phoenicis.git" && read KREYRENNN && emerge --sync && emerge git maven openjdk fakeroot && cd $HOME && git clone $KREYRENNN && cd phoenicis && mvn clean package && cd phoenicis-dist/src/scripts && bash phoenicis-create-package.sh
 ```
 
 ---
