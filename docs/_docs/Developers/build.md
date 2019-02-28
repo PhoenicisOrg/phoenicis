@@ -6,7 +6,6 @@ toc: true
 ---
 
 ## Ubuntu 18.04/18.10
-*Updated by [kreyren](https://github.com/Kreyren) at 24.02.2019*
 
 Fork https://github.com/PhoenicisOrg/phoenicis on github before building.
 
@@ -42,7 +41,6 @@ bash phoenicis-create-package.sh
 ---
 
 ## Gentoo Linux
-*Updated by [kreyren](https://github.com/Kreyren) at 24.02.2019*
 
 Fork https://github.com/PhoenicisOrg/phoenicis on github before building.
 
