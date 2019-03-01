@@ -50,10 +50,15 @@ public class ContainersController {
 
     private boolean firstViewSelection = true;
 
-    public ContainersController(ContainersView containersView, ContainersManager containersManager,
-            ContainerEngineController containerEngineController, RepositoryManager repositoryManager,
-            EngineSettingsManager engineSettingsManager, VerbsManager verbsManager,
+    public ContainersController(ContainersView containersView,
+            ContainersManager containersManager,
+            ContainerEngineController containerEngineController,
+            RepositoryManager repositoryManager,
+            EngineSettingsManager engineSettingsManager,
+            VerbsManager verbsManager,
             EngineToolsManager engineToolsManager) {
+        super();
+
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
@@ -108,12 +113,7 @@ public class ContainersController {
         this.containersView.setEngineToolsManager(engineToolsManager);
         this.containersView.setContainerEngineController(containerEngineController);
 
-        this.containersView.setOnSelectContainer(container -> {
-            // TODO: better way to get engine ID
-            final String engineId = container.getEngine().toLowerCase();
-
-            this.containersView.setContainer(container);
-        });
+        this.containersView.setOnSelectContainer(this.containersView::setContainer);
 
         this.containersView.setOnDeleteContainer(container -> {
             final ConfirmDialog confirmMessage = ConfirmDialog.builder()
