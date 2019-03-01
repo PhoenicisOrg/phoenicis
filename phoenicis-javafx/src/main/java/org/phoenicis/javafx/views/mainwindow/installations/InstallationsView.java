@@ -21,6 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -30,14 +31,15 @@ import javafx.collections.transformation.SortedList;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
+import org.phoenicis.javafx.components.common.control.TabIndicator;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.components.installation.control.InstallationSidebar;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.utils.ObjectBindings;
 import org.phoenicis.javafx.utils.StringBindings;
-import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
@@ -86,6 +88,18 @@ public class InstallationsView extends MainWindowView<InstallationSidebar> {
         this.getStyleClass().add("mainWindowScene");
 
         this.activeInstallations = createInstallationListWidget();
+
+        // a binding containing the number of currently active installations
+        final StringBinding openInstallations = Bindings.createStringBinding(
+                () -> Integer.toString(this.activeInstallations.getElements().size()),
+                this.activeInstallations.getElements());
+
+        final TabIndicator indicator = new TabIndicator();
+        indicator.textProperty().bind(openInstallations);
+
+        // only show the tab indicator if at least one active installation exists
+        this.graphicProperty().bind(Bindings.when(Bindings.notEqual(openInstallations, "0")).then(indicator)
+                .otherwise(new SimpleObjectProperty<>()));
 
         this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
 
