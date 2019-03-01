@@ -1,5 +1,6 @@
 package org.phoenicis.javafx.utils;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -28,7 +29,7 @@ public class CollectionBindings {
             Function<I, ? extends Collection<O>> converter) {
         final ObservableList<O> result = FXCollections.observableArrayList();
 
-        property.addListener((Observable invalidation) -> {
+        final InvalidationListener listener = (Observable invalidation) -> {
             final I input = property.getValue();
 
             if (input != null) {
@@ -36,7 +37,13 @@ public class CollectionBindings {
             } else {
                 result.clear();
             }
-        });
+        };
+
+        // add the listener to the property
+        property.addListener(listener);
+
+        // ensure that the result list is initialised correctly
+        listener.invalidated(property);
 
         return result;
     }
