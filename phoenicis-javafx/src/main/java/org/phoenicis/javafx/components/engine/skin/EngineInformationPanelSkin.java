@@ -3,9 +3,7 @@ package org.phoenicis.javafx.components.engine.skin;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
+import javafx.beans.binding.StringBinding;
 import javafx.collections.ObservableMap;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +17,8 @@ import org.phoenicis.engines.dto.EngineDTO;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.engine.control.EngineInformationPanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
+import org.phoenicis.javafx.utils.CollectionBindings;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +36,7 @@ public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel,
     /**
      * The engine version of the shown engine
      */
-    private final StringProperty engineVersionName;
+    private final StringBinding engineVersionName;
 
     /**
      * The user data of the shown engine
@@ -51,8 +51,8 @@ public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel,
     public EngineInformationPanelSkin(EngineInformationPanel control) {
         super(control);
 
-        this.engineVersionName = new SimpleStringProperty();
-        this.engineUserData = FXCollections.observableHashMap();
+        this.engineVersionName = StringBindings.map(getControl().engineDTOProperty(), EngineDTO::getVersion);
+        this.engineUserData = CollectionBindings.mapToMap(getControl().engineDTOProperty(), EngineDTO::getUserData);
     }
 
     /**
@@ -77,11 +77,6 @@ public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel,
         final VBox container = new VBox(informationContentPane, informationContentSpacer, buttonBox, buttonBoxSpacer);
 
         getChildren().add(container);
-
-        // ensure that the content of the details panel changes when the to be shown engine changes
-        getControl().engineDTOProperty().addListener((Observable invalidation) -> updateEngine());
-        // initialize the content of the details panel correctly
-        updateEngine();
     }
 
     /**
@@ -180,20 +175,6 @@ public class EngineInformationPanelSkin extends SkinBase<EngineInformationPanel,
             path.setWrapText(true);
 
             userDataGrid.addRow(row, userDataLabel, path);
-        }
-    }
-
-    /**
-     * Updates the {@link Engine} and {@link EngineDTO} of this {@link EngineInformationPanelSkin} instance
-     */
-    private void updateEngine() {
-        final EngineDTO engine = getControl().getEngineDTO();
-
-        if (engine != null) {
-            engineVersionName.setValue(engine.getVersion());
-
-            engineUserData.clear();
-            engineUserData.putAll(engine.getUserData());
         }
     }
 }
