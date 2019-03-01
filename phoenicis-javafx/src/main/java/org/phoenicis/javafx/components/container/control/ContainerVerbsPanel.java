@@ -1,16 +1,15 @@
 package org.phoenicis.javafx.components.container.control;
 
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.container.skin.ContainerVerbsPanelSkin;
+import org.phoenicis.javafx.utils.CollectionBindings;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
@@ -45,51 +44,16 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
 
     /**
      * Constructor
-     *
-     * @param container The container
-     * @param verbsManager The verbs manager
-     * @param verbs The application containing the verbs
-     * @param lockVerbs A boolean signifying whether all verb buttons should be locked
-     */
-    public ContainerVerbsPanel(ObjectProperty<ContainerDTO> container, ObjectProperty<VerbsManager> verbsManager,
-            ObjectProperty<ApplicationDTO> verbs, BooleanProperty lockVerbs) {
-        super();
-
-        this.container = container;
-        this.verbsManager = verbsManager;
-        this.verbs = verbs;
-        this.lockVerbs = lockVerbs;
-
-        this.verbScripts = createVerbScripts();
-    }
-
-    /**
-     * Constructor
      */
     public ContainerVerbsPanel() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleBooleanProperty());
-    }
+        super();
 
-    /**
-     * Creates an {@link ObservableList} containing all tool {@link ScriptDTO}s contained in <code>engineTools</code>
-     *
-     * @return An {@link ObservableList} containing all tool {@link ScriptDTO}s contained in <code>engineTools</code>
-     */
-    private ObservableList<ScriptDTO> createVerbScripts() {
-        final ObservableList<ScriptDTO> verbScripts = FXCollections.observableArrayList();
+        this.container = new SimpleObjectProperty<>();
+        this.verbsManager = new SimpleObjectProperty<>();
+        this.verbs = new SimpleObjectProperty<>();
+        this.lockVerbs = new SimpleBooleanProperty();
 
-        verbs.addListener((Observable invalidation) -> {
-            final ApplicationDTO verbs = getVerbs();
-
-            if (verbs != null) {
-                verbScripts.setAll(verbs.getScripts());
-            } else {
-                verbScripts.clear();
-            }
-        });
-
-        return verbScripts;
+        this.verbScripts = CollectionBindings.mapToList(verbsProperty(), ApplicationDTO::getScripts);
     }
 
     /**
