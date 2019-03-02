@@ -16,25 +16,26 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.nashorn;
+package org.phoenicis.scripts.engine;
 
-import org.phoenicis.scripts.nashorn.builtins.EngineInjector;
+import org.phoenicis.scripts.engine.builtins.EngineInjector;
 
 import javax.script.ScriptEngineManager;
 import java.util.List;
 
-public class NashornEngineFactory {
+public class PhoenicisScriptEngineFactory {
     private final List<EngineInjector> engineInjectors;
 
-    public NashornEngineFactory(List<EngineInjector> engineInjectors) {
+    public PhoenicisScriptEngineFactory(List<EngineInjector> engineInjectors) {
         this.engineInjectors = engineInjectors;
     }
 
-    NashornEngine createEngine() {
-        final NashornEngine nashornEngine = new NashornEngine(new ScriptEngineManager().getEngineByName("nashorn"));
+    PhoenicisScriptEngine createEngine() {
+        final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine(
+                new ScriptEngineManager().getEngineByName("nashorn"));
 
-        engineInjectors.forEach(engineInjector -> engineInjector.injectInto(nashornEngine));
+        engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 
-        return nashornEngine;
+        return phoenicisScriptEngine;
     }
 }

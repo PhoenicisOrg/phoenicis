@@ -23,9 +23,9 @@ import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.scripts.nashorn.NashornEngineFactory;
-import org.phoenicis.scripts.nashorn.NashornScriptInterpreter;
-import org.phoenicis.scripts.nashorn.builtins.*;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.engine.PhoenicisScriptInterpreter;
+import org.phoenicis.scripts.engine.builtins.*;
 import org.phoenicis.scripts.wizard.WizardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -51,8 +51,8 @@ public class ScriptsConfiguration {
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
-    public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
+    public PhoenicisScriptEngineFactory nashornScriptEngineFactory() {
+        return new PhoenicisScriptEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
                 new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
                 new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
@@ -64,12 +64,12 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornInterpreter(),
+        return new BackgroundScriptInterpreter(nashornScriptInterpreter(),
                 multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean
-    ScriptInterpreter nashornInterpreter() {
-        return new NashornScriptInterpreter(scriptEngineFactory());
+    ScriptInterpreter nashornScriptInterpreter() {
+        return new PhoenicisScriptInterpreter(nashornScriptEngineFactory());
     }
 }
