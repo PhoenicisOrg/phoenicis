@@ -7,23 +7,23 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
-import org.phoenicis.javafx.components.common.control.PhoenicisView;
+import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 
 /**
- * A base skin implementation for {@link PhoenicisView} components implementations
+ * A base skin implementation for {@link FeaturePanel} components implementations
  *
  * @param <C> The control type of the component
  * @param <S> The skin type of the component
  */
-public abstract class PhoenicisViewSkin<C extends PhoenicisView<C, S>, S extends PhoenicisViewSkin<C, S>>
+public abstract class FeaturePanelSkin<C extends FeaturePanel<C, S>, S extends FeaturePanelSkin<C, S>>
         extends SkinBase<C, S> {
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    public PhoenicisViewSkin(C control) {
+    public FeaturePanelSkin(C control) {
         super(control);
     }
 

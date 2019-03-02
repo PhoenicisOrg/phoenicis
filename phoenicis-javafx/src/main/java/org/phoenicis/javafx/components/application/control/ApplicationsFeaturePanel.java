@@ -4,8 +4,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.application.skin.ApplicationsViewSkin;
-import org.phoenicis.javafx.components.common.control.PhoenicisView;
+import org.phoenicis.javafx.components.application.skin.ApplicationsFeaturePanelSkin;
+import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
@@ -17,7 +17,7 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 /**
  * The component shown inside the Phoenicis "Applications" tab
  */
-public class ApplicationsView extends PhoenicisView<ApplicationsView, ApplicationsViewSkin> {
+public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
     /**
      * The theme manager
      */
@@ -56,7 +56,7 @@ public class ApplicationsView extends PhoenicisView<ApplicationsView, Applicatio
     /**
      * Constructor
      */
-    public ApplicationsView() {
+    public ApplicationsFeaturePanel() {
         super();
 
         this.themeManager = new SimpleObjectProperty<>();
@@ -72,8 +72,8 @@ public class ApplicationsView extends PhoenicisView<ApplicationsView, Applicatio
      * {@inheritDoc}
      */
     @Override
-    public ApplicationsViewSkin createSkin() {
-        return new ApplicationsViewSkin(this);
+    public ApplicationsFeaturePanelSkin createSkin() {
+        return new ApplicationsFeaturePanelSkin(this);
     }
 
     public ThemeManager getThemeManager() {

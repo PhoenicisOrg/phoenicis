@@ -11,10 +11,10 @@ import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
-import org.phoenicis.javafx.components.application.control.ApplicationsView;
+import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
-import org.phoenicis.javafx.components.common.skin.PhoenicisViewSkin;
+import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
@@ -29,15 +29,15 @@ import java.util.Comparator;
 import java.util.Optional;
 
 /**
- * A skin implementation for the {@link ApplicationsView} component
+ * A skin implementation for the {@link ApplicationsFeaturePanel} component
  */
-public class ApplicationsViewSkin extends PhoenicisViewSkin<ApplicationsView, ApplicationsViewSkin> {
+public class ApplicationsFeaturePanelSkin extends FeaturePanelSkin<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
     /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
-    public ApplicationsViewSkin(ApplicationsView control) {
+    public ApplicationsFeaturePanelSkin(ApplicationsFeaturePanel control) {
         super(control);
     }
 
