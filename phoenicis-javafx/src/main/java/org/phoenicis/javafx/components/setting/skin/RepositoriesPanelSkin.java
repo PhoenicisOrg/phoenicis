@@ -21,7 +21,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.setting.control.RepositoriesPanel;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.views.mainwindow.settings.addrepository.AddRepositoryDialog;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.Repository;
@@ -239,7 +239,7 @@ public class RepositoriesPanelSkin extends SkinBase<RepositoriesPanel, Repositor
         final Button restoreDefault = new Button(tr("Restore defaults"));
         restoreDefault.getStyleClass().add("repositories-restore");
         restoreDefault.setOnAction(event -> {
-            final ConfirmDialog dialog = ConfirmDialog.builder()
+            final SimpleConfirmDialog dialog = SimpleConfirmDialog.builder()
                     .withTitle(tr("Restore default repositories"))
                     .withMessage(tr("Are you sure you want to restore the default repositories?"))
                     .withYesCallback(() -> Platform.runLater(() -> getControl().getRepositoryLocations().setAll(
