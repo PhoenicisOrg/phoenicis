@@ -21,7 +21,7 @@ package org.phoenicis.javafx.views.mainwindow.installations;
 import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.StringBinding;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
@@ -90,15 +90,20 @@ public class InstallationsView extends MainWindowView<InstallationSidebar> {
         this.activeInstallations = createInstallationListWidget();
 
         // a binding containing the number of currently active installations
-        final StringBinding openInstallations = Bindings.createStringBinding(
-                () -> Integer.toString(this.activeInstallations.getElements().size()),
-                this.activeInstallations.getElements());
+        final IntegerBinding openInstallations = Bindings.createIntegerBinding(
+                () -> this.activeInstallations.getElements().size(), this.activeInstallations.getElements());
 
         final TabIndicator indicator = new TabIndicator();
-        indicator.textProperty().bind(openInstallations);
+        indicator.textProperty().bind(StringBindings.map(openInstallations, numberOfInstallations -> {
+            if (numberOfInstallations.intValue() < 10) {
+                return String.valueOf(numberOfInstallations);
+            } else {
+                return "+";
+            }
+        }));
 
         // only show the tab indicator if at least one active installation exists
-        this.graphicProperty().bind(Bindings.when(Bindings.notEqual(openInstallations, "0")).then(indicator)
+        this.graphicProperty().bind(Bindings.when(Bindings.notEqual(openInstallations, 0)).then(indicator)
                 .otherwise(new SimpleObjectProperty<>()));
 
         this.filter.selectedInstallationCategoryProperty().addListener((Observable invalidation) -> closeDetailsView());
