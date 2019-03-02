@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-01 13:23+0000\n"
+"POT-Creation-Date: 2019-03-02 14:00+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -309,24 +309,24 @@ msgstr ""
 msgid "Not installed"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:111
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
 msgid "Install"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:121
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
 msgid "An error occurred while installing the engine"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:131
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
 msgid "Delete"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:141
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
 msgid "An error occurred while deleting the engine"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:164
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 msgid "Version:"
 msgstr ""
@@ -446,18 +446,18 @@ msgid "Description:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:143
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:128
 msgid "Miniature:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:153
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:138
 msgid "Browse..."
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:159
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:144
 msgid "Images"
 msgstr ""
 
@@ -465,19 +465,19 @@ msgstr ""
 msgid "Executable:"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:129
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:135
 msgid "Run"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:135
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:141
 msgid "Close"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:141
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:147
 msgid "Uninstall"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:77
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:88
 msgid "Save"
 msgstr ""
 
