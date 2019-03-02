@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.nashorn;
+package org.phoenicis.scripts.engine;
 
 import javax.script.ScriptEngine;
 import java.io.InputStreamReader;
@@ -24,11 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class NashornEngine {
+public class PhoenicisScriptEngine {
     private final ScriptEngine scriptEngine;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
-    NashornEngine(ScriptEngine scriptEngine) {
+    PhoenicisScriptEngine(ScriptEngine scriptEngine) {
         this.scriptEngine = scriptEngine;
     }
 
