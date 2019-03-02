@@ -30,27 +30,13 @@ public class ContainerOverviewPanel extends ControlBase<ContainerOverviewPanel, 
 
     /**
      * Constructor
-     *
-     * @param container The selected container
-     * @param onDeleteContainer The callback method which is called when the container should be deleted
-     * @param onOpenFileBrowser The callback method which is called when the container should be opened in a file
-     *            browser
-     */
-    public ContainerOverviewPanel(ObjectProperty<WinePrefixContainerDTO> container,
-            ObjectProperty<Consumer<ContainerDTO>> onDeleteContainer,
-            ObjectProperty<Consumer<ContainerDTO>> onOpenFileBrowser) {
-        super();
-
-        this.container = container;
-        this.onDeleteContainer = onDeleteContainer;
-        this.onOpenFileBrowser = onOpenFileBrowser;
-    }
-
-    /**
-     * Constructor
      */
     public ContainerOverviewPanel() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+        super();
+
+        this.container = new SimpleObjectProperty<>();
+        this.onDeleteContainer = new SimpleObjectProperty<>();
+        this.onOpenFileBrowser = new SimpleObjectProperty<>();
     }
 
     /**
