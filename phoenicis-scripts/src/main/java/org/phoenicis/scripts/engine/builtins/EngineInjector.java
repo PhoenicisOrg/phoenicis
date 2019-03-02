@@ -7,7 +7,7 @@ import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
  */
 public interface EngineInjector {
     /**
-     * Injects component into a engine engine
+     * Injects component into an engine engine
      *
      * @param phoenicisScriptEngine The engine to be injected in
      */
