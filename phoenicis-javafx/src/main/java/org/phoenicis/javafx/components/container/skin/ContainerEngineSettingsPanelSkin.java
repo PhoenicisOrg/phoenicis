@@ -82,14 +82,18 @@ public class ContainerEngineSettingsPanelSkin
             final ComboBox<String> engineSettingComboBox = new ComboBox<>(items);
             engineSettingComboBox.getStyleClass().add("engine-setting-combo-box");
             engineSettingComboBox.disableProperty().bind(getControl().lockEngineSettingsProperty());
-            engineSettingComboBox.setValue(engineSetting.getCurrentOption(container.getName()));
-            engineSettingComboBox.valueProperty().addListener((Observable invalidation) -> Platform.runLater(() -> {
-                getControl().setLockEngineSettings(true);
 
-                engineSetting.setOption(container.getName(), items.indexOf(engineSettingComboBox.getValue()));
+            // if the container is not specified set no default values
+            if (container != null) {
+                engineSettingComboBox.setValue(engineSetting.getCurrentOption(container.getName()));
+                engineSettingComboBox.valueProperty().addListener((Observable invalidation) -> Platform.runLater(() -> {
+                    getControl().setLockEngineSettings(true);
 
-                getControl().setLockEngineSettings(false);
-            }));
+                    engineSetting.setOption(container.getName(), items.indexOf(engineSettingComboBox.getValue()));
+
+                    getControl().setLockEngineSettings(false);
+                }));
+            }
 
             engineSettingsGrid.addRow(row, engineSettingDescription, engineSettingComboBox);
         }

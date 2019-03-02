@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.themes;
 
 import java.net.URI;
+import java.util.Optional;
 
 /**
  * A theme for Phoenicis
@@ -41,7 +42,8 @@ public abstract class Theme {
      * Gets the {@link URI} leading to the given <code>resource</code> of the theme
      *
      * @param resource The searched resource
-     * @return The uri leading to the given resource of the theme
+     * @return The uri leading to the given resource of the theme or {@link Optional#empty()} if the resource doesn't
+     *         exist in the theme
      */
-    public abstract URI getResourceUrl(String resource);
+    public abstract Optional<URI> getResourceUri(String resource);
 }

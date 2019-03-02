@@ -19,17 +19,15 @@
 package org.phoenicis.javafx.controller.containers;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableMap;
 import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
-import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.dialogs.ConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainerPanel;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
@@ -38,9 +36,7 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -51,9 +47,6 @@ public class ContainersController {
     private EngineSettingsManager engineSettingsManager;
     private final EngineToolsManager engineToolsManager;
     private final VerbsManager verbsManager;
-    private Map<String, List<EngineSetting>> engineSettings; // engine settings per engine
-    private Map<String, ApplicationDTO> verbs; // Verbs per engine
-    private Map<String, ApplicationDTO> engineTools; // engine tools per engine
 
     private boolean firstViewSelection = true;
 
@@ -64,6 +57,8 @@ public class ContainersController {
             EngineSettingsManager engineSettingsManager,
             VerbsManager verbsManager,
             EngineToolsManager engineToolsManager) {
+        super();
+
         this.containersView = containersView;
         this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
@@ -73,7 +68,6 @@ public class ContainersController {
         this.containersView.setOnSelectionChanged(event -> {
             if (this.containersView.isSelected()) {
                 if (this.firstViewSelection) {
-                    this.engineSettings = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateEngineSettings,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -85,7 +79,6 @@ public class ContainersController {
                                 errorDialog.showAndWait();
                             }));
 
-                    this.verbs = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateVerbs,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -97,7 +90,6 @@ public class ContainersController {
                                 errorDialog.showAndWait();
                             }));
 
-                    this.engineTools = new HashMap<>();
                     repositoryManager.addCallbacks(this::updateEngineTools,
                             e -> Platform.runLater(() -> {
                                 final ErrorDialog errorDialog = ErrorDialog.builder()
@@ -117,80 +109,67 @@ public class ContainersController {
             }
         });
 
-        this.containersView.setOnSelectContainer((ContainerDTO containerDTO) -> {
-            // TODO: better way to get engine ID
-            final String engineId = containerDTO.getEngine().toLowerCase();
-            final ContainerPanel panel = new ContainerPanel(
-                    containerDTO,
-                    verbsManager,
-                    engineToolsManager,
-                    Optional.ofNullable(engineSettings.get(engineId)),
-                    Optional.ofNullable(verbs.get(engineId)),
-                    Optional.ofNullable(engineTools.get(engineId)),
-                    containerEngineController);
+        this.containersView.setVerbsManager(verbsManager);
+        this.containersView.setEngineToolsManager(engineToolsManager);
+        this.containersView.setContainerEngineController(containerEngineController);
 
-            panel.setOnDeleteContainer(
-                    containerToDelete -> {
-                        final ConfirmDialog confirmMessage = ConfirmDialog.builder()
-                                .withTitle(tr("Delete {0} container", containerToDelete.getName()))
-                                .withMessage(tr("Are you sure you want to delete the {0} container?",
-                                        containerToDelete.getName()))
-                                .withOwner(containersView.getContent().getScene().getWindow())
-                                .withResizable(true)
-                                .withYesCallback(() -> {
-                                    containersManager.deleteContainer(containerToDelete, e -> Platform.runLater(() -> {
-                                        final ErrorDialog errorDialog = ErrorDialog.builder()
-                                                .withMessage(tr("Error"))
-                                                .withException(e)
-                                                .withOwner(this.containersView.getContent().getScene().getWindow())
-                                                .build();
+        this.containersView.setOnSelectContainer(this.containersView::setContainer);
 
-                                        errorDialog.showAndWait();
-                                    }));
+        this.containersView.setOnDeleteContainer(container -> {
+            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+                    .withTitle(tr("Delete {0} container", container.getName()))
+                    .withMessage(tr("Are you sure you want to delete the {0} container?",
+                            container.getName()))
+                    .withOwner(containersView.getContent().getScene().getWindow())
+                    .withResizable(true)
+                    .withYesCallback(() -> {
+                        containersManager.deleteContainer(container, e -> Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(tr("Error"))
+                                    .withException(e)
+                                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                                    .build();
 
-                                    loadContainers();
-                                })
-                                .build();
+                            errorDialog.showAndWait();
+                        }));
 
-                        confirmMessage.showAndCallback();
-                    });
+                        loadContainers();
+                    })
+                    .build();
 
-            panel.setOnOpenFileBrowser(container -> {
-                try {
-                    File containerDir = new File(container.getPath());
-                    EventQueue.invokeLater(() -> {
-                        try {
-                            Desktop.getDesktop().open(containerDir);
-                        } catch (IOException e) {
-                            Platform.runLater(() -> {
-                                final ErrorDialog errorDialog = ErrorDialog.builder()
-                                        .withMessage(
-                                                tr("Cannot open container {0} in file browser", container.getPath()))
-                                        .withException(e)
-                                        .withOwner(this.containersView.getContent().getScene().getWindow())
-                                        .build();
+            confirmMessage.showAndCallback();
+        });
 
-                                errorDialog.showAndWait();
-                            });
-                        }
-                    });
-                } catch (IllegalArgumentException e) {
-                    Platform.runLater(() -> {
-                        final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("Cannot open container {0} in file browser", container.getPath()))
-                                .withException(e)
-                                .withOwner(this.containersView.getContent().getScene().getWindow())
-                                .build();
+        this.containersView.setOnOpenFileBrowser(container -> {
+            try {
+                File containerDir = new File(container.getPath());
+                EventQueue.invokeLater(() -> {
+                    try {
+                        Desktop.getDesktop().open(containerDir);
+                    } catch (IOException e) {
+                        Platform.runLater(() -> {
+                            final ErrorDialog errorDialog = ErrorDialog.builder()
+                                    .withMessage(
+                                            tr("Cannot open container {0} in file browser", container.getPath()))
+                                    .withException(e)
+                                    .withOwner(this.containersView.getContent().getScene().getWindow())
+                                    .build();
 
-                        errorDialog.showAndWait();
-                    });
-                }
-            });
+                            errorDialog.showAndWait();
+                        });
+                    }
+                });
+            } catch (IllegalArgumentException e) {
+                Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Cannot open container {0} in file browser", container.getPath()))
+                            .withException(e)
+                            .withOwner(this.containersView.getContent().getScene().getWindow())
+                            .build();
 
-            panel.setOnClose(containersView::closeDetailsView);
-            panel.prefWidthProperty().bind(this.containersView.getTabPane().widthProperty().divide(3));
-
-            Platform.runLater(() -> containersView.showDetailsView(panel));
+                    errorDialog.showAndWait();
+                });
+            }
         });
     }
 
@@ -207,7 +186,13 @@ public class ContainersController {
 
     private void updateEngineSettings(RepositoryDTO repositoryDTO) {
         this.engineSettingsManager.fetchAvailableEngineSettings(repositoryDTO,
-                engineSettings -> Platform.runLater(() -> this.engineSettings = engineSettings),
+                engineSettings -> Platform.runLater(() -> {
+                    final ObservableMap<String, List<EngineSetting>> engineSettingsMap = this.containersView
+                            .getEngineSettings();
+
+                    engineSettingsMap.clear();
+                    engineSettingsMap.putAll(engineSettings);
+                }),
                 e -> Platform.runLater(() -> {
                     final ErrorDialog errorDialog = ErrorDialog.builder()
                             .withMessage(tr("Loading engine tools failed."))
@@ -220,12 +205,20 @@ public class ContainersController {
     }
 
     private void updateVerbs(RepositoryDTO repositoryDTO) {
-        this.verbsManager.fetchAvailableVerbs(repositoryDTO,
-                verbs -> this.verbs = verbs);
+        this.verbsManager.fetchAvailableVerbs(repositoryDTO, verbs -> Platform.runLater(() -> {
+            final ObservableMap<String, ApplicationDTO> verbsMap = this.containersView.getVerbs();
+
+            verbsMap.clear();
+            verbsMap.putAll(verbs);
+        }));
     }
 
     private void updateEngineTools(RepositoryDTO repositoryDTO) {
-        this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO,
-                engineTools -> this.engineTools = engineTools);
+        this.engineToolsManager.fetchAvailableEngineTools(repositoryDTO, engineTools -> Platform.runLater(() -> {
+            final ObservableMap<String, ApplicationDTO> engineToolsMap = this.containersView.getEngineTools();
+
+            engineToolsMap.clear();
+            engineToolsMap.putAll(engineTools);
+        }));
     }
 }

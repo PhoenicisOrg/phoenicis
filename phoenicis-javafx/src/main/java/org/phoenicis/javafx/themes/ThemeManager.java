@@ -1,17 +1,23 @@
 package org.phoenicis.javafx.themes;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.StringBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.collections.ConcatenatedList;
+import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.utils.CollectionBindings;
+import org.phoenicis.javafx.utils.ObjectBindings;
 import org.phoenicis.javafx.utils.StringBindings;
 
+import java.net.URI;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * A manager class for the currently selected/used {@link Theme}
@@ -38,8 +44,7 @@ public class ThemeManager {
     private final ObservableList<String> stylesheets;
 
     /**
-     * The stylesheet to be used inside the
-     * {@link org.phoenicis.javafx.components.application.control.ApplicationInformationPanel}
+     * The stylesheet to be used inside the {@link ApplicationInformationPanel}
      */
     private final StringBinding webEngineStylesheet;
 
@@ -52,10 +57,6 @@ public class ThemeManager {
         super();
 
         this.currentTheme = currentTheme;
-        this.webEngineStylesheet = Bindings.when(Bindings.isNotNull(currentTheme))
-                .then(StringBindings.map(currentTheme,
-                        theme -> theme.getResourceUrl("description.css").toString()))
-                .otherwise(Themes.STANDARD.getResourceUrl("description.css").toString());
 
         this.defaultCategoryIconsStylesheets = FXCollections.observableArrayList();
         this.defaultEngineIconsStylesheets = FXCollections.observableArrayList();
@@ -69,6 +70,18 @@ public class ThemeManager {
 
         this.stylesheets = ConcatenatedList.create(defaultCategoryIconsStylesheets, defaultEngineIconsStylesheets,
                 baseStylesheets, currentStylesheets);
+
+        final ObjectBinding<Optional<URI>> currentWebEngineUri = ObjectBindings.map(currentTheme,
+                theme -> theme.getResourceUri("description.css"));
+        final StringBinding currentWebEngineStylesheet = StringBindings.map(currentWebEngineUri,
+                uri -> uri.map(URI::toString).orElse(null));
+
+        this.webEngineStylesheet = Bindings
+                .when(Bindings.isNull(currentWebEngineStylesheet))
+                .then(Themes.STANDARD.getResourceUri("description.css").map(URI::toString)
+                        .orElseThrow(
+                                () -> new IllegalStateException("Standard theme contains no \"description.css\" file")))
+                .otherwise(currentWebEngineStylesheet);
     }
 
     /**
@@ -125,7 +138,15 @@ public class ThemeManager {
             return Collections.emptyList();
         }
 
-        return Collections.singletonList(theme.getResourceUrl("main.css").toString());
+        // an ordered list of all file names making up a theme
+        final List<String> themeResourceFiles = List.of("main.css", "buttons.css");
+
+        // query the theme for the concrete paths leading to the theme resource files
+        return themeResourceFiles.stream()
+                .map(theme::getResourceUri)
+                .flatMap(Optional::stream)
+                .map(URI::toString)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -135,10 +156,6 @@ public class ThemeManager {
      * @return A list containing all stylesheets for the given theme if it is not the standard theme
      */
     private List<String> getNonStandardStylesheets(Theme theme) {
-        if (Themes.STANDARD == theme) {
-            return Collections.emptyList();
-        }
-
-        return getStylesheets(theme);
+        return Themes.STANDARD == theme ? Collections.emptyList() : getStylesheets(theme);
     }
 }
