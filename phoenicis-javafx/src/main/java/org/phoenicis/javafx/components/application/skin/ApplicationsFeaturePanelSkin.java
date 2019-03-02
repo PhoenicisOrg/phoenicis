@@ -31,7 +31,8 @@ import java.util.Optional;
 /**
  * A skin implementation for the {@link ApplicationsFeaturePanel} component
  */
-public class ApplicationsFeaturePanelSkin extends FeaturePanelSkin<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
+public class ApplicationsFeaturePanelSkin
+        extends FeaturePanelSkin<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
     /**
      * Constructor
      *
