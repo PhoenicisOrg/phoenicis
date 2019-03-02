@@ -48,7 +48,7 @@ import org.phoenicis.javafx.components.library.control.LibrarySidebar;
 import org.phoenicis.javafx.components.library.control.ShortcutCreationPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutEditingPanel;
 import org.phoenicis.javafx.components.library.control.ShortcutInformationPanel;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
@@ -407,7 +407,7 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
     private void uninstallShortcut(ShortcutDTO shortcut) {
         final String shortcutName = shortcut.getInfo().getName();
 
-        final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+        final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                 .withTitle(tr("Uninstall {0}", shortcutName))
                 .withMessage(tr("Are you sure you want to uninstall {0}?", shortcutName))
                 .withOwner(content.getScene().getWindow())

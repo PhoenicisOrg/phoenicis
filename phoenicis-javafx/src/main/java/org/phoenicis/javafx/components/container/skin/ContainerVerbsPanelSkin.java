@@ -15,6 +15,7 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.container.control.ContainerVerbsPanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
+import org.phoenicis.javafx.dialogs.ListConfirmDialog;
 import org.phoenicis.repository.dto.ScriptDTO;
 
 import java.util.List;
@@ -83,23 +84,44 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
             final ContainerDTO container = getControl().getContainer();
 
             // find the ids of all selected verbs
-            final List<String> verbIds = verbs.getChildren().stream()
+            final List<ScriptDTO> installationVerbs = verbs.getChildren().stream()
                     .filter(element -> element instanceof CheckBox && ((CheckBox) element).isSelected())
                     .map(GridPane::getRowIndex)
                     .map(getControl().getVerbScripts()::get)
-                    .map(ScriptDTO::getId)
                     .collect(Collectors.toList());
 
-            // install the selected verbs
-            getControl().getVerbsManager().installVerbs(container.getEngine().toLowerCase(), container.getName(),
-                    verbIds, () -> getControl().setLockVerbs(false), e -> Platform.runLater(() -> {
-                        final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("Error installing Verbs"))
-                                .withException(e)
-                                .build();
+            final List<String> verbNames = installationVerbs.stream()
+                    .map(ScriptDTO::getScriptName)
+                    .collect(Collectors.toList());
 
-                        errorDialog.showAndWait();
-                    }));
+            final ListConfirmDialog confirmDialog = ListConfirmDialog.builder()
+                    .withTitle(tr("Install Verbs"))
+                    .withMessage(tr("Are you sure you want to install the following Verbs:"))
+                    .withConfirmItems(verbNames)
+                    .withOwner(getControl().getScene().getWindow())
+                    .withYesCallback(() -> {
+                        final List<String> verbIds = installationVerbs.stream()
+                                .map(ScriptDTO::getId)
+                                .collect(Collectors.toList());
+
+                        // install the selected verbs
+                        getControl().getVerbsManager().installVerbs(container.getEngine().toLowerCase(),
+                                container.getName(),
+                                verbIds, () -> getControl().setLockVerbs(false), e -> Platform.runLater(() -> {
+                                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                                            .withMessage(tr("Error installing Verbs"))
+                                            .withException(e)
+                                            .build();
+
+                                    errorDialog.showAndWait();
+                                }));
+                    })
+                    .build();
+
+            confirmDialog.showAndCallback();
+
+            // after the dialog has been closed unlock the verb buttons
+            getControl().setLockVerbs(false);
         });
 
         final Button clearButton = new Button(tr("Clear selection"));
