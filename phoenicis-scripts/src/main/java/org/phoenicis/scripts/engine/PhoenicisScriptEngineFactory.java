@@ -32,7 +32,7 @@ public class PhoenicisScriptEngineFactory {
 
     PhoenicisScriptEngine createEngine() {
         final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine(
-                new ScriptEngineManager().getEngineByName("engine"));
+                new ScriptEngineManager().getEngineByName("nashorn"));
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 
