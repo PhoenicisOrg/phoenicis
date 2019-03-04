@@ -70,4 +70,4 @@ modules:
       - type: script
         dest-filename: phoenicis-playonlinux
         commands:
-          - /app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=ALL-MODULE-PATH org.phoenicis.javafx.JavaFXApplication "$@"
+          - /app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=ALL-MODULE-PATH -Dpolyglot.js.nashorn-compat=true -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -classpath /app/phoenicis/lib --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"
