@@ -6,7 +6,7 @@ toc: true
 ---
 
 ### naming conventions
-* Use camel case.
+* Use camel case for variables and methods.
 
 ### "this" keyword
 * Use `this` for all member variables.
