@@ -26,7 +26,7 @@ public class ContainerSidebar
     /**
      * Constructor
      *
-     * @param filter The container filterCategory utility class
+     * @param filter The container filter utility class
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */

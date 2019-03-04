@@ -39,7 +39,7 @@ public class EngineSubCategoryPanelSkin extends SkinBase<EngineSubCategoryPanel,
      */
     @Override
     public void initialise() {
-        // apply the filterCategory to the engine versions
+        // apply the filter to the engine versions
         final ObservableList<EngineVersionDTO> filteredEngineVersions = createFilteredEngineVersions();
 
         final CombinedListWidget<EngineVersionDTO> engineVersionsView = createListWidget(filteredEngineVersions);
