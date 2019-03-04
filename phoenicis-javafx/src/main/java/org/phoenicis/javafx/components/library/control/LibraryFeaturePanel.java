@@ -148,7 +148,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
 
         final InteractiveScriptSession interactiveScriptSession = getScriptInterpreter().createInteractiveSession();
 
-        final String scriptInclude = "include(\"engines." + engineId + "\".shortcuts." + engineId + "\");";
+        final String scriptInclude = "include(\"engines." + engineId + ".shortcuts." + engineId + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
