@@ -24,13 +24,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
-import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
@@ -41,7 +41,7 @@ public class MainWindow extends Stage {
     private TabPane tabPane;
 
     public MainWindow(String applicationName,
-            LibraryView library,
+            LibraryFeaturePanel library,
             ApplicationsFeaturePanel apps,
             EnginesView engines,
             ContainersView containers,
@@ -55,7 +55,8 @@ public class MainWindow extends Stage {
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().addAll(library, createApplicationsTab(apps), containers, engines, installations, settings);
+        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps), containers, engines,
+                installations, settings);
 
         this.scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
@@ -72,6 +73,14 @@ public class MainWindow extends Stage {
         this.setScene(scene);
         this.setTitle(applicationName);
         this.show();
+    }
+
+    private Tab createLibraryTab(LibraryFeaturePanel library) {
+        final Tab libraryTab = new Tab(tr("Library"), library);
+
+        libraryTab.setClosable(false);
+
+        return libraryTab;
     }
 
     private Tab createApplicationsTab(ApplicationsFeaturePanel apps) {

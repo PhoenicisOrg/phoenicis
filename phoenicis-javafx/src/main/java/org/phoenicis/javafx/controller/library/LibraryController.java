@@ -19,60 +19,56 @@
 package org.phoenicis.javafx.controller.library;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.List;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 public class LibraryController {
-    private final LibraryView libraryView;
+    private final LibraryFeaturePanel libraryView;
     private final LibraryManager libraryManager;
-    private final RepositoryManager repositoryManager;
 
-    private boolean firstViewSelection = true;
-
-    public LibraryController(LibraryView libraryView, ConsoleController consoleController,
-            LibraryManager libraryManager, RepositoryManager repositoryManager) {
+    public LibraryController(LibraryFeaturePanel libraryView, LibraryManager libraryManager,
+            RepositoryManager repositoryManager) {
         super();
 
         this.libraryView = libraryView;
         this.libraryManager = libraryManager;
-        this.repositoryManager = repositoryManager;
 
-        this.libraryManager.setOnUpdate(this::updateLibrary);
+        this.libraryManager.setOnUpdate(this::populate);
 
-        this.libraryView.setOnOpenConsole(() -> libraryView.createNewTab(consoleController.createConsole()));
+        repositoryManager.addCallbacks(repository -> this.populate(), this::showError);
+        repositoryManager.triggerCallbacks();
+    }
 
-        this.libraryView.setOnSelectionChanged(event -> {
-            if (this.libraryView.isSelected() && this.firstViewSelection) {
-                this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
-                });
-                this.repositoryManager.triggerCallbacks();
-                this.firstViewSelection = false;
-            }
+    private void populate() {
+        final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
+
+        Platform.runLater(() -> {
+            getView().getCategories().setAll(categories);
+
+            getView().setInitialized(true);
         });
     }
 
-    /**
-     * update library with translations from repository
-     *
-     * @param repositoryDTO
-     */
-    public void updateLibrary(RepositoryDTO repositoryDTO) {
-        this.updateLibrary();
+    private void showError(Exception e) {
+        Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withOwner(getView().getScene().getWindow())
+                    .withException(e)
+                    .withMessage(tr("Unable to load library, please try again."))
+                    .build();
+
+            errorDialog.showAndWait();
+        });
     }
 
-    public void updateLibrary() {
-        final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
-
-        Platform.runLater(() -> this.libraryView.populate(categories));
-    }
-
-    public LibraryView getView() {
+    public LibraryFeaturePanel getView() {
         return libraryView;
     }
 }

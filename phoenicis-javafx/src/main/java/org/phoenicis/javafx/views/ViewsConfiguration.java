@@ -19,6 +19,8 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
@@ -126,7 +128,7 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public LibraryView viewLibrary() {
+    public LibraryFeaturePanel viewLibrary() {
         return viewsConfigurationLibrary.viewLibrary();
     }
 
