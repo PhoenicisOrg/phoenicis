@@ -36,14 +36,14 @@ public class EngineSidebar extends ExtendedSidebarBase<EngineCategoryDTO, Engine
     private final BooleanProperty showNotInstalled;
 
     /**
-     * The engines filter
+     * The engines filterCategory
      */
     private final ObjectProperty<EnginesFilter> filter;
 
     /**
      * Constructor
      *
-     * @param filter The engines filter
+     * @param filter The engines filterCategory
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      * @param javaFxSettingsManager The JavaFX settings manager
@@ -64,7 +64,7 @@ public class EngineSidebar extends ExtendedSidebarBase<EngineCategoryDTO, Engine
     /**
      * Constructor
      *
-     * @param filter The engines filter
+     * @param filter The engines filterCategory
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */

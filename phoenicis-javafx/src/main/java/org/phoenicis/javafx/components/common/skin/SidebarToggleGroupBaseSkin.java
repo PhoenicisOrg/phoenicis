@@ -55,7 +55,7 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
     }
 
     /**
-     * An event filter to prevent the deselection of all buttons
+     * An event filterCategory to prevent the deselection of all buttons
      *
      * @param event The input event to be filtered
      */

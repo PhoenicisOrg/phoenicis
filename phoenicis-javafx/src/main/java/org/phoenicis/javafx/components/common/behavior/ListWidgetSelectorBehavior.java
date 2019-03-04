@@ -53,7 +53,7 @@ public class ListWidgetSelectorBehavior
     }
 
     /**
-     * An event filter to prevent the deselection of all buttons
+     * An event filterCategory to prevent the deselection of all buttons
      *
      * @param event The input event to be filtered
      */

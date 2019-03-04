@@ -21,7 +21,7 @@ public class InstallationSidebar
     private ObjectProperty<InstallationCategoryDTO> selectedInstallationCategory;
 
     /**
-     * The installations filter
+     * The installations filterCategory
      */
     private final ObjectProperty<InstallationsFilter> filter;
 
@@ -33,7 +33,7 @@ public class InstallationSidebar
     /**
      * Constructor
      *
-     * @param filter The installations filter
+     * @param filter The installations filterCategory
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      * @param javaFxSettingsManager The JavaFX settings manager
@@ -52,7 +52,7 @@ public class InstallationSidebar
     /**
      * Constructor
      *
-     * @param filter The installations filter
+     * @param filter The installations filterCategory
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */

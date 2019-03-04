@@ -128,7 +128,7 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
         clearButton.disableProperty().bind(getControl().lockVerbsProperty());
 
         clearButton.setOnAction(event -> verbs.getChildren().stream()
-                // filter all checkboxes
+                // filterCategory all checkboxes
                 .filter(element -> element instanceof CheckBox)
                 .map(element -> (CheckBox) element)
                 // deselect the checkboxes

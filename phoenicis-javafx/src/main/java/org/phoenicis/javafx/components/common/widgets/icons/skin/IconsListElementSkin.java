@@ -85,7 +85,7 @@ public class IconsListElementSkin<E> extends SkinBase<IconsListElement<E>, Icons
 
         Tooltip.install(miniature, tooltip);
 
-        // set a gray filter for this element if it is not enabled
+        // set a gray filterCategory for this element if it is not enabled
         getControl().enabledProperty().addListener((Observable invalidation) -> updateEnabled(miniature));
         // adopt the enable status during initialisation
         updateEnabled(miniature);
