@@ -45,14 +45,14 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
     private final ObjectProperty<Runnable> onOpenConsole;
 
     /**
-     * The library filterCategory utility class
+     * The library filter utility class
      */
     private final LibraryFilter filter;
 
     /**
      * Constructor
      *
-     * @param filter The library filterCategory utility class
+     * @param filter The library filter utility class
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      * @param applicationName The name of the application
@@ -78,7 +78,7 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
     /**
      * Constructor
      *
-     * @param filter The library filterCategory utility class
+     * @param filter The library filter utility class
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */

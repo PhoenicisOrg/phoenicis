@@ -184,7 +184,7 @@ public class EnginesView extends MainWindowView<EngineSidebar> {
                 // sort the engine sub category panels alphabetically
                 .sorted(Comparator
                         .comparing(engineSubCategoryPanel -> engineSubCategoryPanel.getEngineSubCategory().getName()))
-                // filterCategory the engine sub category panels, so that only the visible panels remain
+                // filter the engine sub category panels, so that only the visible panels remain
                 .filtered(this.filter::filter);
 
         filteredEngineSubCategoryPanels.predicateProperty().bind(

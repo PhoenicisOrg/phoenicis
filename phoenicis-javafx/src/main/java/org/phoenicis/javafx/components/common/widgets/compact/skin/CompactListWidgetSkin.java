@@ -100,7 +100,7 @@ public class CompactListWidgetSkin<E> extends SkinBase<CompactListWidget<E>, Com
         Optional.ofNullable(oldSelection).map(ListWidgetSelection::getSelection).ifPresent(selection -> {
             final int oldValueIndex = getControl().getElements().indexOf(selection);
 
-            // In some corner cases (category / filterCategory changes, the current selection can disappear)
+            // In some corner cases (category / filter changes, the current selection can disappear)
             if (mappedElements.size() > oldValueIndex && oldValueIndex != -1) {
                 container.getSelectionModel().clearSelection(oldValueIndex);
             }

@@ -60,7 +60,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * This view is partitioned in three sections:
  *
  * <ul>
- * <li>A sidebar, that allows the user to filterCategory between the container categories</li>
+ * <li>A sidebar, that allows the user to filter between the container categories</li>
  * <li>A list widget, which contains the installed containers</li>
  * <li>An optional details view showing details about the selected container in the list widget</li>
  * </ul>

@@ -55,7 +55,7 @@ public class EngineSidebarSkin extends ExtendedSidebarSkinBase<EngineCategoryDTO
     }
 
     /**
-     * Creates the {@link SidebarGroup} containing buttons to filterCategory for installed and not installed engines
+     * Creates the {@link SidebarGroup} containing buttons to filter for installed and not installed engines
      */
     private SidebarGroup<CheckBox> createInstallationFilters() {
         final CheckBox installedCheck = new CheckBox(tr("Installed"));

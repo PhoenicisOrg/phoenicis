@@ -113,11 +113,11 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     }
 
     public ThemeManager getThemeManager() {
-        return themeManager.get();
+        return this.themeManager.get();
     }
 
     public ObjectProperty<ThemeManager> themeManagerProperty() {
-        return themeManager;
+        return this.themeManager;
     }
 
     public void setThemeManager(ThemeManager themeManager) {
@@ -125,11 +125,11 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     }
 
     public JavaFxSettingsManager getJavaFxSettingsManager() {
-        return javaFxSettingsManager.get();
+        return this.javaFxSettingsManager.get();
     }
 
     public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
-        return javaFxSettingsManager;
+        return this.javaFxSettingsManager;
     }
 
     public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {

@@ -11,7 +11,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
- * This class represents a filterCategory used for filtering the engine versions for
+ * This class represents a filter used for filtering the engine versions for
  * <ul>
  * <li>
  * Installed engine versions
@@ -23,7 +23,7 @@ import java.util.function.Predicate;
  * Engine versions containing a search term
  * </li>
  * </ul>
- * This filterCategory depends on a previously defines {@link EngineSubCategoryDTO}.
+ * This filter depends on a previously defines {@link EngineSubCategoryDTO}.
  *
  * @author marc
  * @since 23.04.17
@@ -106,13 +106,13 @@ public class EnginesFilter {
     }
 
     /**
-     * Creates a new filterCategory predicate for a {@link EngineCategoryDTO} and {@link EngineSubCategoryDTO}.
+     * Creates a new filter predicate for a {@link EngineCategoryDTO} and {@link EngineSubCategoryDTO}.
      * This predicate then accepts a {@link EngineVersionDTO} object and returns true if the given object fulfills the
-     * filterCategory predicate and false otherwise
+     * filter predicate and false otherwise
      *
      * @param engineCategory The engine category
      * @param engineSubCategory The engine sub category
-     * @return A new filterCategory predicate
+     * @return A new filter predicate
      */
     public Predicate<EngineVersionDTO> createFilter(EngineCategoryDTO engineCategory,
             EngineSubCategoryDTO engineSubCategory) {
@@ -132,10 +132,10 @@ public class EnginesFilter {
     }
 
     /**
-     * Checks if the given engine category fulfills this filterCategory
+     * Checks if the given engine category fulfills this filter
      *
      * @param engineCategory The engine category
-     * @return True if the given engine category fulfills the filterCategory, false otherwise
+     * @return True if the given engine category fulfills the filter, false otherwise
      */
     public boolean filter(EngineCategoryDTO engineCategory) {
         return Optional.ofNullable(searchTerm.getValueSafe())
@@ -147,10 +147,10 @@ public class EnginesFilter {
     }
 
     /**
-     * Checks if a given engine sub category tab fulfills this filterCategory
+     * Checks if a given engine sub category tab fulfills this filter
      *
      * @param engineSubCategoryPanel The engine sub category tab
-     * @return True if the given engine sub category tab fulfills the filterCategory, false otherwise
+     * @return True if the given engine sub category tab fulfills the filter, false otherwise
      */
     public boolean filter(EngineSubCategoryPanel engineSubCategoryPanel) {
         final boolean tabNotEmpty = engineSubCategoryPanel.notEmpty(this);

@@ -41,7 +41,7 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     private final ObjectProperty<Engine> engine;
 
     /**
-     * The applied filterCategory
+     * The applied filter
      */
     private final ObjectProperty<EnginesFilter> filter;
 
@@ -62,7 +62,7 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
      * @param engineSubCategory The engine subcategory
      * @param enginesPath The path leading to where the engines are saved
      * @param engine The engine
-     * @param filter The applied filterCategory
+     * @param filter The applied filter
      * @param selectedListWidget The selected list widget
      * @param onEngineSelect The callback for when an engine has been selected
      */
@@ -100,10 +100,10 @@ public class EngineSubCategoryPanel extends ControlBase<EngineSubCategoryPanel, 
     }
 
     /**
-     * Checks whether this panel will be empty when applying the given {@link EnginesFilter filterCategory}
+     * Checks whether this panel will be empty when applying the given {@link EnginesFilter filter}
      *
-     * @param filter The applied filterCategory
-     * @return True if this panel will be empty when applying the given filterCategory, false otherwise
+     * @param filter The applied filter
+     * @return True if this panel will be empty when applying the given filter, false otherwise
      */
     public boolean notEmpty(EnginesFilter filter) {
         return getEngineSubCategory().getPackages().stream()

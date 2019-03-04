@@ -68,12 +68,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public double getFuzzySearchRatio() {
-        return fuzzySearchRatio.get();
+        return this.fuzzySearchRatio.get();
     }
 
     @Override
     public DoubleProperty fuzzySearchRatioProperty() {
-        return fuzzySearchRatio;
+        return this.fuzzySearchRatio;
     }
 
     public void setFuzzySearchRatio(double fuzzySearchRatio) {
@@ -81,12 +81,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public OperatingSystem getOperatingSystem() {
-        return operatingSystem.get();
+        return this.operatingSystem.get();
     }
 
     @Override
     public ObjectProperty<OperatingSystem> operatingSystemProperty() {
-        return operatingSystem;
+        return this.operatingSystem;
     }
 
     public void setOperatingSystem(OperatingSystem operatingSystem) {
@@ -94,12 +94,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainCommercialApplications() {
-        return containCommercialApplications.get();
+        return this.containCommercialApplications.get();
     }
 
     @Override
     public BooleanProperty containCommercialApplicationsProperty() {
-        return containCommercialApplications;
+        return this.containCommercialApplications;
     }
 
     public void setContainCommercialApplications(boolean containCommercialApplications) {
@@ -107,12 +107,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainRequiresPatchApplications() {
-        return containRequiresPatchApplications.get();
+        return this.containRequiresPatchApplications.get();
     }
 
     @Override
     public BooleanProperty containRequiresPatchApplicationsProperty() {
-        return containRequiresPatchApplications;
+        return this.containRequiresPatchApplications;
     }
 
     public void setContainRequiresPatchApplications(boolean containRequiresPatchApplications) {
@@ -120,12 +120,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainTestingApplications() {
-        return containTestingApplications.get();
+        return this.containTestingApplications.get();
     }
 
     @Override
     public BooleanProperty containTestingApplicationsProperty() {
-        return containTestingApplications;
+        return this.containTestingApplications;
     }
 
     public void setContainTestingApplications(boolean containTestingApplications) {
@@ -133,12 +133,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainAllOSCompatibleApplications() {
-        return containAllOSCompatibleApplications.get();
+        return this.containAllOSCompatibleApplications.get();
     }
 
     @Override
     public BooleanProperty containAllOSCompatibleApplicationsProperty() {
-        return containAllOSCompatibleApplications;
+        return this.containAllOSCompatibleApplications;
     }
 
     public void setContainAllOSCompatibleApplications(boolean containAllOSCompatibleApplications) {

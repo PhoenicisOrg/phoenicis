@@ -19,7 +19,7 @@ public class ContainerSidebar
     private final ObjectProperty<ContainerCategoryDTO> selectedContainerCategory;
 
     /**
-     * The container filterCategory utility class
+     * The container filter utility class
      */
     private final ContainersFilter filter;
 
