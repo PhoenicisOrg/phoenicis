@@ -41,7 +41,7 @@ public interface ScriptFilter {
      * Filter function for {@link ScriptDTO} objects
      *
      * @param script The script which should be checked
-     * @return True if the given <code>script</code> fulfills the filterCategory conditions, false otherwise
+     * @return True if the given <code>script</code> fulfills the filter conditions, false otherwise
      */
     default boolean filterScript(ScriptDTO script) {
         boolean result = true;

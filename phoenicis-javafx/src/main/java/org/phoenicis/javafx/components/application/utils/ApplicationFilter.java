@@ -33,7 +33,7 @@ public interface ApplicationFilter extends ScriptFilter {
      * Filter function for {@link ApplicationDTO} objects
      *
      * @param application The application which should checked
-     * @return True if the given <code>application</code> fulfills the filterCategory conditions, false otherwise
+     * @return True if the given <code>application</code> fulfills the filter conditions, false otherwise
      */
     default boolean filterApplication(ApplicationDTO application) {
         final boolean matchesFilterCategory = Optional.ofNullable(filterCategoryProperty().getValue())
@@ -49,9 +49,9 @@ public interface ApplicationFilter extends ScriptFilter {
 
         /*
          * An application can be shown, if:
-         * - it belongs to the filterCategory category, if such a category is set
+         * - it belongs to the filter category, if such a category is set
          * - it contains at least one visible script
-         * - its text matches the filterCategory text
+         * - its text matches the filter text
          */
         return matchesFilterCategory && matchesApplicationName && matchesAtLeastOneScript;
     }

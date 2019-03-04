@@ -26,7 +26,7 @@ public interface CategoryFilter extends ScriptFilter {
      * Filter function for {@link CategoryDTO} objects
      *
      * @param category The category which should be checked
-     * @return True if the given <code>category</code> fulfills the filterCategory condition, false otherwise
+     * @return True if the given <code>category</code> fulfills the filter condition, false otherwise
      */
     default boolean filterCategory(CategoryDTO category) {
         /*
@@ -44,7 +44,7 @@ public interface CategoryFilter extends ScriptFilter {
             /*
              * An application can be shown, if:
              * - it contains at least one visible script
-             * - its text matches the filterCategory text
+             * - its text matches the filter text
              */
             return matchesApplicationName && matchesAtLeastOneScript;
         });
