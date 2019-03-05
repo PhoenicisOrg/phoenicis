@@ -24,6 +24,7 @@ import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -72,7 +73,18 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept(((Value) output).as(Map.class)),
+                output -> {
+                    Map<String, List<Object>> settingsMapJs = ((Value) output).as(Map.class);
+                    Map<String, List<EngineSetting>> settingsMapJava = new HashMap<>();
+                    for (String engine : settingsMapJs.keySet()) {
+                        List<EngineSetting> settings = new ArrayList<>();
+                        for (Object settingAdapter : settingsMapJs.get(engine)) {
+                            settings.add((EngineSetting) settingAdapter);
+                        }
+                        settingsMapJava.put(engine, settings);
+                    }
+                    callback.accept(settingsMapJava);
+                },
                 errorCallback);
     }
 
