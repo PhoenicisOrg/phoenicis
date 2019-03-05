@@ -1,16 +1,16 @@
 package org.phoenicis.scripts.engine.builtins;
 
-import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.PhoenicisScriptContext;
 
 import java.io.InputStreamReader;
 
 /**
  * Includes utils.js
  */
-public class ScriptUtilitiesInjector implements EngineInjector {
+public class ScriptUtilitiesInjector implements ScriptContextInjector {
     @Override
-    public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
-        phoenicisScriptEngine.eval(new InputStreamReader(getClass().getResourceAsStream("utils.js")),
+    public void injectInto(PhoenicisScriptContext phoenicisScriptContext) {
+        phoenicisScriptContext.eval(new InputStreamReader(getClass().getResourceAsStream("utils.js")),
                 this::throwException);
     }
 }

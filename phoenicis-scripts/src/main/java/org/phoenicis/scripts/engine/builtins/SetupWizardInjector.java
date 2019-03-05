@@ -1,7 +1,7 @@
 package org.phoenicis.scripts.engine.builtins;
 
 import org.phoenicis.scripts.TriFunction;
-import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.PhoenicisScriptContext;
 import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;
@@ -12,7 +12,7 @@ import java.util.Optional;
 /**
  * Injects SetupWizard() function into a script engine
  */
-public class SetupWizardInjector implements EngineInjector {
+public class SetupWizardInjector implements ScriptContextInjector {
     private final UiSetupWizardFactory uiSetupWizardFactory;
 
     public SetupWizardInjector(UiSetupWizardFactory uiSetupWizardFactory) {
@@ -20,16 +20,16 @@ public class SetupWizardInjector implements EngineInjector {
     }
 
     @Override
-    public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
-        phoenicisScriptEngine.eval(
+    public void injectInto(PhoenicisScriptContext phoenicisScriptContext) {
+        phoenicisScriptContext.eval(
                 "var InstallationType = Java.type(\"" + InstallationType.class.getCanonicalName() + "\")",
                 this::throwException);
-        phoenicisScriptEngine.put("SetupWizard",
+        phoenicisScriptContext.put("SetupWizard",
                 (TriFunction<InstallationType, String, Optional<URI>, UiSetupWizardImplementation>) (installationType,
                         name, miniature) -> {
                     final UiSetupWizardImplementation uiSetupWizardImplementation = uiSetupWizardFactory.create(name,
                             miniature, installationType);
-                    phoenicisScriptEngine.addErrorHandler(e -> uiSetupWizardImplementation.close());
+                    phoenicisScriptContext.addErrorHandler(e -> uiSetupWizardImplementation.close());
                     return uiSetupWizardImplementation;
                 },
                 this::throwException);

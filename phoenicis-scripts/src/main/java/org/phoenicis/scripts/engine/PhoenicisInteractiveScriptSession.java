@@ -23,14 +23,14 @@ import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import java.util.function.Consumer;
 
 public class PhoenicisInteractiveScriptSession implements InteractiveScriptSession {
-    private final PhoenicisScriptEngine phoenicisScriptEngine;
+    private final PhoenicisScriptContext phoenicisScriptContext;
 
-    public PhoenicisInteractiveScriptSession(PhoenicisScriptEngineFactory phoenicisScriptEngineFactory) {
-        this.phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
+    public PhoenicisInteractiveScriptSession(PhoenicisScriptContextFactory phoenicisScriptContextFactory) {
+        this.phoenicisScriptContext = phoenicisScriptContextFactory.createScriptContext();
     }
 
     @Override
     public void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback) {
-        responseCallback.accept(phoenicisScriptEngine.evalAndReturn(evaluation, errorCallback));
+        responseCallback.accept(phoenicisScriptContext.evalAndReturn(evaluation, errorCallback));
     }
 }

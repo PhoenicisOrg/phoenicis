@@ -1,7 +1,7 @@
 package org.phoenicis.scripts.engine.builtins;
 
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.PhoenicisScriptContext;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.annotation.Annotation;
@@ -10,7 +10,7 @@ import java.util.function.Function;
 /**
  * Injects Bean() function into a Script Engine
  */
-public class BeanInjector implements EngineInjector {
+public class BeanInjector implements ScriptContextInjector {
     private final ApplicationContext applicationContext;
 
     public BeanInjector(ApplicationContext applicationContext) {
@@ -18,8 +18,8 @@ public class BeanInjector implements EngineInjector {
     }
 
     @Override
-    public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
-        phoenicisScriptEngine.put("Bean", (Function<String, Object>) this::fetchBean, this::throwException);
+    public void injectInto(PhoenicisScriptContext phoenicisScriptContext) {
+        phoenicisScriptContext.put("Bean", (Function<String, Object>) this::fetchBean, this::throwException);
     }
 
     private Object fetchBean(String beanName) {

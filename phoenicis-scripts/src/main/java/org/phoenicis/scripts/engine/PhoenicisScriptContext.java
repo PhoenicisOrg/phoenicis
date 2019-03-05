@@ -27,11 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class PhoenicisScriptEngine {
+public class PhoenicisScriptContext {
     private final Context context;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
-    PhoenicisScriptEngine() {
+    PhoenicisScriptContext() {
         this.context = Context.newBuilder()
                 .option("js.nashorn-compat", "true")
                 .allowHostAccess(true)

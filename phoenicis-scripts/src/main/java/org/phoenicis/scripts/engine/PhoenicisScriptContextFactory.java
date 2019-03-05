@@ -18,22 +18,22 @@
 
 package org.phoenicis.scripts.engine;
 
-import org.phoenicis.scripts.engine.builtins.EngineInjector;
+import org.phoenicis.scripts.engine.builtins.ScriptContextInjector;
 
 import java.util.List;
 
-public class PhoenicisScriptEngineFactory {
-    private final List<EngineInjector> engineInjectors;
+public class PhoenicisScriptContextFactory {
+    private final List<ScriptContextInjector> scriptContextInjectors;
 
-    public PhoenicisScriptEngineFactory(List<EngineInjector> engineInjectors) {
-        this.engineInjectors = engineInjectors;
+    public PhoenicisScriptContextFactory(List<ScriptContextInjector> scriptContextInjectors) {
+        this.scriptContextInjectors = scriptContextInjectors;
     }
 
-    PhoenicisScriptEngine createEngine() {
-        final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine();
+    public PhoenicisScriptContext createScriptContext() {
+        final PhoenicisScriptContext phoenicisScriptContext = new PhoenicisScriptContext();
 
-        engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
+        scriptContextInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptContext));
 
-        return phoenicisScriptEngine;
+        return phoenicisScriptContext;
     }
 }
