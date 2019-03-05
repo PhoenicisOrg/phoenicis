@@ -20,21 +20,17 @@ package org.phoenicis.scripts.engine;
 
 import org.phoenicis.scripts.engine.builtins.EngineInjector;
 
-import javax.script.ScriptEngineManager;
 import java.util.List;
 
 public class PhoenicisScriptEngineFactory {
-    private final ScriptEngineType type;
     private final List<EngineInjector> engineInjectors;
 
-    public PhoenicisScriptEngineFactory(ScriptEngineType type, List<EngineInjector> engineInjectors) {
-        this.type = type;
+    public PhoenicisScriptEngineFactory(List<EngineInjector> engineInjectors) {
         this.engineInjectors = engineInjectors;
     }
 
     PhoenicisScriptEngine createEngine() {
-        final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine(
-                new ScriptEngineManager().getEngineByName(type.toString()));
+        final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine();
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 

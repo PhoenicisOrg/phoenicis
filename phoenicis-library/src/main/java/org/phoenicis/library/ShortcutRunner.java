@@ -18,14 +18,11 @@
 
 package org.phoenicis.library;
 
+import org.graalvm.polyglot.PolyglotException;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -46,18 +43,13 @@ public class ShortcutRunner {
     public void run(ShortcutDTO shortcutDTO, List<String> arguments, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        ScriptEngineManager m = new ScriptEngineManager();
-        ScriptEngine engine = m.getEngineByName("graal.js");
-        Invocable inv = (Invocable) engine;
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final Object shortcutReader = (Object) output;
+                    final Value shortcutReader = (Value) output;
                     try {
-                        inv.invokeMethod(shortcutReader, "of", shortcutDTO);
-                        inv.invokeMethod(shortcutReader, "run", arguments);
-                    } catch (ScriptException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
+                        shortcutReader.invokeMember("of", shortcutDTO);
+                        shortcutReader.invokeMember("run", arguments);
+                    } catch (UnsupportedOperationException | PolyglotException | NullPointerException e) {
                         e.printStackTrace();
                     }
                 }, errorCallback), errorCallback);
@@ -68,11 +60,9 @@ public class ShortcutRunner {
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    /*
-                     * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                     * shortcutReader.callMember("of", shortcutDTO);
-                     * shortcutReader.callMember("stop");
-                     */
+                    final Value shortcutReader = (Value) output;
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("stop");
                 }, errorCallback), errorCallback);
     }
 
