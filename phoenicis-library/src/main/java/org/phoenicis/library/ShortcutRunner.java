@@ -18,6 +18,7 @@
 
 package org.phoenicis.library;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -25,8 +26,6 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -51,15 +50,10 @@ public class ShortcutRunner {
         Invocable inv = (Invocable) engine;
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final Object shortcutReader = (Object) output;
-                    try {
-                        inv.invokeMethod(shortcutReader, "of", shortcutDTO);
-                        inv.invokeMethod(shortcutReader, "run", arguments);
-                    } catch (ScriptException e) {
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    }
+                    final Value shortcutReader = (Value) output;
+
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("run", arguments);
                 }, errorCallback), errorCallback);
     }
 
