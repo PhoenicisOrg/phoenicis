@@ -1,10 +1,9 @@
 package org.phoenicis.scripts.engine;
 
-import javax.script.ScriptEngineManager;
 import java.util.Map;
 
 /**
- * type of the script engine
+ * The support script engine types
  */
 public enum ScriptEngineType {
     NASHORN("nashorn") {
@@ -21,12 +20,25 @@ public enum ScriptEngineType {
         }
     };
 
+    /**
+     * The name of the script engine type
+     */
     private final String name;
 
+    /**
+     * Constructor
+     *
+     * @param name The name of the script engine type
+     */
     ScriptEngineType(String name) {
         this.name = name;
     }
 
+    /**
+     * Creates a new instance of the {@link ScriptEngineType}
+     *
+     * @return The new instance of the {@link ScriptEngineType}
+     */
     public abstract PhoenicisScriptEngine createScriptEngine();
 
     @Override
