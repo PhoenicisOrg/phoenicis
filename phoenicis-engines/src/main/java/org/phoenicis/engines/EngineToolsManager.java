@@ -18,6 +18,7 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -60,7 +61,7 @@ public class EngineToolsManager {
         interactiveScriptSession.eval(
                 "include(\"engines." + engineId + ".tools." + toolId + "\");",
                 ignored -> interactiveScriptSession.eval("new Tool()", output -> {
-                    final EngineTool toolObject = (EngineTool) output;
+                    final EngineTool toolObject = ((Value) output).as(EngineTool.class);
                     toolObject.run(container);
                     doneCallback.run();
                 }, errorCallback), errorCallback);

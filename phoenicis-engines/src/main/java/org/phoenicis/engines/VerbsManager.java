@@ -18,6 +18,7 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
@@ -62,7 +63,7 @@ public class VerbsManager {
         interactiveScriptSession.eval(
                 "include(\"" + verbId + "\");",
                 ignored -> interactiveScriptSession.eval("new Verb()", output -> {
-                    final Verb verbObject = (Verb) output;
+                    final Verb verbObject = ((Value) output).as(Verb.class);
                     verbObject.install(container);
                     doneCallback.run();
                 }, errorCallback), errorCallback);

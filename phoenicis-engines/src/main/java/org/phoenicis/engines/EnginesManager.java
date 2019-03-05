@@ -20,6 +20,7 @@ package org.phoenicis.engines;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
@@ -67,7 +68,7 @@ public class EnginesManager {
         interactiveScriptSession.eval(
                 "include(\"engines." + engineId + ".engine.implementation\"); new Engine();",
                 output -> {
-                    final Engine engine = (Engine) output;
+                    final Engine engine = ((Value) output).as(Engine.class);
                     doneCallback.accept(engine);
                 }, errorCallback);
     }
