@@ -72,7 +72,8 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
+                output -> callback.accept(((Value) output).as(Map.class)),
+                errorCallback);
     }
 
     /**
