@@ -55,37 +55,18 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
      * @param filter The library filter utility class
      * @param items The items shown inside a toggle button group in the sidebar
      * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
-     * @param applicationName The name of the application
-     * @param onCreateShortcut The callback method used to create a new shortcut
-     * @param onScriptRun The callback method used to execute a script file
-     * @param onOpenConsole The callback method used to open a Phoenicis console
-     */
-    private LibrarySidebar(LibraryFilter filter, ObservableList<ShortcutCategoryDTO> items,
-            ObjectProperty<ListWidgetType> selectedListWidget, StringProperty applicationName,
-            ObjectProperty<Runnable> onCreateShortcut,
-            ObjectProperty<Consumer<File>> onScriptRun, ObjectProperty<Runnable> onOpenConsole) {
-        super(items, filter.searchTermProperty(), selectedListWidget);
-
-        this.applicationName = applicationName;
-        this.onCreateShortcut = onCreateShortcut;
-        this.onScriptRun = onScriptRun;
-        this.onOpenConsole = onOpenConsole;
-        this.filter = filter;
-
-        this.selectedShortcutCategory = filter.selectedShortcutCategoryProperty();
-    }
-
-    /**
-     * Constructor
-     *
-     * @param filter The library filter utility class
-     * @param items The items shown inside a toggle button group in the sidebar
-     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
     public LibrarySidebar(LibraryFilter filter, ObservableList<ShortcutCategoryDTO> items,
             ObjectProperty<ListWidgetType> selectedListWidget) {
-        this(filter, items, selectedListWidget, new SimpleStringProperty(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+        super(items, filter.searchTermProperty(), selectedListWidget);
+
+        this.applicationName = new SimpleStringProperty();
+        this.onCreateShortcut = new SimpleObjectProperty<>();
+        this.onScriptRun = new SimpleObjectProperty<>();
+        this.onOpenConsole = new SimpleObjectProperty<>();
+        this.filter = filter;
+
+        this.selectedShortcutCategory = filter.selectedShortcutCategoryProperty();
     }
 
     /**

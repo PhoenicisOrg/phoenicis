@@ -146,11 +146,12 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
             final File defaultFile = new File(miniatureURI);
             chooser.setInitialDirectory(defaultFile.getParentFile());
 
-            final File newMiniature = chooser.showOpenDialog(getControl().getScene().getWindow());
-            miniaturePathField.setText(newMiniature.toString());
+            Optional.ofNullable(chooser.showOpenDialog(getControl().getScene().getWindow())).ifPresent(newMiniature -> {
+                miniaturePathField.setText(newMiniature.toString());
 
-            getControl().setShortcut(new ShortcutDTO.Builder(getControl().getShortcut())
-                    .withMiniature(newMiniature.toURI()).build());
+                getControl().setShortcut(new ShortcutDTO.Builder(getControl().getShortcut())
+                        .withMiniature(newMiniature.toURI()).build());
+            });
         });
 
         final HBox miniatureContainer = new HBox(miniaturePathField, openBrowser);
