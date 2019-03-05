@@ -32,7 +32,10 @@ public class PhoenicisScriptEngine {
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
     PhoenicisScriptEngine() {
-        this.context = Context.newBuilder().option("js.nashorn-compat", "true").build();
+        this.context = Context.newBuilder()
+                .option("js.nashorn-compat", "true")
+                .allowHostAccess(true)
+                .build();
     }
 
     public void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback) {
