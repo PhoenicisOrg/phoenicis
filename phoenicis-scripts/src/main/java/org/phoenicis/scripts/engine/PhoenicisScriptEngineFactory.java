@@ -32,9 +32,8 @@ public class PhoenicisScriptEngineFactory {
         this.engineInjectors = engineInjectors;
     }
 
-    PhoenicisScriptEngine createEngine() {
-        final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine(
-                new ScriptEngineManager().getEngineByName(type.toString()));
+    public PhoenicisScriptEngine createEngine() {
+        final PhoenicisScriptEngine phoenicisScriptEngine = type.createScriptEngine();
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 
