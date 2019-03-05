@@ -16,10 +16,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.scripts.session;
 
-public class CancelException extends RuntimeException {
-    public CancelException(String s) {
-        super(s);
-    }
+import java.util.function.Consumer;
+
+public interface InteractiveScriptSession {
+    void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback);
 }

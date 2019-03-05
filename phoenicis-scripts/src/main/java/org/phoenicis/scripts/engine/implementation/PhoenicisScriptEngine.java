@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.engine;
+package org.phoenicis.scripts.engine.implementation;
 
 import com.google.common.util.concurrent.Runnables;
 

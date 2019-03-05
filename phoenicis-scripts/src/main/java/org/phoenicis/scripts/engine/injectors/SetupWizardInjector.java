@@ -1,7 +1,7 @@
-package org.phoenicis.scripts.engine.builtins;
+package org.phoenicis.scripts.engine.injectors;
 
 import org.phoenicis.scripts.TriFunction;
-import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.wizard.UiSetupWizardFactory;
 import org.phoenicis.scripts.wizard.UiSetupWizardImplementation;

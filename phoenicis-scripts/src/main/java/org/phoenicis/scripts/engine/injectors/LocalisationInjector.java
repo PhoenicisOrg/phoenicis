@@ -1,6 +1,6 @@
-package org.phoenicis.scripts.engine.builtins;
+package org.phoenicis.scripts.engine.injectors;
 
-import org.phoenicis.scripts.engine.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
 /**
  * Injects tr() function into a Script Engine

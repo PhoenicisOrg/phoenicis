@@ -18,9 +18,9 @@
 
 package org.phoenicis.scripts.engine;
 
-import org.phoenicis.scripts.engine.builtins.EngineInjector;
+import org.phoenicis.scripts.engine.injectors.EngineInjector;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
-import javax.script.ScriptEngineManager;
 import java.util.List;
 
 public class PhoenicisScriptEngineFactory {

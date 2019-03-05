@@ -28,7 +28,7 @@ import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;

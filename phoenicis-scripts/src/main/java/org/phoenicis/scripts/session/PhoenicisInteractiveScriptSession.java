@@ -16,10 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.scripts.session;
+
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
 import java.util.function.Consumer;
 
-public interface InteractiveScriptSession {
-    void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback);
+public class PhoenicisInteractiveScriptSession implements InteractiveScriptSession {
+    private final PhoenicisScriptEngine phoenicisScriptEngine;
+
+    public PhoenicisInteractiveScriptSession(PhoenicisScriptEngineFactory phoenicisScriptEngineFactory) {
+        this.phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
+    }
+
+    @Override
+    public void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback) {
+        responseCallback.accept(phoenicisScriptEngine.evalAndReturn(evaluation, errorCallback));
+    }
 }
