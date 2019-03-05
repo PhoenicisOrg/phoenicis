@@ -74,6 +74,7 @@
   -fx-text-font-family: "Roboto Light";
   -fx-text-fill: #FFFFFF;
   -fx-font-size: 1.2em;
+  -fx-content-display: right;
   -fx-cursor: hand;
 }
 
@@ -93,6 +94,29 @@
 
 #menuPane > .tab-header-area .tab:disabled {
   -fx-opacity: 1;
+}
+
+.tab-indicator {
+  -fx-alignment: top-left;
+
+  .indicator-container {
+    -fx-alignment: center;
+
+    .indicator-circle {
+      -fx-pref-width: 1em;
+      -fx-pref-height: 1em;
+      -fx-border-radius: 1em;
+      -fx-background-radius: 1em;
+      -fx-background-color: #529bda;
+      -fx-background-repeat: no-repeat;
+    }
+
+    .indicator-information {
+      -fx-font-size: 0.8em;
+      -fx-font-weight: bold;
+      -fx-fill: white;
+    }
+  }
 }
 
 /*******************************************************/
@@ -756,6 +780,22 @@
 
   &> .viewport {
     -fx-background-color: transparent;
+  }
+}
+
+.phoenicis-dialog {
+  &.simple-confirm-dialog {
+    // nothing yet
+  }
+
+  &.list-confirm-dialog {
+    .confirm-list {
+      -fx-pref-height: 7.5em;
+    }
+  }
+
+  &.error-dialog {
+    // nothing yet
   }
 }
 

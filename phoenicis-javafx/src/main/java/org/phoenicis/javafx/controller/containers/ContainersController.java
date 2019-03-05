@@ -26,7 +26,7 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.repository.RepositoryManager;
@@ -116,7 +116,7 @@ public class ContainersController {
         this.containersView.setOnSelectContainer(this.containersView::setContainer);
 
         this.containersView.setOnDeleteContainer(container -> {
-            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                     .withTitle(tr("Delete {0} container", container.getName()))
                     .withMessage(tr("Are you sure you want to delete the {0} container?",
                             container.getName()))

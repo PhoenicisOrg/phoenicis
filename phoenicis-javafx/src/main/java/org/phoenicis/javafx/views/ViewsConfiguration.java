@@ -18,14 +18,15 @@
 
 package org.phoenicis.javafx.views;
 
+import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
+import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
-import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 import org.phoenicis.repository.RepositoryConfiguration;
@@ -78,10 +79,20 @@ public class ViewsConfiguration {
     private RepositoryConfiguration repositoryConfiguration;
 
     @Bean
-    public ApplicationsView viewApps() {
-        return new ApplicationsView(themeConfiguration.themeManager(),
-                javaFxSettingsConfiguration.javaFxSettingsManager(),
-                toolsConfiguration, scriptsConfiguration.scriptInterpreter());
+    public ApplicationsFeaturePanel viewApps() {
+        final ApplicationsFeaturePanel applicationsFeaturePanel = new ApplicationsFeaturePanel();
+
+        applicationsFeaturePanel.setThemeManager(themeConfiguration.themeManager());
+        applicationsFeaturePanel.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
+        applicationsFeaturePanel.setScriptInterpreter(scriptsConfiguration.scriptInterpreter());
+
+        // TODO: remove the ApplicationFilter class
+        final ApplicationFilter applicationFilter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
+                javaFxSettingsConfiguration.javaFxSettingsManager().getFuzzySearchRatio());
+
+        applicationsFeaturePanel.setFilter(applicationFilter);
+
+        return applicationsFeaturePanel;
     }
 
     @Bean
@@ -115,7 +126,7 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public LibraryView viewLibrary() {
+    public LibraryFeaturePanel viewLibrary() {
         return viewsConfigurationLibrary.viewLibrary();
     }
 

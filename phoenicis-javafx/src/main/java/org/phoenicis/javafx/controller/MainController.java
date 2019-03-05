@@ -25,7 +25,7 @@ import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
@@ -93,7 +93,7 @@ public class MainController {
 
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event -> {
-            final ConfirmDialog confirmDialog = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmDialog = SimpleConfirmDialog.builder()
                     .withTitle(this.applicationName)
                     .withMessage(tr("Are you sure you want to close all {0} windows?", this.applicationName))
                     .withOwner(this.mainWindow)
