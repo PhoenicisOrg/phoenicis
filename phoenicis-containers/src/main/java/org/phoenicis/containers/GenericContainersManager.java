@@ -132,23 +132,22 @@ public class GenericContainersManager implements ContainersManager {
         final String engineId = container.getEngine().toLowerCase();
 
         List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
-        /*
-         * categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-         * .forEach(shortcutDTO -> {
-         * final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
-         * .createInteractiveSession();
-         * interactiveScriptSession.eval(
-         * "include(\"engines." + engineId + ".shortcuts.reader\");",
-         * ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-         * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-         * shortcutReader.callMember("of", shortcutDTO);
-         * final String containerName = (String) shortcutReader.callMember("container");
-         * if (containerName.equals(container.getName())) {
-         * this.shortcutManager.deleteShortcut(shortcutDTO);
-         * }
-         * }, errorCallback), errorCallback);
-         * });
-         */
+        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
+                .forEach(shortcutDTO -> {
+                    final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
+                            .createInteractiveSession();
+                    interactiveScriptSession.eval(
+                            "include(\"engines." + engineId + ".shortcuts.reader\");",
+                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
+                                final org.graalvm.polyglot.Value shortcutReader = (org.graalvm.polyglot.Value) output;
+                                shortcutReader.invokeMember("of", shortcutDTO);
+                                final String containerName = shortcutReader.invokeMember("container").as(String.class);
+                                if (containerName.equals(container.getName())) {
+                                    this.shortcutManager.deleteShortcut(shortcutDTO);
+                                }
+                            }, errorCallback), errorCallback);
+                });
+
     }
 
     /**
