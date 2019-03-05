@@ -23,9 +23,6 @@ import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -45,9 +42,6 @@ public class ShortcutRunner {
     public void run(ShortcutDTO shortcutDTO, List<String> arguments, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        ScriptEngineManager m = new ScriptEngineManager();
-        ScriptEngine engine = m.getEngineByName("graal.js");
-        Invocable inv = (Invocable) engine;
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                     final Value shortcutReader = (Value) output;
@@ -62,11 +56,10 @@ public class ShortcutRunner {
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    /*
-                     * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                     * shortcutReader.callMember("of", shortcutDTO);
-                     * shortcutReader.callMember("stop");
-                     */
+                    final Value shortcutReader = (Value) output;
+
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("stop");
                 }, errorCallback), errorCallback);
     }
 
