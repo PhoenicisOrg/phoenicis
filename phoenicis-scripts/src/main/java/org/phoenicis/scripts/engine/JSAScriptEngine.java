@@ -1,17 +1,28 @@
 package org.phoenicis.scripts.engine;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * A {@link PhoenicisScriptEngine} wrapping around a {@link ScriptEngine} object defined by the Java Scripting API
+ */
 public class JSAScriptEngine implements PhoenicisScriptEngine {
     private final ScriptEngine scriptEngine;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
-    public JSAScriptEngine(ScriptEngine scriptEngine) {
-        this.scriptEngine = scriptEngine;
+    /**
+     * Constructor
+     *
+     * @param engine The name of the engine
+     */
+    public JSAScriptEngine(String engine) {
+        super();
+
+        this.scriptEngine = new ScriptEngineManager().getEngineByName(engine);
     }
 
     public void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback) {

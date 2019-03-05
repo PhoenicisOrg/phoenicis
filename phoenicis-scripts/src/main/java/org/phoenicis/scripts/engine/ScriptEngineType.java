@@ -10,7 +10,7 @@ public enum ScriptEngineType {
     NASHORN("nashorn") {
         @Override
         public PhoenicisScriptEngine createScriptEngine() {
-            return new JSAScriptEngine(new ScriptEngineManager().getEngineByName("nashorn"));
+            return new JSAScriptEngine("nashorn");
         }
     },
 

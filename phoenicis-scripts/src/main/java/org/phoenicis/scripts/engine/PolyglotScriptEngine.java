@@ -11,16 +11,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * A {@link PhoenicisScriptEngine} wrapping around a polyglot {@link Context} object defined by Graal
+ */
 public class PolyglotScriptEngine implements PhoenicisScriptEngine {
-    private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
+    /**
+     * A list of error handlers
+     */
+    private final List<Consumer<Exception>> errorHandlers;
 
+    /**
+     * The scripting language
+     */
     private final String language;
 
+    /**
+     * The context representing the handle to the scripting engine
+     */
     private final Context context;
 
+    /**
+     * Constructor
+     *
+     * @param language The language name
+     * @param options A map of options for the Polyglot context
+     */
     public PolyglotScriptEngine(String language, Map<String, String> options) {
         super();
 
+        this.errorHandlers = new ArrayList<>();
         this.language = language;
         this.context = Context.newBuilder(language)
                 .options(options).allowHostAccess(true).build();
