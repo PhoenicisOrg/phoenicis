@@ -1,6 +1,7 @@
 package org.phoenicis.scripts.engine;
 
 import javax.script.ScriptEngineManager;
+import java.util.Map;
 
 /**
  * type of the script engine
@@ -16,7 +17,7 @@ public enum ScriptEngineType {
     GRAAL("graal.js") {
         @Override
         public PhoenicisScriptEngine createScriptEngine() {
-            return new PolyglotScriptEngine();
+            return new PolyglotScriptEngine("js", Map.of("js.nashorn-compat", "true"));
         }
     };
 

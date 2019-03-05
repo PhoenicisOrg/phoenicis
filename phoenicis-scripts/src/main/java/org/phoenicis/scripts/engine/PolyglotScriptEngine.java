@@ -8,19 +8,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class PolyglotScriptEngine implements PhoenicisScriptEngine {
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
+    private final String language;
+
     private final Context context;
 
-    public PolyglotScriptEngine() {
+    public PolyglotScriptEngine(String language, Map<String, String> options) {
         super();
 
-        this.context = Context.newBuilder("js")
-                .option("js.nashorn-compat", "true")
-                .allowHostAccess(true).build();
+        this.language = language;
+        this.context = Context.newBuilder(language)
+                .options(options).allowHostAccess(true).build();
     }
 
     @Override
@@ -37,7 +40,7 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
     @Override
     public void eval(String script, Runnable doneCallback, Consumer<Exception> errorCallback) {
         try {
-            context.eval("js", script);
+            this.context.eval(this.language, script);
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
@@ -46,7 +49,7 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
     @Override
     public Object evalAndReturn(String script, Consumer<Exception> errorCallback) {
         try {
-            return context.eval("js", script);
+            return this.context.eval(this.language, script);
         } catch (Exception e) {
             handleError(errorCallback, e);
 
@@ -56,7 +59,7 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
 
     @Override
     public void put(String name, Object object, Consumer<Exception> errorCallback) {
-        context.getBindings("js").putMember(name, object);
+        this.context.getBindings(this.language).putMember(name, object);
     }
 
     @Override
@@ -65,7 +68,7 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
     }
 
     private void handleError(Consumer<Exception> errorCallback, Exception e) {
-        for (Consumer<Exception> errorHandler : errorHandlers) {
+        for (Consumer<Exception> errorHandler : this.errorHandlers) {
             errorHandler.accept(e);
         }
 
