@@ -20,6 +20,7 @@ package org.phoenicis.library;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.library.dto.ShortcutInfoDTO;
@@ -121,11 +122,9 @@ public class ShortcutManager {
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    /*
-                     * final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                     * shortcutReader.callMember("of", shortcutDTO);
-                     * shortcutReader.callMember("uninstall");
-                     */
+                    final Value shortcutReader = (Value) output;
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("uninstall");
                 }, errorCallback), errorCallback);
     }
 
