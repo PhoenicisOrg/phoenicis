@@ -3,7 +3,7 @@ package org.phoenicis.scripts.engine;
 import java.util.Map;
 
 /**
- * The support script engine types
+ * The supported script engine types
  */
 public enum ScriptEngineType {
     NASHORN("nashorn") {
