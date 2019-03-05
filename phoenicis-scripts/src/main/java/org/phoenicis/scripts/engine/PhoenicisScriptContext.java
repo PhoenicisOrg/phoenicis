@@ -30,6 +30,7 @@ import java.util.function.Consumer;
 public class PhoenicisScriptContext {
     private final Context context;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
+    private final static String LANGUAGE_ID = "js";
 
     PhoenicisScriptContext() {
         this.context = Context.newBuilder()
@@ -43,7 +44,7 @@ public class PhoenicisScriptContext {
             StringWriter stringWriter = new StringWriter();
             IOUtils.copy(inputStreamReader, stringWriter);
             String streamAsString = stringWriter.toString();
-            this.context.eval("js", streamAsString);
+            this.context.eval(LANGUAGE_ID, streamAsString);
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
@@ -56,7 +57,7 @@ public class PhoenicisScriptContext {
 
     public void eval(String script, Runnable doneCallback, Consumer<Exception> errorCallback) {
         try {
-            this.context.eval("js", script);
+            this.context.eval(LANGUAGE_ID, script);
             doneCallback.run();
         } catch (Exception e) {
             handleError(errorCallback, e);
@@ -65,7 +66,7 @@ public class PhoenicisScriptContext {
 
     Object evalAndReturn(String line, Consumer<Exception> errorCallback) {
         try {
-            final Object evaluation = this.context.eval("js", line);
+            final Object evaluation = this.context.eval(LANGUAGE_ID, line);
             if (evaluation == null) {
                 return null;
             }
@@ -85,7 +86,7 @@ public class PhoenicisScriptContext {
 
     public void put(String name, Object object, Consumer<Exception> errorCallback) {
         try {
-            this.context.getBindings("js").putMember(name, object);
+            this.context.getBindings(LANGUAGE_ID).putMember(name, object);
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
