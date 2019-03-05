@@ -20,6 +20,7 @@ package org.phoenicis.scripts;
 
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.scripts.engine.ScriptEngineType;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -51,8 +52,15 @@ public class ScriptsConfiguration {
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
+    public PhoenicisScriptEngineFactory graalScriptEngineFactory() {
+        return new PhoenicisScriptEngineFactory(ScriptEngineType.GRAAL, Arrays.asList(new ScriptUtilitiesInjector(),
+                new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
+                new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
+    }
+
+    @Bean
     public PhoenicisScriptEngineFactory nashornScriptEngineFactory() {
-        return new PhoenicisScriptEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
+        return new PhoenicisScriptEngineFactory(ScriptEngineType.NASHORN, Arrays.asList(new ScriptUtilitiesInjector(),
                 new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
                 new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
@@ -64,8 +72,13 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornScriptInterpreter(),
+        return new BackgroundScriptInterpreter(graalScriptInterpreter(),
                 multithreadingConfiguration.scriptExecutorService());
+    }
+
+    @Bean
+    ScriptInterpreter graalScriptInterpreter() {
+        return new PhoenicisScriptInterpreter(graalScriptEngineFactory());
     }
 
     @Bean

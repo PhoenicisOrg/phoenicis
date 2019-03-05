@@ -18,7 +18,7 @@ add: JavaFXApplication with:
 * main class: org.phoenicis.javafx.JavaFXApplication
 * VM options: 
 ```
---add-modules=ALL-MODULE-PATH --module-path=phoenicis-dist/target/lib
+--add-modules=ALL-MODULE-PATH --module-path=phoenicis-dist/target/lib -Dpolyglot.js.nashorn-compat=true -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -classpath phoenicis-dist/target/lib --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar
 ```
 * **With Java 11**, you may need to remove the = in --module-path
 ```

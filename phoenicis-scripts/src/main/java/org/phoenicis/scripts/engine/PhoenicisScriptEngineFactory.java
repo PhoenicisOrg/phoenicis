@@ -24,15 +24,17 @@ import javax.script.ScriptEngineManager;
 import java.util.List;
 
 public class PhoenicisScriptEngineFactory {
+    private final ScriptEngineType type;
     private final List<EngineInjector> engineInjectors;
 
-    public PhoenicisScriptEngineFactory(List<EngineInjector> engineInjectors) {
+    public PhoenicisScriptEngineFactory(ScriptEngineType type, List<EngineInjector> engineInjectors) {
+        this.type = type;
         this.engineInjectors = engineInjectors;
     }
 
     PhoenicisScriptEngine createEngine() {
         final PhoenicisScriptEngine phoenicisScriptEngine = new PhoenicisScriptEngine(
-                new ScriptEngineManager().getEngineByName("nashorn"));
+                new ScriptEngineManager().getEngineByName(type.toString()));
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 
