@@ -20,7 +20,7 @@ package org.phoenicis.javafx.views.scriptui;
 
 import javafx.application.Platform;
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
 
 @Safe
@@ -35,7 +35,7 @@ public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
     @Override
     public void create(String questionText, Runnable yesCallback, Runnable noCallback) {
         Platform.runLater(() -> {
-            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                     .withTitle(wizardTitle)
                     .withMessage(questionText)
                     .withResizable(true)

@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.library.skin;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.beans.Observable;
 import javafx.beans.binding.StringBinding;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -16,6 +15,7 @@ import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.library.control.ShortcutInformationPanel;
+import org.phoenicis.javafx.utils.CollectionBindings;
 import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.ColumnConstraintsWithPercentage;
 import org.phoenicis.library.dto.ShortcutDTO;
@@ -35,14 +35,14 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
     private final Logger LOGGER = LoggerFactory.getLogger(ShortcutInformationPanelSkin.class);
 
     /**
-     * The properties of the currently selected {@link ShortcutDTO}
-     */
-    private final ObservableMap<String, Object> shortcutProperties;
-
-    /**
      * The description of the currently selected {@link ShortcutDTO}
      */
     private final StringBinding description;
+
+    /**
+     * The properties of the currently selected {@link ShortcutDTO}
+     */
+    private final ObservableMap<String, Object> shortcutProperties;
 
     /**
      * Constructor
@@ -52,9 +52,20 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
     public ShortcutInformationPanelSkin(ShortcutInformationPanel control) {
         super(control);
 
-        this.shortcutProperties = FXCollections.observableHashMap();
         this.description = StringBindings.map(getControl().shortcutProperty(),
                 shortcut -> shortcut.getInfo().getDescription());
+        this.shortcutProperties = CollectionBindings.mapToMap(getControl().shortcutProperty(), shortcut -> {
+            try {
+                return getControl().getObjectMapper()
+                        .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
+                            // nothing
+                        });
+            } catch (IOException e) {
+                LOGGER.error("An error occurred during a shortcut update", e);
+
+                return Map.of();
+            }
+        });
     }
 
     /**
@@ -76,11 +87,6 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         final VBox container = new VBox(descriptionLabel, propertiesGrid, spacer, controlButtons);
 
         getChildren().setAll(container);
-
-        // ensure that the content of the details panel changes when the to be shown shortcut changes
-        getControl().shortcutProperty().addListener((Observable invalidation) -> updateShortcut());
-        // initialize the content of the details panel correctly
-        updateShortcut();
     }
 
     /**
@@ -168,27 +174,6 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
             valueLabel.setWrapText(true);
 
             propertiesGrid.addRow(row, keyLabel, valueLabel);
-        }
-    }
-
-    /**
-     * Updates the shortcut of this {@link ShortcutInformationPanelSkin} instance
-     */
-    private void updateShortcut() {
-        final ShortcutDTO shortcut = getControl().getShortcut();
-
-        if (shortcut != null) {
-            try {
-                final Map<String, Object> shortcutProperties = getControl().getObjectMapper()
-                        .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
-                            // nothing
-                        });
-
-                this.shortcutProperties.clear();
-                this.shortcutProperties.putAll(shortcutProperties);
-            } catch (IOException e) {
-                LOGGER.error("An error occurred during a shortcut update", e);
-            }
         }
     }
 

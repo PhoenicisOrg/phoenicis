@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.util.StringConverter;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.setting.control.UserInterfacePanel;
 import org.phoenicis.javafx.themes.Theme;
@@ -43,10 +44,7 @@ public class UserInterfacePanelSkin extends SkinBase<UserInterfacePanel, UserInt
         final Text themeLabel = new Text(tr("Theme"));
         themeLabel.getStyleClass().add("captionTitle");
 
-        final ComboBox<Theme> themeSelection = new ComboBox<>();
-        themeSelection.valueProperty().bindBidirectional(getControl().selectedThemeProperty());
-
-        Bindings.bindContent(themeSelection.getItems(), getControl().getThemes());
+        final ComboBox<Theme> themeSelection = createThemeSelection();
 
         // view script sources
         final Label showScriptSourceLabel = new Label(tr("View the scripts’ source repository"));
@@ -79,5 +77,36 @@ public class UserInterfacePanelSkin extends SkinBase<UserInterfacePanel, UserInt
         container.getStyleClass().add("containerConfigurationPane");
 
         getChildren().setAll(container);
+    }
+
+    /**
+     * Create the {@link ComboBox} containing the known themes
+     *
+     * @return A {@link ComboBox} containing the known themes
+     */
+    private ComboBox<Theme> createThemeSelection() {
+        final ComboBox<Theme> themeSelection = new ComboBox<>();
+
+        Bindings.bindContent(themeSelection.getItems(), getControl().getThemes());
+
+        themeSelection.valueProperty().bindBidirectional(getControl().selectedThemeProperty());
+        themeSelection.setConverter(new StringConverter<>() {
+            @Override
+            public String toString(Theme theme) {
+                return theme.getName();
+            }
+
+            @Override
+            public Theme fromString(String themeName) {
+                final Optional<Theme> foundTheme = getControl().getThemes().stream()
+                        .filter(theme -> themeName.equals(theme.getName()))
+                        .findFirst();
+
+                return foundTheme.orElseThrow(
+                        () -> new IllegalArgumentException("Couldn't find theme with name \"" + themeName + "\""));
+            }
+        });
+
+        return themeSelection;
     }
 }

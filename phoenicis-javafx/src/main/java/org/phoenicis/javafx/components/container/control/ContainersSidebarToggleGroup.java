@@ -6,7 +6,7 @@ import org.phoenicis.javafx.components.container.skin.ContainersSidebarToggleGro
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
 
 /**
- * A toggle group component used inside the {@link ContainersSidebar}
+ * A toggle group component used inside the {@link ContainerSidebar}
  */
 public class ContainersSidebarToggleGroup extends
         SidebarToggleGroupBase<ContainerCategoryDTO, ContainersSidebarToggleGroup, ContainersSidebarToggleGroupSkin> {

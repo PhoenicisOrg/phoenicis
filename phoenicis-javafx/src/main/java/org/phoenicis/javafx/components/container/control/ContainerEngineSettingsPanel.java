@@ -33,25 +33,13 @@ public class ContainerEngineSettingsPanel
 
     /**
      * Constructor
-     *
-     * @param container The container
-     * @param engineSettings A list of all engine settings
-     * @param lockEngineSettings A boolean signifying whether all engine settings buttons should be locked
-     */
-    public ContainerEngineSettingsPanel(ObjectProperty<ContainerDTO> container,
-            ObservableList<EngineSetting> engineSettings, BooleanProperty lockEngineSettings) {
-        super();
-
-        this.container = container;
-        this.engineSettings = engineSettings;
-        this.lockEngineSettings = lockEngineSettings;
-    }
-
-    /**
-     * Constructor
      */
     public ContainerEngineSettingsPanel() {
-        this(new SimpleObjectProperty<>(), FXCollections.observableArrayList(), new SimpleBooleanProperty());
+        super();
+
+        this.container = new SimpleObjectProperty<>();
+        this.engineSettings = FXCollections.observableArrayList();
+        this.lockEngineSettings = new SimpleBooleanProperty();
     }
 
     /**
