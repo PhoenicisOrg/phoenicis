@@ -195,7 +195,7 @@ public class ContainersController {
                 }),
                 e -> Platform.runLater(() -> {
                     final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Loading engine tools failed."))
+                            .withMessage(tr("Loading engine settings failed."))
                             .withException(e)
                             .withOwner(this.containersView.getContent().getScene().getWindow())
                             .build();
