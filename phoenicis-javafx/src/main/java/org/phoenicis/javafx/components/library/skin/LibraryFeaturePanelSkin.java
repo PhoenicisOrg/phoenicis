@@ -9,11 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
@@ -84,27 +81,16 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
                 final ShortcutDTO selectedItem = newValue.getItem();
                 final MouseEvent event = newValue.getEvent();
 
-                getControl().setSelectedShortcut(selectedItem);
+                this.selectedDetailsPanel.setValue(LibraryDetailsPanelType.ShortcutDetails);
 
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    this.selectedDetailsPanel.setValue(LibraryDetailsPanelType.ShortcutDetails);
-
-                    if (event.getClickCount() == 2) {
-                        getControl().runShortcut(selectedItem);
-                    }
-                } else if (event.getButton() == MouseButton.SECONDARY) {
-                    final MenuItem edit = new MenuItem(tr("Edit"));
-                    edit.setOnAction(
-                            editEvent -> this.selectedDetailsPanel.setValue(LibraryDetailsPanelType.ShortcutEditing));
-
-                    final ContextMenu contextMenu = new ContextMenu(edit);
-                    // show context menu
-                    contextMenu.show(getControl(), event.getScreenX(), event.getScreenY());
+                if (event.getClickCount() == 2) {
+                    getControl().runShortcut(selectedItem);
                 }
-            } else {
-                closeDetailsPanel();
             }
         });
+
+        getControl().selectedShortcutProperty().bind(ObjectBindings
+                .map(selectedListWidgetElement, ListWidgetSelection::getItem));
 
         return selectedListWidgetElement;
     }
@@ -275,6 +261,8 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         shortcutInformationPanel.setOnShortcutRun(getControl()::runShortcut);
         shortcutInformationPanel.setOnShortcutStop(getControl()::stopShortcut);
         shortcutInformationPanel.setOnShortcutUninstall(getControl()::uninstallShortcut);
+        shortcutInformationPanel.setOnShortcutEdit(
+                shortcut -> this.selectedDetailsPanel.setValue(LibraryDetailsPanelType.ShortcutEditing));
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 

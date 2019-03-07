@@ -126,9 +126,10 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         final GridPane controlButtons = new GridPane();
         controlButtons.getStyleClass().add("shortcut-control-button-group");
 
-        ColumnConstraints runColumn = new ColumnConstraintsWithPercentage(33.3);
-        ColumnConstraints stopColumn = new ColumnConstraintsWithPercentage(33.3);
-        ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(33.3);
+        ColumnConstraints runColumn = new ColumnConstraintsWithPercentage(25);
+        ColumnConstraints stopColumn = new ColumnConstraintsWithPercentage(25);
+        ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(25);
+        ColumnConstraints editColumn = new ColumnConstraintsWithPercentage(25);
 
         controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
 
@@ -150,7 +151,13 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
                 .ifPresent(onShortcutUninstall -> onShortcutUninstall.accept(getControl().getShortcut())));
         GridPane.setHalignment(uninstallButton, HPos.CENTER);
 
-        controlButtons.addRow(0, runButton, stopButton, uninstallButton);
+        final Button editButton = new Button(tr("Edit"));
+        editButton.getStyleClass().addAll("shortcutButton", "editButton");
+        editButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutEdit())
+                .ifPresent(onShortcutEdit -> onShortcutEdit.accept(getControl().getShortcut())));
+        GridPane.setHalignment(editButton, HPos.CENTER);
+
+        controlButtons.addRow(0, runButton, stopButton, uninstallButton, editButton);
 
         return controlButtons;
     }
