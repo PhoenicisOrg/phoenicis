@@ -102,11 +102,11 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     }
 
     public Consumer<ShortcutDTO> getOnShortcutUninstall() {
-        return onShortcutUninstall.get();
+        return this.onShortcutUninstall.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstallProperty() {
-        return onShortcutUninstall;
+        return this.onShortcutUninstall;
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
@@ -114,11 +114,11 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     }
 
     public Consumer<ShortcutDTO> getOnShortcutEdit() {
-        return onShortcutEdit.get();
+        return this.onShortcutEdit.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutEditProperty() {
-        return onShortcutEdit;
+        return this.onShortcutEdit;
     }
 
     public void setOnShortcutEdit(Consumer<ShortcutDTO> onShortcutEdit) {
@@ -126,11 +126,11 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     }
 
     public ShortcutDTO getShortcut() {
-        return shortcut.get();
+        return this.shortcut.get();
     }
 
     public ObjectProperty<ShortcutDTO> shortcutProperty() {
-        return shortcut;
+        return this.shortcut;
     }
 
     public void setShortcut(ShortcutDTO shortcut) {
