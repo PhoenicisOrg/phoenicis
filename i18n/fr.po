@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-05 12:05+0000\n"
-"PO-Revision-Date: 2019-03-05 12:13\n"
+"PO-Revision-Date: 2019-03-07 12:15\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -288,7 +288,7 @@ msgstr "La connexion au dépôt a échoué.\n"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Impossible de charger la bibliothèque, veuillez réessayer."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
@@ -617,7 +617,7 @@ msgstr "Restaurer les valeurs par défaut"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
-msgstr ""
+msgstr "Restaurer les dépôts par défaut"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
 msgid "Are you sure you want to restore the default repositories?"
