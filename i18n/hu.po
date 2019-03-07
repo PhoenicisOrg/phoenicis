@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-05 12:05+0000\n"
-"PO-Revision-Date: 2019-03-05 12:13\n"
+"PO-Revision-Date: 2019-03-07 12:15\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -288,7 +288,7 @@ msgstr "Nem sikerült csatlakozni az adattárolóhoz.\n"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Nem lehet betölteni a könyvtárat, próbálja újra."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
@@ -410,11 +410,11 @@ msgstr "Kijelölés telepítése"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
-msgstr ""
+msgstr "Az igék telepítése"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
 msgid "Are you sure you want to install the following Verbs:"
-msgstr ""
+msgstr "Biztosan szeretné a következő igék feltelepítése:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
 msgid "Error installing Verbs"
