@@ -131,7 +131,7 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(25);
         ColumnConstraints editColumn = new ColumnConstraintsWithPercentage(25);
 
-        controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
+        controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn, editColumn);
 
         final Button runButton = new Button(tr("Run"));
         runButton.getStyleClass().addAll("shortcutButton", "runButton");
