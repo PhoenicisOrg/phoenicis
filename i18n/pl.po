@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-03-05 12:05+0000\n"
-"PO-Revision-Date: 2019-03-06 12:13\n"
+"PO-Revision-Date: 2019-03-07 12:14\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -211,7 +211,7 @@ msgstr "Wystąpił błąd podczas odinstalowywania {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:80
 msgid "Installations"
-msgstr ""
+msgstr "Instalacje"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
@@ -232,7 +232,7 @@ msgstr "Ciemny motyw"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:15
 msgid "Breeze Dark theme"
-msgstr ""
+msgstr "Motyw Bryzy"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:17
 msgid "Unity theme"
@@ -287,7 +287,7 @@ msgstr "Połączenie z repozytorium nie powiodło się. Sprawdź połączenie i 
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Nie udało się załadować biblioteki, spróbuj ponownie."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
@@ -405,7 +405,7 @@ msgstr "Narzędzia"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
 msgid "Install selected"
-msgstr ""
+msgstr "Zainstaluj wybrane"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
@@ -421,7 +421,7 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
 msgid "Clear selection"
-msgstr ""
+msgstr "Wyczyść zaznaczenie"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:55
 msgid "Run executable"
@@ -531,7 +531,7 @@ msgstr "Zaawansowane narzędzia"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:55
 msgid "Testing"
-msgstr ""
+msgstr "Testowane"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:58
 msgid "Patch required"
@@ -592,15 +592,15 @@ msgstr "Ustawienia repozytoriów"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
 msgid "Priority"
-msgstr ""
+msgstr "Priorytet"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
 msgid "Repository name"
-msgstr ""
+msgstr "Nazwa repozytorium"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
 msgid "Move the repository up or down to change its priority"
-msgstr ""
+msgstr "Przenieść repozytorium w górę lub w dół, aby zmienić jego priorytet"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
 msgid "Add"
@@ -616,11 +616,11 @@ msgstr "Przywróć domyślne"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
-msgstr ""
+msgstr "Przywróć domyślne repozytoria"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
 msgid "Are you sure you want to restore the default repositories?"
-msgstr ""
+msgstr "Na pewno chcesz przywrócić domyślne repozytoria?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
 msgid "Fetch updates from the repositories to retrieve latest script versions"
