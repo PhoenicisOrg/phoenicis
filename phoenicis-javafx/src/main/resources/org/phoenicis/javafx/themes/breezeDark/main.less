@@ -27,65 +27,65 @@
 /*********************** general ***********************/
 /*******************************************************/
 * {
-    -fx-background: @background-color;
-    -fx-focus-color: @focus-color;
-    -fx-faint-focus-color: @focus-color;
-    -fx-text-fill: @text-color;
-    -fx-text-base-color: @text-color;
-    -fx-text-inner-color: @text-color;
-    -fx-border-radius: 0;
+  -fx-background: @background-color;
+  -fx-focus-color: @focus-color;
+  -fx-faint-focus-color: @focus-color;
+  -fx-text-fill: @text-color;
+  -fx-text-base-color: @text-color;
+  -fx-text-inner-color: @text-color;
+  -fx-border-radius: 0;
 }
 
 .text {
-    -fx-fill: @text-color;
+  -fx-fill: @text-color;
 }
 
 .button {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
 }
 
 .button:hover {
-    -fx-border-color: @focus-color;
+  -fx-border-color: @focus-color;
 }
 
 .toggle-button {
-    -fx-text-fill: @text-color;
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+  -fx-text-fill: @text-color;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
 
-    &:hover, &:selected, &:selected:focused {
-        -fx-background-color: @focus-color;
-        -fx-background-insets: 0;
-        -fx-background-radius: 0;
-    }
+  &:hover, &:selected, &:selected:focused {
+    -fx-background-color: @focus-color;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+  }
 }
 
 .combo-box {
-    -fx-color: @inactive-text-color;
-    -fx-background-color: transparent;
-    -fx-border-color: @inactive-text-color;
+  -fx-color: @inactive-text-color;
+  -fx-background-color: transparent;
+  -fx-border-color: @inactive-text-color;
 }
 
 .combo-box:hover {
-    -fx-border-color: @focus-color;
+  -fx-border-color: @focus-color;
 }
 
 .combo-box:hover .arrow-button {
-    -fx-color: @focus-color;
+  -fx-color: @focus-color;
 }
 
 .combo-box-popup .list-view {
-    -fx-background-color: @main-color, @main-color;
+  -fx-background-color: @main-color, @main-color;
 }
 
 .combo-box .list-cell {
-    -fx-background: @main-color;
-    -fx-background-color: @main-color;
+  -fx-background: @main-color;
+  -fx-background-color: @main-color;
 }
 
 .combo-box-popup .list-view .list-cell:filled:hover {
-    -fx-background-color: @focus-color;
+  -fx-background-color: @focus-color;
 }
 
 .context-menu {
@@ -102,242 +102,234 @@
 }
 
 .check-box .box {
-    -fx-background-color: transparent;
-    -fx-border-color: @inactive-text-color;
+  -fx-background-color: transparent;
+  -fx-border-color: @inactive-text-color;
 }
 
 .check-box:hover .box {
-    -fx-background-color: transparent;
-    -fx-border-color: @focus-color;
+  -fx-background-color: transparent;
+  -fx-border-color: @focus-color;
 }
 
 .check-box:selected .mark {
-    -fx-color: @focus-color;
-    -fx-background-color: @focus-color;
+  -fx-color: @focus-color;
+  -fx-background-color: @focus-color;
 }
 
 .tab-header-area .tab-header-background {
-    -fx-background-color: @main-color;
+  -fx-background-color: @main-color;
 }
 
 .tab-header-area .tab:selected {
-    -fx-background-color: @focus-color;
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
+  -fx-background-color: @focus-color;
+  -fx-focus-color: transparent;
+  -fx-faint-focus-color: transparent;
 }
 
 .tab-header-area .tab {
-    -fx-background-radius: 0;
-    -fx-background-color: @background-color;
-    -fx-border-width: 0;
-    -fx-background-opacity: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: @background-color;
+  -fx-border-width: 0;
+  -fx-background-opacity: 0;
 }
 
 .list-view {
-    -fx-background-color: @background-color;
-    -fx-border-color: @inactive-text-color;
+  -fx-background-color: @background-color;
+  -fx-border-color: @inactive-text-color;
 }
 
 .list-cell {
-    -fx-background-color: @main-color;
-    -fx-text-fill: @text-color;
+  -fx-background-color: @main-color;
+  -fx-text-fill: @text-color;
 }
 
 .list-cell:even {
-    -fx-background-color: @background-color;
-    -fx-text-fill: @text-color;
+  -fx-background-color: @background-color;
+  -fx-text-fill: @text-color;
 }
 
 .list-cell:filled:hover, .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: @focus-color;
-    -fx-text-fill: @text-color;
+  -fx-background-color: @focus-color;
+  -fx-text-fill: @text-color;
 }
 
 .text-field, .text-area {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: @main-color;
-    -fx-border-color: transparent;
-    -fx-text-fill: @text-color;
-    -fx-focus-color: @focus-color;
+  -fx-border-radius: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: @main-color;
+  -fx-border-color: transparent;
+  -fx-text-fill: @text-color;
+  -fx-focus-color: @focus-color;
 }
 
 .text-field:hover, .text-area:hover {
-    -fx-border-color: @focus-color;
-    -fx-text-fill: @text-color;
+  -fx-border-color: @focus-color;
+  -fx-text-fill: @text-color;
 }
 
 .text-area .content {
-    -fx-background-color: transparent;
+  -fx-background-color: transparent;
 }
 
 .scroll-bar:horizontal {
-    -fx-background-color:transparent;
-    -fx-pref-height: 0.8em;
+  -fx-background-color: transparent;
+  -fx-pref-height: 0.8em;
 }
 
 .scroll-bar:vertical {
-    -fx-background-color:transparent;
-    -fx-pref-width: 0.8em;
+  -fx-background-color: transparent;
+  -fx-pref-width: 0.8em;
 }
 
 .increment-button, .decrement-button {
-    -fx-background-color:transparent;
-    -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
 }
 
 .scroll-bar:horizontal .track, .scroll-bar:vertical .track {
-    -fx-background-color: #606365;
-    -fx-border-color: transparent;
-    -fx-background-radius: 0.8em;
+  -fx-background-color: #606365;
+  -fx-border-color: transparent;
+  -fx-background-radius: 0.8em;
 }
 
 .scroll-bar:horizontal .thumb, .scroll-bar:vertical .thumb {
-    -fx-background-color: #a8a9ab;
-    -fx-background-insets: 0, 0, 0;
-    -fx-background-radius: 0.8em;
+  -fx-background-color: #a8a9ab;
+  -fx-background-insets: 0, 0, 0;
+  -fx-background-radius: 0.8em;
 }
 
 .scroll-bar:horizontal:hover .track,
 .scroll-bar:horizontal:pressed .track,
 .scroll-bar:vertical:hover .track,
 .scroll-bar:vertical:pressed .track {
-    -fx-background-color: #606365;
-    -fx-border-color: transparent;
+  -fx-background-color: #606365;
+  -fx-border-color: transparent;
 }
 
 .scroll-bar .thumb:hover, .scroll-bar .thumb:pressed {
-    -fx-background-color: @focus-color;
-    -fx-border-color: transparent;
+  -fx-background-color: @focus-color;
+  -fx-border-color: transparent;
 }
 
 .increment-button:hover, .decrement-button:hover {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
 }
 
 .increment-arrow, .decrement-arrow {
-    -fx-background-color: @inactive-text-color;
+  -fx-background-color: @inactive-text-color;
 }
 
 .increment-arrow:hover, .decrement-arrow:hover {
-    -fx-background-color: @focus-color;
+  -fx-background-color: @focus-color;
 }
 
 .progress-bar > .track {
-    -fx-background-color: @main-color;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
-    -fx-padding: 0;
+  -fx-background-color: @main-color;
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-padding: 0;
 }
 
 .progress-bar > .bar {
-    -fx-background-color: @focus-color;
-    -fx-background-insets: 0;
-    -fx-background-radius: 0;
-    -fx-padding: 0;
+  -fx-background-color: @focus-color;
+  -fx-background-insets: 0;
+  -fx-background-radius: 0;
+  -fx-padding: 0;
 }
 
 .tooltip {
-    -fx-background-radius: 0;
+  -fx-background-radius: 0;
 }
 
 /*******************************************************/
 /************************ menu *************************/
 /*******************************************************/
 #menuPane {
-    -fx-tab-min-width: 7.5em;
+  -fx-tab-min-width: 7.5em;
 }
 
 #menuPane > .tab-header-area .tab-header-background {
-    -fx-background-color: @main-color;
+  -fx-background-color: @main-color;
 }
 
 #menuPane > .tab-header-area .tab:selected {
-    -fx-border-color: @focus-color;
+  -fx-border-color: @focus-color;
 }
 
 #menuPane > .tab-header-area .tab:selected .focus-indicator {
-    -fx-border-style: hidden hidden hidden hidden;
+  -fx-border-style: hidden hidden hidden hidden;
 }
 
 /*******************************************************/
 /*********************** sidebar ***********************/
 /*******************************************************/
 .sidebar {
+  -fx-background-color: @main-color;
+
+  .sidebarScrollbar {
     -fx-background-color: @main-color;
+  }
 
-    .sidebarScrollbar {
-        -fx-background-color: @main-color;
+  .sidebarScrollbar > .viewport {
+    -fx-background-color: @main-color;
+  }
+
+  .sidebarScrollbar .scroll-bar:vertical .track {
+    -fx-background-color: #3c3f41;
+    -fx-background-radius: 1em;
+  }
+
+  .sidebarScrollbar .scroll-bar:vertical .thumb {
+    -fx-background-color: derive(black, 70%);
+    -fx-background-radius: 0em;
+  }
+
+  .sidebarTitle {
+    -fx-font-size: 1.2em;
+
+    .text {
+      -fx-fill: @inactive-text-color;
+    }
+  }
+
+  .sidebarButton {
+    .text {
+      -fx-fill: @text-color;
     }
 
-    .sidebarScrollbar > .viewport {
-        -fx-background-color: @main-color;
+    &:hover, &:selected {
+      -fx-background-color: @focus-color;
+      -fx-background-radius: 0;
     }
+  }
 
-    .sidebarScrollbar .scroll-bar:vertical .track {
-        -fx-background-color: #3c3f41;
-        -fx-background-radius: 1em;
+  .searchBox {
+    .searchBar {
+      -fx-border-radius: 0;
+      -fx-background-radius: 0;
+      -fx-background-color: @background-color;
+      -fx-border-color: transparent;
+      -fx-text-fill: @text-color;
+      -fx-focus-color: @focus-color;
+
+      &:hover {
+        -fx-border-color: @focus-color;
+        -fx-text-fill: @text-color;
+      }
     }
-
-    .sidebarScrollbar .scroll-bar:vertical .thumb {
-        -fx-background-color: derive(black, 70%);
-        -fx-background-radius: 0em;
-    }
-
-    .sidebarTitle {
-        -fx-font-size: 1.2em;
-
-        .text {
-            -fx-fill: @inactive-text-color;
-        }
-    }
-
-    .sidebarButton {
-        .text {
-            -fx-fill: @text-color;
-        }
-
-        &:hover, &:selected {
-            -fx-background-color: @focus-color;
-            -fx-background-radius: 0;
-        }
-    }
-
-    .searchBox {
-        .searchBar {
-            -fx-border-radius: 0;
-            -fx-background-radius: 0;
-            -fx-background-color: @background-color;
-            -fx-border-color: transparent;
-            -fx-text-fill: @text-color;
-            -fx-focus-color: @focus-color;
-
-            &:hover {
-                -fx-border-color: @focus-color;
-                -fx-text-fill: @text-color;
-            }
-        }
-
-        .searchCleanButton {
-            -fx-graphic: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/edit-clear.png');
-        }
-    }
+  }
 }
 
 /*******************************************************/
 /************************ right ************************/
 /*******************************************************/
 .rightPane > .viewport {
-    -fx-background-color: @background-color;
+  -fx-background-color: @background-color;
 }
 
 .detailsPane {
-    -fx-background-color: @background-color;
-
-    .closeIcon {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/window-close.png');
-    }
+  -fx-background-color: @background-color;
 }
 
 /*******************************************************/
@@ -357,307 +349,178 @@
 /************************* apps ************************/
 /*******************************************************/
 .appPanelMiniaturesPane {
-    -fx-background-color: @background-color;
-    -fx-padding: 1em;
+  -fx-background-color: @background-color;
+  -fx-padding: 1em;
 }
 
 .appPanelMiniaturesPaneWrapper > .viewport {
-    -fx-background-color: @background-color;
+  -fx-background-color: @background-color;
 }
 
 /********************** description ********************/
 .descriptionTitle {
-    -fx-text-fill: @focus-color;
+  -fx-text-fill: @focus-color;
 }
 
 /*******************************************************/
 /********************** containers *********************/
 /*******************************************************/
 .containerConfigurationPane > .grid {
-    -fx-padding: 1em;
+  -fx-padding: 1em;
 }
 
 /*******************************************************/
 /********************** miniature **********************/
 /*******************************************************/
 .listWidget {
-    .list-cell {
-        &:hover {
-          -fx-background-color: @hover-color;
-        }
-
-        &:selected {
-          -fx-background-color: @focus-color;
-        }
+  .list-cell {
+    &:hover {
+      -fx-background-color: @hover-color;
     }
+
+    &:selected {
+      -fx-background-color: @focus-color;
+    }
+  }
 }
 
 .iconListWidget {
   -fx-background-color: @background-color;
 
-    .iconListElement {
-        -fx-background-radius: 0em;
+  .iconListElement {
+    -fx-background-radius: 0em;
 
-        &:hover {
-            -fx-background-color: @hover-color;
-        }
-
-        &:selected {
-            -fx-background-color: @focus-color;
-        }
-
-        .iconListMiniatureLabel {
-            -fx-text-fill: @text-color;
-        }
+    &:hover {
+      -fx-background-color: @hover-color;
     }
+
+    &:selected {
+      -fx-background-color: @focus-color;
+    }
+
+    .iconListMiniatureLabel {
+      -fx-text-fill: @text-color;
+    }
+  }
 }
 
 .listChooser {
-    -fx-spacing: 0.2em;
-    -fx-padding: 0;
+  -fx-spacing: 0.2em;
+  -fx-padding: 0;
 
-    .listIcon {
-        -fx-pref-width: 2em;
-        -fx-pref-height: 2em;
-        -fx-content-display: graphic-only;
-        -fx-background-size: contain;
-        -fx-background-repeat: no-repeat;
-        -fx-background-position: center;
-        -fx-background-color: transparent;
-    }
+  .listIcon {
+    -fx-pref-width: 2em;
+    -fx-pref-height: 2em;
+    -fx-content-display: graphic-only;
+    -fx-background-size: contain;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-color: transparent;
+  }
 
-    .listIcon:selected {
-        -fx-border-radius: 0;
-        -fx-border-color: @focus-color;
-    }
-
-    .compactList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-compact.png');
-    }
-
-    .compactList:selected {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-compact.png');
-    }
-
-    .detailsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-details.png');
-    }
-
-    .detailsList:selected {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-details.png');
-    }
-
-    .iconsList {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-icons.png');
-    }
-
-    .iconsList:selected {
-        -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/general/view-list-icons.png');
-    }
+  .listIcon:selected {
+    -fx-border-radius: 0;
+    -fx-border-color: @focus-color;
+  }
 }
 
 /*******************************************************/
 /***************** installation wizard *****************/
 /*******************************************************/
 #presentationBackground {
-    -fx-background-color: @background-color;
-    -fx-padding: 0.8em;
+  -fx-background-color: @background-color;
+  -fx-padding: 0.8em;
 }
 
 #presentationScrollPane {
-    -fx-background: @background-color;
-    -fx-border-color: @background-color;
+  -fx-background: @background-color;
+  -fx-border-color: @background-color;
 }
 
 #presentationTextTitle {
-    -fx-fill: @text-color;
+  -fx-fill: @text-color;
 }
 
 #presentationText {
-    -fx-fill: @text-color;
+  -fx-fill: @text-color;
 }
 
 /************************ step *************************/
 #panelForTopheader {
-    -fx-background-color: @background-color;
-    -fx-border-color: transparent;
+  -fx-background-color: @background-color;
+  -fx-border-color: transparent;
 }
 
 #header {
-    -fx-border-color: @focus-color;
-    -fx-background-color: @background-color;
+  -fx-border-color: @focus-color;
+  -fx-background-color: @background-color;
 }
 
 #footer {
-    -fx-border-color: @inactive-text-color;
-    -fx-border-style: solid hidden hidden hidden;
-    -fx-border-width: 0.2em;
+  -fx-border-color: @inactive-text-color;
+  -fx-border-style: solid hidden hidden hidden;
+  -fx-border-width: 0.2em;
 }
 
 #stepScrollPane {
-    -fx-background: @background-color;
-    -fx-border-color: @background-color;
+  -fx-background: @background-color;
+  -fx-border-color: @background-color;
 }
 
 #stepText {
-    -fx-fill: @text-color;
-    -fx-font-size: 1.1em;
+  -fx-fill: @text-color;
+  -fx-font-size: 1.1em;
 }
 
 /*******************************************************/
 /*********************** console ***********************/
 /*******************************************************/
 .console {
-    -fx-background-color: @background-color;
+  -fx-background-color: @background-color;
 
-     .viewport {
-        -fx-background-color: transparent;
-     }
+  .viewport {
+    -fx-background-color: transparent;
+  }
 }
 
 .consoleCommandType {
-    -fx-background-color: @main-color;
-    -fx-border-color: transparent;
-    -fx-text-fill: @text-color;
+  -fx-background-color: @main-color;
+  -fx-border-color: transparent;
+  -fx-text-fill: @text-color;
 }
 
 .consoleCommandType:focused {
-    -fx-border-radius: 0;
-    -fx-background-radius: 0;
-    -fx-background-color: @main-color;
-    -fx-border-color: @focus-color;
-    -fx-text-fill: @text-color;
+  -fx-border-radius: 0;
+  -fx-background-radius: 0;
+  -fx-background-color: @main-color;
+  -fx-border-color: @focus-color;
+  -fx-text-fill: @text-color;
 }
 
 .consoleText {
-    -fx-wrap-text: true;
-    -fx-font-size: 0.85em;
+  -fx-wrap-text: true;
+  -fx-font-size: 0.85em;
 }
 
 .consoleText.normal {
-    -fx-fill: @text-color;
+  -fx-fill: @text-color;
 }
 
 .consoleText.default {
-    -fx-fill: @inactive-text-color;
+  -fx-fill: @inactive-text-color;
 }
 
 .consoleText.error {
-    -fx-fill: #da4453;
+  -fx-fill: #da4453;
 }
 
 /*******************************************************/
 /************************* misc ************************/
 /*******************************************************/
 .title {
-    -fx-fill: @focus-color;
+  -fx-fill: @focus-color;
 }
 
 .captionTitle {
-    -fx-fill: @inactive-text-color;
-}
-
-/*******************************************************/
-/************************ icons ************************/
-/*******************************************************/
-
-/************************ apps *************************/
-#allButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/all.png');
-}
-
-#customButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/custom.png');
-}
-
-#developmentButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/development.png');
-}
-
-#gamesButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/games.png');
-}
-
-#graphicsButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/graphics.png');
-}
-
-#internetButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/internet.png');
-}
-
-#multimediaButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/multimedia.png');
-}
-
-#officeButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/office.png');
-}
-
-#otherButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/other.png');
-}
-
-#scienceButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/apps/science.png');
-}
-
-/********************* containers **********************/
-.containerButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/containers/container.png');
-}
-
-.runExecutable {
-  -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/containers/runExecutable.png');
-}
-
-/*********************** engines ***********************/
-#enginesButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/engines/wine.png');
-}
-
-#wineButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/engines/wine.png');
-}
-
-/*********************** library ***********************/
-.runButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/play.png');
-}
-
-.stopButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/stop.png');
-}
-
-.uninstallButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/remove.png');
-}
-
-.scriptButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/script.png');
-}
-
-.consoleButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/library/console.png');
-}
-
-/*********************** settings **********************/
-.userInterfaceButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/userInterface.png');
-}
-
-.repositoriesButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/repository.png');
-}
-
-.settingsButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/settings.png');
-}
-
-.networkButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/network.png');
-}
-
-.aboutButton {
-    -fx-background-image: url('/org/phoenicis/javafx/themes/breezeDark/icons/mainwindow/settings/about.png');
+  -fx-fill: @inactive-text-color;
 }
