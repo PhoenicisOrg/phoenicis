@@ -20,13 +20,13 @@ package org.phoenicis.scripts;
 
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.interpreter.PhoenicisScriptInterpreter;
 import org.phoenicis.scripts.engine.ScriptEngineType;
+import org.phoenicis.scripts.engine.injectors.*;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
-import org.phoenicis.scripts.engine.PhoenicisScriptInterpreter;
-import org.phoenicis.scripts.engine.builtins.*;
 import org.phoenicis.scripts.wizard.WizardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;

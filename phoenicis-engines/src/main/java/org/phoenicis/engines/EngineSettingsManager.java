@@ -20,7 +20,7 @@ package org.phoenicis.engines;
 
 import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.*;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;

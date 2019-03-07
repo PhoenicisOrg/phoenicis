@@ -1,5 +1,9 @@
 package org.phoenicis.scripts.engine;
 
+import org.phoenicis.scripts.engine.implementation.JSAScriptEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.implementation.PolyglotScriptEngine;
+
 import java.util.Map;
 
 /**
