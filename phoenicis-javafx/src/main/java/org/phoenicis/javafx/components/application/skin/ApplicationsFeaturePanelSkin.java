@@ -2,6 +2,7 @@ package org.phoenicis.javafx.components.application.skin;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.ObjectExpression;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -34,12 +35,27 @@ import java.util.Optional;
 public class ApplicationsFeaturePanelSkin
         extends FeaturePanelSkin<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
     /**
+     * The current list widget selection containing the selected {@link ApplicationDTO} object
+     */
+    private final ObjectProperty<ListWidgetSelection<ApplicationDTO>> listWidgetSelection;
+
+    /**
+     * The currently selected application
+     */
+    private final ObjectProperty<ApplicationDTO> selectedApplication;
+
+    /**
      * Constructor
      *
      * @param control The control belonging to the skin
      */
     public ApplicationsFeaturePanelSkin(ApplicationsFeaturePanel control) {
         super(control);
+
+        this.listWidgetSelection = new SimpleObjectProperty<>();
+        // TODO: replace with ObjectBinding<ApplicationDTO>
+        this.selectedApplication = new SimpleObjectProperty<>();
+        this.selectedApplication.bind(ObjectBindings.map(this.listWidgetSelection, ListWidgetSelection::getItem));
     }
 
     /**
@@ -110,8 +126,7 @@ public class ApplicationsFeaturePanelSkin
         final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries,
                 getControl().selectedListWidgetProperty());
 
-        getControl().selectedApplicationProperty().bind(
-                ObjectBindings.map(listWidget.selectedElementProperty(), ListWidgetSelection::getItem));
+        listWidget.selectedElementProperty().bindBidirectional(this.listWidgetSelection);
 
         return new SimpleObjectProperty<>(listWidget);
     }
@@ -122,8 +137,7 @@ public class ApplicationsFeaturePanelSkin
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
         final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel(
-                getControl().getScriptInterpreter(), getControl().getFilter(),
-                getControl().selectedApplicationProperty());
+                getControl().getScriptInterpreter(), getControl().getFilter(), this.selectedApplication);
 
         // TODO: change to a binding
         applicationPanel.setShowScriptSource(getControl().getJavaFxSettingsManager().isViewScriptSource());
@@ -134,15 +148,13 @@ public class ApplicationsFeaturePanelSkin
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 
-        detailsPanel.titleProperty()
-                .bind(StringBindings.map(getControl().selectedApplicationProperty(), ApplicationDTO::getName));
+        detailsPanel.titleProperty().bind(StringBindings.map(this.selectedApplication, ApplicationDTO::getName));
         detailsPanel.setContent(applicationPanel);
-
-        detailsPanel.setOnClose(() -> getControl().setSelectedApplication(null));
+        detailsPanel.setOnClose(() -> this.listWidgetSelection.setValue(null));
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
-        return Bindings.when(Bindings.isNotNull(getControl().selectedApplicationProperty()))
+        return Bindings.when(Bindings.isNotNull(this.selectedApplication))
                 .then(detailsPanel).otherwise(new SimpleObjectProperty<>());
     }
 }
