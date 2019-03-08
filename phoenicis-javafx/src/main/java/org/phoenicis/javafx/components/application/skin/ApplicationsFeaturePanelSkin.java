@@ -3,6 +3,7 @@ package org.phoenicis.javafx.components.application.skin;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -41,6 +42,16 @@ public class ApplicationsFeaturePanelSkin
     private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     /**
+     * The current list widget selection containing the selected {@link ApplicationDTO} object
+     */
+    private final ObjectProperty<ListWidgetSelection<ApplicationDTO>> listWidgetSelection;
+
+    /**
+     * The currently selected application
+     */
+    private final ObjectBinding<ApplicationDTO> selectedApplication;
+
+    /**
      * Constructor
      *
      * @param control The control belonging to the skin
@@ -48,6 +59,8 @@ public class ApplicationsFeaturePanelSkin
     public ApplicationsFeaturePanelSkin(ApplicationsFeaturePanel control) {
         super(control);
 
+        this.listWidgetSelection = new SimpleObjectProperty<>();
+        this.selectedApplication = ObjectBindings.map(this.listWidgetSelection, ListWidgetSelection::getItem);
         this.selectedListWidget = createSelectedListWidget();
     }
 
@@ -149,8 +162,7 @@ public class ApplicationsFeaturePanelSkin
         final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries,
                 this.selectedListWidget);
 
-        getControl().selectedApplicationProperty().bind(
-                ObjectBindings.map(listWidget.selectedElementProperty(), ListWidgetSelection::getItem));
+        listWidget.selectedElementProperty().bindBidirectional(this.listWidgetSelection);
 
         return new SimpleObjectProperty<>(listWidget);
     }
@@ -163,7 +175,7 @@ public class ApplicationsFeaturePanelSkin
         final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel();
 
         applicationPanel.scriptInterpreterProperty().bind(getControl().scriptInterpreterProperty());
-        applicationPanel.applicationProperty().bind(getControl().selectedApplicationProperty());
+        applicationPanel.applicationProperty().bind(this.selectedApplication);
 
         applicationPanel.operatingSystemProperty().bind(getControl().operatingSystemProperty());
         applicationPanel.containCommercialApplicationsProperty()
@@ -183,14 +195,13 @@ public class ApplicationsFeaturePanelSkin
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 
-        detailsPanel.titleProperty()
-                .bind(StringBindings.map(getControl().selectedApplicationProperty(), ApplicationDTO::getName));
+        detailsPanel.titleProperty().bind(StringBindings.map(this.selectedApplication, ApplicationDTO::getName));
         detailsPanel.setContent(applicationPanel);
-        detailsPanel.setOnClose(() -> getControl().setSelectedApplication(null));
+        detailsPanel.setOnClose(() -> this.listWidgetSelection.setValue(null));
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
-        return Bindings.when(Bindings.isNotNull(getControl().selectedApplicationProperty()))
+        return Bindings.when(Bindings.isNotNull(this.selectedApplication))
                 .then(detailsPanel).otherwise(new SimpleObjectProperty<>());
     }
 }

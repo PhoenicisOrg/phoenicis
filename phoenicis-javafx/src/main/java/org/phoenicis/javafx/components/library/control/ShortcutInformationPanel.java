@@ -34,38 +34,27 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     private final ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall;
 
     /**
+     * The callback method for when a {@link ShortcutDTO} should be edited
+     */
+    private final ObjectProperty<Consumer<ShortcutDTO>> onShortcutEdit;
+
+    /**
      * The currently shown {@link ShortcutDTO} object
      */
     private final ObjectProperty<ShortcutDTO> shortcut;
 
     /**
      * Constructor
-     *
-     * @param objectMapper The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
-     * @param shortcut The currently shown {@link ShortcutDTO} object
-     * @param onShortcutRun The callback method for when a {@link ShortcutDTO} should be executed
-     * @param onShortcutStop The callback method for when a {@link ShortcutDTO} should be stopped
-     * @param onShortcutUninstall The callback method for when a {@link ShortcutDTO} should be uninstalled
-     */
-    private ShortcutInformationPanel(ObjectProperty<ObjectMapper> objectMapper, ObjectProperty<ShortcutDTO> shortcut,
-            ObjectProperty<Consumer<ShortcutDTO>> onShortcutRun,
-            ObjectProperty<Consumer<ShortcutDTO>> onShortcutStop,
-            ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstall) {
-        super();
-
-        this.objectMapper = objectMapper;
-        this.shortcut = shortcut;
-        this.onShortcutRun = onShortcutRun;
-        this.onShortcutStop = onShortcutStop;
-        this.onShortcutUninstall = onShortcutUninstall;
-    }
-
-    /**
-     * Constructor
      */
     public ShortcutInformationPanel() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleObjectProperty<>(), new SimpleObjectProperty<>());
+        super();
+
+        this.objectMapper = new SimpleObjectProperty<>();
+        this.shortcut = new SimpleObjectProperty<>();
+        this.onShortcutRun = new SimpleObjectProperty<>();
+        this.onShortcutStop = new SimpleObjectProperty<>();
+        this.onShortcutUninstall = new SimpleObjectProperty<>();
+        this.onShortcutEdit = new SimpleObjectProperty<>();
     }
 
     /**
@@ -113,23 +102,35 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     }
 
     public Consumer<ShortcutDTO> getOnShortcutUninstall() {
-        return onShortcutUninstall.get();
+        return this.onShortcutUninstall.get();
     }
 
     public ObjectProperty<Consumer<ShortcutDTO>> onShortcutUninstallProperty() {
-        return onShortcutUninstall;
+        return this.onShortcutUninstall;
     }
 
     public void setOnShortcutUninstall(Consumer<ShortcutDTO> onShortcutUninstall) {
         this.onShortcutUninstall.set(onShortcutUninstall);
     }
 
+    public Consumer<ShortcutDTO> getOnShortcutEdit() {
+        return this.onShortcutEdit.get();
+    }
+
+    public ObjectProperty<Consumer<ShortcutDTO>> onShortcutEditProperty() {
+        return this.onShortcutEdit;
+    }
+
+    public void setOnShortcutEdit(Consumer<ShortcutDTO> onShortcutEdit) {
+        this.onShortcutEdit.set(onShortcutEdit);
+    }
+
     public ShortcutDTO getShortcut() {
-        return shortcut.get();
+        return this.shortcut.get();
     }
 
     public ObjectProperty<ShortcutDTO> shortcutProperty() {
-        return shortcut;
+        return this.shortcut;
     }
 
     public void setShortcut(ShortcutDTO shortcut) {

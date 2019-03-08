@@ -9,7 +9,6 @@ import org.phoenicis.javafx.components.application.utils.ApplicationFilter;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
-import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
@@ -79,11 +78,6 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     private final ObjectProperty<ScriptInterpreter> scriptInterpreter;
 
     /**
-     * The currently selected application
-     */
-    private final ObjectProperty<ApplicationDTO> selectedApplication;
-
-    /**
      * Constructor
      */
     public ApplicationsFeaturePanel() {
@@ -101,7 +95,6 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
         this.categories = FXCollections.observableArrayList();
         this.scriptInterpreter = new SimpleObjectProperty<>();
-        this.selectedApplication = new SimpleObjectProperty<>();
     }
 
     /**
@@ -254,17 +247,5 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
 
     public void setScriptInterpreter(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter.set(scriptInterpreter);
-    }
-
-    public ApplicationDTO getSelectedApplication() {
-        return this.selectedApplication.get();
-    }
-
-    public ObjectProperty<ApplicationDTO> selectedApplicationProperty() {
-        return this.selectedApplication;
-    }
-
-    public void setSelectedApplication(ApplicationDTO selectedApplication) {
-        this.selectedApplication.set(selectedApplication);
     }
 }
