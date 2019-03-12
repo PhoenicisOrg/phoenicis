@@ -94,6 +94,8 @@ public class ContainersController {
                     errorDialog.showAndWait();
                 }));
 
+        repositoryManager.triggerCallbacks();
+
         containersManager.fetchContainers(
                 containerCategories -> Platform.runLater(() -> {
                     this.containersView.getCategories().setAll(containerCategories);
