@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
@@ -26,7 +27,7 @@ import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
-import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
+import org.phoenicis.javafx.views.mainwindow.installations.InstallationsFilter;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 import org.phoenicis.repository.RepositoryConfiguration;
@@ -108,9 +109,18 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public InstallationsView viewInstallations() {
-        return new InstallationsView(themeConfiguration.themeManager(),
-                javaFxSettingsConfiguration.javaFxSettingsManager());
+    public InstallationsFeaturePanel viewInstallations() {
+        final InstallationsFeaturePanel installationsFeaturePanel = new InstallationsFeaturePanel();
+
+        installationsFeaturePanel.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
+
+        // TODO: remove the InstallationsFilter class
+        final InstallationsFilter installationsFilter = new InstallationsFilter();
+        installationsFeaturePanel.setFilter(installationsFilter);
+
+        installationsFeaturePanel.setInitialized(true);
+
+        return installationsFeaturePanel;
     }
 
     @Bean
