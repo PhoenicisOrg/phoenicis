@@ -18,26 +18,34 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.IntegerBinding;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
+import org.phoenicis.javafx.collections.ConcatenatedList;
+import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.common.control.TabIndicator;
+import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
+import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
-import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
+import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainWindow extends Stage {
-    private final PhoenicisScene scene;
-
     private TabPane tabPane;
 
     public MainWindow(String applicationName,
@@ -45,7 +53,7 @@ public class MainWindow extends Stage {
             ApplicationsFeaturePanel apps,
             EnginesView engines,
             ContainersView containers,
-            InstallationsView installations,
+            InstallationsFeaturePanel installations,
             SettingsView settings,
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
@@ -56,9 +64,9 @@ public class MainWindow extends Stage {
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps), containers, engines,
-                installations, settings);
+                createInstallationsTab(installations), settings);
 
-        this.scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
+        final Scene scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
@@ -89,6 +97,35 @@ public class MainWindow extends Stage {
         applicationsTab.setClosable(false);
 
         return applicationsTab;
+    }
+
+    private Tab createInstallationsTab(InstallationsFeaturePanel installationsFeaturePanel) {
+        final Tab installationsTab = new Tab(tr("Installations"), installationsFeaturePanel);
+
+        installationsTab.setClosable(false);
+
+        final ConcatenatedList<InstallationDTO> installations = ConcatenatedList.create(
+                new MappedList<>(installationsFeaturePanel.getInstallationCategories(),
+                        InstallationCategoryDTO::getInstallations));
+
+        // a binding containing the number of currently active installations
+        final IntegerBinding openInstallations = Bindings.createIntegerBinding(installations::size, installations);
+
+        final TabIndicator indicator = new TabIndicator();
+        indicator.textProperty().bind(StringBindings.map(openInstallations, numberOfInstallations -> {
+            if (numberOfInstallations.intValue() < 10) {
+                return String.valueOf(numberOfInstallations);
+            } else {
+                return "+";
+            }
+        }));
+
+        // only show the tab indicator if at least one active installation exists
+        installationsTab.graphicProperty().bind(Bindings
+                .when(Bindings.notEqual(openInstallations, 0))
+                .then(indicator).otherwise(new SimpleObjectProperty<>()));
+
+        return installationsTab;
     }
 
     public void showInstallations() {
