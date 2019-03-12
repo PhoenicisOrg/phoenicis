@@ -24,11 +24,11 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.phoenicis.javafx.JavaFXApplication;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
@@ -44,7 +44,7 @@ public class MainWindow extends Stage {
             LibraryFeaturePanel library,
             ApplicationsFeaturePanel apps,
             EnginesView engines,
-            ContainersView containers,
+            ContainersFeaturePanel containers,
             InstallationsView installations,
             SettingsView settings,
             ThemeManager themeManager,
@@ -55,8 +55,9 @@ public class MainWindow extends Stage {
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps), containers, engines,
-                installations, settings);
+        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps),
+                createContainersTab(containers),
+                engines, installations, settings);
 
         this.scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
@@ -89,6 +90,14 @@ public class MainWindow extends Stage {
         applicationsTab.setClosable(false);
 
         return applicationsTab;
+    }
+
+    private Tab createContainersTab(ContainersFeaturePanel containers) {
+        final Tab containersTab = new Tab(tr("Containers"), containers);
+
+        containersTab.setClosable(false);
+
+        return containersTab;
     }
 
     public void showInstallations() {

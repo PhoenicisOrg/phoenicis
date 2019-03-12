@@ -19,12 +19,13 @@
 package org.phoenicis.javafx.views;
 
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
+import org.phoenicis.javafx.views.mainwindow.containers.ContainersFilter;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
 import org.phoenicis.javafx.views.mainwindow.library.ViewsConfigurationLibrary;
@@ -102,9 +103,15 @@ public class ViewsConfiguration {
     }
 
     @Bean
-    public ContainersView viewContainers() {
-        return new ContainersView(themeConfiguration.themeManager(),
-                javaFxSettingsConfiguration.javaFxSettingsManager());
+    public ContainersFeaturePanel viewContainers() {
+        final ContainersFeaturePanel containersFeaturePanel = new ContainersFeaturePanel();
+
+        containersFeaturePanel.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
+
+        final ContainersFilter containersFilter = new ContainersFilter();
+        containersFeaturePanel.setFilter(containersFilter);
+
+        return containersFeaturePanel;
     }
 
     @Bean

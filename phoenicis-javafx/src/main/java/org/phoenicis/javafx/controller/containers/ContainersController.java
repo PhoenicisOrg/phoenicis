@@ -26,31 +26,23 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineSettingsManager;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.VerbsManager;
-import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
+import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class ContainersController {
-    private final ContainersView containersView;
-    private final ContainersManager containersManager;
-    private EngineSettingsManager engineSettingsManager;
+    private final ContainersFeaturePanel containersView;
+    private final EngineSettingsManager engineSettingsManager;
     private final EngineToolsManager engineToolsManager;
     private final VerbsManager verbsManager;
 
-    private boolean firstViewSelection = true;
-
-    public ContainersController(ContainersView containersView,
+    public ContainersController(ContainersFeaturePanel containersView,
             ContainersManager containersManager,
             ContainerEngineController containerEngineController,
             RepositoryManager repositoryManager,
@@ -60,128 +52,66 @@ public class ContainersController {
         super();
 
         this.containersView = containersView;
-        this.containersManager = containersManager;
         this.engineSettingsManager = engineSettingsManager;
         this.verbsManager = verbsManager;
         this.engineToolsManager = engineToolsManager;
 
-        this.containersView.setOnSelectionChanged(event -> {
-            if (this.containersView.isSelected()) {
-                if (this.firstViewSelection) {
-                    repositoryManager.addCallbacks(this::updateEngineSettings,
-                            e -> Platform.runLater(() -> {
-                                final ErrorDialog errorDialog = ErrorDialog.builder()
-                                        .withMessage(tr("Loading engine settings failed."))
-                                        .withException(e)
-                                        .withOwner(this.containersView.getContent().getScene().getWindow())
-                                        .build();
-
-                                errorDialog.showAndWait();
-                            }));
-
-                    repositoryManager.addCallbacks(this::updateVerbs,
-                            e -> Platform.runLater(() -> {
-                                final ErrorDialog errorDialog = ErrorDialog.builder()
-                                        .withMessage(tr("Loading Verbs failed."))
-                                        .withException(e)
-                                        .withOwner(this.containersView.getContent().getScene().getWindow())
-                                        .build();
-
-                                errorDialog.showAndWait();
-                            }));
-
-                    repositoryManager.addCallbacks(this::updateEngineTools,
-                            e -> Platform.runLater(() -> {
-                                final ErrorDialog errorDialog = ErrorDialog.builder()
-                                        .withMessage(tr("Loading engine tools failed."))
-                                        .withException(e)
-                                        .withOwner(this.containersView.getContent().getScene().getWindow())
-                                        .build();
-
-                                errorDialog.showAndWait();
-                            }));
-
-                    repositoryManager.triggerCallbacks();
-                    this.firstViewSelection = false;
-                }
-
-                loadContainers();
-            }
-        });
-
         this.containersView.setVerbsManager(verbsManager);
         this.containersView.setEngineToolsManager(engineToolsManager);
         this.containersView.setContainerEngineController(containerEngineController);
+        this.containersView.setContainersManager(containersManager);
 
-        this.containersView.setOnSelectContainer(this.containersView::setContainer);
-
-        this.containersView.setOnDeleteContainer(container -> {
-            final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
-                    .withTitle(tr("Delete {0} container", container.getName()))
-                    .withMessage(tr("Are you sure you want to delete the {0} container?",
-                            container.getName()))
-                    .withOwner(containersView.getContent().getScene().getWindow())
-                    .withResizable(true)
-                    .withYesCallback(() -> {
-                        containersManager.deleteContainer(container, e -> Platform.runLater(() -> {
-                            final ErrorDialog errorDialog = ErrorDialog.builder()
-                                    .withMessage(tr("Error"))
-                                    .withException(e)
-                                    .withOwner(this.containersView.getContent().getScene().getWindow())
-                                    .build();
-
-                            errorDialog.showAndWait();
-                        }));
-
-                        loadContainers();
-                    })
-                    .build();
-
-            confirmMessage.showAndCallback();
-        });
-
-        this.containersView.setOnOpenFileBrowser(container -> {
-            try {
-                File containerDir = new File(container.getPath());
-                EventQueue.invokeLater(() -> {
-                    try {
-                        Desktop.getDesktop().open(containerDir);
-                    } catch (IOException e) {
-                        Platform.runLater(() -> {
-                            final ErrorDialog errorDialog = ErrorDialog.builder()
-                                    .withMessage(
-                                            tr("Cannot open container {0} in file browser", container.getPath()))
-                                    .withException(e)
-                                    .withOwner(this.containersView.getContent().getScene().getWindow())
-                                    .build();
-
-                            errorDialog.showAndWait();
-                        });
-                    }
-                });
-            } catch (IllegalArgumentException e) {
-                Platform.runLater(() -> {
+        repositoryManager.addCallbacks(this::updateEngineSettings,
+                e -> Platform.runLater(() -> {
                     final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Cannot open container {0} in file browser", container.getPath()))
+                            .withMessage(tr("Loading engine settings failed."))
                             .withException(e)
-                            .withOwner(this.containersView.getContent().getScene().getWindow())
+                            .withOwner(this.containersView.getScene().getWindow())
                             .build();
 
                     errorDialog.showAndWait();
-                });
-            }
-        });
+                }));
+
+        repositoryManager.addCallbacks(this::updateVerbs,
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading Verbs failed."))
+                            .withException(e)
+                            .withOwner(this.containersView.getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                }));
+
+        repositoryManager.addCallbacks(this::updateEngineTools,
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading engine tools failed."))
+                            .withException(e)
+                            .withOwner(this.containersView.getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                }));
+
+        containersManager.fetchContainers(
+                containerCategories -> Platform.runLater(() -> {
+                    this.containersView.getCategories().setAll(containerCategories);
+                    this.containersView.setInitialized(true);
+                }),
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading containers failed."))
+                            .withException(e)
+                            .withOwner(this.containersView.getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                }));
     }
 
-    public ContainersView getView() {
+    public ContainersFeaturePanel getView() {
         return containersView;
-    }
-
-    public void loadContainers() {
-        this.containersView.showWait();
-        this.containersManager.fetchContainers(containersView::populate,
-                e -> this.containersView.showFailure(tr("Loading containers failed."), Optional
-                        .of(e)));
     }
 
     private void updateEngineSettings(RepositoryDTO repositoryDTO) {
@@ -197,7 +127,7 @@ public class ContainersController {
                     final ErrorDialog errorDialog = ErrorDialog.builder()
                             .withMessage(tr("Loading engine tools failed."))
                             .withException(e)
-                            .withOwner(this.containersView.getContent().getScene().getWindow())
+                            .withOwner(this.containersView.getScene().getWindow())
                             .build();
 
                     errorDialog.showAndWait();

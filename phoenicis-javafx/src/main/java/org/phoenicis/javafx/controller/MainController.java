@@ -83,8 +83,6 @@ public class MainController {
         });
 
         installationsController.setOnInstallationAdded(this.mainWindow::showInstallations);
-
-        appsController.setOnAppLoaded(containersController::loadContainers);
     }
 
     public void show() {

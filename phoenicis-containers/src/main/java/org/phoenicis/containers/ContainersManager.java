@@ -27,22 +27,25 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * manages the containers
+ * Manager class for {@link ContainerDTO} objects
  */
 public interface ContainersManager {
     Logger LOGGER = LoggerFactory.getLogger(ContainersManager.class);
 
     /**
-     * fetches the available containers
-     * @param callback
-     * @param errorCallback
+     * Fetches a list containing all available containers
+     *
+     * @param onSuccess Callback for when the fetching was successful
+     * @param onError Callback for when an error occurred during the fetching
      */
-    void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback);
+    void fetchContainers(Consumer<List<ContainerCategoryDTO>> onSuccess, Consumer<Exception> onError);
 
     /**
-     * deletes a container
-     * @param container
-     * @param errorCallback
+     * Deletes a given container
+     *
+     * @param container The container
+     * @param onSuccess Callback for when the container has been successfully deleted
+     * @param onError Callback for when an error occured during the deletion
      */
-    void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback);
+    void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError);
 }

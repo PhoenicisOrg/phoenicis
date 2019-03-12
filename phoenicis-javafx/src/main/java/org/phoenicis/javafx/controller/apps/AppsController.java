@@ -32,17 +32,10 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class AppsController {
     private final ApplicationsFeaturePanel view;
 
-    private Runnable onAppLoaded = () -> {
-    };
-
     public AppsController(ApplicationsFeaturePanel view, RepositoryManager repositoryManager) {
         this.view = view;
 
         repositoryManager.addCallbacks(this::populate, this::showError);
-    }
-
-    public void setOnAppLoaded(Runnable onAppLoaded) {
-        this.onAppLoaded = onAppLoaded;
     }
 
     public ApplicationsFeaturePanel getView() {
@@ -56,9 +49,6 @@ public class AppsController {
             getView().getCategories().setAll(categoryDTOS);
 
             getView().setInitialized(true);
-
-            // TODO: remove the callback (I don't think it is changed by `setOnAppLoaded` before it is called here)
-            onAppLoaded.run();
         });
     }
 
