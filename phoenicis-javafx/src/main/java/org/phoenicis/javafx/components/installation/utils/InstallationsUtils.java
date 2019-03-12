@@ -27,12 +27,12 @@ public final class InstallationsUtils {
     /**
      * Adds a new {@link InstallationDTO} object to an existing list of {@link InstallationDTO} objects
      *
-     * @param list  The list of existing installations
+     * @param list The list of existing installations
      * @param toAdd The new installation
      * @return A new list of installations containing the existing and new installations
      */
     public static List<InstallationCategoryDTO> addInstallationToList(List<InstallationCategoryDTO> list,
-                                                                      InstallationDTO toAdd) {
+            InstallationDTO toAdd) {
         final String newInstallationCategory = toAdd.getCategory().toString();
 
         final InstallationCategoryDTO newCategory = new InstallationCategoryDTO.Builder()
@@ -60,13 +60,13 @@ public final class InstallationsUtils {
     /**
      * Removes an {@link InstallationDTO} object from an existing list of {@link InstallationDTO} objects
      *
-     * @param list     The list of existing installations
+     * @param list The list of existing installations
      * @param toRemove The installation which shall be removed
      * @return A new list of installations containing the existing installations without the installation which shall be
-     * removed
+     *         removed
      */
     public static List<InstallationCategoryDTO> removeInstallationFromList(List<InstallationCategoryDTO> list,
-                                                                           InstallationDTO toRemove) {
+            InstallationDTO toRemove) {
         final String newInstallationCategory = toRemove.getCategory().toString();
 
         final SortedMap<String, InstallationCategoryDTO> newCategories = new TreeMap<>(
@@ -89,7 +89,7 @@ public final class InstallationsUtils {
     }
 
     private static InstallationCategoryDTO mergeCategories(InstallationCategoryDTO leftCategory,
-                                                           InstallationCategoryDTO rightCategory) {
+            InstallationCategoryDTO rightCategory) {
         final Map<String, InstallationDTO> leftInstallations = createSortedMap(leftCategory.getInstallations(),
                 InstallationDTO::getId);
         final Map<String, InstallationDTO> rightInstallations = createSortedMap(rightCategory.getInstallations(),
@@ -120,7 +120,7 @@ public final class InstallationsUtils {
     }
 
     private static InstallationCategoryDTO removeFromCategory(InstallationCategoryDTO category,
-                                                              InstallationDTO newInstallation) {
+            InstallationDTO newInstallation) {
         final SortedMap<String, InstallationDTO> mergedInstallations = new TreeMap<>(
                 createSortedMap(category.getInstallations(), InstallationDTO::getId));
 

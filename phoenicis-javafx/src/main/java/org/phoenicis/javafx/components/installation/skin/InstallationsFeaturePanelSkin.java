@@ -136,7 +136,7 @@ public class InstallationsFeaturePanelSkin
 
         /*
          * whenever a selected installation is set inside the control,
-         * automatically select in in the combined list widget
+         * automatically select it in the combined list widget
          */
         getControl().selectedInstallationProperty().addListener((Observable invalidation) -> {
             final InstallationDTO installation = getControl().getSelectedInstallation();
