@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-07 19:09+0000\n"
-"PO-Revision-Date: 2019-03-08 12:14\n"
+"POT-Creation-Date: 2019-03-12 18:12+0000\n"
+"PO-Revision-Date: 2019-03-13 10:04\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -151,13 +151,17 @@ msgstr ""
 msgid "Containers"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:79
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:87
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:105
 msgid "Library"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:95
 msgid "Apps"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:103
+msgid "Installations"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
@@ -207,10 +211,6 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:235
 #, java-format
 msgid "Error while uninstalling {0}"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:80
-msgid "Installations"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
