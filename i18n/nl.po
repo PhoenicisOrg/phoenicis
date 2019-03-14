@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-07 19:09+0000\n"
-"PO-Revision-Date: 2019-03-09 12:12\n"
+"POT-Creation-Date: 2019-03-12 18:12+0000\n"
+"PO-Revision-Date: 2019-03-14 10:13\n"
 "Last-Translator: plata <plata@mailbox.org>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -151,14 +151,18 @@ msgstr "Kies de locatie van uw klas pad repository"
 msgid "Containers"
 msgstr "Containers"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:79
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:87
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:105
 msgid "Library"
 msgstr "Bibliotheek"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:87
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:95
 msgid "Apps"
 msgstr "Apps"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:103
+msgid "Installations"
+msgstr "Installaties"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
 msgid "Retry"
@@ -208,10 +212,6 @@ msgstr "Weet u zeker dat u {0} wilt deïnstalleren?"
 #, java-format
 msgid "Error while uninstalling {0}"
 msgstr "Fout tijdens het verwijderen van {0}"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/installations/InstallationsView.java:80
-msgid "Installations"
-msgstr "Installaties"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
 msgid "Console"
