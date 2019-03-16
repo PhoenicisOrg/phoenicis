@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.SimpleObjectProperty;
@@ -34,6 +35,7 @@ import org.phoenicis.javafx.components.common.control.TabIndicator;
 import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.utils.StringBindings;
@@ -103,6 +105,21 @@ public class MainWindow extends Stage {
         final Tab containersTab = new Tab(tr("Containers"), containers);
 
         containersTab.setClosable(false);
+
+        containersTab.setOnSelectionChanged(event -> containers.getContainersManager().fetchContainers(
+                containerCategories -> Platform.runLater(() -> {
+                    containers.getCategories().setAll(containerCategories);
+                    containers.setInitialized(true);
+                }),
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading containers failed."))
+                            .withException(e)
+                            .withOwner(containers.getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                })));
 
         return containersTab;
     }

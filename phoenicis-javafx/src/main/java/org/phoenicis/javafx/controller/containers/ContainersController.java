@@ -95,21 +95,6 @@ public class ContainersController {
                 }));
 
         repositoryManager.triggerCallbacks();
-
-        containersManager.fetchContainers(
-                containerCategories -> Platform.runLater(() -> {
-                    this.containersView.getCategories().setAll(containerCategories);
-                    this.containersView.setInitialized(true);
-                }),
-                e -> Platform.runLater(() -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Loading containers failed."))
-                            .withException(e)
-                            .withOwner(this.containersView.getScene().getWindow())
-                            .build();
-
-                    errorDialog.showAndWait();
-                }));
     }
 
     public ContainersFeaturePanel getView() {
