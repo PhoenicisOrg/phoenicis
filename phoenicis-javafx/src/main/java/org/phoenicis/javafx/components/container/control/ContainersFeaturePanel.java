@@ -28,19 +28,43 @@ import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
+/**
+ * The component shown inside the Phoenicis "Containers" tab
+ */
 public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel, ContainersFeaturePanelSkin> {
+    /**
+     * The container filter
+     */
     private final ObjectProperty<ContainersFilter> filter;
 
+    /**
+     * The JavaFX settings manager
+     */
     private final ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager;
 
+    /**
+     * A list of all shown {@link ContainerCategoryDTO} objects
+     */
     private final ObservableList<ContainerCategoryDTO> categories;
 
+    /**
+     * The container manager used to fetch the existing containers
+     */
     private final ObjectProperty<ContainersManager> containersManager;
 
+    /**
+     * The container engine controller
+     */
     private final ObjectProperty<ContainerEngineController> containerEngineController;
 
+    /**
+     * The verbs manager
+     */
     private final ObjectProperty<VerbsManager> verbsManager;
 
+    /**
+     * the engine tools manager
+     */
     private final ObjectProperty<EngineToolsManager> engineToolsManager;
 
     /**
@@ -58,8 +82,14 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
      */
     private final ObservableMap<String, ApplicationDTO> engineTools;
 
+    /**
+     * The currently selected (visible) container
+     */
     private final ObjectProperty<ContainerDTO> selectedContainer;
 
+    /**
+     * Constructor
+     */
     public ContainersFeaturePanel() {
         super();
 
@@ -76,11 +106,19 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.selectedContainer = new SimpleObjectProperty<>();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ContainersFeaturePanelSkin createSkin() {
         return new ContainersFeaturePanelSkin(this);
     }
 
+    /**
+     * Deletes a given container
+     *
+     * @param container The container
+     */
     public void deleteContainer(final ContainerDTO container) {
         final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                 .withTitle(tr("Delete {0} container", container.getName()))
@@ -116,6 +154,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         confirmMessage.showAndCallback();
     }
 
+    /**
+     * Opens the given container in a file browser
+     *
+     * @param container The container
+     */
     public void openFileBrowser(final ContainerDTO container) {
         try {
             final File containerDir = new File(container.getPath());
@@ -149,11 +192,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ContainersFilter getFilter() {
-        return filter.get();
+        return this.filter.get();
     }
 
     public ObjectProperty<ContainersFilter> filterProperty() {
-        return filter;
+        return this.filter;
     }
 
     public void setFilter(ContainersFilter filter) {
@@ -161,11 +204,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public JavaFxSettingsManager getJavaFxSettingsManager() {
-        return javaFxSettingsManager.get();
+        return this.javaFxSettingsManager.get();
     }
 
     public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
-        return javaFxSettingsManager;
+        return this.javaFxSettingsManager;
     }
 
     public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {
@@ -173,15 +216,15 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ObservableList<ContainerCategoryDTO> getCategories() {
-        return categories;
+        return this.categories;
     }
 
     public ContainersManager getContainersManager() {
-        return containersManager.get();
+        return this.containersManager.get();
     }
 
     public ObjectProperty<ContainersManager> containersManagerProperty() {
-        return containersManager;
+        return this.containersManager;
     }
 
     public void setContainersManager(ContainersManager containersManager) {
@@ -189,11 +232,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ContainerEngineController getContainerEngineController() {
-        return containerEngineController.get();
+        return this.containerEngineController.get();
     }
 
     public ObjectProperty<ContainerEngineController> containerEngineControllerProperty() {
-        return containerEngineController;
+        return this.containerEngineController;
     }
 
     public void setContainerEngineController(ContainerEngineController containerEngineController) {
@@ -201,11 +244,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public VerbsManager getVerbsManager() {
-        return verbsManager.get();
+        return this.verbsManager.get();
     }
 
     public ObjectProperty<VerbsManager> verbsManagerProperty() {
-        return verbsManager;
+        return this.verbsManager;
     }
 
     public void setVerbsManager(VerbsManager verbsManager) {
@@ -213,11 +256,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public EngineToolsManager getEngineToolsManager() {
-        return engineToolsManager.get();
+        return this.engineToolsManager.get();
     }
 
     public ObjectProperty<EngineToolsManager> engineToolsManagerProperty() {
-        return engineToolsManager;
+        return this.engineToolsManager;
     }
 
     public void setEngineToolsManager(EngineToolsManager engineToolsManager) {
@@ -225,11 +268,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ObservableMap<String, List<EngineSetting>> getEngineSettings() {
-        return engineSettings;
+        return this.engineSettings;
     }
 
     public ObservableMap<String, ApplicationDTO> getVerbs() {
-        return verbs;
+        return this.verbs;
     }
 
     public ObservableMap<String, ApplicationDTO> getEngineTools() {
@@ -237,7 +280,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ContainerDTO getSelectedContainer() {
-        return selectedContainer.get();
+        return this.selectedContainer.get();
     }
 
     public ObjectProperty<ContainerDTO> selectedContainerProperty() {
