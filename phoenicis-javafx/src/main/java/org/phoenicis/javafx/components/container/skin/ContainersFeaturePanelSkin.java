@@ -35,6 +35,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * A skin implementation for the {@link ContainersFeaturePanel} component
+ */
 public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeaturePanel, ContainersFeaturePanelSkin> {
     /**
      * The currently selected list widget
@@ -75,6 +78,9 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         return selectedListWidgetElement;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectExpression<SidebarBase<?, ?, ?>> createSidebar() {
         /*
@@ -105,6 +111,9 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         return new SimpleObjectProperty<>(sidebar);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectExpression<Node> createContent() {
         /*
@@ -148,6 +157,9 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         return new SimpleObjectProperty<>(listWidget);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
         final ContainerInformationPanel containerInformationPanel = new ContainerInformationPanel();
@@ -192,6 +204,12 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
                 .then(containerDetailsPanel).otherwise(new SimpleObjectProperty<>());
     }
 
+    /**
+     * Applies the engine settings belonging to the currently selected container to the given
+     * {@link ContainerInformationPanel}
+     *
+     * @param containerInformationPanel The information panel showing the details for the currently selected container
+     */
     private void updateEngineSettings(final ContainerInformationPanel containerInformationPanel) {
         final ObservableMap<String, List<EngineSetting>> engineSettings = getControl().getEngineSettings();
         final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
@@ -205,6 +223,11 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         }
     }
 
+    /**
+     * Applies the verbs belonging to the currently selected container to the given {@link ContainerInformationPanel}
+     *
+     * @param containerInformationPanel The information panel showing the details for the currently selected container
+     */
     private void updateVerbs(final ContainerInformationPanel containerInformationPanel) {
         ObservableMap<String, ApplicationDTO> verbs = getControl().getVerbs();
         final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
@@ -217,6 +240,12 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         }
     }
 
+    /**
+     * Applies the engine tools belonging to the currently selected container to the given
+     * {@link ContainerInformationPanel}
+     *
+     * @param containerInformationPanel The information panel showing the details for the currently selected container
+     */
     private void updateEngineTools(final ContainerInformationPanel containerInformationPanel) {
         ObservableMap<String, ApplicationDTO> engineTools = getControl().getEngineTools();
         final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
