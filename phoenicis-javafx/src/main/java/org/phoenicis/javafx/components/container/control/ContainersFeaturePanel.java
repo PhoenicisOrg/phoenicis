@@ -276,7 +276,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ObservableMap<String, ApplicationDTO> getEngineTools() {
-        return engineTools;
+        return this.engineTools;
     }
 
     public ContainerDTO getSelectedContainer() {
@@ -284,7 +284,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     public ObjectProperty<ContainerDTO> selectedContainerProperty() {
-        return selectedContainer;
+        return this.selectedContainer;
     }
 
     public void setSelectedContainer(ContainerDTO selectedContainer) {
