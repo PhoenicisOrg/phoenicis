@@ -18,6 +18,7 @@
 
 package org.phoenicis.javafx.views.mainwindow.ui;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.property.SimpleObjectProperty;
@@ -31,13 +32,14 @@ import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
 import org.phoenicis.javafx.components.common.control.TabIndicator;
+import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.utils.StringBindings;
 import org.phoenicis.javafx.views.common.PhoenicisScene;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersView;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
@@ -52,7 +54,7 @@ public class MainWindow extends Stage {
             LibraryFeaturePanel library,
             ApplicationsFeaturePanel apps,
             EnginesView engines,
-            ContainersView containers,
+            ContainersFeaturePanel containers,
             InstallationsFeaturePanel installations,
             SettingsView settings,
             ThemeManager themeManager,
@@ -63,8 +65,8 @@ public class MainWindow extends Stage {
         tabPane.setId("menuPane");
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps), containers, engines,
-                createInstallationsTab(installations), settings);
+        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps),
+                createContainersTab(containers), engines, createInstallationsTab(installations), settings);
 
         final Scene scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
 
@@ -97,6 +99,29 @@ public class MainWindow extends Stage {
         applicationsTab.setClosable(false);
 
         return applicationsTab;
+    }
+
+    private Tab createContainersTab(ContainersFeaturePanel containers) {
+        final Tab containersTab = new Tab(tr("Containers"), containers);
+
+        containersTab.setClosable(false);
+
+        containersTab.setOnSelectionChanged(event -> containers.getContainersManager().fetchContainers(
+                containerCategories -> Platform.runLater(() -> {
+                    containers.getCategories().setAll(containerCategories);
+                    containers.setInitialized(true);
+                }),
+                e -> Platform.runLater(() -> {
+                    final ErrorDialog errorDialog = ErrorDialog.builder()
+                            .withMessage(tr("Loading containers failed."))
+                            .withException(e)
+                            .withOwner(containers.getScene().getWindow())
+                            .build();
+
+                    errorDialog.showAndWait();
+                })));
+
+        return containersTab;
     }
 
     private Tab createInstallationsTab(InstallationsFeaturePanel installationsFeaturePanel) {
