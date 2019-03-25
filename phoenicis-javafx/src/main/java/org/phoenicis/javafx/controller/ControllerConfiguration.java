@@ -23,7 +23,6 @@ import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
-import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
@@ -74,7 +73,7 @@ public class ControllerConfiguration {
                 appsController(),
                 enginesController(),
                 containersController(),
-                installationsController(),
+                viewsConfiguration.viewInstallations(),
                 settingsController(),
                 repositoryConfiguration.repositoryManager(),
                 themeConfiguration.themeManager(),
@@ -109,11 +108,6 @@ public class ControllerConfiguration {
     @Bean
     public AppsController appsController() {
         return new AppsController(viewsConfiguration.viewApps(), repositoryConfiguration.repositoryManager());
-    }
-
-    @Bean
-    public InstallationsController installationsController() {
-        return new InstallationsController(viewsConfiguration.viewInstallations());
     }
 
     @Bean

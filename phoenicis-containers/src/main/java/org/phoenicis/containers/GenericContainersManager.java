@@ -65,6 +65,7 @@ public class GenericContainersManager implements ContainersManager {
 
     /**
      * constructor
+     *
      * @param compatibleConfigFileFormatFactory
      * @param libraryManager
      * @param shortcutManager
@@ -88,18 +89,16 @@ public class GenericContainersManager implements ContainersManager {
 
     /**
      * {@inheritDoc}
-     * @param callback
-     * @param errorCallback
      */
     @Override
-    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
+    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> onSuccess, Consumer<Exception> onError) {
         final File containersFile = new File(containersPath);
         containersFile.mkdirs();
 
         final File[] engineDirectories = containersFile.listFiles();
 
         if (engineDirectories == null) {
-            callback.accept(Collections.emptyList());
+            onSuccess.accept(Collections.emptyList());
         } else {
             final List<ContainerCategoryDTO> containerCategories = new ArrayList<>();
             for (File engineDirectory : engineDirectories) {
@@ -111,47 +110,52 @@ public class GenericContainersManager implements ContainersManager {
                 }
             }
 
-            callback.accept(containerCategories);
+            onSuccess.accept(containerCategories);
         }
     }
 
     /**
      * {@inheritDoc}
-     * @param container
-     * @param errorCallback
      */
     @Override
-    public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
+    public void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError) {
         try {
-            this.fileUtilities.remove(new File(container.getPath()));
+            final File containerPath = new File(container.getPath());
+
+            this.fileUtilities.remove(containerPath);
         } catch (IOException e) {
             LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
-            errorCallback.accept(e);
+            onError.accept(e);
         }
+
         // TODO: better way to get engine ID
         final String engineId = container.getEngine().toLowerCase();
 
-        List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
-        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-                .forEach(shortcutDTO -> {
+        final List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
+
+        // remove the shortcuts leading to the container
+        categories.stream().flatMap(shortcutCategory -> shortcutCategory.getShortcuts().stream())
+                .forEach(shortcut -> {
                     final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
                             .createInteractiveSession();
-                    interactiveScriptSession.eval(
-                            "include(\"engines." + engineId + ".shortcuts.reader\");",
+
+                    interactiveScriptSession.eval("include(\"engines." + engineId + ".shortcuts.reader\");",
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                                 final org.graalvm.polyglot.Value shortcutReader = (org.graalvm.polyglot.Value) output;
-                                shortcutReader.invokeMember("of", shortcutDTO);
+                                shortcutReader.invokeMember("of", shortcut);
                                 final String containerName = shortcutReader.invokeMember("container").as(String.class);
                                 if (containerName.equals(container.getName())) {
-                                    this.shortcutManager.deleteShortcut(shortcutDTO);
+                                    this.shortcutManager.deleteShortcut(shortcut);
                                 }
-                            }, errorCallback), errorCallback);
+                            }, onError), onError);
                 });
 
+        onSuccess.accept(container);
     }
 
     /**
      * fetches all containers in a given directory
+     *
      * @param directory
      * @return found containers
      */
@@ -193,7 +197,7 @@ public class GenericContainersManager implements ContainersManager {
             }
             containers.sort(ContainerDTO.nameComparator());
         }
+
         return containers;
     }
-
 }

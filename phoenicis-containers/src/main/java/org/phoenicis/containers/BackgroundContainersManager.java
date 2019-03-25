@@ -33,9 +33,10 @@ class BackgroundContainersManager implements ContainersManager {
     private final ExecutorService executorService;
 
     /**
-     * constructor
-     * @param delegatedContainersManager
-     * @param executorService
+     * Constructor
+     *
+     * @param delegatedContainersManager The delegated containers manager
+     * @param executorService The executor service
      */
     BackgroundContainersManager(ContainersManager delegatedContainersManager, ExecutorService executorService) {
         this.delegatedContainersManager = delegatedContainersManager;
@@ -44,21 +45,17 @@ class BackgroundContainersManager implements ContainersManager {
 
     /**
      * {@inheritDoc}
-     * @param callback
-     * @param errorCallback
      */
     @Override
-    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedContainersManager.fetchContainers(callback, errorCallback));
+    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> onSuccess, Consumer<Exception> onError) {
+        executorService.submit(() -> delegatedContainersManager.fetchContainers(onSuccess, onError));
     }
 
     /**
      * {@inheritDoc}
-     * @param container
-     * @param errorCallback
      */
     @Override
-    public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
-        executorService.submit(() -> delegatedContainersManager.deleteContainer(container, errorCallback));
+    public void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError) {
+        executorService.submit(() -> delegatedContainersManager.deleteContainer(container, onSuccess, onError));
     }
 }
