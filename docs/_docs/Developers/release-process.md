@@ -1,7 +1,7 @@
 ---
 title: "Release process"
 category: Developers
-order: 5
+order: 8
 toc: false
 ---
 

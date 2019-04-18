@@ -256,6 +256,7 @@ public class Downloader {
                 connection.setHeaders(headers);
             }
 
+            connection.connect();
             saveConnectionToStream(url, connection, outputStream, onChange);
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);

@@ -23,7 +23,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ import java.util.Optional;
  *
  * @param <S> Sidebar used by this MainWindowView
  */
-public class MainWindowView<S extends Sidebar> extends Tab {
+public class MainWindowView<S extends Node> extends Tab {
     protected final ThemeManager themeManager;
 
     protected final BorderPane content;

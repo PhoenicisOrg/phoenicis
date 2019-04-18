@@ -19,9 +19,13 @@
 package org.phoenicis.javafx.views.mainwindow.library;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
+import org.phoenicis.library.LibraryConfiguration;
+import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +40,10 @@ public class ViewsConfigurationLibrary {
     private String containersPath;
 
     @Autowired
-    private ThemeConfiguration themeConfiguration;
+    private LibraryConfiguration libraryConfiguration;
+
+    @Autowired
+    private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
@@ -44,13 +51,30 @@ public class ViewsConfigurationLibrary {
     @Autowired
     private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
 
+    @Autowired
+    private ViewsConfiguration viewsConfiguration;
+
     @Bean
-    public LibraryView viewLibrary() {
-        return new LibraryView(applicationName,
-                containersPath,
-                themeConfiguration.themeManager(),
-                phoenicisGlobalConfiguration.objectMapper(),
-                javaFxSettingsConfiguration.javaFxSettingsManager());
+    public LibraryFeaturePanel viewLibrary() {
+        final LibraryFeaturePanel libraryFeaturePanel = new LibraryFeaturePanel();
+
+        libraryFeaturePanel.setApplicationName(applicationName);
+        libraryFeaturePanel.setContainersPath(containersPath);
+        libraryFeaturePanel.setScriptInterpreter(scriptsConfiguration.scriptInterpreter());
+        libraryFeaturePanel.setObjectMapper(phoenicisGlobalConfiguration.objectMapper());
+        libraryFeaturePanel.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
+        libraryFeaturePanel.setConsoleController(consoleController());
+        libraryFeaturePanel.setShortcutRunner(libraryConfiguration.shortcutRunner());
+        libraryFeaturePanel.setShortcutManager(libraryConfiguration.shortcutManager());
+
+        libraryFeaturePanel.setFilter(new LibraryFilter());
+
+        return libraryFeaturePanel;
+    }
+
+    @Bean
+    public ConsoleController consoleController() {
+        return new ConsoleController(viewsConfiguration.consoleTabFactory(), scriptsConfiguration.scriptInterpreter());
     }
 
     @Bean

@@ -65,7 +65,7 @@ public class EnginesManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"engine\", \"implementation\"]); new Engine();",
+                "include(\"engines." + engineId + ".engine.implementation\"); new Engine();",
                 output -> {
                     final Engine engine = (Engine) output;
                     doneCallback.accept(engine);
@@ -149,8 +149,8 @@ public class EnginesManager {
         script.append("(function () {\n");
         script.append("var engines = {};\n");
         for (CategoryDTO engine : categoryDTOS) {
-            final String engineId = engine.getId();
-            script.append("include([\"engines\", \"" + engineId + "\", \"engine\", \"implementation\"]);\n");
+            final String engineId = engine.getId().replaceAll("^.*\\.", "");
+            script.append("include(\"engines." + engineId + ".engine.implementation\");\n");
             script.append("if (!(\"" + engineId + "\" in engines))\n");
             script.append("{\n");
             script.append("engines[\"" + engineId + "\"] = new Engine();\n");

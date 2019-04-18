@@ -16,7 +16,8 @@
     <category>Utility</category>
   </categories>
   <url type="homepage">https://phoenicis.org/</url>
-  <url type="help">https://github.com/PhoenicisOrg/phoenicis/issues</url>
+  <url type="help">https://phoenicisorg.github.io/phoenicis/</url>
+  <url type="bugtracker">https://github.com/PhoenicisOrg/phoenicis/issues</url>
   <url type="translate">https://crowdin.com/project/phoenicis</url>
   <project_license>LGPL-3.0</project_license>
   <developer_name>PhoenicisOrg</developer_name>

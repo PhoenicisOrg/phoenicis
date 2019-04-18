@@ -19,8 +19,8 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.installations.InstallationsView;
+import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 import org.phoenicis.scripts.ui.InstallationType;
 import org.phoenicis.scripts.ui.SetupUi;
@@ -39,7 +39,7 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
 
     private OperatingSystemFetcher operatingSystemFetcher;
     private ThemeManager themeManager;
-    private InstallationsView installationsView;
+    private InstallationsFeaturePanel installationsView;
 
     /**
      * constructor
@@ -48,7 +48,7 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
      * @param installationsView
      */
     public SetupUiFactoryJavaFX(OperatingSystemFetcher operatingSystemFetcher, ThemeManager themeManager,
-            InstallationsView installationsView) {
+            InstallationsFeaturePanel installationsView) {
         super();
         this.operatingSystemFetcher = operatingSystemFetcher;
         this.themeManager = themeManager;
@@ -67,16 +67,19 @@ public class SetupUiFactoryJavaFX implements SetupUiFactory {
     public SetupUi createSetupWindow(String title, Optional<URI> miniature, InstallationType installationType) {
         final SetupUiJavaFXImplementation setupWindow = new SetupUiJavaFXImplementation(title,
                 this.operatingSystemFetcher, this.themeManager);
-        this.installationsView.closeDetailsView();
-        InstallationDTO installationDTO = new InstallationDTO.Builder()
+
+        final InstallationDTO installationDTO = new InstallationDTO.Builder()
                 .withCategory(installationType)
                 .withId(title + "_" + new Date().getTime())
                 .withName(title)
                 .withMiniature(miniature.orElse(null))
                 .withNode(setupWindow.getContent())
                 .build();
+
         this.installationsView.addInstallation(installationDTO);
+
         setupWindow.setOnShouldClose(() -> this.installationsView.removeInstallation(installationDTO));
+
         return setupWindow;
     }
 }

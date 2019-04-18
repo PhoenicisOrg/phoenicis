@@ -3,8 +3,7 @@ package org.phoenicis.javafx.components.setting.skin;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.setting.control.SettingsSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.settings.SettingsSidebar;
-import org.phoenicis.javafx.views.mainwindow.settings.SettingsSidebar.SettingsSidebarItem;
+import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 
 import java.util.Optional;
 

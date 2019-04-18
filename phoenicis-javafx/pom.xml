@@ -26,7 +26,7 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.root>${project.basedir}/../</project.root>
-        <openjfx.version>11.0.1</openjfx.version>
+        <openjfx.version>11.0.2</openjfx.version>
         <testfx.version>4.0.15-alpha</testfx.version>
     </properties>
     <dependencies>
@@ -123,6 +123,11 @@
             <artifactId>openjfx-monocle</artifactId>
             <version>jdk-11+23</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.PhoenicisOrg</groupId>
+            <artifactId>javafx-collections</artifactId>
+            <version>1.2.0</version>
         </dependency>
     </dependencies>
     <build>

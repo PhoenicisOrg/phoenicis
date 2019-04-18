@@ -1,7 +1,6 @@
 package org.phoenicis.javafx.dialogs;
 
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Alert;
@@ -12,8 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import org.apache.commons.lang.exception.ExceptionUtils;
-
-import java.util.Optional;
+import org.phoenicis.javafx.utils.StringBindings;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -50,8 +48,9 @@ public class ErrorDialog extends Alert {
      * Initializes the components used in the {@link ErrorDialog}
      */
     private void initialise() {
-        contentTextProperty().bind(Bindings.createStringBinding(
-                () -> Optional.ofNullable(getException()).map(Exception::getMessage).orElse(null), exception));
+        getDialogPane().getStyleClass().addAll("phoenicis-dialog", "error-dialog");
+
+        contentTextProperty().bind(StringBindings.map(exceptionProperty(), Exception::getMessage));
 
         getDialogPane().setExpandableContent(createExpandableContent());
 
@@ -77,9 +76,7 @@ public class ErrorDialog extends Alert {
         final TextArea textArea = new TextArea();
         textArea.setEditable(false);
 
-        textArea.textProperty().bind(Bindings.createStringBinding(
-                () -> Optional.ofNullable(getException()).map(ExceptionUtils::getFullStackTrace).orElse(null),
-                exception));
+        textArea.textProperty().bind(StringBindings.map(exceptionProperty(), ExceptionUtils::getFullStackTrace));
 
         VBox.setVgrow(textArea, Priority.ALWAYS);
 
@@ -91,11 +88,11 @@ public class ErrorDialog extends Alert {
     }
 
     public Exception getException() {
-        return exception.get();
+        return this.exception.get();
     }
 
     public ObjectProperty<Exception> exceptionProperty() {
-        return exception;
+        return this.exception;
     }
 
     public void setException(Exception exception) {

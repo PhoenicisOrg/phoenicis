@@ -1,7 +1,7 @@
 ---
 title: "Translation"
 category: Developers
-order: 4
+order: 7
 ---
 
 1. run `mvn package` to update the `.pot` and `.po` files

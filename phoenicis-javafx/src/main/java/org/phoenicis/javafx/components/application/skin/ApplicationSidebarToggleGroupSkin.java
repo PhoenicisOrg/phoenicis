@@ -1,9 +1,9 @@
 package org.phoenicis.javafx.components.application.skin;
 
 import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsSidebar;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Optional;
@@ -11,7 +11,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link ApplicationsSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link ApplicationSidebar}
  */
 public class ApplicationSidebarToggleGroupSkin extends
         SidebarToggleGroupBaseSkin<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> {

@@ -25,9 +25,9 @@ import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.javafx.controller.apps.AppsController;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -90,7 +90,7 @@ public class EnginesController {
         });
 
         this.enginesView.setOnInstallEngine(engineDTO -> {
-            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                     .withTitle(tr("Install {0}", engineDTO.getVersion()))
                     .withMessage(tr("Are you sure you want to install {0}?", engineDTO.getVersion()))
                     .withOwner(enginesView.getContent().getScene().getWindow())
@@ -116,7 +116,7 @@ public class EnginesController {
         });
 
         this.enginesView.setOnDeleteEngine(engineDTO -> {
-            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
                     .withTitle(tr("Delete {0}", engineDTO.getVersion()))
                     .withMessage(tr("Are you sure you want to delete {0}?", engineDTO.getVersion()))
                     .withOwner(enginesView.getContent().getScene().getWindow())

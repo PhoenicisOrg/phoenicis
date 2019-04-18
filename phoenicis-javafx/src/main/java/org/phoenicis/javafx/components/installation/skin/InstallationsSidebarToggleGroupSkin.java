@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.installation.skin;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.installation.control.InstallationsSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.installations.InstallationsSidebar;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 
 import java.util.Optional;

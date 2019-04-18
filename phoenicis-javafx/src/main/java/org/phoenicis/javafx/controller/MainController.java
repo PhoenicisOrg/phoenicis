@@ -19,15 +19,15 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
-import org.phoenicis.javafx.controller.installations.InstallationsController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.views.common.ThemeManager;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -57,7 +57,7 @@ public class MainController {
             AppsController appsController,
             EnginesController enginesController,
             ContainersController containersController,
-            InstallationsController installationsController,
+            InstallationsFeaturePanel installationsView,
             SettingsController settingsController,
             RepositoryManager repositoryManager,
             ThemeManager themeManager,
@@ -71,7 +71,7 @@ public class MainController {
                 appsController.getView(),
                 enginesController.getView(),
                 containersController.getView(),
-                installationsController.getView(),
+                installationsView,
                 settingsController.getView(),
                 themeManager,
                 javaFxSettingsManager);
@@ -82,9 +82,7 @@ public class MainController {
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
 
-        installationsController.setOnInstallationAdded(this.mainWindow::showInstallations);
-
-        appsController.setOnAppLoaded(containersController::loadContainers);
+        installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
     }
 
     public void show() {
@@ -93,7 +91,7 @@ public class MainController {
 
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event -> {
-            final ConfirmDialog confirmDialog = ConfirmDialog.builder()
+            final SimpleConfirmDialog confirmDialog = SimpleConfirmDialog.builder()
                     .withTitle(this.applicationName)
                     .withMessage(tr("Are you sure you want to close all {0} windows?", this.applicationName))
                     .withOwner(this.mainWindow)
