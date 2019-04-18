@@ -43,7 +43,7 @@ public class InstallationsSidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(InstallationCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
+        categoryButton.setId(String.format("%s-button", category.getId().toLowerCase().replace('.', '-')));
         categoryButton.setOnMouseClicked(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

@@ -36,7 +36,7 @@ public class EnginesSidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(EngineCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getName().toLowerCase()));
+        categoryButton.setId(String.format("%s-button", category.getName().toLowerCase().replace('.', '-')));
         categoryButton.setOnAction(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

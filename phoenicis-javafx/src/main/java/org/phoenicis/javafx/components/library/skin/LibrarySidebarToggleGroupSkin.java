@@ -43,7 +43,9 @@ public class LibrarySidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(ShortcutCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
+        categoryButton.setId(String.format("applications-%s-button", category.getId().toLowerCase())); // TODO: store
+                                                                                                       // category ID in
+                                                                                                       // shortcut.info?
         categoryButton.setOnMouseClicked(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

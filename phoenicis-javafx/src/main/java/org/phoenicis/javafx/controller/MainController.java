@@ -79,8 +79,10 @@ public class MainController {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
+        // set callbacks and ensure that they are really called at least once initially
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
+        repositoryManager.triggerCallbacks();
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
     }
@@ -124,7 +126,7 @@ public class MainController {
                 List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
+                    cssBuilder.append("#" + category.getId().toLowerCase().replace(".", "-") + "-button{\n");
                     URI categoryIcon = category.getIcon();
                     if (categoryIcon == null) {
                         cssBuilder
