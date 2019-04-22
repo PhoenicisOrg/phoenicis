@@ -10,7 +10,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link InstallationsSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link InstallationSidebar}
  */
 public class InstallationsSidebarToggleGroupSkin extends
         SidebarToggleGroupBaseSkin<InstallationCategoryDTO, InstallationsSidebarToggleGroup, InstallationsSidebarToggleGroupSkin> {
@@ -30,7 +30,7 @@ public class InstallationsSidebarToggleGroupSkin extends
     protected Optional<ToggleButton> createAllButton() {
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
-        allCategoryButton.setId("allButton");
+        allCategoryButton.setId("all-button");
         allCategoryButton.setOnMouseClicked(event -> getControl().setNothingSelected());
 
         return Optional.of(allCategoryButton);
@@ -43,7 +43,7 @@ public class InstallationsSidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(InstallationCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%s-button", category.getId().toLowerCase().replace('.', '-')));
+        categoryButton.setId(SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()));
         categoryButton.setOnMouseClicked(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

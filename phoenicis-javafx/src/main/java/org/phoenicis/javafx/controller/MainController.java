@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
@@ -126,7 +127,7 @@ public class MainController {
                 List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + category.getId().toLowerCase().replace(".", "-") + "-button{\n");
+                    cssBuilder.append("#" + SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()) + "{\n");
                     URI categoryIcon = category.getIcon();
                     if (categoryIcon == null) {
                         cssBuilder

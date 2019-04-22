@@ -70,7 +70,7 @@ public class EnginesController {
         this.enginesView.setOnSelectEngineCategory(engineCategoryDTO -> {
             // TODO: better way to get engine ID
             final String engineId = engineCategoryDTO.getName().toLowerCase();
-            // only if not chached
+            // only if not cached
             if (!this.versionsCache.containsKey(engineId)) {
                 this.enginesManager.fetchAvailableVersions(engineId,
                         versions -> {
