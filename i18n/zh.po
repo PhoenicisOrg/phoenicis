@@ -2,18 +2,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 21:01+0000\n"
-"PO-Revision-Date: 2019-03-22 21:03\n"
-"Last-Translator: plata <plata@mailbox.org>\n"
-"Language-Team: Chinese Traditional\n"
-"Language: zh_TW\n"
+"POT-Creation-Date: 2019-04-22 11:31+0000\n"
+"PO-Revision-Date: 2019-04-22 12:42\n"
+"Last-Translator: plata\n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: phoenicis\n"
-"X-Crowdin-Language: zh-TW\n"
+"X-Crowdin-Language: zh-CN\n"
 "X-Crowdin-File: /master/i18n/keys.pot\n"
 
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Loading engine tools failed."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:96
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr ""
