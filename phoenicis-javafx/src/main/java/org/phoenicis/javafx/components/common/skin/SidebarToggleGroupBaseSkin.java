@@ -114,4 +114,14 @@ public abstract class SidebarToggleGroupBaseSkin<E, C extends SidebarToggleGroup
     public ToggleGroup getToggleGroup() {
         return toggleGroup;
     }
+
+    /**
+     * Creates a button ID which can be used e.g. to assign icons via CSS based on the category ID
+     *
+     * @param categoryId The category ID which should be used
+     * @return The created button ID
+     */
+    public static String getToggleButtonId(String categoryId) {
+        return String.format("%s-button", categoryId.toLowerCase().replace('.', '-'));
+    }
 }
