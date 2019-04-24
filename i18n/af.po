@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 21:01+0000\n"
-"PO-Revision-Date: 2019-03-28 07:32\n"
-"Last-Translator: plata <plata@mailbox.org>\n"
+"POT-Creation-Date: 2019-04-22 11:31+0000\n"
+"PO-Revision-Date: 2019-04-24 07:33\n"
+"Last-Translator: plata\n"
 "Language-Team: Afrikaans\n"
 "Language: af_ZA\n"
 "MIME-Version: 1.0\n"
@@ -260,7 +260,7 @@ msgstr ""
 msgid "Loading engine tools failed."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:96
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr ""
