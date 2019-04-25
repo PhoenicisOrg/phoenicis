@@ -30,6 +30,8 @@ cd phoenicis-javafx/
 mvn exec:java
 ```
 
+For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+
 ## Build and Run in Online IDE
 
 You can get a complete Phoenicis development setup with Gitpod, a free one-click online IDE for GitHub:
