@@ -121,7 +121,7 @@
         <dependency>
             <groupId>org.testfx</groupId>
             <artifactId>openjfx-monocle</artifactId>
-            <version>jdk-11+23</version>
+            <version>jdk-12.0.1+2</version>
             <scope>test</scope>
         </dependency>
         <dependency>
