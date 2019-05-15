@@ -13,7 +13,7 @@ sudo apt update
 sudo apt install git maven openjdk-11-jdk fakeroot
 ```
 
-* Optional: if your distribution does not support Java 10+ **or** if you need to create packages, grab the latest JDK 
+* Optional: if your distribution does not support Java 11+ **or** if you need to create packages, grab the latest JDK 
 ```
  wget https://download.java.net/java/GA/jdk11/13/GPL/openjdk-11.0.1_linux-x64_bin.tar.gz -O /tmp/openjdk-11+28_linux-x64_bin.tar.gz
  sudo tar xfvz /tmp/openjdk-11+28_linux-x64_bin.tar.gz --directory /usr/lib/jvm
@@ -135,5 +135,4 @@ Problem:
 Exception in thread "main" java.lang.UnsupportedClassVersionError: org/phoenicis/javafx/JavaFXApplication : Unsupported major.minor version
 ```
 Solution:
-Switch to at least Java 10 for running locally (see: these [instructions](https://wiki.archlinux.org/index.php/java#Switching_between_JVM))
-Switch to at least Java 11 for creating packages
+Switch to at least Java 11 for running locally (see: these [instructions](https://wiki.archlinux.org/index.php/java#Switching_between_JVM))
