@@ -16,7 +16,7 @@ Supported engines:
 
 ## Build and Run locally
 Dependencies:
-* Java 10+
+* Java 11+
 * Maven
 
 Build
