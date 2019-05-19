@@ -224,8 +224,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>1.10</source>
-                    <target>1.10</target>
+                    <release>11</release>
                 </configuration>
             </plugin>
             <plugin>
@@ -233,7 +232,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
-                    <forkCount>0</forkCount>
+                    <argLine>--add-exports javafx.graphics/com.sun.javafx.application=org.testfx</argLine>
                 </configuration>
             </plugin>
         </plugins>
