@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-22 21:01+0000\n"
+"POT-Creation-Date: 2019-04-22 11:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -261,7 +261,7 @@ msgstr ""
 msgid "Loading engine tools failed."
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:96
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr ""

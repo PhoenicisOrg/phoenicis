@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
@@ -79,8 +80,10 @@ public class MainController {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
+        // set callbacks and ensure that they are really called at least once initially
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
+        repositoryManager.triggerCallbacks();
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
     }
@@ -124,7 +127,7 @@ public class MainController {
                 List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
+                    cssBuilder.append("#" + SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()) + "{\n");
                     URI categoryIcon = category.getIcon();
                     if (categoryIcon == null) {
                         cssBuilder

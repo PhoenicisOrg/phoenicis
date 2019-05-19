@@ -14,7 +14,7 @@ Supported engines:
 
 ------------
 
-## Build and Run
+## Build and Run locally
 Dependencies:
 * Java 11+
 * Maven
@@ -31,6 +31,12 @@ mvn exec:java
 ```
 
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+
+## Build and Run in Online IDE
+
+You can get a complete Phoenicis development setup with Gitpod, a free one-click online IDE for GitHub:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/PhoenicisOrg/phoenicis)
 
 ## Scripts
 To add or update scripts, please make pull requests to this repository: https://github.com/PhoenicisOrg/scripts
