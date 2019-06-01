@@ -52,7 +52,7 @@
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <excludeArtifactIds>commons-logging, xml-apis, xmlParserAPIs, xercesImpl</excludeArtifactIds>
+                            <excludeArtifactIds>bcprov-jdk16, bcmail-jdk16, bcpg-jdk16, commons-logging, xml-apis, xmlParserAPIs, xercesImpl</excludeArtifactIds>
                         </configuration>
                     </execution>
                 </executions>
