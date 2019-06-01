@@ -49,16 +49,19 @@ public class ApplicationDTO {
     private final List<ScriptDTO> scripts;
     private final List<ResourceDTO> resources;
 
+    private static final String ID_REGEX = "^[a-zA-Z0-9_.]+$";
+    private static final String INVALID_ID_CHARS_REGEX = "[^a-zA-Z0-9_.]";
+
     private ApplicationDTO(Builder builder) {
         this.typeId = builder.typeId;
         this.categoryId = builder.categoryId;
         if (builder.id != null) {
-            if (builder.id.matches("^[a-zA-Z0-9_]+$")) {
+            if (builder.id.matches(ID_REGEX)) {
                 this.id = builder.id;
             } else {
                 LOGGER.warn(String.format("Application ID (%s) contains invalid characters, will remove them.",
                         builder.id));
-                this.id = builder.id.replaceAll("[^a-zA-Z0-9_]", "");
+                this.id = builder.id.replaceAll(INVALID_ID_CHARS_REGEX, "");
             }
         } else {
             this.id = null;

@@ -1,0 +1,15 @@
+image:
+  file: .gitpod.dockerfile
+ports:
+  - port: 6080
+    onOpen: open-preview
+  - port: 5900
+    onOpen: ignore
+  - port: 3343
+    onOpen: ignore
+tasks:
+- init: >
+    mvn install
+  command: >
+    cd phoenicis-javafx/ &&
+    mvn exec:java

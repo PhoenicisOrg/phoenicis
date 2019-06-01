@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -49,7 +50,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.fileUtilities = fileUtilities;
 
         this.repositoryMap = new HashMap<>();
-        this.callbacks = new ArrayList<>();
+        this.callbacks = new CopyOnWriteArrayList<>();
 
         this.multipleRepository = new MultipleRepository();
         this.cachedRepository = new CachedRepository(multipleRepository);
@@ -57,7 +58,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError) {
+    public synchronized void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError) {
         this.callbacks.add(new CallbackPair(onRepositoryChange, onError));
     }
 
@@ -72,6 +73,11 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
+    public ScriptDTO getScript(String id) {
+        return this.cachedRepository.getScript(id);
+    }
+
+    @Override
     public void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex) {
         LOGGER.info(String.format("Move repository: %s to %d", repositoryUrl, toIndex));
 
@@ -81,7 +87,42 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
+    public synchronized void updateRepositories(
+            final List<RepositoryLocation<? extends Repository>> repositoryLocations) {
+        LOGGER.info(String.format("Updating repositories list to %s", repositoryLocations.toString()));
+
+        final Map<RepositoryLocation<? extends Repository>, Repository> copy = new HashMap<>(this.repositoryMap);
+
+        // delete the old repositories
+        copy.forEach((repositoryLocation, repository) -> {
+            this.multipleRepository.removeRepository(repository);
+
+            if (!repositoryLocations.contains(repositoryLocation)) {
+                this.repositoryMap.remove(repositoryLocation);
+
+                repository.onDelete();
+            }
+        });
+
+        // add the new repositories
+        repositoryLocations.forEach(repositoryLocation -> {
+            if (!this.repositoryMap.containsKey(repositoryLocation)) {
+                final Repository repository = repositoryLocation.createRepository(cacheDirectoryPath,
+                        localRepositoryFactory,
+                        classPathRepositoryFactory, fileUtilities);
+
+                this.repositoryMap.put(repositoryLocation, repository);
+            }
+
+            this.multipleRepository.addRepository(this.repositoryMap.get(repositoryLocation));
+        });
+
+        // trigger a repository changed event
+        this.triggerRepositoryChange();
+    }
+
+    @Override
+    public synchronized void addRepositories(int index, RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
 
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
@@ -97,12 +138,12 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void addRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
+    public synchronized void addRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         this.addRepositories(this.multipleRepository.size(), repositoryUrls);
     }
 
     @Override
-    public void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
+    public synchronized void removeRepositories(RepositoryLocation<? extends Repository>... repositoryUrls) {
         LOGGER.info(String.format("Removing repositories: %s", Arrays.toString(repositoryUrls)));
 
         for (RepositoryLocation<? extends Repository> repositoryLocation : repositoryUrls) {
@@ -119,13 +160,13 @@ public class DefaultRepositoryManager implements RepositoryManager {
     }
 
     @Override
-    public void triggerRepositoryChange() {
+    public synchronized void triggerRepositoryChange() {
         this.cachedRepository.clearCache();
         triggerCallbacks();
     }
 
     @Override
-    public void triggerCallbacks() {
+    public synchronized void triggerCallbacks() {
         if (!this.callbacks.isEmpty()) {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
                 this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));

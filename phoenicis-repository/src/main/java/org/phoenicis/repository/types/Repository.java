@@ -54,6 +54,14 @@ public interface Repository {
     }
 
     /**
+     * fetches the RepositoryDTO
+     * @return RepositoryDTO
+     */
+    default RepositoryDTO getRepository() {
+        return fetchInstallableApplications();
+    }
+
+    /**
      * fetches the TypeDTO for a given path (e.g. ["Applications"])
      * @param path path in the JS namespace
      * @return TypeDTO
@@ -132,6 +140,28 @@ public interface Repository {
         }
 
         LOGGER.error(String.format("Could not find ScriptDTO with ID \"%s\"", wantedId));
+        return null;
+    }
+
+    /**
+     * fetches the ScriptDTO for a given ID (e.g. "applications.development.notepadplusplus.online")
+     * @param id script ID
+     * @return ScriptDTO
+     */
+    default ScriptDTO getScript(String id) {
+        RepositoryDTO repositoryDTO = getRepository();
+
+        for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
+            for (CategoryDTO categoryDTO : typeDTO.getCategories()) {
+                for (ApplicationDTO applicationDTO : categoryDTO.getApplications()) {
+                    for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
+                        if (id.equals(scriptDTO.getId())) {
+                            return scriptDTO;
+                        }
+                    }
+                }
+            }
+        }
         return null;
     }
 

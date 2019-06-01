@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-java --module-path /usr/share/phoenicis-playonlinux -m org.phoenicis.javafx/org.phoenicis.javafx.JavaFXApplication

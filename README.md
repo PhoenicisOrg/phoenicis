@@ -14,37 +14,36 @@ Supported engines:
 
 ------------
 
-## Build and Run
-### Linux
+## Build and Run locally
+Dependencies:
+* Java 11+
+* Maven
+
 Build
 ```
 mvn clean package
 ```
 Run
 ```
-cd phoenicis-dist/target
-unzip phoenicis-dist.zip
-./phoenicis-dist/phoenicis.sh
-```
-
-### OSX
-Build
-```
-mvn clean package install
-```
-Run
-```
-cd phoenicis-javafx
-mvn jfx:native
+mvn install
+cd phoenicis-javafx/
+mvn exec:java
 ```
 
 For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+
+## Build and Run in Online IDE
+
+You can get a complete Phoenicis development setup with Gitpod, a free one-click online IDE for GitHub:
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/PhoenicisOrg/phoenicis)
 
 ## Scripts
 To add or update scripts, please make pull requests to this repository: https://github.com/PhoenicisOrg/scripts
 
 ## Translate
 Phoenicis is localized using Crowdin: https://crowdin.com/project/phoenicis
+If your language is not listed, please create an [issue](https://github.com/PhoenicisOrg/phoenicis/issues).
 
 ## Community
 * Issues or ideas: https://github.com/PhoenicisOrg/phoenicis/issues

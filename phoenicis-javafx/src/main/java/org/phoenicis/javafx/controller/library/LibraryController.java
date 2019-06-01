@@ -19,204 +19,56 @@
 package org.phoenicis.javafx.controller.library;
 
 import javafx.application.Platform;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
-import org.phoenicis.javafx.controller.library.console.ConsoleController;
-import org.phoenicis.javafx.dialogs.ConfirmDialog;
+import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.mainwindow.library.LibraryView;
 import org.phoenicis.library.LibraryManager;
-import org.phoenicis.library.ShortcutManager;
-import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
-import org.phoenicis.library.dto.ShortcutCreationDTO;
-import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class LibraryController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(LibraryController.class);
-    @Value("${application.user.containers}")
-    private String containersPath;
-
-    private final LibraryView libraryView;
+    private final LibraryFeaturePanel libraryView;
     private final LibraryManager libraryManager;
-    private final ShortcutRunner shortcutRunner;
-    private final ShortcutManager shortcutManager;
-    private final ScriptInterpreter scriptInterpreter;
-    private final RepositoryManager repositoryManager;
 
-    private boolean firstViewSelection = true;
+    public LibraryController(LibraryFeaturePanel libraryView, LibraryManager libraryManager,
+            RepositoryManager repositoryManager) {
+        super();
 
-    public LibraryController(LibraryView libraryView, ConsoleController consoleController,
-            LibraryManager libraryManager, ShortcutRunner shortcutRunner, ShortcutManager shortcutManager,
-            ScriptInterpreter scriptInterpreter, RepositoryManager repositoryManager) {
         this.libraryView = libraryView;
         this.libraryManager = libraryManager;
-        this.shortcutRunner = shortcutRunner;
-        this.shortcutManager = shortcutManager;
-        this.scriptInterpreter = scriptInterpreter;
-        this.repositoryManager = repositoryManager;
 
-        libraryManager.setOnUpdate(this::updateLibrary);
+        this.libraryManager.setOnUpdate(this::populate);
 
-        this.libraryView.setOnShortcutCreate(this::createShortcut);
-        this.libraryView.setOnShortcutRun(this::runShortcut);
-        this.libraryView.setOnShortcutDoubleClicked(this::runShortcut);
-        this.libraryView.setOnShortcutStop(
-                shortcutDTO -> shortcutRunner.stop(shortcutDTO, e -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Error"))
-                            .withException(e)
-                            .withOwner(this.libraryView.getContent().getScene().getWindow())
-                            .build();
-
-                    errorDialog.showAndWait();
-                }));
-
-        this.libraryView.setOnShortcutUninstall(shortcutDTO -> {
-            final String shortcutName = shortcutDTO.getInfo().getName();
-
-            final ConfirmDialog confirmMessage = ConfirmDialog.builder()
-                    .withTitle(tr("Uninstall {0}", shortcutName))
-                    .withMessage(tr("Are you sure you want to uninstall {0}?", shortcutName))
-                    .withOwner(libraryView.getContent().getScene().getWindow())
-                    .withResizable(true)
-                    .withYesCallback(() -> shortcutManager.uninstallFromShortcut(shortcutDTO, e -> {
-                        final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("Error while uninstalling {0}", shortcutName))
-                                .withException(e)
-                                .withOwner(this.libraryView.getContent().getScene().getWindow())
-                                .build();
-
-                        errorDialog.showAndWait();
-                    }))
-                    .build();
-
-            confirmMessage.showAndCallback();
-        });
-
-        this.libraryView.setOnShortcutChanged(shortcutDTO -> this.shortcutManager.updateShortcut(shortcutDTO));
-
-        this.libraryView.setOnOpenConsole(() -> {
-            libraryView.createNewTab(consoleController.createConsole());
-        });
-
-        this.libraryView.setOnScriptRun(file -> {
-            scriptInterpreter.runScript(file, e -> Platform.runLater(() -> {
-                final ErrorDialog errorDialog = ErrorDialog.builder()
-                        .withMessage(tr("Error while running script"))
-                        .withException(e)
-                        .withOwner(this.libraryView.getContent().getScene().getWindow())
-                        .build();
-
-                errorDialog.showAndWait();
-            }));
-        });
-
-        this.libraryView.setOnSelectionChanged(event -> {
-            if (this.libraryView.isSelected() && this.firstViewSelection) {
-                this.repositoryManager.addCallbacks(this::updateLibrary, e -> {
-                });
-                this.repositoryManager.triggerCallbacks();
-                this.firstViewSelection = false;
-            }
-        });
+        repositoryManager.addCallbacks(repository -> this.populate(), this::showError);
+        repositoryManager.triggerCallbacks();
     }
 
-    /**
-     * creates a new shortcut
-     *
-     * @param shortcutCreationDTO DTO describing the new shortcut
-     */
-    private void createShortcut(ShortcutCreationDTO shortcutCreationDTO) {
-        // get container
-        // TODO: smarter way using container manager
-        final String executablePath = shortcutCreationDTO.getExecutable().getAbsolutePath();
-        final String pathInContainers = executablePath.replace(containersPath, "");
-        final String[] split = pathInContainers.split("/");
-        final String engineContainer = split[0];
-        final String engine = (Character.toUpperCase(engineContainer.charAt(0)) + engineContainer.substring(1))
-                .replace("prefix", "");
-        // TODO: better way to get engine ID
-        final String engineId = engine.toLowerCase();
-        final String container = split[1];
-
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"" + engineId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()", output -> {
-                    final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
-                    shortcutObject.callMember("name", shortcutCreationDTO.getName());
-                    shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
-                    shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
-                    shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
-                    shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
-                    shortcutObject.callMember("prefix", container);
-                    shortcutObject.callMember("create");
-                }, e -> this.showErrorMessage(e, tr("Error while creating shortcut"))),
-                e -> this.showErrorMessage(e, tr("Error while creating shortcut")));
-    }
-
-    private void runShortcut(ShortcutDTO shortcutDTO) {
-        shortcutRunner.run(shortcutDTO, Collections.emptyList(), e -> Platform.runLater(() -> {
-            final ErrorDialog errorDialog = ErrorDialog.builder()
-                    .withMessage(tr("Error"))
-                    .withException(e)
-                    .withOwner(this.libraryView.getContent().getScene().getWindow())
-                    .build();
-
-            errorDialog.showAndWait();
-        }));
-    }
-
-    /**
-     * shows an error message
-     *
-     * @param e exception that caused the error
-     * @param message error message
-     */
-    private void showErrorMessage(Exception e, String message) {
-        Platform.runLater(() -> {
-            final ErrorDialog errorDialog = ErrorDialog.builder()
-                    .withMessage(message)
-                    .withException(e)
-                    .withOwner(this.libraryView.getContent().getScene().getWindow())
-                    .build();
-
-            errorDialog.showAndWait();
-        });
-    }
-
-    public void setOnTabOpened(Runnable onTabOpened) {
-        this.libraryView.setOnTabOpened(onTabOpened);
-    }
-
-    /**
-     * update library with translations from repository
-     *
-     * @param repositoryDTO
-     */
-    public void updateLibrary(RepositoryDTO repositoryDTO) {
-        this.updateLibrary();
-    }
-
-    public void updateLibrary() {
+    private void populate() {
         final List<ShortcutCategoryDTO> categories = libraryManager.fetchShortcuts();
 
-        Platform.runLater(() -> this.libraryView.populate(categories));
+        Platform.runLater(() -> {
+            getView().getCategories().setAll(categories);
+
+            getView().setInitialized(true);
+        });
     }
 
-    public LibraryView getView() {
+    private void showError(Exception e) {
+        Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withOwner(getView().getScene().getWindow())
+                    .withException(e)
+                    .withMessage(tr("Unable to load library, please try again."))
+                    .build();
+
+            errorDialog.showAndWait();
+        });
+    }
+
+    public LibraryFeaturePanel getView() {
         return libraryView;
     }
 }

@@ -18,7 +18,10 @@
 
 package org.phoenicis.scripts.wizard;
 
-public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard {
+/**
+ * SetupWizard suitable to install a wine program
+ */
+public interface WineWizard extends ChoiceWizard, ProgressWizard, LogWizard, BrowserWizard {
     @Override
     void close();
 }
