@@ -35,7 +35,7 @@ PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
 PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
 PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,org.graalvm.truffle"
-PHOENICIS_RUNTIME_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=../Java/compiler.jar"
+PHOENICIS_RUNTIME_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI"
 PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION" "--jvm-args" "$PHOENICIS_RUNTIME_OPTIONS")
 
 _download_jpackager() {
