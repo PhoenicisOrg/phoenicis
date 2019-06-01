@@ -42,6 +42,7 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
         this.errorHandlers = new ArrayList<>();
         this.language = language;
         this.context = Context.newBuilder(language)
+                .allowExperimentalOptions(true)
                 .options(options).allowHostAccess(true).build();
     }
 
