@@ -30,7 +30,7 @@ fi
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     PHOENICIS_APPTITLE="Phoenicis PlayOnLinux"
     JPACKAGER_OS="linux"
-    JAR_RELATIVE_PATH="./app"
+    JAR_RELATIVE_PATH="/usr/share/phoenicis/app"
 fi
 
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
