@@ -1,16 +1,15 @@
 package org.phoenicis.javafx.components.container.control;
 
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.container.skin.ContainerEngineToolsPanelSkin;
+import org.phoenicis.javafx.utils.CollectionBindings;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
@@ -45,51 +44,16 @@ public class ContainerEngineToolsPanel extends ControlBase<ContainerEngineToolsP
 
     /**
      * Constructor
-     *
-     * @param container The container
-     * @param engineTools The application containing the tool scripts
-     * @param engineToolsManager The engine tools manager
-     * @param lockTools A boolean signifying whether all tool buttons should be locked
-     */
-    public ContainerEngineToolsPanel(ObjectProperty<ContainerDTO> container, ObjectProperty<ApplicationDTO> engineTools,
-            ObjectProperty<EngineToolsManager> engineToolsManager, BooleanProperty lockTools) {
-        super();
-
-        this.container = container;
-        this.engineTools = engineTools;
-        this.engineToolsManager = engineToolsManager;
-        this.lockTools = lockTools;
-
-        this.engineToolScripts = createEngineToolScripts();
-    }
-
-    /**
-     * Constructor
      */
     public ContainerEngineToolsPanel() {
-        this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
-                new SimpleBooleanProperty());
-    }
+        super();
 
-    /**
-     * Creates an {@link ObservableList} containing all tool {@link ScriptDTO}s contained in <code>engineTools</code>
-     *
-     * @return An {@link ObservableList} containing all tool {@link ScriptDTO}s contained in <code>engineTools</code>
-     */
-    private ObservableList<ScriptDTO> createEngineToolScripts() {
-        final ObservableList<ScriptDTO> engineToolScripts = FXCollections.observableArrayList();
+        this.container = new SimpleObjectProperty<>();
+        this.engineTools = new SimpleObjectProperty<>();
+        this.engineToolsManager = new SimpleObjectProperty<>();
+        this.lockTools = new SimpleBooleanProperty();
 
-        engineTools.addListener((Observable invalidation) -> {
-            final ApplicationDTO engineTools = getEngineTools();
-
-            if (engineTools != null) {
-                engineToolScripts.setAll(engineTools.getScripts());
-            } else {
-                engineToolScripts.clear();
-            }
-        });
-
-        return engineToolScripts;
+        this.engineToolScripts = CollectionBindings.mapToList(engineToolsProperty(), ApplicationDTO::getScripts);
     }
 
     /**

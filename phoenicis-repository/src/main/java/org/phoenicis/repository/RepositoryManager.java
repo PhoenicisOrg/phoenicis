@@ -43,6 +43,14 @@ public interface RepositoryManager {
     ScriptDTO getScript(List<String> path);
 
     /**
+     * This method returns the {@link org.phoenicis.repository.dto.ScriptDTO} with the given ID
+     *
+     * @param id The script ID
+     * @return The found ScriptDTO
+     */
+    ScriptDTO getScript(String id);
+
+    /**
      * This method moves the repository, belonging to the given repository url, to the given index.
      * This is done by swapping the current content at the given index with old index of the given repository url
      * After this method has been called {@link #triggerRepositoryChange()} will be called once.
@@ -51,6 +59,13 @@ public interface RepositoryManager {
      * @param toIndex The index, to which the repository should be moved
      */
     void moveRepository(RepositoryLocation<? extends Repository> repositoryUrl, int toIndex);
+
+    /**
+     * This method updates the repositories list maintained by this {@link RepositoryManager}
+     *
+     * @param repositoryLocations The new repository locations
+     */
+    void updateRepositories(final List<RepositoryLocation<? extends Repository>> repositoryLocations);
 
     /**
      * This method adds a number of given repositories to this manager. This is done by inserting the repositories at

@@ -25,12 +25,6 @@ jobs:
 
     # build + test
     - stage: Build + test
-      name: Linux OpenJDK 10
-      os: linux
-      dist: trusty
-      jdk: openjdk10
-      script: mvn clean package
-    - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
       dist: trusty

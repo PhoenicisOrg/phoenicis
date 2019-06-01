@@ -19,67 +19,49 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
+import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
-    private final ApplicationsView view;
-    private final RepositoryManager repositoryManager;
+    private final ApplicationsFeaturePanel view;
 
-    private boolean firstViewSelection = true;
-
-    private Runnable onAppLoaded = () -> {
-    };
-
-    public AppsController(ApplicationsView view, RepositoryManager repositoryManager) {
+    public AppsController(ApplicationsFeaturePanel view, RepositoryManager repositoryManager) {
         this.view = view;
-        this.repositoryManager = repositoryManager;
 
-        this.view.setOnSelectionChanged(event -> {
-            if (this.view.isSelected() && this.firstViewSelection) {
-                this.repositoryManager.addCallbacks(this::populateView,
-                        e -> Platform.runLater(() -> view.showFailure(
-                                tr("Connecting to the repository failed.\nPlease check your connection and try again."),
-                                Optional.of(e))));
-
-                loadApps();
-
-                this.firstViewSelection = false;
-            }
-        });
+        repositoryManager.addCallbacks(this::populate, this::showError);
     }
 
-    private void loadApps() {
-        this.view.showWait();
-        this.repositoryManager.triggerCallbacks();
-
-        this.view.setOnRetryButtonClicked(event -> {
-            this.view.showWait();
-            this.repositoryManager.triggerRepositoryChange();
-        });
-
-        onAppLoaded.run();
-    }
-
-    public void setOnAppLoaded(Runnable onAppLoaded) {
-        this.onAppLoaded = onAppLoaded;
-    }
-
-    public ApplicationsView getView() {
+    public ApplicationsFeaturePanel getView() {
         return view;
     }
 
-    private void populateView(RepositoryDTO repositoryDTO) {
+    private void populate(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
-            List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
-            this.view.populate(categoryDTOS);
+            final List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
+
+            getView().getCategories().setAll(categoryDTOS);
+
+            getView().setInitialized(true);
+        });
+    }
+
+    private void showError(Exception e) {
+        Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withOwner(view.getScene().getWindow())
+                    .withException(e)
+                    .withMessage(
+                            tr("Connecting to the repository failed.\nPlease check your connection and try again."))
+                    .build();
+
+            errorDialog.showAndWait();
         });
     }
 }
