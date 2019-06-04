@@ -34,6 +34,16 @@ jobs:
       os: linux
       dist: trusty
       jdk: oraclejdk11
+    - stage: Build + test
+      name: Linux OpenJDK 12
+      os: linux
+      dist: trusty
+      jdk: openjdk12
+    - stage: Build + test
+      name: Linux Oracle JDK 12
+      os: linux
+      dist: trusty
+      jdk: oraclejdk12
 
     # packages
     - stage: Packages
