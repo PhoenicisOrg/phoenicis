@@ -30,17 +30,17 @@ jobs:
       dist: trusty
       jdk: openjdk11
     - stage: Build + test
-      name: Linux Oracle JDK 11
+      name: Linux OpenJDK 12
       os: linux
       dist: trusty
-      jdk: oraclejdk11
+      jdk: openjdk12
 
     # packages
     - stage: Packages
       name: Flatpak
       os: linux
       dist: xenial
-      jdk: openjdk11
+      jdk: openjdk12
       before_install:
         - sudo add-apt-repository ppa:alexlarsson/flatpak -y
         - sudo apt-get update -q
@@ -50,7 +50,7 @@ jobs:
         - flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
         - flatpak --user -y install flathub org.freedesktop.Platform/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/18.08
-        - flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/18.08
+        - flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/18.08
         - flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-410-73/x86_64/1.4
         - cd phoenicis-dist/src/flatpak/
