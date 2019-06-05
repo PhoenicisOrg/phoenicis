@@ -174,6 +174,7 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         containerInformationPanel.engineToolsManagerProperty().bind(getControl().engineToolsManagerProperty());
 
         containerInformationPanel.setOnDeleteContainer(getControl()::deleteContainer);
+        containerInformationPanel.setOnChangeEngine(getControl()::changeEngineVersion);
         containerInformationPanel.setOnOpenFileBrowser(getControl()::openFileBrowser);
 
         getControl().getEngineSettings()

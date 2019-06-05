@@ -70,11 +70,15 @@ public class ContainerOverviewPanelSkin extends SkinBase<ContainerOverviewPanel,
         deleteButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnDeleteContainer())
                 .ifPresent(onDeleteContainer -> onDeleteContainer.accept(getControl().getContainer())));
 
+        final Button changeEngineButton = new Button(tr("Change engine version"));
+        changeEngineButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnChangeEngine())
+                .ifPresent(onChangeEngine -> onChangeEngine.accept(getControl().getContainer())));
+
         final Button openFileBrowserButton = new Button(tr("Open in file browser"));
         openFileBrowserButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnOpenFileBrowser())
                 .ifPresent(onOpenFileBrowser -> onOpenFileBrowser.accept(getControl().getContainer())));
 
-        return new HBox(deleteButton, openFileBrowserButton);
+        return new HBox(deleteButton, changeEngineButton, openFileBrowserButton);
     }
 
     /**

@@ -68,6 +68,11 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
     private final ObjectProperty<Consumer<ContainerDTO>> onDeleteContainer;
 
     /**
+     * Callback method for when the engine version of the container should be changed
+     */
+    private final ObjectProperty<Consumer<ContainerDTO>> onChangeEngine;
+
+    /**
      * Callback method for when the folder containing the container should be openend in a file browser
      */
     private final ObjectProperty<Consumer<ContainerDTO>> onOpenFileBrowser;
@@ -86,6 +91,7 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
         this.engineToolsManager = new SimpleObjectProperty<>();
         this.engineTools = new SimpleObjectProperty<>();
         this.onDeleteContainer = new SimpleObjectProperty<>();
+        this.onChangeEngine = new SimpleObjectProperty<>();
         this.onOpenFileBrowser = new SimpleObjectProperty<>();
     }
 
@@ -183,6 +189,18 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
 
     public void setOnDeleteContainer(Consumer<ContainerDTO> onDeleteContainer) {
         this.onDeleteContainer.set(onDeleteContainer);
+    }
+
+    public Consumer<ContainerDTO> getOnChangeEngine() {
+        return this.onChangeEngine.get();
+    }
+
+    public ObjectProperty<Consumer<ContainerDTO>> onChangeEngineProperty() {
+        return this.onChangeEngine;
+    }
+
+    public void setOnChangeEngine(Consumer<ContainerDTO> onChangeEngine) {
+        this.onChangeEngine.set(onChangeEngine);
     }
 
     public Consumer<ContainerDTO> getOnOpenFileBrowser() {
