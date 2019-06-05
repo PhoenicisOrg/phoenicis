@@ -15,7 +15,8 @@ Build phoenicis (root) → Lifecycle → package
 ### Run
 Run → Edit Configurations
 add: JavaFXApplication with:
-* main class: org.phoenicis.javafx.JavaFXApplication
+* Name: `JavaFXApplication`
+* Main class: `org.phoenicis.javafx.JavaFXApplication`
 * VM options: 
 ```
 --add-modules=ALL-MODULE-PATH --module-path=phoenicis-dist/target/lib
@@ -24,7 +25,15 @@ add: JavaFXApplication with:
 ```
 --add-modules=ALL-MODULE-PATH --module-path phoenicis-dist/target/lib
 ```
-![IntelliJ IDEA configuration](/images/intellij-idea-run.png)
+* Program arguments: empty
+* Working directory: `/path/to/phoenicis`
+* Environment variables: empty
+* Redirect input from: unchecked
+* Use classpath of module: `phoenicis-dist`
+* Include dependencis with "Provided" scope: unchecked
+* JRE: `Default`
+* Shorten command line: `user-local: none - java [options]`
+* Enable capturing form snapshots: unchecked
 
 ### Code Style
 File → Settings → Editor → Code Style → Scheme: Manage... → Import → Eclipse XML Profile: select [settings/POL_Formatter_Settings.xml](https://github.com/PhoenicisOrg/phoenicis/blob/master/settings/POL_Formatter_Settings.xml)
