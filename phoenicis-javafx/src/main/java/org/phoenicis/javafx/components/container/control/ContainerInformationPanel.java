@@ -4,10 +4,10 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.container.skin.ContainerInformationPanelSkin;
@@ -33,14 +33,14 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
     private final ObjectProperty<ContainerDTO> container;
 
     /**
-     * The container engine controller
-     */
-    private final ObjectProperty<ContainerEngineController> containerEngineController;
-
-    /**
      * The engine settings
      */
     private final ObservableList<EngineSetting> engineSettings;
+
+    /**
+     * The verbs manager
+     */
+    private final ObjectProperty<EnginesManager> enginesManager;
 
     /**
      * The verbs manager
@@ -70,7 +70,7 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
     /**
      * Callback method for when the engine version of the container should be changed
      */
-    private final ObjectProperty<Consumer<ContainerDTO>> onChangeEngine;
+    private final ObjectProperty<Consumer<ContainerDTO>> onChangeEngineVersion;
 
     /**
      * Callback method for when the folder containing the container should be openend in a file browser
@@ -84,14 +84,14 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
         super();
 
         this.container = new SimpleObjectProperty<>();
-        this.containerEngineController = new SimpleObjectProperty<>();
         this.engineSettings = FXCollections.observableArrayList();
+        this.enginesManager = new SimpleObjectProperty<>();
         this.verbsManager = new SimpleObjectProperty<>();
         this.verbs = new SimpleObjectProperty<>();
         this.engineToolsManager = new SimpleObjectProperty<>();
         this.engineTools = new SimpleObjectProperty<>();
         this.onDeleteContainer = new SimpleObjectProperty<>();
-        this.onChangeEngine = new SimpleObjectProperty<>();
+        this.onChangeEngineVersion = new SimpleObjectProperty<>();
         this.onOpenFileBrowser = new SimpleObjectProperty<>();
     }
 
@@ -115,20 +115,20 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
         this.container.set(container);
     }
 
-    public ContainerEngineController getContainerEngineController() {
-        return this.containerEngineController.get();
-    }
-
-    public ObjectProperty<ContainerEngineController> containerEngineControllerProperty() {
-        return this.containerEngineController;
-    }
-
-    public void setContainerEngineController(ContainerEngineController containerEngineController) {
-        this.containerEngineController.set(containerEngineController);
-    }
-
     public ObservableList<EngineSetting> getEngineSettings() {
         return this.engineSettings;
+    }
+
+    public EnginesManager getEnginesManager() {
+        return this.enginesManager.get();
+    }
+
+    public ObjectProperty<EnginesManager> enginesManagerProperty() {
+        return this.enginesManager;
+    }
+
+    public void setEnginesManager(EnginesManager enginesManager) {
+        this.enginesManager.set(enginesManager);
     }
 
     public VerbsManager getVerbsManager() {
@@ -191,16 +191,16 @@ public class ContainerInformationPanel extends ControlBase<ContainerInformationP
         this.onDeleteContainer.set(onDeleteContainer);
     }
 
-    public Consumer<ContainerDTO> getOnChangeEngine() {
-        return this.onChangeEngine.get();
+    public Consumer<ContainerDTO> getOnChangeEngineVersion() {
+        return this.onChangeEngineVersion.get();
     }
 
-    public ObjectProperty<Consumer<ContainerDTO>> onChangeEngineProperty() {
-        return this.onChangeEngine;
+    public ObjectProperty<Consumer<ContainerDTO>> onChangeEngineVersionProperty() {
+        return this.onChangeEngineVersion;
     }
 
-    public void setOnChangeEngine(Consumer<ContainerDTO> onChangeEngine) {
-        this.onChangeEngine.set(onChangeEngine);
+    public void setOnChangeEngineVersion(Consumer<ContainerDTO> onChangeEngineVersion) {
+        this.onChangeEngineVersion.set(onChangeEngineVersion);
     }
 
     public Consumer<ContainerDTO> getOnOpenFileBrowser() {

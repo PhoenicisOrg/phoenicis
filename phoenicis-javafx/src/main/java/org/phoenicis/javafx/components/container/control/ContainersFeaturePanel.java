@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -54,12 +53,6 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     private final ObjectProperty<ContainersManager> containersManager;
 
     /**
-     * The container engine controller
-     * TODO: remove and directly use `enginesManager` instead
-     */
-    private final ObjectProperty<ContainerEngineController> containerEngineController;
-
-    /**
      * The engines manager
      */
     private final ObjectProperty<EnginesManager> enginesManager;
@@ -104,7 +97,6 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.javaFxSettingsManager = new SimpleObjectProperty<>();
         this.categories = FXCollections.observableArrayList();
         this.containersManager = new SimpleObjectProperty<>();
-        this.containerEngineController = new SimpleObjectProperty<>();
         this.enginesManager = new SimpleObjectProperty<>();
         this.verbsManager = new SimpleObjectProperty<>();
         this.engineToolsManager = new SimpleObjectProperty<>();
@@ -162,6 +154,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         confirmMessage.showAndCallback();
     }
 
+    /**
+     * Opens a dialog to change the engine version used for a given container
+     *
+     * @param container The container
+     */
     public void changeEngineVersion(final ContainerDTO container) {
         EnginesManager enginesManager = getEnginesManager();
 
@@ -257,18 +254,6 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
 
     public void setContainersManager(ContainersManager containersManager) {
         this.containersManager.set(containersManager);
-    }
-
-    public ContainerEngineController getContainerEngineController() {
-        return this.containerEngineController.get();
-    }
-
-    public ObjectProperty<ContainerEngineController> containerEngineControllerProperty() {
-        return this.containerEngineController;
-    }
-
-    public void setContainerEngineController(ContainerEngineController containerEngineController) {
-        this.containerEngineController.set(containerEngineController);
     }
 
     public EnginesManager getEnginesManager() {

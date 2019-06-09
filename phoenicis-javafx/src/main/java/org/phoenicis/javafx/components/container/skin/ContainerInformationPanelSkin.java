@@ -84,7 +84,7 @@ public class ContainerInformationPanelSkin extends SkinBase<ContainerInformation
         containerOverviewPanel.containerProperty().bind(
                 ObjectBindings.map(getControl().containerProperty(), container -> (WinePrefixContainerDTO) container));
         containerOverviewPanel.onDeleteContainerProperty().bind(getControl().onDeleteContainerProperty());
-        containerOverviewPanel.onChangeEngineProperty().bind(getControl().onChangeEngineProperty());
+        containerOverviewPanel.onChangeEngineVersionProperty().bind(getControl().onChangeEngineVersionProperty());
         containerOverviewPanel.onOpenFileBrowserProperty().bind(getControl().onOpenFileBrowserProperty());
 
         final Tab containerOverviewTab = new Tab(tr("Information"), containerOverviewPanel);
@@ -139,7 +139,7 @@ public class ContainerInformationPanelSkin extends SkinBase<ContainerInformation
         final ContainerToolsPanel containerToolsPanel = new ContainerToolsPanel();
 
         containerToolsPanel.containerProperty().bind(getControl().containerProperty());
-        containerToolsPanel.containerEngineControllerProperty().bind(getControl().containerEngineControllerProperty());
+        containerToolsPanel.enginesManagerProperty().bind(getControl().enginesManagerProperty());
 
         final Tab containerToolsTab = new Tab(tr("Tools"), containerToolsPanel);
 

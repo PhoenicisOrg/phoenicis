@@ -30,7 +30,6 @@ import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
-import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -47,9 +46,6 @@ public class ControllerConfiguration {
 
     @Autowired
     private ViewsConfiguration viewsConfiguration;
-
-    @Autowired
-    private ScriptsConfiguration scriptsConfiguration;
 
     @Autowired
     private RepositoryConfiguration repositoryConfiguration;
@@ -84,7 +80,6 @@ public class ControllerConfiguration {
     public ContainersController containersController() {
         return new ContainersController(viewsConfiguration.viewContainers(),
                 containersConfiguration.backgroundContainersManager(),
-                containersConfiguration.containerEngineController(),
                 repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.engineSettingsManager(),
                 enginesConfiguration.enginesSource(),
