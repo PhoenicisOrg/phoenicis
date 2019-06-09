@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## TODO: This script does not work yet
+## TODO: This script has not been adapted for Linux
 
 ## Dependencies
 # Linux:
@@ -38,8 +38,8 @@ fi
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
 PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
-PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,java.desktop,java.prefs,java.xml"
-PHOENICIS_RUNTIME_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=$JAR_RELATIVE_PATH/compiler.jar"
+PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom"
+PHOENICIS_RUNTIME_OPTIONS="-XX:MaxHeapFreeRatio=10 -XX:MinHeapFreeRatio=5 -XX:-ShrinkHeapInSteps -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=$JAR_RELATIVE_PATH/compiler.jar --module-path=../Java --add-modules=$PHOENICIS_MODULES"
 PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--app-version" "$VERSION" "--java-options" "$PHOENICIS_RUNTIME_OPTIONS")
 
 
