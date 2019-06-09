@@ -6,12 +6,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
+import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.container.skin.ContainersFeaturePanelSkin;
@@ -53,9 +53,9 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     private final ObjectProperty<ContainersManager> containersManager;
 
     /**
-     * The container engine controller
+     * The engines manager
      */
-    private final ObjectProperty<ContainerEngineController> containerEngineController;
+    private final ObjectProperty<EnginesManager> enginesManager;
 
     /**
      * The verbs manager
@@ -97,7 +97,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.javaFxSettingsManager = new SimpleObjectProperty<>();
         this.categories = FXCollections.observableArrayList();
         this.containersManager = new SimpleObjectProperty<>();
-        this.containerEngineController = new SimpleObjectProperty<>();
+        this.enginesManager = new SimpleObjectProperty<>();
         this.verbsManager = new SimpleObjectProperty<>();
         this.engineToolsManager = new SimpleObjectProperty<>();
         this.engineSettings = FXCollections.observableHashMap();
@@ -152,6 +152,31 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
                 .build();
 
         confirmMessage.showAndCallback();
+    }
+
+    /**
+     * Opens a dialog to change the engine version used for a given container
+     *
+     * @param container The container
+     */
+    public void changeEngineVersion(final ContainerDTO container) {
+        EnginesManager enginesManager = getEnginesManager();
+
+        if (enginesManager != null) {
+            final String engineId = container.getEngine().toLowerCase();
+
+            enginesManager.getEngine(engineId,
+                    engine -> engine.changeVersion(container.getName()),
+                    exception -> Platform.runLater(() -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error during engine engine version change"))
+                                .withException(exception)
+                                .withOwner(getScene().getWindow())
+                                .build();
+
+                        errorDialog.showAndWait();
+                    }));
+        }
     }
 
     /**
@@ -231,16 +256,16 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.containersManager.set(containersManager);
     }
 
-    public ContainerEngineController getContainerEngineController() {
-        return this.containerEngineController.get();
+    public EnginesManager getEnginesManager() {
+        return this.enginesManager.get();
     }
 
-    public ObjectProperty<ContainerEngineController> containerEngineControllerProperty() {
-        return this.containerEngineController;
+    public ObjectProperty<EnginesManager> enginesManagerProperty() {
+        return this.enginesManager;
     }
 
-    public void setContainerEngineController(ContainerEngineController containerEngineController) {
-        this.containerEngineController.set(containerEngineController);
+    public void setEnginesManager(EnginesManager enginesManager) {
+        this.enginesManager.set(enginesManager);
     }
 
     public VerbsManager getVerbsManager() {

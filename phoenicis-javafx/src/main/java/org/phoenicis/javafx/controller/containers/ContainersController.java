@@ -20,12 +20,8 @@ package org.phoenicis.javafx.controller.containers;
 
 import javafx.application.Platform;
 import javafx.collections.ObservableMap;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.ContainersManager;
-import org.phoenicis.engines.EngineSetting;
-import org.phoenicis.engines.EngineSettingsManager;
-import org.phoenicis.engines.EngineToolsManager;
-import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.engines.*;
 import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.RepositoryManager;
@@ -44,9 +40,9 @@ public class ContainersController {
 
     public ContainersController(ContainersFeaturePanel containersView,
             ContainersManager containersManager,
-            ContainerEngineController containerEngineController,
             RepositoryManager repositoryManager,
             EngineSettingsManager engineSettingsManager,
+            EnginesManager enginesManager,
             VerbsManager verbsManager,
             EngineToolsManager engineToolsManager) {
         super();
@@ -56,9 +52,9 @@ public class ContainersController {
         this.verbsManager = verbsManager;
         this.engineToolsManager = engineToolsManager;
 
+        this.containersView.setEnginesManager(enginesManager);
         this.containersView.setVerbsManager(verbsManager);
         this.containersView.setEngineToolsManager(engineToolsManager);
-        this.containersView.setContainerEngineController(containerEngineController);
         this.containersView.setContainersManager(containersManager);
 
         repositoryManager.addCallbacks(this::updateEngineSettings,
