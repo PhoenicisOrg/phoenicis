@@ -1,5 +1,7 @@
 #!/bin/bash
 
+## TODO: This script does not work yet
+
 ## Dependencies
 # Linux:
 # - fakeroot
