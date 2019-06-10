@@ -6,11 +6,13 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.container.control.ContainerToolsPanel;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 
 import java.io.File;
+import java.util.HashMap;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -68,12 +70,22 @@ public class ContainerToolsPanelSkin extends SkinBase<ContainerToolsPanel, Conta
 
             final File file = fileChooser.showOpenDialog(getControl().getScene().getWindow());
             if (file != null) {
-                getControl().getContainerEngineController().runInContainer(getControl().getContainer(),
-                        file.getAbsolutePath(), () -> getControl().setLockTools(false), e -> Platform.runLater(() -> {
+                final ContainerDTO container = getControl().getContainer();
+                final String engineId = container.getEngine().toLowerCase();
+
+                getControl().getEnginesManager().getEngine(engineId,
+                        engine -> {
+                            engine.setWorkingContainer(container.getName());
+                            engine.run(file.getAbsolutePath(), new String[0], container.getPath(), false, true,
+                                    new HashMap<>());
+
+                            getControl().setLockTools(false);
+                        },
+                        exception -> Platform.runLater(() -> {
                             final ErrorDialog errorDialog = ErrorDialog.builder()
                                     .withMessage(tr("Error"))
                                     .withOwner(getControl().getScene().getWindow())
-                                    .withException(e)
+                                    .withException(exception)
                                     .build();
 
                             errorDialog.showAndWait();

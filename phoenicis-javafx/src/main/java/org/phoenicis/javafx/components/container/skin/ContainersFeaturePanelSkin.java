@@ -168,12 +168,12 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
                 .map(this.selectedListWidgetElement, ListWidgetSelection::getItem);
 
         containerInformationPanel.containerProperty().bind(container);
-        containerInformationPanel.containerEngineControllerProperty()
-                .bind(getControl().containerEngineControllerProperty());
+        containerInformationPanel.enginesManagerProperty().bind(getControl().enginesManagerProperty());
         containerInformationPanel.verbsManagerProperty().bind(getControl().verbsManagerProperty());
         containerInformationPanel.engineToolsManagerProperty().bind(getControl().engineToolsManagerProperty());
 
         containerInformationPanel.setOnDeleteContainer(getControl()::deleteContainer);
+        containerInformationPanel.setOnChangeEngineVersion(getControl()::changeEngineVersion);
         containerInformationPanel.setOnOpenFileBrowser(getControl()::openFileBrowser);
 
         getControl().getEngineSettings()

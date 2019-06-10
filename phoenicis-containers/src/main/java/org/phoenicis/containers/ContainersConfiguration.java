@@ -34,9 +34,6 @@ public class ContainersConfiguration {
     private LibraryConfiguration libraryConfiguration;
 
     @Autowired
-    private EnginesConfiguration enginesConfiguration;
-
-    @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Autowired
@@ -62,10 +59,5 @@ public class ContainersConfiguration {
     public ContainersManager backgroundContainersManager() {
         return new BackgroundContainersManager(containersManager(),
                 multithreadingConfiguration.containersExecutorService());
-    }
-
-    @Bean
-    public ContainerEngineController containerEngineController() {
-        return new ContainerEngineController(enginesConfiguration.enginesSource());
     }
 }
