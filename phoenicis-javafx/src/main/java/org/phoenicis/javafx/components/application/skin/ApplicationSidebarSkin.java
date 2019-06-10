@@ -37,18 +37,25 @@ public class ApplicationSidebarSkin
 
     private ApplicationSidebarToggleGroup createSidebarToggleGroup() {
         final FilteredList<CategoryDTO> filteredCategories = getControl().getItems()
-                .filtered(getControl().getFilter()::filter);
+                .filtered(getControl()::filterCategory);
 
         filteredCategories.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> getControl().getFilter()::filter,
+                Bindings.createObjectBinding(() -> getControl()::filterCategory,
                         getControl().searchTermProperty(),
+                        getControl().fuzzySearchRatioProperty(),
+                        getControl().operatingSystemProperty(),
                         getControl().containAllOSCompatibleApplicationsProperty(),
                         getControl().containCommercialApplicationsProperty(),
                         getControl().containRequiresPatchApplicationsProperty(),
                         getControl().containTestingApplicationsProperty()));
 
-        return new ApplicationSidebarToggleGroup(tr("Categories"),
-                filteredCategories, getControl().filterCategoryProperty());
+        final ApplicationSidebarToggleGroup applicationSidebarToggleGroup = new ApplicationSidebarToggleGroup(
+                filteredCategories);
+
+        applicationSidebarToggleGroup.setTitle(tr("Categories"));
+        getControl().selectedItemProperty().bind(applicationSidebarToggleGroup.selectedElementProperty());
+
+        return applicationSidebarToggleGroup;
     }
 
     private SidebarGroup<CheckBox> createFilterGroup() {

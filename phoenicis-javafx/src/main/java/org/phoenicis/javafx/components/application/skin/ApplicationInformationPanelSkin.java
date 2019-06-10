@@ -19,7 +19,6 @@ import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
@@ -80,16 +79,15 @@ public class ApplicationInformationPanelSkin
      * @return A filtered version of the scripts list
      */
     private FilteredList<ScriptDTO> createFilteredScripts() {
-        final ApplicationFilter filter = getControl().getFilter();
-
-        final FilteredList<ScriptDTO> filteredScripts = scripts.filtered(filter::filter);
+        final FilteredList<ScriptDTO> filteredScripts = scripts.filtered(getControl()::filterScript);
 
         filteredScripts.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> filter::filter,
-                        filter.containAllOSCompatibleApplicationsProperty(),
-                        filter.containCommercialApplicationsProperty(),
-                        filter.containRequiresPatchApplicationsProperty(),
-                        filter.containTestingApplicationsProperty()));
+                Bindings.createObjectBinding(() -> getControl()::filterScript,
+                        getControl().operatingSystemProperty(),
+                        getControl().containAllOSCompatibleApplicationsProperty(),
+                        getControl().containCommercialApplicationsProperty(),
+                        getControl().containRequiresPatchApplicationsProperty(),
+                        getControl().containTestingApplicationsProperty()));
 
         return filteredScripts;
     }
