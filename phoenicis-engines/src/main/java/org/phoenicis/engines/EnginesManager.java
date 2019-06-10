@@ -20,11 +20,12 @@ package org.phoenicis.engines;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.repository.dto.*;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +68,7 @@ public class EnginesManager {
         interactiveScriptSession.eval(
                 "include(\"engines." + engineId + ".engine.implementation\"); new Engine();",
                 output -> {
-                    final Engine engine = (Engine) output;
+                    final Engine engine = ((Value) output).as(Engine.class);
                     doneCallback.accept(engine);
                 }, errorCallback);
     }
@@ -129,7 +130,7 @@ public class EnginesManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept((Map<String, Engine>) output), errorCallback);
+                output -> callback.accept(((Value) output).as(Map.class)), errorCallback);
     }
 
     /**

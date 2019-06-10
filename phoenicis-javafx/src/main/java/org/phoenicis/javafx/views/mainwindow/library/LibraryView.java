@@ -35,8 +35,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.lang.StringUtils;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
@@ -60,7 +60,7 @@ import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.Collections;
@@ -350,15 +350,15 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
                         output -> {
-                            final ScriptObjectMirror shortcutObject = (ScriptObjectMirror) output;
+                            final Value shortcutObject = (Value) output;
 
-                            shortcutObject.callMember("name", shortcutCreationDTO.getName());
-                            shortcutObject.callMember("category", shortcutCreationDTO.getCategory());
-                            shortcutObject.callMember("description", shortcutCreationDTO.getDescription());
-                            shortcutObject.callMember("miniature", shortcutCreationDTO.getMiniature());
-                            shortcutObject.callMember("search", shortcutCreationDTO.getExecutable().getName());
-                            shortcutObject.callMember("prefix", container);
-                            shortcutObject.callMember("create");
+                            shortcutObject.invokeMember("name", shortcutCreationDTO.getName());
+                            shortcutObject.invokeMember("category", shortcutCreationDTO.getCategory());
+                            shortcutObject.invokeMember("description", shortcutCreationDTO.getDescription());
+                            shortcutObject.invokeMember("miniature", shortcutCreationDTO.getMiniature());
+                            shortcutObject.invokeMember("search", shortcutCreationDTO.getExecutable().getName());
+                            shortcutObject.invokeMember("prefix", container);
+                            shortcutObject.invokeMember("create");
                         },
                         e -> Platform.runLater(() -> {
                             final ErrorDialog errorDialog = ErrorDialog.builder()

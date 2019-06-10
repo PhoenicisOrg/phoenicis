@@ -1,35 +1,28 @@
-/*
- * Copyright (C) 2015-2017 PÂRIS Quentin
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
-
-package org.phoenicis.scripts.nashorn;
+package org.phoenicis.scripts.engine.implementation;
 
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class NashornEngine {
+/**
+ * A {@link PhoenicisScriptEngine} wrapping around a {@link ScriptEngine} object defined by the Java Scripting API
+ */
+public class JSAScriptEngine implements PhoenicisScriptEngine {
     private final ScriptEngine scriptEngine;
     private final List<Consumer<Exception>> errorHandlers = new ArrayList<>();
 
-    NashornEngine(ScriptEngine scriptEngine) {
-        this.scriptEngine = scriptEngine;
+    /**
+     * Constructor
+     *
+     * @param engine The name of the engine
+     */
+    public JSAScriptEngine(String engine) {
+        super();
+
+        this.scriptEngine = new ScriptEngineManager().getEngineByName(engine);
     }
 
     public void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback) {
@@ -38,11 +31,6 @@ public class NashornEngine {
         } catch (Exception e) {
             handleError(errorCallback, e);
         }
-    }
-
-    public void eval(String script, Consumer<Exception> errorCallback) {
-        eval(script, () -> {
-        }, errorCallback);
     }
 
     public void eval(String script, Runnable doneCallback, Consumer<Exception> errorCallback) {
@@ -54,7 +42,7 @@ public class NashornEngine {
         }
     }
 
-    Object evalAndReturn(String line, Consumer<Exception> errorCallback) {
+    public Object evalAndReturn(String line, Consumer<Exception> errorCallback) {
         try {
             final Object evaluation = this.scriptEngine.eval(line);
             if (evaluation == null) {

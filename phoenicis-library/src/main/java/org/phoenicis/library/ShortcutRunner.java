@@ -18,10 +18,10 @@
 
 package org.phoenicis.library;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -44,9 +44,10 @@ public class ShortcutRunner {
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("run", arguments);
+                    final Value shortcutReader = (Value) output;
+
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("run", arguments);
                 }, errorCallback), errorCallback);
     }
 
@@ -55,9 +56,10 @@ public class ShortcutRunner {
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
                 ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("stop");
+                    final Value shortcutReader = (Value) output;
+
+                    shortcutReader.invokeMember("of", shortcutDTO);
+                    shortcutReader.invokeMember("stop");
                 }, errorCallback), errorCallback);
     }
 
