@@ -151,6 +151,11 @@ public class GitRepository implements Repository {
                 gitRepository.pull().call();
             } catch (Exception e) {
                 LOGGER.warn("Could not update {0}. Local checkout will be used.", e);
+            } finally {
+                // close repository to free resources
+                if (gitRepository != null) {
+                    gitRepository.close();
+                }
             }
         }
     }
