@@ -1,7 +1,7 @@
-package org.phoenicis.scripts.nashorn.builtins;
+package org.phoenicis.scripts.engine.injectors;
 
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.scripts.nashorn.NashornEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.springframework.context.ApplicationContext;
 
 import java.lang.annotation.Annotation;
@@ -18,8 +18,8 @@ public class BeanInjector implements EngineInjector {
     }
 
     @Override
-    public void injectInto(NashornEngine nashornEngine) {
-        nashornEngine.put("Bean", (Function<String, Object>) this::fetchBean, this::throwException);
+    public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
+        phoenicisScriptEngine.put("Bean", (Function<String, Object>) this::fetchBean, this::throwException);
     }
 
     private Object fetchBean(String beanName) {

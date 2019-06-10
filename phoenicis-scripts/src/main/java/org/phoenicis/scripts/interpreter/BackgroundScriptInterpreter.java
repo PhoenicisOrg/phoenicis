@@ -18,6 +18,8 @@
 
 package org.phoenicis.scripts.interpreter;
 
+import org.phoenicis.scripts.session.InteractiveScriptSession;
+
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 

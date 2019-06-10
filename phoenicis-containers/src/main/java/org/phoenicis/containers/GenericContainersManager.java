@@ -20,7 +20,6 @@ package org.phoenicis.containers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -29,7 +28,7 @@ import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
@@ -142,11 +141,9 @@ public class GenericContainersManager implements ContainersManager {
 
                     interactiveScriptSession.eval("include(\"engines." + engineId + ".shortcuts.reader\");",
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-
-                                shortcutReader.callMember("of", shortcut);
-
-                                final String containerName = (String) shortcutReader.callMember("container");
+                                final org.graalvm.polyglot.Value shortcutReader = (org.graalvm.polyglot.Value) output;
+                                shortcutReader.invokeMember("of", shortcut);
+                                final String containerName = shortcutReader.invokeMember("container").as(String.class);
                                 if (containerName.equals(container.getName())) {
                                     this.shortcutManager.deleteShortcut(shortcut);
                                 }

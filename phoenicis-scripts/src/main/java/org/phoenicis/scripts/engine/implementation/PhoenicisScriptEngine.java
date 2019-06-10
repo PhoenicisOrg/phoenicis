@@ -16,21 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.nashorn;
+package org.phoenicis.scripts.engine.implementation;
 
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import com.google.common.util.concurrent.Runnables;
 
+import java.io.InputStreamReader;
 import java.util.function.Consumer;
 
-public class NashornInteractiveSession implements InteractiveScriptSession {
-    private final NashornEngine nashornEngine;
+public interface PhoenicisScriptEngine {
+    void eval(InputStreamReader inputStreamReader, Consumer<Exception> errorCallback);
 
-    public NashornInteractiveSession(NashornEngineFactory nashornEngineFactory) {
-        this.nashornEngine = nashornEngineFactory.createEngine();
+    void eval(String script, Runnable doneCallback, Consumer<Exception> errorCallback);
+
+    default void eval(String script, Consumer<Exception> errorCallback) {
+        eval(script, Runnables.doNothing(), errorCallback);
     }
 
-    @Override
-    public void eval(String evaluation, Consumer<Object> responseCallback, Consumer<Exception> errorCallback) {
-        responseCallback.accept(nashornEngine.evalAndReturn(evaluation, errorCallback));
-    }
+    Object evalAndReturn(String line, Consumer<Exception> errorCallback);
+
+    void put(String name, Object object, Consumer<Exception> errorCallback);
+
+    void addErrorHandler(Consumer<Exception> errorHandler);
 }

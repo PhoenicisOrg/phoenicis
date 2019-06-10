@@ -16,28 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.nashorn;
+package org.phoenicis.scripts.interpreter;
 
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.PhoenicisInteractiveScriptSession;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.function.Consumer;
 
-public class NashornScriptInterpreter implements ScriptInterpreter {
-    private final NashornEngineFactory nashornEngineFactory;
+public class PhoenicisScriptInterpreter implements ScriptInterpreter {
+    private final PhoenicisScriptEngineFactory phoenicisScriptEngineFactory;
 
-    public NashornScriptInterpreter(NashornEngineFactory nashornEngineFactory) {
-        this.nashornEngineFactory = nashornEngineFactory;
+    public PhoenicisScriptInterpreter(PhoenicisScriptEngineFactory phoenicisScriptEngineFactory) {
+        this.phoenicisScriptEngineFactory = phoenicisScriptEngineFactory;
     }
 
     @Override
     public void runScript(String scriptContent, Runnable doneCallback, Consumer<Exception> errorCallback) {
-        nashornEngineFactory.createEngine().eval(scriptContent, doneCallback, errorCallback);
+        phoenicisScriptEngineFactory.createEngine().eval(scriptContent, doneCallback, errorCallback);
     }
 
     @Override
     public InteractiveScriptSession createInteractiveSession() {
-        return new NashornInteractiveSession(nashornEngineFactory);
+        return new PhoenicisInteractiveScriptSession(phoenicisScriptEngineFactory);
     }
 
 }

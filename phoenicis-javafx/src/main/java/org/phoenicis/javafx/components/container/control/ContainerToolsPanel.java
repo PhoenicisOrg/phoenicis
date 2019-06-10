@@ -4,8 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import org.phoenicis.containers.ContainerEngineController;
 import org.phoenicis.containers.dto.ContainerDTO;
+import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.container.skin.ContainerToolsPanelSkin;
 
@@ -19,9 +19,9 @@ public class ContainerToolsPanel extends ControlBase<ContainerToolsPanel, Contai
     private final ObjectProperty<ContainerDTO> container;
 
     /**
-     * The container engine controller used to execute a tool inside a container
+     * The engines manager used to execute a tool inside a container
      */
-    private final ObjectProperty<ContainerEngineController> containerEngineController;
+    private final ObjectProperty<EnginesManager> enginesManager;
 
     /**
      * A boolean signifying whether all tool buttons should be locked
@@ -35,7 +35,7 @@ public class ContainerToolsPanel extends ControlBase<ContainerToolsPanel, Contai
         super();
 
         this.container = new SimpleObjectProperty<>();
-        this.containerEngineController = new SimpleObjectProperty<>();
+        this.enginesManager = new SimpleObjectProperty<>();
         this.lockTools = new SimpleBooleanProperty();
     }
 
@@ -59,16 +59,16 @@ public class ContainerToolsPanel extends ControlBase<ContainerToolsPanel, Contai
         this.container.set(container);
     }
 
-    public ContainerEngineController getContainerEngineController() {
-        return this.containerEngineController.get();
+    public EnginesManager getEnginesManager() {
+        return this.enginesManager.get();
     }
 
-    public ObjectProperty<ContainerEngineController> containerEngineControllerProperty() {
-        return this.containerEngineController;
+    public ObjectProperty<EnginesManager> enginesManagerProperty() {
+        return this.enginesManager;
     }
 
-    public void setContainerEngineController(ContainerEngineController containerEngineController) {
-        this.containerEngineController.set(containerEngineController);
+    public void setEnginesManager(EnginesManager enginesManager) {
+        this.enginesManager.set(enginesManager);
     }
 
     public boolean isLockTools() {

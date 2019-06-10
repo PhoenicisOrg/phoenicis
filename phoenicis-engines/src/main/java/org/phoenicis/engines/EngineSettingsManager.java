@@ -18,8 +18,9 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.*;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class EngineSettingsManager {
         interactiveScriptSession.eval(
                 "include(\"engines." + engineId + ".settings." + settingId + "\"); new Setting();",
                 output -> {
-                    final EngineSetting setting = (EngineSetting) output;
+                    final EngineSetting setting = ((Value) output).as(EngineSetting.class);
                     doneCallback.accept(setting);
                 }, errorCallback);
     }
@@ -71,7 +72,8 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
+                output -> callback.accept(((Value) output).as(Map.class)),
+                errorCallback);
     }
 
     /**

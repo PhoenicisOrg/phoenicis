@@ -1,17 +1,17 @@
-package org.phoenicis.scripts.nashorn.builtins;
+package org.phoenicis.scripts.engine.injectors;
 
-import org.phoenicis.scripts.nashorn.NashornEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
 /**
  * Injects some code into a Script Engine
  */
 public interface EngineInjector {
     /**
-     * Injects component into a nashorn engine
+     * Injects component into an engine engine
      *
-     * @param nashornEngine The engine to be injected in
+     * @param phoenicisScriptEngine The engine to be injected in
      */
-    void injectInto(NashornEngine nashornEngine);
+    void injectInto(PhoenicisScriptEngine phoenicisScriptEngine);
 
     /**
      * Throws a ScriptException error (can be use as a lambda)
