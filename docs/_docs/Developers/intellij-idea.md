@@ -18,7 +18,7 @@ add: JavaFXApplication with:
 * main class: org.phoenicis.javafx.JavaFXApplication
 * VM options: 
 ```
---add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path=phoenicis-dist/target/lib -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -classpath phoenicis-dist/target/lib --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar
+--add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path phoenicis-dist/target/lib -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar
 ```
 * **With Java 11**, you may need to remove the = in --module-path
 ```
