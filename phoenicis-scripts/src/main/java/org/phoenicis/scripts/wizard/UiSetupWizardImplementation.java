@@ -256,7 +256,9 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public MenuItem menu(String textToShow, List<String> menuItems, String defaultValue) {
-        return messageSender.runAndWait(message -> setupUi.showMenuStep(message, textToShow, menuItems, defaultValue));
+        final List<String> copiedMenuItems = List.copyOf(menuItems);
+        return messageSender
+                .runAndWait(message -> setupUi.showMenuStep(message, textToShow, copiedMenuItems, defaultValue));
     }
 
     /**
