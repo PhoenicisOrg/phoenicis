@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -256,7 +257,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public MenuItem menu(String textToShow, List<String> menuItems, String defaultValue) {
-        return messageSender.runAndWait(message -> setupUi.showMenuStep(message, textToShow, menuItems, defaultValue));
+        final List<String> copiedMenuItems = new ArrayList<>(menuItems);
+        return messageSender.runAndWait(message -> setupUi.showMenuStep(message, textToShow, copiedMenuItems, defaultValue));
     }
 
     /**

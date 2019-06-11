@@ -18,14 +18,13 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import java.util.List;
-
+import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 
-import javafx.collections.FXCollections;
-import javafx.scene.control.ListView;
+import java.util.List;
 
 public class StepRepresentationMenu extends StepRepresentationMessage {
     private final String defaultValue;
