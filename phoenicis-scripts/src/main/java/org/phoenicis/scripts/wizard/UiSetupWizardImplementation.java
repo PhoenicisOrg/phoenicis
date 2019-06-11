@@ -242,7 +242,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public MenuItem menu(String textToShow, List<String> menuItems) {
+    public MenuItem menu(String textToShow, String[] menuItems) {
         return this.menu(textToShow, menuItems, "");
     }
 
@@ -255,7 +255,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
      * @return the value the user entered (as string)
      */
     @Override
-    public MenuItem menu(String textToShow, List<String> menuItems, String defaultValue) {
+    public MenuItem menu(String textToShow, String[] menuItems, String defaultValue) {
         return messageSender.runAndWait(message -> setupUi.showMenuStep(message, textToShow, menuItems, defaultValue));
     }
 

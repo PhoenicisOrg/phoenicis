@@ -110,7 +110,7 @@ public class SetupUiJavaFXImplementation extends Tab implements SetupUi {
     }
 
     @Override
-    public void showMenuStep(Message<MenuItem> message, String textToShow, List<String> menuItems,
+    public void showMenuStep(Message<MenuItem> message, String textToShow, String[] menuItems,
             String defaultValue) {
         StepRepresentationMenu stepMenu = new StepRepresentationMenu(this, message, textToShow, menuItems,
                 defaultValue);

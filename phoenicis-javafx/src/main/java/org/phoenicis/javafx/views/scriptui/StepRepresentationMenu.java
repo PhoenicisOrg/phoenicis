@@ -18,23 +18,20 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import java.util.List;
-
+import javafx.collections.FXCollections;
+import javafx.scene.control.ListView;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.scripts.ui.MenuItem;
 import org.phoenicis.scripts.ui.Message;
 
-import javafx.collections.FXCollections;
-import javafx.scene.control.ListView;
-
 public class StepRepresentationMenu extends StepRepresentationMessage {
     private final String defaultValue;
-    private final List<String> menuItems;
+    private final String[] menuItems;
     private final ListView<String> listViewWidget;
     private final Message<MenuItem> messageWaitingForResponse;
 
     public StepRepresentationMenu(SetupUiJavaFXImplementation parent, Message<MenuItem> messageWaitingForResponse,
-            String textToShow, List<String> menuItems, String defaultValue) {
+            String textToShow, String[] menuItems, String defaultValue) {
         super(parent, messageWaitingForResponse, textToShow);
         this.messageWaitingForResponse = messageWaitingForResponse;
 
@@ -49,7 +46,12 @@ public class StepRepresentationMenu extends StepRepresentationMessage {
 
         listViewWidget.setItems(FXCollections.observableArrayList(menuItems));
         if (defaultValue != null) {
-            int idx = menuItems.indexOf(defaultValue);
+            int idx = -1;
+            for (int i = 0; i < menuItems.length; i++) {
+                if (menuItems[i].equals(defaultValue)) {
+                    idx = i;
+                }
+            }
             if (idx != -1) {
                 listViewWidget.getSelectionModel().select(idx);
                 listViewWidget.getFocusModel().focus(idx);

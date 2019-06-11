@@ -20,10 +20,8 @@ package org.phoenicis.scripts.wizard;
 
 import org.phoenicis.scripts.ui.MenuItem;
 
-import java.util.List;
-
 public interface ChoiceWizard {
-    MenuItem menu(String textToShow, List<String> menuItems);
+    MenuItem menu(String textToShow, String[] menuItems);
 
-    MenuItem menu(String textToShow, List<String> menuItems, String defaultValue);
+    MenuItem menu(String textToShow, String[] menuItems, String defaultValue);
 }
