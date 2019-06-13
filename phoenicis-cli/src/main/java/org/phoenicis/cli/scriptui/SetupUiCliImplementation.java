@@ -75,7 +75,7 @@ class SetupUiCliImplementation implements SetupUi {
     }
 
     @Override
-    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, List<String> menuItems,
+    public void showMenuStep(Message<MenuItem> doneCallback, String textToShow, String[] menuItems,
             String defaultValue) {
         throw new UnsupportedOperationException("FIXME");
     }
