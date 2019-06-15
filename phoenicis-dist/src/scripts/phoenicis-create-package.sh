@@ -79,7 +79,7 @@ Version: $VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind, libfreetype6, libfreetype6:i386
+Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind, libfreetype6, libfreetype6:i386, libbsd0, libbsd0:i386, libncurses5, libncurses5:i386
 Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
 Description: This program is a front-end for wine.
  It permits you to install Windows Games and softwares
