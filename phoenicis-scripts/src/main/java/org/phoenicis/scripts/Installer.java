@@ -7,5 +7,5 @@ public interface Installer {
     /**
      * runs the installer
      */
-    void run();
+    void go();
 }
