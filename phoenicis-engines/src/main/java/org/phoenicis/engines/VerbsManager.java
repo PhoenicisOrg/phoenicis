@@ -61,7 +61,7 @@ public class VerbsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include(\"" + verbId + "\");",
+                "const Verb = include(\"" + verbId + "\");",
                 ignored -> interactiveScriptSession.eval("new Verb()", output -> {
                     final Verb verbObject = ((Value) output).as(Verb.class);
                     verbObject.install(container);
