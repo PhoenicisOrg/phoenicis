@@ -23,8 +23,9 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
+import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,16 +40,16 @@ public class VerbsManager {
     private final ScriptInterpreter scriptInterpreter;
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param scriptInterpreter
+     * @param scriptInterpreter The underlying script interpreter
      */
     public VerbsManager(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter = scriptInterpreter;
     }
 
     /**
-     * installs a Verb in a given container
+     * Installs a Verb in a given container
      *
      * @param engineId ID of the engine which provides the Verb (e.g. "Wine")
      * @param container name of the container
@@ -60,13 +61,23 @@ public class VerbsManager {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(
-                "include(\"" + verbId + "\");",
-                ignored -> interactiveScriptSession.eval("new Verb()", output -> {
-                    final Verb verbObject = ((Value) output).as(Verb.class);
-                    verbObject.install(container);
+        final String script = String.format("include(\"%s\");", verbId);
+
+        interactiveScriptSession.eval(script,
+                output -> {
+                    final Value verbClass = (Value) output;
+
+                    final Verb verb = verbClass.newInstance().as(Verb.class);
+
+                    try {
+                        verb.install(container);
+                    } catch (ScriptException se) {
+                        errorCallback.accept(se);
+                    }
+
                     doneCallback.run();
-                }, errorCallback), errorCallback);
+                },
+                errorCallback);
     }
 
     /**
@@ -87,14 +98,15 @@ public class VerbsManager {
 
             final List<String> remainingVerbIds = verbIds.subList(1, verbIds.size());
 
-            installVerb(engineId, container, verbId, () ->
-            // recursively install the remaining verbs in the list
-            installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback), errorCallback);
+            installVerb(engineId, container, verbId,
+                    // recursively install the remaining verbs in the list
+                    () -> installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback),
+                    errorCallback);
         }
     }
 
     /**
-     * fetches the available Verbs
+     * Fetches the available Verbs
      *
      * @param repositoryDTO
      * @param callback
