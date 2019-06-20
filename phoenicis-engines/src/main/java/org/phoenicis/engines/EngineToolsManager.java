@@ -23,8 +23,8 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,14 +33,15 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * manages the engine tools
+ * Manages the engine tools
  */
 public class EngineToolsManager {
     private final ScriptInterpreter scriptInterpreter;
 
     /**
-     * constructor
-     * @param scriptInterpreter
+     * Constructor
+     *
+     * @param scriptInterpreter The underlying script interpreter
      */
     public EngineToolsManager(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter = scriptInterpreter;
@@ -48,6 +49,7 @@ public class EngineToolsManager {
 
     /**
      * runs a tool in a given container
+     *
      * @param engineId ID of the engine which provides the tool (e.g. "Wine")
      * @param container name of the container
      * @param toolId ID of the tool
@@ -58,22 +60,28 @@ public class EngineToolsManager {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(
-                "include(\"engines." + engineId + ".tools." + toolId + "\");",
-                ignored -> interactiveScriptSession.eval("new Tool()", output -> {
-                    final EngineTool toolObject = ((Value) output).as(EngineTool.class);
-                    toolObject.run(container);
+        final String include = String.format("include(\"engines.%s.tools.%s\");", engineId, toolId);
+
+        interactiveScriptSession.eval(include,
+                output -> {
+                    final Value toolClass = (Value) output;
+
+                    final EngineTool tool = toolClass.newInstance().as(EngineTool.class);
+
+                    tool.run(container);
+
                     doneCallback.run();
-                }, errorCallback), errorCallback);
+                },
+                errorCallback);
     }
 
     /**
-     * fetches the available engine tools
-     * @param repositoryDTO
-     * @param callback
+     * Fetches the available engine tools
+     *
+     * @param repositoryDTO The repository containing the engine tools
+     * @param callback The callback taking the fetched engine tools
      */
     public void fetchAvailableEngineTools(RepositoryDTO repositoryDTO, Consumer<Map<String, ApplicationDTO>> callback) {
-        Map<String, ApplicationDTO> tools = new HashMap<>();
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOS = new ArrayList<>();
         for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
@@ -81,6 +89,8 @@ public class EngineToolsManager {
                 categoryDTOS = typeDTO.getCategories();
             }
         }
+
+        Map<String, ApplicationDTO> tools = new HashMap<>();
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
                 if (applicationDTO.getId().equals(engine.getId() + ".tools")) {
