@@ -22,107 +22,125 @@ import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
- * manages the engine settings
+ * Manages the engine settings
  */
 public class EngineSettingsManager {
-    private final ScriptInterpreter scriptInterpreter;
+    private final PhoenicisScriptEngineFactory phoenicisScriptEngineFactory;
+    private final ExecutorService executorService;
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param scriptInterpreter
+     * @param phoenicisScriptEngineFactory The used script engine factory
+     * @param executorService The executor service to allow for parallelization
      */
-    public EngineSettingsManager(ScriptInterpreter scriptInterpreter) {
-        this.scriptInterpreter = scriptInterpreter;
+    public EngineSettingsManager(PhoenicisScriptEngineFactory phoenicisScriptEngineFactory,
+            ExecutorService executorService) {
+        super();
+
+        this.phoenicisScriptEngineFactory = phoenicisScriptEngineFactory;
+        this.executorService = executorService;
     }
 
     /**
-     * fetches the required setting
+     * Fetches the available engine settings
      *
-     * @param engineId setting ID (e.g. "glsl")
-     * @param settingId setting ID (e.g. "glsl")
-     * @param doneCallback callback which will be executed with the fetched setting
-     * @param errorCallback callback which will be executed if an error occurs
-     */
-    public void getSetting(String engineId, String settingId, Consumer<EngineSetting> doneCallback,
-            Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
-
-        interactiveScriptSession.eval("include(\"engines." + engineId + ".settings." + settingId + "\");",
-                output -> {
-                    final Value settingClass = (Value) output;
-
-                    final EngineSetting setting = settingClass.newInstance().as(EngineSetting.class);
-
-                    doneCallback.accept(setting);
-                },
-                errorCallback);
-    }
-
-    /**
-     * fetches the available engine settings
-     *
-     * @param repositoryDTO
-     * @param callback
-     * @param errorCallback callback which will be executed if an error occurs
+     * @param repositoryDTO The repository containing the engine settings
+     * @param callback The callback which recieves the found engine settings
+     * @param errorCallback The callback which will be executed if an error occurs
      */
     public void fetchAvailableEngineSettings(RepositoryDTO repositoryDTO,
             Consumer<Map<String, List<EngineSetting>>> callback, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+        executorService.execute(() -> {
+            final List<SettingConfig> configurations = fetchSettingConfigurations(repositoryDTO);
 
-        interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept(((Value) output).as(Map.class)),
-                errorCallback);
+            // the script engine needs to be created inside the correct thread otherwise GraalJS throwa an error
+            final PhoenicisScriptEngine phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
+
+            final Map<String, List<EngineSetting>> result = configurations.stream()
+                    .collect(Collectors.groupingBy(
+                            configuration -> configuration.engineId,
+                            Collectors.mapping(configuration -> {
+                                final String include = String.format("include(\"engines.%s.settings.%s\");",
+                                        configuration.engineId, configuration.settingId);
+
+                                final Value settingClass = (Value) phoenicisScriptEngine.evalAndReturn(include,
+                                        errorCallback);
+
+                                return settingClass.newInstance().as(EngineSetting.class);
+                            }, Collectors.toList())));
+
+            callback.accept(result);
+        });
     }
 
     /**
-     * retrieves a Javascript string which can be used to fetch the available settings
+     * Fetches a list of the setting parameters requires to fetch all settings in the given repository
      *
-     * @param repositoryDTO repository containing the settings
-     * @return Javascript
+     * @param repositoryDTO The repository containing the settings
+     * @return A list containing all necessary setting parameters
      */
-    private String createFetchScript(RepositoryDTO repositoryDTO) {
+    private List<SettingConfig> fetchSettingConfigurations(RepositoryDTO repositoryDTO) {
         // get engine CategoryDTOs
-        List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().stream()
+        List<CategoryDTO> categoryDTOs = repositoryDTO.getTypes().stream()
                 .filter(typeDTO -> typeDTO.getId().equals("engines"))
                 .flatMap(typeDTO -> typeDTO.getCategories().stream())
                 .collect(Collectors.toList());
 
-        StringBuilder script = new StringBuilder();
-        script.append("(function () {\n");
-        script.append("const settings = {};\n");
-        script.append("let Setting = null;\n");
-        for (CategoryDTO engine : categoryDTOS) {
-            final String engineId = engine.getId().replaceAll("^.*\\.", "");
-            for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("engines." + engineId + ".settings")) {
-                    for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                        final String settingsInclude = String.format("include(\"engines.%s.settings.%s\")",
-                                engineId, scriptDTO.getId().replaceAll("^.*\\.", ""));
+        return categoryDTOs.stream()
+                // map category -> (engineId, application)
+                .flatMap(engine -> {
+                    final String engineId = engine.getId().replaceAll("^.*\\.", "");
 
-                        script.append(String.format("Setting = %s;\n", settingsInclude));
-                        script.append("if (!(\"" + engineId + "\" in settings))\n");
-                        script.append("{\n");
-                        script.append("settings[\"" + engineId + "\"] = new java.util.ArrayList();\n");
-                        script.append("}\n");
-                        script.append("settings[\"" + engineId + "\"].add(new Setting());\n");
-                    }
-                }
-            }
+                    return engine.getApplications().stream()
+                            .map(application -> new EngineInformation(engineId, application));
+                })
+                // filter to setting applications
+                .filter(engineInformation -> {
+                    final String applicationId = engineInformation.application.getId();
+                    final String settingIdPrefix = String.format("engines.%s.settings", engineInformation.engineId);
+
+                    return applicationId.equals(settingIdPrefix);
+                })
+                // map (engineId, application) -> (engineId, settingId)
+                .flatMap(engineInformation -> engineInformation.application.getScripts().stream()
+                        .map(script -> {
+                            final String settingId = script.getId().replaceAll("^.*\\.", "");
+
+                            return new SettingConfig(engineInformation.engineId, settingId);
+                        }))
+                .collect(Collectors.toList());
+    }
+
+    private class EngineInformation {
+        public final String engineId;
+
+        public final ApplicationDTO application;
+
+        private EngineInformation(String engineId, ApplicationDTO application) {
+            this.engineId = engineId;
+            this.application = application;
         }
-        script.append("return settings;\n");
-        script.append("})();\n");
+    }
 
-        return script.toString();
+    private class SettingConfig {
+        public final String engineId;
+
+        public final String settingId;
+
+        public SettingConfig(String engineId, String settingId) {
+            this.engineId = engineId;
+            this.settingId = settingId;
+        }
     }
 }
