@@ -26,8 +26,11 @@ import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JavaFXApplication extends Application {
+    private final static Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
 
     public static void main(String[] args) {
         try {
@@ -52,6 +55,7 @@ public class JavaFXApplication extends Application {
                 applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
                 applicationContext.close();
             } catch (Exception e) {
+                LOGGER.warn("Exception while closing the application.", e);
             }
         });
     }
