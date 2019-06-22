@@ -64,7 +64,7 @@ public class EngineSettingsManager {
         executorService.execute(() -> {
             final List<SettingConfig> configurations = fetchSettingConfigurations(repositoryDTO);
 
-            // the script engine needs to be created inside the correct thread otherwise GraalJS throwa an error
+            // the script engine needs to be created inside the correct thread otherwise GraalJS throws an error
             final PhoenicisScriptEngine phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
 
             final Map<String, List<EngineSetting>> result = configurations.stream()
