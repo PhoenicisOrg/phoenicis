@@ -48,8 +48,11 @@ public class JavaFXApplication extends Application {
         final MainController mainController = applicationContext.getBean(MainController.class);
         mainController.show();
         mainController.setOnClose(() -> {
-            applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
-            applicationContext.close();
+            try {
+                applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
+                applicationContext.close();
+            } catch (Exception e) {
+            }
         });
     }
 
