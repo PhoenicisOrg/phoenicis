@@ -149,14 +149,14 @@ public class UiSetupWizardImplementation implements SetupWizard {
     public Void presentation(String programName, String programEditor, String applicationHomepage,
             String scriptorName) {
         final String htmlToShow = "<body>" + tr("Installation wizard for {0}", programName)
-                + ".<br><br>" + tr("Installation script by {0}", programEditor) + "<br><br>"
+                + ".<br><br>" + tr("Program by {0}", programEditor) + "<br><br>"
                 + tr("For more information about this program, visit:")
                 + String.format("<br><a href=\"%1$s\">%1$s</a><br><br>", applicationHomepage)
                 + tr("Installation script by {0}", scriptorName) + "<br><br>" + "<br><br>"
                 + tr("{0} will be installed in: {1}", programName, applicationUserRoot) + "<br><br>"
                 + tr("{0} is not responsible for anything that might happen as a result of using these scripts.",
                         applicationName)
-                + "<br><br>" + tr("Click \"Next\" to start.") + "</body>";
+                + "<br><br>" + tr("Click Next to start.") + "</body>";
         return messageSender.runAndWait(message -> setupUi.showHtmlPresentationStep(message, htmlToShow));
     }
 
@@ -305,4 +305,8 @@ public class UiSetupWizardImplementation implements SetupWizard {
         return title;
     }
 
+    @Override
+    public BrowserControl createBrowser(String textToShow) {
+        return messageSender.runAndWait(message -> setupUi.showBrowser(message, textToShow));
+    }
 }

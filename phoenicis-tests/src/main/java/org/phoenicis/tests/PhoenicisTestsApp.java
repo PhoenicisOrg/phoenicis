@@ -67,7 +67,7 @@ public class PhoenicisTestsApp {
     }
 
     private void testScript(CategoryDTO categoryDTO, ApplicationDTO applicationDTO, ScriptDTO scriptDTO) {
-        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterprpeter",
+        final ScriptInterpreter scriptInterpreter = applicationContext.getBean("nashornInterpreter",
                 ScriptInterpreter.class);
         System.out.print("| |-- " + scriptDTO.getScriptName());
         try {

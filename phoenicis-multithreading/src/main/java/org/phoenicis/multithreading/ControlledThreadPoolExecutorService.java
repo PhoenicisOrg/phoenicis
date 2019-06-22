@@ -48,6 +48,7 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
     @Override
     public void execute(Runnable runnable) {
         try {
+            this.setCorePoolSize(numberOfThreads);
             remainingTasks.incrementAndGet();
             semaphore.acquire();
         } catch (InterruptedException e) {
@@ -65,6 +66,7 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
         semaphore.release();
         processed.addAndGet(1);
         if (remainingTasks.decrementAndGet() == 0) {
+            this.setCorePoolSize(1);
             if (shouldShutdown) {
                 shutdown();
             }
@@ -108,5 +110,9 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
      */
     public String getName() {
         return name;
+    }
+
+    public long getProcessed() {
+        return processed.get();
     }
 }

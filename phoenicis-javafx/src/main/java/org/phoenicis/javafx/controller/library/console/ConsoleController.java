@@ -21,7 +21,7 @@ package org.phoenicis.javafx.controller.library.console;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTab;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTextType;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.apache.commons.lang.exception.ExceptionUtils;
 

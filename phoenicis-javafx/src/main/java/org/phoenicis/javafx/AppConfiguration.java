@@ -24,7 +24,7 @@ import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.javafx.controller.ControllerConfiguration;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
-import org.phoenicis.javafx.views.common.ThemeConfiguration;
+import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.scriptui.JavaFxUiConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;

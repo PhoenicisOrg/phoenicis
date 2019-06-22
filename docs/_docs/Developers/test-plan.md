@@ -1,7 +1,7 @@
 ---
 title: "Test plan"
 category: Developers
-order: 6
+order: 9
 toc: true
 ---
 
@@ -32,7 +32,7 @@ Before you start, ensure that you are in a clean environment:
 
 # Engines
 * open "Engines" tab
-* check that Wine categoriy is shown
+* check that Wine category is shown
 * check that engines are listed
 * check that list style can be switched
 * search for "3.0"
@@ -122,10 +122,13 @@ Before you start, ensure that you are in a clean environment:
 * check that tabs exist
     * Information
     * Engine Settings
+    * Verbs
     * Engine Tools
     * Tools
 * open "Engine Settings" tab
 * check that all settings are shown
+* open "Verbs" tab
+* check that all Verbs are shown
 * open "Engine Tools" tab
 * check that all tools open
 * open "Tools" tab
@@ -165,11 +168,10 @@ Before you start, ensure that you are in a clean environment:
 * check that new repository is listed
 * select new repository
 * click "delete"
-* approve pop-up
 * check that repository has been removed from list
 * click "add"
 * select "local repository"
-* use "/home/<userhome>/.Phoenicis/cache/git-XXXXXX"
+* use "/home/\<userhome\>/.Phoenicis/cache/git-XXXXXX"
 * click "finish"
 * check that new repository is listed
 * click "reset

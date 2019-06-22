@@ -22,7 +22,7 @@ public abstract class BehaviorSkinBase<C extends ControlBase<C, S>, S extends Be
      *
      * @param control The control belonging to the skin
      */
-    BehaviorSkinBase(C control) {
+    protected BehaviorSkinBase(C control) {
         super(control);
     }
 

@@ -19,6 +19,7 @@
 package org.phoenicis.scripts.interpreter;
 
 import org.apache.commons.io.IOUtils;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.io.File;
 import java.io.FileInputStream;

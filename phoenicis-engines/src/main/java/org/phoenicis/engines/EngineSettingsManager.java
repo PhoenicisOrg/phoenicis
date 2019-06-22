@@ -18,8 +18,9 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.*;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
@@ -53,9 +54,9 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"settings\", \"" + settingId + "\"]); new Setting();",
+                "include(\"engines." + engineId + ".settings." + settingId + "\"); new Setting();",
                 output -> {
-                    final EngineSetting setting = (EngineSetting) output;
+                    final EngineSetting setting = ((Value) output).as(EngineSetting.class);
                     doneCallback.accept(setting);
                 }, errorCallback);
     }
@@ -71,7 +72,8 @@ public class EngineSettingsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept((Map<String, List<EngineSetting>>) output), errorCallback);
+                output -> callback.accept(((Value) output).as(Map.class)),
+                errorCallback);
     }
 
     /**
@@ -91,12 +93,12 @@ public class EngineSettingsManager {
         script.append("(function () {\n");
         script.append("var settings = {};\n");
         for (CategoryDTO engine : categoryDTOS) {
-            final String engineId = engine.getId();
+            final String engineId = engine.getId().replaceAll("^.*\\.", "");
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("settings")) {
+                if (applicationDTO.getId().equals("engines." + engineId + ".settings")) {
                     for (ScriptDTO scriptDTO : applicationDTO.getScripts()) {
-                        script.append("include([\"engines\", \"" + engineId + "\", \"settings\", \"" + scriptDTO.getId()
-                                + "\"]);\n");
+                        script.append("include(\"engines." + engineId + ".settings."
+                                + scriptDTO.getId().replaceAll("^.*\\.", "") + "\");\n");
                         script.append("if (!(\"" + engineId + "\" in settings))\n");
                         script.append("{\n");
                         script.append("settings[\"" + engineId + "\"] = new java.util.ArrayList();\n");

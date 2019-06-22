@@ -18,11 +18,12 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class VerbsManager {
 
     /**
      * constructor
+     *
      * @param scriptInterpreter
      */
     public VerbsManager(ScriptInterpreter scriptInterpreter) {
@@ -47,6 +49,7 @@ public class VerbsManager {
 
     /**
      * installs a Verb in a given container
+     *
      * @param engineId ID of the engine which provides the Verb (e.g. "Wine")
      * @param container name of the container
      * @param verbId ID of the Verb
@@ -58,16 +61,41 @@ public class VerbsManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"verbs\", \"" + verbId + "\"]);",
+                "include(\"" + verbId + "\");",
                 ignored -> interactiveScriptSession.eval("new Verb()", output -> {
-                    final Verb verbObject = (Verb) output;
+                    final Verb verbObject = ((Value) output).as(Verb.class);
                     verbObject.install(container);
                     doneCallback.run();
                 }, errorCallback), errorCallback);
     }
 
     /**
+     * Installs a list of Verbs in a given container
+     *
+     * @param engineId ID of the engine which provides the Verbs (e.g. "Wine")
+     * @param container name of the container
+     * @param verbIds A list of verb ids
+     * @param doneCallback callback executed after the scripts ran
+     * @param errorCallback callback executed in case of an error
+     */
+    public void installVerbs(String engineId, String container, List<String> verbIds, Runnable doneCallback,
+            Consumer<Exception> errorCallback) {
+        if (verbIds.isEmpty()) {
+            doneCallback.run();
+        } else {
+            final String verbId = verbIds.get(0);
+
+            final List<String> remainingVerbIds = verbIds.subList(1, verbIds.size());
+
+            installVerb(engineId, container, verbId, () ->
+            // recursively install the remaining verbs in the list
+            installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback), errorCallback);
+        }
+    }
+
+    /**
      * fetches the available Verbs
+     *
      * @param repositoryDTO
      * @param callback
      */
@@ -82,8 +110,8 @@ public class VerbsManager {
         }
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("verbs")) {
-                    verbs.put(engine.getId(), applicationDTO);
+                if (applicationDTO.getId().equals(engine.getId() + ".verbs")) {
+                    verbs.put(engine.getId().replaceAll("^.*\\.", ""), applicationDTO);
                 }
             }
         }

@@ -19,127 +19,49 @@
 package org.phoenicis.javafx.controller.apps;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.views.common.ErrorMessage;
-import org.phoenicis.javafx.views.common.ThemeManager;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationsView;
+import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class AppsController {
-    private final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(AppsController.class);
-    private final ApplicationsView view;
-    private final RepositoryManager repositoryManager;
-    private final ScriptInterpreter scriptInterpreter;
-    private ThemeManager themeManager;
+    private final ApplicationsFeaturePanel view;
 
-    private Runnable onAppLoaded = () -> {
-    };
-
-    public AppsController(ApplicationsView view, RepositoryManager repositoryManager,
-            ScriptInterpreter scriptInterpreter,
-            ThemeManager themeManager) {
+    public AppsController(ApplicationsFeaturePanel view, RepositoryManager repositoryManager) {
         this.view = view;
-        this.repositoryManager = repositoryManager;
-        this.scriptInterpreter = scriptInterpreter;
-        this.themeManager = themeManager;
 
-        this.repositoryManager.addCallbacks(this::populateView,
-                e -> Platform.runLater(() -> view.showFailure(
-                        tr("Connecting to the repository failed.\nPlease check your connection and try again."),
-                        Optional.of(e))));
+        repositoryManager.addCallbacks(this::populate, this::showError);
     }
 
-    public void loadApps() {
-        this.view.showWait();
-        this.repositoryManager.triggerRepositoryChange();
-
-        this.view.setOnRetryButtonClicked(event -> {
-            this.view.showWait();
-            this.repositoryManager.triggerRepositoryChange();
-        });
-
-        this.view.setOnSelectScript(
-                scriptDTO -> {
-                    final StringBuilder executeBuilder = new StringBuilder();
-                    executeBuilder.append("TYPE_ID=\"");
-                    executeBuilder.append(scriptDTO.getTypeId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("CATEGORY_ID=\"");
-                    executeBuilder.append(scriptDTO.getCategoryId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("APPLICATION_ID=\"");
-                    executeBuilder.append(scriptDTO.getApplicationId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append("SCRIPT_ID=\"");
-                    executeBuilder.append(scriptDTO.getId());
-                    executeBuilder.append("\";\n");
-                    executeBuilder.append(scriptDTO.getScript());
-                    executeBuilder.append("\n");
-                    // TODO: use Java interface instead of String
-                    executeBuilder.append("new Installer().run();");
-                    scriptInterpreter.runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
-                        // no exception if installation is cancelled
-                        if (!(e.getCause() instanceof InterruptedException)) {
-                            new ErrorMessage(tr("The script ended unexpectedly"), e, this.view);
-                        }
-                    }));
-                });
-
-        onAppLoaded.run();
-    }
-
-    public void setOnAppLoaded(Runnable onAppLoaded) {
-        this.onAppLoaded = onAppLoaded;
-    }
-
-    public ApplicationsView getView() {
+    public ApplicationsFeaturePanel getView() {
         return view;
     }
 
-    private void populateView(RepositoryDTO repositoryDTO) {
+    private void populate(RepositoryDTO repositoryDTO) {
         Platform.runLater(() -> {
-            List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
-            setDefaultCategoryIcons(categoryDTOS);
-            this.view.populate(categoryDTOS);
+            final List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
+
+            getView().getCategories().setAll(categoryDTOS);
+
+            getView().setInitialized(true);
         });
     }
 
-    private void setDefaultCategoryIcons(List<CategoryDTO> categoryDTOS) {
-        try {
-            StringBuilder cssBuilder = new StringBuilder();
-            for (CategoryDTO category : categoryDTOS) {
-                cssBuilder.append("#" + category.getId().toLowerCase() + "Button{\n");
-                URI categoryIcon = category.getIcon();
-                if (categoryIcon == null) {
-                    cssBuilder
-                            .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                } else {
-                    cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                }
-                cssBuilder.append("}\n");
-            }
-            String css = cssBuilder.toString();
-            Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-            File tempFile = temp.toFile();
-            tempFile.deleteOnExit();
-            Files.write(temp, css.getBytes());
-            String defaultCategoryIconsCss = temp.toUri().toString();
-            themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-        } catch (IOException e) {
-            LOGGER.warn("Could not set default category icons.", e);
-        }
+    private void showError(Exception e) {
+        Platform.runLater(() -> {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withOwner(view.getScene().getWindow())
+                    .withException(e)
+                    .withMessage(
+                            tr("Connecting to the repository failed.\nPlease check your connection and try again."))
+                    .build();
+
+            errorDialog.showAndWait();
+        });
     }
 }

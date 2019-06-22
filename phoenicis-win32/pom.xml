@@ -58,11 +58,5 @@
             <version>${phoenicis.version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.phoenicis</groupId>
-            <artifactId>phoenicis-configuration</artifactId>
-            <version>${phoenicis.version}</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 </project>
