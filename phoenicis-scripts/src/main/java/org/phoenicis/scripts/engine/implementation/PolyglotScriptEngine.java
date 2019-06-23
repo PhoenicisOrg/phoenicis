@@ -41,8 +41,8 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
      */
     public PolyglotScriptEngine(PhoenicisSandbox phoenicisSandbox, String language, Map<String, String> options) {
         super();
-        this.phoenicisSandbox = phoenicisSandbox;
 
+        this.phoenicisSandbox = phoenicisSandbox;
         this.errorHandlers = new ArrayList<>();
         this.language = language;
         this.context = Context.newBuilder(language)
