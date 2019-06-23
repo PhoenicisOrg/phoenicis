@@ -1,22 +1,27 @@
 package org.phoenicis.javafx.components.application.control;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.*;
 import javafx.collections.ObservableList;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationSidebarSkin;
+import org.phoenicis.javafx.components.application.utils.CategoryFilter;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 /**
  * A sidebar implementation for the applications tab
  */
-public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, ApplicationSidebar, ApplicationSidebarSkin> {
+public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, ApplicationSidebar, ApplicationSidebarSkin>
+        implements CategoryFilter {
     /**
-     * The selected {@link CategoryDTO} by the user
+     * The fuzzy search ratio
      */
-    private final ObjectProperty<CategoryDTO> filterCategory;
+    private final DoubleProperty fuzzySearchRatio;
+
+    /**
+     * The operating system
+     */
+    private final ObjectProperty<OperatingSystem> operatingSystem;
 
     /**
      * Information about whether the user wants to see commercial applications or not
@@ -39,28 +44,19 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     private final BooleanProperty containAllOSCompatibleApplications;
 
     /**
-     * An application filter utility class
-     */
-    private final ApplicationFilter filter;
-
-    /**
      * Constructor
      *
-     * @param filter The application filter containing all filter properties
      * @param items The items shown inside a toggle button group in the sidebar
-     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
-    public ApplicationSidebar(ApplicationFilter filter, ObservableList<CategoryDTO> items,
-            ObjectProperty<ListWidgetType> selectedListWidget) {
-        super(items, filter.filterTextProperty(), selectedListWidget);
+    public ApplicationSidebar(ObservableList<CategoryDTO> items) {
+        super(items);
 
-        this.filter = filter;
-
-        this.filterCategory = filter.filterCategoryProperty();
-        this.containCommercialApplications = filter.containCommercialApplicationsProperty();
-        this.containRequiresPatchApplications = filter.containRequiresPatchApplicationsProperty();
-        this.containTestingApplications = filter.containTestingApplicationsProperty();
-        this.containAllOSCompatibleApplications = filter.containAllOSCompatibleApplicationsProperty();
+        this.fuzzySearchRatio = new SimpleDoubleProperty();
+        this.operatingSystem = new SimpleObjectProperty<>();
+        this.containCommercialApplications = new SimpleBooleanProperty();
+        this.containRequiresPatchApplications = new SimpleBooleanProperty();
+        this.containTestingApplications = new SimpleBooleanProperty();
+        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
     }
 
     /**
@@ -71,24 +67,39 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
         return new ApplicationSidebarSkin(this);
     }
 
-    public CategoryDTO getFilterCategory() {
-        return filterCategory.get();
+    public double getFuzzySearchRatio() {
+        return this.fuzzySearchRatio.get();
     }
 
-    public ObjectProperty<CategoryDTO> filterCategoryProperty() {
-        return filterCategory;
+    @Override
+    public DoubleProperty fuzzySearchRatioProperty() {
+        return this.fuzzySearchRatio;
     }
 
-    public void setFilterCategory(CategoryDTO filterCategory) {
-        this.filterCategory.set(filterCategory);
+    public void setFuzzySearchRatio(double fuzzySearchRatio) {
+        this.fuzzySearchRatio.set(fuzzySearchRatio);
+    }
+
+    public OperatingSystem getOperatingSystem() {
+        return this.operatingSystem.get();
+    }
+
+    @Override
+    public ObjectProperty<OperatingSystem> operatingSystemProperty() {
+        return this.operatingSystem;
+    }
+
+    public void setOperatingSystem(OperatingSystem operatingSystem) {
+        this.operatingSystem.set(operatingSystem);
     }
 
     public boolean isContainCommercialApplications() {
-        return containCommercialApplications.get();
+        return this.containCommercialApplications.get();
     }
 
+    @Override
     public BooleanProperty containCommercialApplicationsProperty() {
-        return containCommercialApplications;
+        return this.containCommercialApplications;
     }
 
     public void setContainCommercialApplications(boolean containCommercialApplications) {
@@ -96,11 +107,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainRequiresPatchApplications() {
-        return containRequiresPatchApplications.get();
+        return this.containRequiresPatchApplications.get();
     }
 
+    @Override
     public BooleanProperty containRequiresPatchApplicationsProperty() {
-        return containRequiresPatchApplications;
+        return this.containRequiresPatchApplications;
     }
 
     public void setContainRequiresPatchApplications(boolean containRequiresPatchApplications) {
@@ -108,11 +120,12 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainTestingApplications() {
-        return containTestingApplications.get();
+        return this.containTestingApplications.get();
     }
 
+    @Override
     public BooleanProperty containTestingApplicationsProperty() {
-        return containTestingApplications;
+        return this.containTestingApplications;
     }
 
     public void setContainTestingApplications(boolean containTestingApplications) {
@@ -120,18 +133,15 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
     }
 
     public boolean isContainAllOSCompatibleApplications() {
-        return containAllOSCompatibleApplications.get();
+        return this.containAllOSCompatibleApplications.get();
     }
 
+    @Override
     public BooleanProperty containAllOSCompatibleApplicationsProperty() {
-        return containAllOSCompatibleApplications;
+        return this.containAllOSCompatibleApplications;
     }
 
     public void setContainAllOSCompatibleApplications(boolean containAllOSCompatibleApplications) {
         this.containAllOSCompatibleApplications.set(containAllOSCompatibleApplications);
-    }
-
-    public ApplicationFilter getFilter() {
-        return filter;
     }
 }

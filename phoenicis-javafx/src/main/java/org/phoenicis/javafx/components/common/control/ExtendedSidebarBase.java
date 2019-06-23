@@ -1,6 +1,8 @@
 package org.phoenicis.javafx.components.common.control;
 
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.skin.ExtendedSidebarSkinBase;
@@ -38,6 +40,18 @@ public abstract class ExtendedSidebarBase<E, C extends ExtendedSidebarBase<E, C,
 
         this.searchTerm = searchTerm;
         this.selectedListWidget = selectedListWidget;
+    }
+
+    /**
+     * Constructor
+     *
+     * @param items The items shown inside a toggle button group in the sidebar
+     */
+    public ExtendedSidebarBase(ObservableList<E> items) {
+        super(items);
+
+        this.searchTerm = new SimpleStringProperty();
+        this.selectedListWidget = new SimpleObjectProperty<>();
     }
 
     public String getSearchTerm() {

@@ -2,9 +2,10 @@ package org.phoenicis.javafx.components.application.control;
 
 import javafx.beans.property.*;
 import javafx.scene.web.WebView;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationInformationPanelSkin;
+import org.phoenicis.javafx.components.application.utils.ScriptFilter;
 import org.phoenicis.javafx.components.common.control.ControlBase;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
@@ -12,16 +13,36 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
  * A details panel for the applications tab used to show the details for a selected application
  */
 public class ApplicationInformationPanel
-        extends ControlBase<ApplicationInformationPanel, ApplicationInformationPanelSkin> {
+        extends ControlBase<ApplicationInformationPanel, ApplicationInformationPanelSkin> implements ScriptFilter {
     /**
      * The script interpreter to execute installation scripts
      */
-    private final ScriptInterpreter scriptInterpreter;
+    private final ObjectProperty<ScriptInterpreter> scriptInterpreter;
 
     /**
-     * The filter settings to be used to filter the installation scripts
+     * The operating system
      */
-    private final ApplicationFilter filter;
+    private final ObjectProperty<OperatingSystem> operatingSystem;
+
+    /**
+     * Information about whether the user wants to see commercial applications or not
+     */
+    private final BooleanProperty containCommercialApplications;
+
+    /**
+     * Information about whether the user wants to see scripts requiring patches
+     */
+    private final BooleanProperty containRequiresPatchApplications;
+
+    /**
+     * Information about whether the user wants to see scripts that are still in testing
+     */
+    private final BooleanProperty containTestingApplications;
+
+    /**
+     * Information about whether the user wants to see scripts that are not tested on his operating system
+     */
+    private final BooleanProperty containAllOSCompatibleApplications;
 
     /**
      * The shown application
@@ -40,35 +61,19 @@ public class ApplicationInformationPanel
 
     /**
      * Constructor
-     *
-     * @param scriptInterpreter The script interpreter to execute installation scripts
-     * @param filter The filter settings to be used to filter the installation scripts
-     * @param application The shown application
-     * @param showScriptSource Boolean flag to decide whether the script sources should be shown
-     * @param webEngineStylesheet The stylesheet for the {@link WebView}
      */
-    public ApplicationInformationPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
-            ObjectProperty<ApplicationDTO> application, BooleanProperty showScriptSource,
-            StringProperty webEngineStylesheet) {
+    public ApplicationInformationPanel() {
         super();
 
-        this.scriptInterpreter = scriptInterpreter;
-        this.filter = filter;
-        this.application = application;
-        this.showScriptSource = showScriptSource;
-        this.webEngineStylesheet = webEngineStylesheet;
-    }
-
-    /**
-     * Constructor
-     *
-     * @param scriptInterpreter The script interpreter to execute installation scripts
-     * @param filter The filter settings to be used to filter the installation scripts
-     * @param application The shown application
-     */
-    public ApplicationInformationPanel(ScriptInterpreter scriptInterpreter, ApplicationFilter filter,
-            ObjectProperty<ApplicationDTO> application) {
-        this(scriptInterpreter, filter, application, new SimpleBooleanProperty(), new SimpleStringProperty());
+        this.scriptInterpreter = new SimpleObjectProperty<>();
+        this.operatingSystem = new SimpleObjectProperty<>();
+        this.containCommercialApplications = new SimpleBooleanProperty();
+        this.containRequiresPatchApplications = new SimpleBooleanProperty();
+        this.containTestingApplications = new SimpleBooleanProperty();
+        this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
+        this.application = new SimpleObjectProperty<>();
+        this.showScriptSource = new SimpleBooleanProperty();
+        this.webEngineStylesheet = new SimpleStringProperty();
     }
 
     /**
@@ -80,19 +85,88 @@ public class ApplicationInformationPanel
     }
 
     public ScriptInterpreter getScriptInterpreter() {
-        return scriptInterpreter;
+        return this.scriptInterpreter.get();
     }
 
-    public ApplicationFilter getFilter() {
-        return filter;
+    public ObjectProperty<ScriptInterpreter> scriptInterpreterProperty() {
+        return this.scriptInterpreter;
+    }
+
+    public void setScriptInterpreter(ScriptInterpreter scriptInterpreter) {
+        this.scriptInterpreter.set(scriptInterpreter);
+    }
+
+    public OperatingSystem getOperatingSystem() {
+        return this.operatingSystem.get();
+    }
+
+    @Override
+    public ObjectProperty<OperatingSystem> operatingSystemProperty() {
+        return this.operatingSystem;
+    }
+
+    public void setOperatingSystem(OperatingSystem operatingSystem) {
+        this.operatingSystem.set(operatingSystem);
+    }
+
+    public boolean isContainCommercialApplications() {
+        return this.containCommercialApplications.get();
+    }
+
+    @Override
+    public BooleanProperty containCommercialApplicationsProperty() {
+        return this.containCommercialApplications;
+    }
+
+    public void setContainCommercialApplications(boolean containCommercialApplications) {
+        this.containCommercialApplications.set(containCommercialApplications);
+    }
+
+    public boolean isContainRequiresPatchApplications() {
+        return this.containRequiresPatchApplications.get();
+    }
+
+    @Override
+    public BooleanProperty containRequiresPatchApplicationsProperty() {
+        return this.containRequiresPatchApplications;
+    }
+
+    public void setContainRequiresPatchApplications(boolean containRequiresPatchApplications) {
+        this.containRequiresPatchApplications.set(containRequiresPatchApplications);
+    }
+
+    public boolean isContainTestingApplications() {
+        return this.containTestingApplications.get();
+    }
+
+    @Override
+    public BooleanProperty containTestingApplicationsProperty() {
+        return this.containTestingApplications;
+    }
+
+    public void setContainTestingApplications(boolean containTestingApplications) {
+        this.containTestingApplications.set(containTestingApplications);
+    }
+
+    public boolean isContainAllOSCompatibleApplications() {
+        return this.containAllOSCompatibleApplications.get();
+    }
+
+    @Override
+    public BooleanProperty containAllOSCompatibleApplicationsProperty() {
+        return this.containAllOSCompatibleApplications;
+    }
+
+    public void setContainAllOSCompatibleApplications(boolean containAllOSCompatibleApplications) {
+        this.containAllOSCompatibleApplications.set(containAllOSCompatibleApplications);
     }
 
     public ApplicationDTO getApplication() {
-        return application.get();
+        return this.application.get();
     }
 
     public ObjectProperty<ApplicationDTO> applicationProperty() {
-        return application;
+        return this.application;
     }
 
     public void setApplication(ApplicationDTO application) {
@@ -100,11 +174,11 @@ public class ApplicationInformationPanel
     }
 
     public boolean isShowScriptSource() {
-        return showScriptSource.get();
+        return this.showScriptSource.get();
     }
 
     public BooleanProperty showScriptSourceProperty() {
-        return showScriptSource;
+        return this.showScriptSource;
     }
 
     public void setShowScriptSource(boolean showScriptSource) {
@@ -112,11 +186,11 @@ public class ApplicationInformationPanel
     }
 
     public String getWebEngineStylesheet() {
-        return webEngineStylesheet.get();
+        return this.webEngineStylesheet.get();
     }
 
     public StringProperty webEngineStylesheetProperty() {
-        return webEngineStylesheet;
+        return this.webEngineStylesheet;
     }
 
     public void setWebEngineStylesheet(String webEngineStylesheet) {

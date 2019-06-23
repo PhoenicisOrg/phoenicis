@@ -71,6 +71,19 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
         this(new SimpleStringProperty(title), FXCollections.observableArrayList(), new SimpleObjectProperty<>());
     }
 
+    /**
+     * Constructor
+     *
+     * @param elements The elements to be shown inside the sidebar toggle group
+     */
+    public SidebarToggleGroupBase(ObservableList<E> elements) {
+        super();
+
+        this.title = new SimpleStringProperty();
+        this.elements = elements;
+        this.selectedElement = new SimpleObjectProperty<>();
+    }
+
     public String getTitle() {
         return title.get();
     }

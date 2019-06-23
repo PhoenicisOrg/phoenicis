@@ -24,7 +24,6 @@ import org.phoenicis.javafx.components.installation.control.InstallationsFeature
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsConfiguration;
 import org.phoenicis.javafx.themes.ThemeConfiguration;
-import org.phoenicis.javafx.views.mainwindow.apps.ApplicationFilter;
 import org.phoenicis.javafx.views.mainwindow.console.ConsoleTabFactory;
 import org.phoenicis.javafx.views.mainwindow.containers.ContainersFilter;
 import org.phoenicis.javafx.views.mainwindow.engines.EnginesView;
@@ -88,11 +87,10 @@ public class ViewsConfiguration {
         applicationsFeaturePanel.setJavaFxSettingsManager(javaFxSettingsConfiguration.javaFxSettingsManager());
         applicationsFeaturePanel.setScriptInterpreter(scriptsConfiguration.scriptInterpreter());
 
-        // TODO: remove the ApplicationFilter class
-        final ApplicationFilter applicationFilter = new ApplicationFilter(toolsConfiguration.operatingSystemFetcher(),
-                javaFxSettingsConfiguration.javaFxSettingsManager().getFuzzySearchRatio());
-
-        applicationsFeaturePanel.setFilter(applicationFilter);
+        applicationsFeaturePanel
+                .setFuzzySearchRatio(javaFxSettingsConfiguration.javaFxSettingsManager().getFuzzySearchRatio());
+        applicationsFeaturePanel
+                .setOperatingSystem(toolsConfiguration.operatingSystemFetcher().fetchCurrentOperationSystem());
 
         return applicationsFeaturePanel;
     }

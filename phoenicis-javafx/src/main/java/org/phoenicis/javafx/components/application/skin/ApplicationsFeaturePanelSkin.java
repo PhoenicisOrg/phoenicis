@@ -1,6 +1,9 @@
 package org.phoenicis.javafx.components.application.skin;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,13 +30,17 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Comparator;
-import java.util.Optional;
 
 /**
  * A skin implementation for the {@link ApplicationsFeaturePanel} component
  */
 public class ApplicationsFeaturePanelSkin
         extends FeaturePanelSkin<ApplicationsFeaturePanel, ApplicationsFeaturePanelSkin> {
+    /**
+     * The currently selected list widget
+     */
+    private final ObjectProperty<ListWidgetType> selectedListWidget;
+
     /**
      * The current list widget selection containing the selected {@link ApplicationDTO} object
      */
@@ -42,7 +49,7 @@ public class ApplicationsFeaturePanelSkin
     /**
      * The currently selected application
      */
-    private final ObjectProperty<ApplicationDTO> selectedApplication;
+    private final ObjectBinding<ApplicationDTO> selectedApplication;
 
     /**
      * Constructor
@@ -53,9 +60,39 @@ public class ApplicationsFeaturePanelSkin
         super(control);
 
         this.listWidgetSelection = new SimpleObjectProperty<>();
-        // TODO: replace with ObjectBinding<ApplicationDTO>
-        this.selectedApplication = new SimpleObjectProperty<>();
-        this.selectedApplication.bind(ObjectBindings.map(this.listWidgetSelection, ListWidgetSelection::getItem));
+        this.selectedApplication = ObjectBindings.map(this.listWidgetSelection, ListWidgetSelection::getItem);
+        this.selectedListWidget = createSelectedListWidget();
+    }
+
+    private ObjectProperty<ListWidgetType> createSelectedListWidget() {
+        final ObjectProperty<ListWidgetType> selectedListWidget = new SimpleObjectProperty<>();
+
+        final InvalidationListener listener = (Observable invalidation) -> {
+            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
+
+            if (javaFxSettingsManager != null) {
+                selectedListWidget.setValue(javaFxSettingsManager.getAppsListType());
+            } else {
+                selectedListWidget.set(ListWidgetType.ICONS_LIST);
+            }
+        };
+
+        // set the default selection
+        getControl().javaFxSettingsManagerProperty().addListener(listener);
+
+        listener.invalidated(getControl().javaFxSettingsManagerProperty());
+
+        // save changes to the list widget selection to the hard drive
+        selectedListWidget.addListener((observable, oldValue, newValue) -> {
+            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
+
+            if (newValue != null) {
+                javaFxSettingsManager.setAppsListType(newValue);
+                javaFxSettingsManager.save();
+            }
+        });
+
+        return selectedListWidget;
     }
 
     /**
@@ -72,24 +109,21 @@ public class ApplicationsFeaturePanelSkin
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        final ApplicationSidebar sidebar = new ApplicationSidebar(getControl().getFilter(), sortedCategories,
-                getControl().selectedListWidgetProperty());
+        final ApplicationSidebar sidebar = new ApplicationSidebar(sortedCategories);
 
-        // set the default selection
-        sidebar.setSelectedListWidget(Optional
-                .ofNullable(getControl().getJavaFxSettingsManager())
-                .map(JavaFxSettingsManager::getAppsListType)
-                .orElse(ListWidgetType.ICONS_LIST));
+        sidebar.operatingSystemProperty().bind(getControl().operatingSystemProperty());
+        sidebar.fuzzySearchRatioProperty().bind(getControl().fuzzySearchRatioProperty());
 
-        // save changes to the list widget selection to the hard drive
-        sidebar.selectedListWidgetProperty().addListener((observable, oldValue, newValue) -> {
-            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
+        getControl().searchTermProperty().bind(sidebar.searchTermProperty());
+        getControl().filterCategoryProperty().bind(sidebar.selectedItemProperty());
+        getControl().containCommercialApplicationsProperty().bind(sidebar.containCommercialApplicationsProperty());
+        getControl().containRequiresPatchApplicationsProperty()
+                .bind(sidebar.containRequiresPatchApplicationsProperty());
+        getControl().containTestingApplicationsProperty().bind(sidebar.containTestingApplicationsProperty());
+        getControl().containAllOSCompatibleApplicationsProperty()
+                .bind(sidebar.containAllOSCompatibleApplicationsProperty());
 
-            if (newValue != null) {
-                javaFxSettingsManager.setAppsListType(newValue);
-                javaFxSettingsManager.save();
-            }
-        });
+        sidebar.selectedListWidgetProperty().bindBidirectional(this.selectedListWidget);
 
         return new SimpleObjectProperty<>(sidebar);
     }
@@ -109,22 +143,24 @@ public class ApplicationsFeaturePanelSkin
                         .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS),
                         CategoryDTO::getApplications))
                 .sorted(Comparator.comparing(ApplicationDTO::getName))
-                .filtered(getControl().getFilter()::filter);
+                .filtered(getControl()::filterApplication);
 
         filteredApplications.predicateProperty().bind(
-                Bindings.createObjectBinding(() -> getControl().getFilter()::filter,
-                        getControl().getFilter().filterTextProperty(),
-                        getControl().getFilter().filterCategoryProperty(),
-                        getControl().getFilter().containAllOSCompatibleApplicationsProperty(),
-                        getControl().getFilter().containCommercialApplicationsProperty(),
-                        getControl().getFilter().containRequiresPatchApplicationsProperty(),
-                        getControl().getFilter().containTestingApplicationsProperty()));
+                Bindings.createObjectBinding(() -> getControl()::filterApplication,
+                        getControl().searchTermProperty(),
+                        getControl().fuzzySearchRatioProperty(),
+                        getControl().operatingSystemProperty(),
+                        getControl().filterCategoryProperty(),
+                        getControl().containAllOSCompatibleApplicationsProperty(),
+                        getControl().containCommercialApplicationsProperty(),
+                        getControl().containRequiresPatchApplicationsProperty(),
+                        getControl().containTestingApplicationsProperty()));
 
         final ObservableList<ListWidgetElement<ApplicationDTO>> listWidgetEntries = new MappedList<>(
                 filteredApplications, ListWidgetElement::create);
 
         final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries,
-                getControl().selectedListWidgetProperty());
+                this.selectedListWidget);
 
         listWidget.selectedElementProperty().bindBidirectional(this.listWidgetSelection);
 
@@ -136,8 +172,19 @@ public class ApplicationsFeaturePanelSkin
      */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
-        final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel(
-                getControl().getScriptInterpreter(), getControl().getFilter(), this.selectedApplication);
+        final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel();
+
+        applicationPanel.scriptInterpreterProperty().bind(getControl().scriptInterpreterProperty());
+        applicationPanel.applicationProperty().bind(this.selectedApplication);
+
+        applicationPanel.operatingSystemProperty().bind(getControl().operatingSystemProperty());
+        applicationPanel.containCommercialApplicationsProperty()
+                .bind(getControl().containCommercialApplicationsProperty());
+        applicationPanel.containRequiresPatchApplicationsProperty()
+                .bind(getControl().containRequiresPatchApplicationsProperty());
+        applicationPanel.containAllOSCompatibleApplicationsProperty()
+                .bind(getControl().containAllOSCompatibleApplicationsProperty());
+        applicationPanel.containTestingApplicationsProperty().bind(getControl().containTestingApplicationsProperty());
 
         // TODO: change to a binding
         applicationPanel.setShowScriptSource(getControl().getJavaFxSettingsManager().isViewScriptSource());
