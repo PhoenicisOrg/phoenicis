@@ -18,7 +18,6 @@
 
 package org.phoenicis.configuration.localisation;
 
-import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xnap.commons.i18n.I18n;
@@ -31,7 +30,6 @@ import java.lang.reflect.Parameter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Safe
 public final class Localisation {
     private static final Logger LOGGER = LoggerFactory.getLogger(Localisation.class);
     private static final LocalisationHelper localisationHelper = new LocalisationHelper();
