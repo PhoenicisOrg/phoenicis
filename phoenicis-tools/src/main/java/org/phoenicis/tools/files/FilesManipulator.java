@@ -35,6 +35,10 @@ public class FilesManipulator {
                 && (fileIside.equals(directory) || isInSubDirectory(directory, fileIside.getParentFile()));
     }
 
+    protected boolean isInDirectory(File file) {
+        return isInSubDirectory(new File(userRoot), file);
+    }
+
     protected void assertInDirectory(File file) {
         if (!isInSubDirectory(new File(userRoot), file)) {
             throw new IllegalArgumentException(

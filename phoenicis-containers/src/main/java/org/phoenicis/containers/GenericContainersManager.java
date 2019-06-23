@@ -28,8 +28,8 @@ import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
 import org.phoenicis.tools.files.FileUtilities;
@@ -120,9 +120,7 @@ public class GenericContainersManager implements ContainersManager {
     @Override
     public void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError) {
         try {
-            final File containerPath = new File(container.getPath());
-
-            this.fileUtilities.remove(containerPath);
+            this.fileUtilities.remove(container.getPath());
         } catch (IOException e) {
             LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
             onError.accept(e);

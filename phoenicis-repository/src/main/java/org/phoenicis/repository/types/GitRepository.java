@@ -22,7 +22,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.phoenicis.repository.RepositoryException;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.tools.files.FileUtilities;
@@ -176,7 +175,7 @@ public class GitRepository implements Repository {
     @Override
     public void onDelete() {
         try {
-            fileUtilities.remove(this.localFolder);
+            fileUtilities.remove(this.localFolder.getAbsolutePath());
 
             LOGGER.info("Deleted " + this);
         } catch (IOException e) {
