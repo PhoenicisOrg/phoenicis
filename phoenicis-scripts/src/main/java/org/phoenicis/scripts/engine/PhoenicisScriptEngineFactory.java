@@ -18,6 +18,7 @@
 
 package org.phoenicis.scripts.engine;
 
+import org.phoenicis.scripts.engine.implementation.PhoenicisSandbox;
 import org.phoenicis.scripts.engine.injectors.EngineInjector;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 
@@ -25,15 +26,18 @@ import java.util.List;
 
 public class PhoenicisScriptEngineFactory {
     private final ScriptEngineType type;
+    private final PhoenicisSandbox phoenicisSandbox;
     private final List<EngineInjector> engineInjectors;
 
-    public PhoenicisScriptEngineFactory(ScriptEngineType type, List<EngineInjector> engineInjectors) {
+    public PhoenicisScriptEngineFactory(PhoenicisSandbox phoenicisSandbox, ScriptEngineType type,
+            List<EngineInjector> engineInjectors) {
         this.type = type;
         this.engineInjectors = engineInjectors;
+        this.phoenicisSandbox = phoenicisSandbox;
     }
 
     public PhoenicisScriptEngine createEngine() {
-        final PhoenicisScriptEngine phoenicisScriptEngine = type.createScriptEngine();
+        final PhoenicisScriptEngine phoenicisScriptEngine = type.createScriptEngine(this.phoenicisSandbox);
 
         engineInjectors.forEach(engineInjector -> engineInjector.injectInto(phoenicisScriptEngine));
 

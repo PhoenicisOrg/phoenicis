@@ -1,8 +1,11 @@
 package org.phoenicis.scripts.ui;
 
+import org.phoenicis.configuration.security.Safe;
+
 /**
  * type of the installation
  */
+@Safe
 public enum InstallationType {
     APPS("Apps"), ENGINES("Engines"), VERBS("Verbs");
 

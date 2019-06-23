@@ -21,6 +21,7 @@ package org.phoenicis.scripts;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.engine.implementation.PhoenicisSandbox;
 import org.phoenicis.scripts.interpreter.PhoenicisScriptInterpreter;
 import org.phoenicis.scripts.engine.ScriptEngineType;
 import org.phoenicis.scripts.engine.injectors.*;
@@ -52,17 +53,26 @@ public class ScriptsConfiguration {
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
+    public PhoenicisSandbox phoenicisSandbox() {
+        return new PhoenicisSandbox();
+    }
+
+    @Bean
     public PhoenicisScriptEngineFactory graalScriptEngineFactory() {
-        return new PhoenicisScriptEngineFactory(ScriptEngineType.GRAAL, Arrays.asList(new ScriptUtilitiesInjector(),
-                new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
-                new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
+        return new PhoenicisScriptEngineFactory(phoenicisSandbox(), ScriptEngineType.GRAAL,
+                Arrays.asList(new ScriptUtilitiesInjector(),
+                        new BeanInjector(applicationContext),
+                        new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
+                        new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
 
     @Bean
     public PhoenicisScriptEngineFactory nashornScriptEngineFactory() {
-        return new PhoenicisScriptEngineFactory(ScriptEngineType.NASHORN, Arrays.asList(new ScriptUtilitiesInjector(),
-                new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
-                new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
+        return new PhoenicisScriptEngineFactory(phoenicisSandbox(), ScriptEngineType.NASHORN,
+                Arrays.asList(new ScriptUtilitiesInjector(),
+                        new BeanInjector(applicationContext),
+                        new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
+                        new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
 
     @Bean

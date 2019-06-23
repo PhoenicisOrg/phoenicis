@@ -1,6 +1,7 @@
 package org.phoenicis.scripts.engine;
 
 import org.phoenicis.scripts.engine.implementation.JSAScriptEngine;
+import org.phoenicis.scripts.engine.implementation.PhoenicisSandbox;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.engine.implementation.PolyglotScriptEngine;
 
@@ -12,15 +13,15 @@ import java.util.Map;
 public enum ScriptEngineType {
     NASHORN("nashorn") {
         @Override
-        public PhoenicisScriptEngine createScriptEngine() {
+        public PhoenicisScriptEngine createScriptEngine(PhoenicisSandbox sandbox) {
             return new JSAScriptEngine("nashorn");
         }
     },
 
     GRAAL("graal.js") {
         @Override
-        public PhoenicisScriptEngine createScriptEngine() {
-            return new PolyglotScriptEngine("js", Map.of("js.nashorn-compat", "true"));
+        public PhoenicisScriptEngine createScriptEngine(PhoenicisSandbox sandbox) {
+            return new PolyglotScriptEngine(sandbox, "js", Map.of("js.nashorn-compat", "true"));
         }
     };
 
@@ -43,7 +44,7 @@ public enum ScriptEngineType {
      *
      * @return The new instance of the {@link ScriptEngineType}
      */
-    public abstract PhoenicisScriptEngine createScriptEngine();
+    public abstract PhoenicisScriptEngine createScriptEngine(PhoenicisSandbox phoenicisSandbox);
 
     @Override
     public String toString() {
