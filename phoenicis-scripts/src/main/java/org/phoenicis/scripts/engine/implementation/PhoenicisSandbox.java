@@ -27,10 +27,7 @@ public class PhoenicisSandbox {
         }
 
         // Needed by GraalVM
-        if (identifier.startsWith("java.net.URLClassLoader")) {
-            return true;
-        }
+        return identifier.startsWith("java.net.URLClassLoader");
 
-        return false;
     }
 }
