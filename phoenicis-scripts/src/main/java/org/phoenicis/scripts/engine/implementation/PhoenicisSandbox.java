@@ -3,6 +3,9 @@ package org.phoenicis.scripts.engine.implementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Filters classes that are allowed to be used inside scripts
+ */
 public class PhoenicisSandbox {
     private static final Logger LOGGER = LoggerFactory.getLogger(PhoenicisSandbox.class);
 
