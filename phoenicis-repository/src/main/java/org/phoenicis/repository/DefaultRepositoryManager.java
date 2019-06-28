@@ -10,7 +10,10 @@ import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
@@ -28,8 +31,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
     private final ClasspathRepository.Factory classPathRepositoryFactory;
     private final String cacheDirectoryPath;
 
-    private final FileUtilities fileUtilities;
-
     private Map<RepositoryLocation<? extends Repository>, Repository> repositoryMap;
 
     private MultipleRepository multipleRepository;
@@ -39,7 +40,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
     private List<CallbackPair> callbacks;
 
     public DefaultRepositoryManager(ExecutorService executorService, String cacheDirectoryPath,
-            FileUtilities fileUtilities,
             LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
             BackgroundRepository.Factory backgroundRepositoryFactory) {
         super();
@@ -47,7 +47,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
         this.localRepositoryFactory = localRepositoryFactory;
         this.classPathRepositoryFactory = classPathRepositoryFactory;
         this.cacheDirectoryPath = cacheDirectoryPath;
-        this.fileUtilities = fileUtilities;
 
         this.repositoryMap = new HashMap<>();
         this.callbacks = new CopyOnWriteArrayList<>();
@@ -107,9 +106,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
         // add the new repositories
         repositoryLocations.forEach(repositoryLocation -> {
             if (!this.repositoryMap.containsKey(repositoryLocation)) {
-                final Repository repository = repositoryLocation.createRepository(cacheDirectoryPath,
-                        localRepositoryFactory,
-                        classPathRepositoryFactory, fileUtilities);
+                final Repository repository = repositoryLocation.createRepository(
+                        cacheDirectoryPath, localRepositoryFactory, classPathRepositoryFactory);
 
                 this.repositoryMap.put(repositoryLocation, repository);
             }
@@ -126,8 +124,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
         LOGGER.info(String.format("Adding repositories: %s at index %d", Arrays.toString(repositoryUrls), index));
 
         for (int repositoryUrlIndex = 0; repositoryUrlIndex < repositoryUrls.length; repositoryUrlIndex++) {
-            Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(cacheDirectoryPath,
-                    localRepositoryFactory, classPathRepositoryFactory, fileUtilities);
+            Repository repository = repositoryUrls[repositoryUrlIndex].createRepository(
+                    cacheDirectoryPath, localRepositoryFactory, classPathRepositoryFactory);
 
             this.repositoryMap.put(repositoryUrls[repositoryUrlIndex], repository);
 

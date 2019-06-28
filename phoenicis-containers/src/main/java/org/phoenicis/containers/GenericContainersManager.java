@@ -20,6 +20,7 @@ package org.phoenicis.containers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
@@ -32,7 +33,6 @@ import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
-import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +40,9 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,7 +62,6 @@ public class GenericContainersManager implements ContainersManager {
     private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
     private final LibraryManager libraryManager;
     private final ShortcutManager shortcutManager;
-    private final FileUtilities fileUtilities;
     private final ScriptInterpreter scriptInterpreter;
     private ObjectMapper objectMapper;
 
@@ -69,20 +71,17 @@ public class GenericContainersManager implements ContainersManager {
      * @param compatibleConfigFileFormatFactory
      * @param libraryManager
      * @param shortcutManager
-     * @param fileUtilities
      * @param scriptInterpreter
      * @param objectMapper
      */
     public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             LibraryManager libraryManager,
             ShortcutManager shortcutManager,
-            FileUtilities fileUtilities,
             ScriptInterpreter scriptInterpreter,
             ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.libraryManager = libraryManager;
         this.shortcutManager = shortcutManager;
-        this.fileUtilities = fileUtilities;
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
@@ -120,7 +119,9 @@ public class GenericContainersManager implements ContainersManager {
     @Override
     public void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError) {
         try {
-            this.fileUtilities.remove(container.getPath());
+            final File containerFile = new File(container.getPath());
+
+            FileUtils.deleteDirectory(containerFile);
         } catch (IOException e) {
             LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
             onError.accept(e);
