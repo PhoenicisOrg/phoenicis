@@ -18,14 +18,13 @@
 
 package org.phoenicis.repository.types;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.errors.RepositoryNotFoundException;
 import org.phoenicis.repository.RepositoryException;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,8 +36,6 @@ import java.nio.channels.FileLock;
 
 public class GitRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
-
-    private final FileUtilities fileUtilities;
 
     private final URI repositoryUri;
     private final String branch;
@@ -52,10 +49,9 @@ public class GitRepository implements Repository {
     private static final Object mutex = new Object();
 
     public GitRepository(URI repositoryUri, String branch, String cacheDirectoryPath,
-            LocalRepository.Factory localRepositoryFactory, FileUtilities fileUtilities) {
+            LocalRepository.Factory localRepositoryFactory) {
         super();
 
-        this.fileUtilities = fileUtilities;
         this.repositoryUri = repositoryUri;
         this.branch = branch == null ? "master" : branch;
         this.localRepositoryFactory = localRepositoryFactory;
@@ -176,7 +172,7 @@ public class GitRepository implements Repository {
     @Override
     public void onDelete() {
         try {
-            fileUtilities.remove(this.localFolder);
+            FileUtils.deleteDirectory(this.localFolder);
 
             LOGGER.info("Deleted " + this);
         } catch (IOException e) {

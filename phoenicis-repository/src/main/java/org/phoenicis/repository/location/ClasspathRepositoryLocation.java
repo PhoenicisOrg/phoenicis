@@ -37,8 +37,7 @@ public class ClasspathRepositoryLocation extends RepositoryLocation<ClasspathRep
 
     @Override
     public ClasspathRepository createRepository(String cacheDirectoryPath,
-            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
-            FileUtilities fileUtilities) {
+            LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory) {
         return classPathRepositoryFactory.createInstance(packagePath);
     }
 

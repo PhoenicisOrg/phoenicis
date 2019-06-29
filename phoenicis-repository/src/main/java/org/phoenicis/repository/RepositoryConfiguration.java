@@ -24,7 +24,6 @@ import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.BackgroundRepository;
 import org.phoenicis.repository.types.ClasspathRepository;
 import org.phoenicis.repository.types.LocalRepository;
-import org.phoenicis.tools.files.FileUtilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -58,9 +57,6 @@ public class RepositoryConfiguration {
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
 
     @Autowired
-    private FileUtilities fileUtilities;
-
-    @Autowired
     private ApplicationContext applicationContext;
 
     @Value("${application.repository.location.loader.name:filesystemLocationLoader}")
@@ -70,7 +66,6 @@ public class RepositoryConfiguration {
     public RepositoryManager repositoryManager() {
         RepositoryManager repositoryManager = new DefaultRepositoryManager(
                 multithreadingConfiguration.appsExecutorService(), cacheDirectoryPath,
-                fileUtilities,
                 localRepositoryFactory(),
                 classPathRepositoryFactory(),
                 backgroundRepositoryFactory());

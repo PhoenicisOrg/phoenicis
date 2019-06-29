@@ -29,57 +29,116 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * A collection of file utilities available to the scripts
+ */
 @Safe
 public class FileUtilities extends FilesManipulator {
     @Value("${application.user.tmp}")
     private String tmpDirectory;
 
     /**
-     * lists files and directories in given directory (non-recursive)
-     * @param directory
+     * Lists files and directories in a given directory (non-recursive)
+     *
+     * @param path The path representing the directory
      * @return list of files and directories
      */
-    public String[] ls(File directory) {
+    public String[] ls(String path) {
+        final File directory = new File(path);
+
+        if (!directory.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" is not a directory", path));
+        }
+
         assertInDirectory(directory);
+
         File[] files = directory.listFiles();
+
+        if (files == null) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not denote a directory", path));
+        }
+
         return Arrays.stream(files)
-                .map(file -> file.getName())
+                .map(File::getName)
                 .toArray(String[]::new);
     }
 
     /**
-     * creates a directory
-     * @param directoryToCreate
+     * Checks whether a file with the given path exists
+     *
+     * @param path The path leading to the file
+     * @return True if a file with the given path exists, false otherwise
      */
-    public void mkdir(File directoryToCreate) {
+    public boolean exists(String path) {
+        final File file = new File(path);
+
+        assertInDirectory(file);
+
+        return file.exists();
+    }
+
+    /**
+     * Creates a directory with a given path
+     *
+     * @param path The path representing the directory
+     */
+    public void mkdir(String path) {
+        final File directoryToCreate = new File(path);
+
         assertInDirectory(directoryToCreate);
+
         directoryToCreate.mkdirs();
     }
 
     /**
-     * creates symbolic link
-     * @param destination
-     * @param target
-     * @throws IOException
+     * Creates a symbolic link from a target file to a destination file
+     *
+     * @param linkPath The path of the symbolic link to create
+     * @param targetPath The target of the symbolic link
+     * @throws IOException if an error during link creation occurs
      */
-    public void createSymbolicLink(File destination, File target) throws IOException {
-        assertInDirectory(destination);
+    public void createSymbolicLink(String linkPath, String targetPath) throws IOException {
+        final File link = new File(linkPath);
+        final File target = new File(targetPath);
+
+        if (!target.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", targetPath));
+        }
+
+        if (link.exists()) {
+            throw new IllegalArgumentException(String.format("Link \"%s\" already exists", linkPath));
+        }
+
+        assertInDirectory(link);
         assertInDirectory(target);
 
-        Files.createSymbolicLink(destination.toPath(), target.toPath());
+        Files.createSymbolicLink(link.toPath(), target.toPath());
     }
 
     /**
-     * copies file
-     * @param source
-     * @param target
-     * @throws IOException
+     * Copies all files contained in the given source path to the given target path
+     *
+     * @param sourcePath The source path
+     * @param targetPath The target path
+     * @throws IOException if an error during the copy operation occurs
      */
-    public void copy(File source, File target) throws IOException {
+    public void copy(String sourcePath, String targetPath) throws IOException {
+        final File source = new File(sourcePath);
+        final File target = new File(targetPath);
+
+        if (!source.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", targetPath));
+        }
+
         assertInDirectory(source);
         assertInDirectory(target);
 
@@ -95,10 +154,17 @@ public class FileUtilities extends FilesManipulator {
     }
 
     /**
-     * deletes a file only if it is inside Phoenicis root
-     * @param fileToDelete fileOrDirectoryToDelete
+     * Deletes a file denoted by a given path if it is inside the Phoenicis root location
+     *
+     * @param path The path denoting the to be deleted file
      */
-    public void remove(File fileToDelete) throws IOException {
+    public void remove(String path) throws IOException {
+        final File fileToDelete = new File(path);
+
+        if (!fileToDelete.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
         assertInDirectory(fileToDelete);
 
         if (fileToDelete.isDirectory()) {
@@ -109,67 +175,125 @@ public class FileUtilities extends FilesManipulator {
     }
 
     /**
-     * fetches content of the given file
-     * @param file
-     * @return content string
-     * @throws IOException
+     * Fetches the file name of the file denoted by the given path
+     *
+     * @param path The path
+     * @return The file name
      */
-    public String getFileContent(File file) throws IOException {
+    public String getFileName(String path) {
+        final File file = new File(path);
+
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
+        assertInDirectory(file);
+
+        return file.getName();
+    }
+
+    /**
+     * Fetches the content of the file located in the given path
+     *
+     * @param path The path to the file
+     * @return The file content as an UTF-8 String
+     * @throws IOException if an error while loading the file content occurs
+     */
+    public String getFileContent(String path) throws IOException {
+        final File file = new File(path);
+
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
         assertInDirectory(file);
 
         return FileUtils.readFileToString(file, "UTF-8");
     }
 
     /**
-     * computes file size of the given file
-     * @param file
-     * @return file size
-     * @throws IOException
+     * Computes the file size of the file or directory denoted by the given path
+     *
+     * @param path The path
+     * @return The size of the given file/directory
+     * @throws IOException if an error while retrieving the file/folder size occurs
      */
-    public long getSize(File file) throws IOException {
+    public long getSize(String path) throws IOException {
+        final File file = new File(path);
+
+        if (!file.exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
         assertInDirectory(file);
 
         Path folder = Paths.get(file.getAbsolutePath());
-        return Files.walk(folder).filter(p -> p.toFile().isFile()).mapToLong(p -> p.toFile().length()).sum();
+
+        return Files.walk(folder)
+                .filter(p -> p.toFile().isFile())
+                .mapToLong(p -> p.toFile().length())
+                .sum();
     }
 
     /**
-     * writes content to file
-     * @param file
-     * @param content
-     * @throws IOException
+     * Writes the given content String to the file denoted by the given path.
+     * If the file already exists its content is replaced with the given String, otherwise the file is created
+     *
+     * @param path The path leading to the destination file
+     * @param content The file content encoded as an UTF-8 String
+     * @throws IOException if an error during the write operation occurs
      */
-    public void writeToFile(File file, String content) throws IOException {
+    public void writeToFile(String path, String content) throws IOException {
+        final File file = new File(path);
+
         assertInDirectory(file);
 
         FileUtils.writeStringToFile(file, content, "UTF-8");
     }
 
     /**
-     * creates temporary file
-     * @param extension
-     * @return
-     * @throws IOException
+     * Creates a temporary file with the given file extension
+     *
+     * @param extension The file extension
+     * @return The path leading to the created temporary file
+     * @throws IOException if an error during the temporary file creation occurs
      */
-    public File createTmpFile(String extension) throws IOException {
+    public String createTmpFile(String extension) throws IOException {
         final File tmpDirectoryFile = new File(tmpDirectory);
+
         tmpDirectoryFile.mkdirs();
         final File file = File.createTempFile("phoenicis", "." + extension, tmpDirectoryFile);
         file.deleteOnExit();
-        return file;
+
+        return file.getAbsolutePath();
     }
 
     /**
-     * creates temporary directory
-     * @return the path of the directory created
-     * @throws IOException if any error occurs
+     * Creates a temporary directory
+     *
+     * @return The path of the created temporary directory
+     * @throws IOException if an error during the temporary directory creation occurs
      */
-    public File createTmpDir() throws IOException {
+    public String createTmpDir() throws IOException {
         final File tmpDirectoryFile = new File(tmpDirectory);
+
         tmpDirectoryFile.mkdirs();
         final File file = Files.createTempDirectory(tmpDirectoryFile.toPath(), "phoenicis").toFile();
         file.deleteOnExit();
-        return file;
+
+        return file.getAbsolutePath();
+    }
+
+    public void chmod(String filePath, String permissions) throws IOException {
+        final Path path = Paths.get(filePath);
+
+        if (!path.toFile().exists()) {
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+        }
+
+        final Set<PosixFilePermission> permissionsObj = PosixFilePermissions.fromString(permissions);
+
+        Files.setPosixFilePermissions(path, permissionsObj);
     }
 
     private Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
