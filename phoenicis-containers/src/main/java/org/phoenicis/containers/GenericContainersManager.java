@@ -139,7 +139,8 @@ public class GenericContainersManager implements ContainersManager {
                             ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
                                 final org.graalvm.polyglot.Value shortcutReader = (org.graalvm.polyglot.Value) output;
                                 shortcutReader.invokeMember("of", shortcut);
-                                final String containerName = shortcutReader.invokeMember("container").as(String.class);
+                                final String containerName = shortcutReader.invokeMember("getContainer")
+                                        .as(String.class);
                                 if (containerName.equals(container.getName())) {
                                     this.shortcutManager.deleteShortcut(shortcut);
                                 }
