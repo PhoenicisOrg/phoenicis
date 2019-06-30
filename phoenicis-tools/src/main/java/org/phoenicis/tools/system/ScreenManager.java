@@ -21,13 +21,14 @@ package org.phoenicis.tools.system;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.OperatingSystem;
 
-public class setVirtualDesktop {
+@Safe
+public class ScreenManager {
     /**
-     *Fetch the screen resolution and sets the virtual desktop to match it
+     * Fetch the screen resolution and sets the virtual desktop to match it
      *
-     *@return the current screen resolution
+     * @return the current screen resolution
      */
     public virtualDesktop fetchCurrentScreenResolution() {
-        return screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        return java.awt.Toolkit.getDefaultToolkit().getScreenSize();
     }
 }
