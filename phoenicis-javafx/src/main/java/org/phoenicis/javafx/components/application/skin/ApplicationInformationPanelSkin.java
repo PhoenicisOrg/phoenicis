@@ -15,12 +15,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.scripts.Installer;
 
 import java.net.URI;
 
@@ -228,20 +230,21 @@ public class ApplicationInformationPanelSkin
         executeBuilder.append(script.getScript());
         executeBuilder.append("\n");
 
-        // TODO: use Java interface instead of String
-        executeBuilder.append("new Installer().run();");
+        getControl().getScriptInterpreter().createInteractiveSession()
+                .eval(executeBuilder.toString(), result -> {
+                    Value installer = (Value) result;
 
-        // execute the script
-        getControl().getScriptInterpreter().runScript(executeBuilder.toString(), e -> Platform.runLater(() -> {
-            // no exception if installation is cancelled
-            if (!(e.getCause() instanceof InterruptedException)) {
-                final ErrorDialog errorDialog = ErrorDialog.builder()
-                        .withMessage(tr("The script ended unexpectedly"))
-                        .withException(e)
-                        .build();
+                    installer.as(Installer.class).go();
+                }, e -> Platform.runLater(() -> {
+                    // no exception if installation is cancelled
+                    if (!(e.getCause() instanceof InterruptedException)) {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("The script ended unexpectedly"))
+                                .withException(e)
+                                .build();
 
-                errorDialog.showAndWait();
-            }
-        }));
+                        errorDialog.showAndWait();
+                    }
+                }));
     }
 }
