@@ -27,6 +27,7 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
+import org.phoenicis.library.ShortcutReader;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -136,15 +137,21 @@ public class GenericContainersManager implements ContainersManager {
                             .createInteractiveSession();
 
                     interactiveScriptSession.eval("include(\"engines." + engineId + ".shortcuts.reader\");",
-                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final org.graalvm.polyglot.Value shortcutReader = (org.graalvm.polyglot.Value) output;
-                                shortcutReader.invokeMember("of", shortcut);
-                                final String containerName = shortcutReader.invokeMember("getContainer")
-                                        .as(String.class);
+                            result -> {
+                                final org.graalvm.polyglot.Value shortcutReaderClass = (org.graalvm.polyglot.Value) result;
+
+                                final ShortcutReader shortcutReader = shortcutReaderClass.newInstance()
+                                        .as(ShortcutReader.class);
+
+                                shortcutReader.of(shortcut);
+
+                                final String containerName = shortcutReader.getContainer();
+
                                 if (containerName.equals(container.getName())) {
                                     this.shortcutManager.deleteShortcut(shortcut);
                                 }
-                            }, onError), onError);
+                            },
+                            onError);
                 });
 
         onSuccess.accept(container);
