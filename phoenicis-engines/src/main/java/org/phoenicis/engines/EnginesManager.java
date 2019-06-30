@@ -24,9 +24,11 @@ import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
-import org.phoenicis.repository.dto.*;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
+import org.phoenicis.repository.dto.CategoryDTO;
+import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.TypeDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +50,7 @@ public class EnginesManager {
 
     /**
      * constructor
+     *
      * @param scriptInterpreter to access the javascript engine implementation
      * @param objectMapper to parse the available versions
      */
@@ -58,6 +61,7 @@ public class EnginesManager {
 
     /**
      * fetches the required engine
+     *
      * @param engineId engine ID (e.g. "wine")
      * @param doneCallback callback which will be executed with the fetched engine
      * @param errorCallback callback which will be executed if an error occurs
@@ -65,16 +69,22 @@ public class EnginesManager {
     public void getEngine(String engineId, Consumer<Engine> doneCallback, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(
-                "include(\"engines." + engineId + ".engine.implementation\"); new Engine();",
+        final String include = String.format("include(\"engines.%s.engine.implementation\");", engineId);
+
+        interactiveScriptSession.eval(include,
                 output -> {
-                    final Engine engine = ((Value) output).as(Engine.class);
+                    final Value engineClass = (Value) output;
+
+                    final Engine engine = engineClass.newInstance().as(Engine.class);
+
                     doneCallback.accept(engine);
-                }, errorCallback);
+                },
+                errorCallback);
     }
 
     /**
      * fetches the available versions of a certain engine
+     *
      * @param engineId engine ID (e.g. "wine")
      * @param callback callback which will be executed with the fetched engine versions
      * @param errorCallback callback which will be executed if an error occurs
@@ -86,6 +96,7 @@ public class EnginesManager {
 
     /**
      * fetches all available engines from the repository
+     *
      * @param categoryDTOS engine categories from the repository
      * @return available engines
      */
@@ -105,6 +116,7 @@ public class EnginesManager {
 
     /**
      * reads available engine versions from JSON
+     *
      * @param json JSON file
      * @return available engine versions
      */
@@ -121,6 +133,7 @@ public class EnginesManager {
 
     /**
      * fetches the available engines
+     *
      * @param repositoryDTO
      * @param callback
      * @param errorCallback callback which will be executed if an error occurs
@@ -135,6 +148,7 @@ public class EnginesManager {
 
     /**
      * retrieves a Javascript string which can be used to fetch the available engines
+     *
      * @param repositoryDTO repository containing the engines
      * @return Javascript
      */
@@ -146,12 +160,14 @@ public class EnginesManager {
                 categoryDTOS = typeDTO.getCategories();
             }
         }
+
         StringBuilder script = new StringBuilder();
         script.append("(function () {\n");
-        script.append("var engines = {};\n");
+        script.append("const engines = {};\n");
+        script.append("let Engine = null;\n");
         for (CategoryDTO engine : categoryDTOS) {
             final String engineId = engine.getId().replaceAll("^.*\\.", "");
-            script.append("include(\"engines." + engineId + ".engine.implementation\");\n");
+            script.append("Engine = include(\"engines." + engineId + ".engine.implementation\");\n");
             script.append("if (!(\"" + engineId + "\" in engines))\n");
             script.append("{\n");
             script.append("engines[\"" + engineId + "\"] = new Engine();\n");
