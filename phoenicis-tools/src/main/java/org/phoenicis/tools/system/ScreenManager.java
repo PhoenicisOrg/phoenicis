@@ -19,6 +19,8 @@
 package org.phoenicis.tools.system;
 
 import org.phoenicis.configuration.security.Safe;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 @Safe
 public class ScreenManager {
@@ -29,5 +31,8 @@ public class ScreenManager {
      */
     public virtualDesktop fetchCurrentScreenResolution() {
         return java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println(getScreenSize().width);
+        System.out.println(getScreenSize().height);
+
     }
 }
