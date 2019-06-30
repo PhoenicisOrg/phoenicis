@@ -155,4 +155,9 @@ public class ToolsConfiguration {
     public LnkParser lnkParser() {
         return new LnkParser(new org.phoenicis.lnk.LnkParser());
     }
+    
+    @Bean
+    public ScreenManager screenManager() {
+        return new ScreenManager();
+    }
 }
