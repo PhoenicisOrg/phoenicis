@@ -30,7 +30,7 @@ public class ScreenManager {
      * @return the current screen resolution
      */
     public virtualDesktop fetchCurrentScreenResolution() {
-        return java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        return getDefaultToolkit().getScreenSize();
         System.out.println(getScreenSize().width);
         System.out.println(getScreenSize().height);
 
