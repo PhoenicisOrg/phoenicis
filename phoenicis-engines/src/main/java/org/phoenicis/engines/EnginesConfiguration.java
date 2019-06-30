@@ -19,6 +19,7 @@
 package org.phoenicis.engines;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
+import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +33,9 @@ public class EnginesConfiguration {
     @Autowired
     private PhoenicisGlobalConfiguration phoenicisGlobalConfiguration;
 
+    @Autowired
+    private MultithreadingConfiguration multithreadingConfiguration;
+
     @Bean
     public EnginesManager enginesSource() {
         return new EnginesManager(scriptsConfiguration.scriptInterpreter(),
@@ -40,7 +44,8 @@ public class EnginesConfiguration {
 
     @Bean
     public EngineSettingsManager engineSettingsManager() {
-        return new EngineSettingsManager(scriptsConfiguration.scriptInterpreter());
+        return new EngineSettingsManager(scriptsConfiguration.graalScriptEngineFactory(),
+                multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean
