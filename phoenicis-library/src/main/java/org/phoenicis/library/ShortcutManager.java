@@ -24,8 +24,8 @@ import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.library.dto.ShortcutInfoDTO;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,11 +121,15 @@ public class ShortcutManager {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
         interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
-                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final Value shortcutReader = (Value) output;
-                    shortcutReader.invokeMember("of", shortcutDTO);
-                    shortcutReader.invokeMember("uninstall");
-                }, errorCallback), errorCallback);
+                result -> {
+                    Value shortcutReaderClass = (Value) result;
+
+                    ShortcutReader shortcutReader = shortcutReaderClass.newInstance().as(ShortcutReader.class);
+
+                    shortcutReader.of(shortcutDTO);
+                    shortcutReader.uninstall();
+                },
+                errorCallback);
     }
 
     public void deleteShortcut(ShortcutDTO shortcutDTO) {
@@ -216,6 +220,7 @@ public class ShortcutManager {
 
     /**
      * creates a file with a resource fallback
+     *
      * @param path file path
      * @param resource resource which shall be used if file path cannot be accessed
      * @return created file
