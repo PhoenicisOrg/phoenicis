@@ -33,16 +33,18 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
     /**
      * Constructor
      *
+     * @param phoenicisSandbox a Phoenicis Sandbox bean
      * @param language The language name
      * @param options A map of options for the Polyglot context
      */
-    public PolyglotScriptEngine(String language, Map<String, String> options) {
+    public PolyglotScriptEngine(PhoenicisSandbox phoenicisSandbox, String language, Map<String, String> options) {
         super();
 
         this.errorHandlers = new ArrayList<>();
         this.language = language;
         this.context = Context.newBuilder(language)
                 .allowExperimentalOptions(true)
+                .allowHostClassLookup(phoenicisSandbox::isSafe)
                 .options(options).allowHostAccess(true).build();
     }
 
