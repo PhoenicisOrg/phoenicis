@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-10 20:49+0000\n"
-"PO-Revision-Date: 2019-06-12 18:05\n"
+"POT-Creation-Date: 2019-06-30 11:00+0000\n"
+"PO-Revision-Date: 2019-07-01 10:52\n"
 "Last-Translator: plata\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -309,7 +309,7 @@ msgid "Not installed"
 msgstr "Nicht installiert"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:185
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
 msgid "Install"
 msgstr "Installieren"
 
@@ -341,7 +341,7 @@ msgstr "Container löschen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
 msgid "Change engine version"
-msgstr ""
+msgstr "Engine Version ändern"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:78
 msgid "Open in file browser"
@@ -440,7 +440,7 @@ msgstr "Sind Sie sicher, dass Sie den Container {0} löschen möchten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:172
 msgid "Error during engine engine version change"
-msgstr ""
+msgstr "Fehler beim Ändern der Engine Version"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:197
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:209
@@ -559,20 +559,20 @@ msgstr "Alle Betriebssysteme"
 msgid "Filters"
 msgstr "Filter"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:125
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:127
 msgid "Installers"
 msgstr "Installationsskripts"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:181
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:183
 #, java-format
 msgid "Source: {0}"
 msgstr "Quelle: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:193
 msgid "Error while trying to download the installer"
 msgstr "Fehler beim Herunterladen des Skripts"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:239
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:242
 msgid "The script ended unexpectedly"
 msgstr "Das Skript wurde unerwartet beendet"
 
