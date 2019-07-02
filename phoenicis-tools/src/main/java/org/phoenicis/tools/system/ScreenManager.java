@@ -30,8 +30,12 @@ public class ScreenManager {
      */
      public Dimension fetchCurrentScreenResolution() {
         return getDefaultToolkit().getScreenSize();
-        int width = System.out.println(getScreenSize().width);
-        int height = System.out.println(getScreenSize().height);
+    }
+     public double getScreenWidth() {
+        return getDefaultToolkit().getScreenSize().getWidth();
+    }
 
+     public double getScreenHeight() {
+        return getDefaultToolkit().getScreenSize().getHeight();
     }
 }
