@@ -19,7 +19,6 @@
 package org.phoenicis.tools.system;
 
 import org.phoenicis.configuration.security.Safe;
-import java.awt.Toolkit;
 
 @Safe
 public class ScreenManager {
