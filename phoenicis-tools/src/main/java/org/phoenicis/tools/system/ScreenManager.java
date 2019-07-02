@@ -27,11 +27,7 @@ public class ScreenManager {
      *
      * @return the current screen resolution
      */
-     public double getScreenWidth() {
-        return getDefaultToolkit().getScreenSize().getWidth();
-    }
-
-     public double getScreenHeight() {
-        return getDefaultToolkit().getScreenSize().getHeight();
-    }
+     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+     double width = screenSize.getWidth();
+     double height = screenSize.getHeight();
 }
