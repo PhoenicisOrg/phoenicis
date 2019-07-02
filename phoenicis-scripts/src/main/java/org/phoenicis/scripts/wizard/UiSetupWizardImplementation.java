@@ -283,8 +283,9 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public String browse(String textToShow, String directory, List<String> allowedExtensions) {
+        final List<String> copiedAllowedExtensions = allowedExtensions != null ? List.copyOf(allowedExtensions) : null;
         return messageSender.runAndWait(
-                message -> setupUi.showBrowseStep(message, textToShow, new File(directory), allowedExtensions));
+                message -> setupUi.showBrowseStep(message, textToShow, new File(directory), copiedAllowedExtensions));
     }
 
     /**
