@@ -27,11 +27,11 @@ public class ScreenManager {
      *
      * @return the current screen resolution
      */
-    public double getScreenWidth() {
+    public int double getScreenWidth() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getWidth();
     }
 
-     public double getScreenHeight() {
+     public int double getScreenHeight() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getHeight();
     }
 }
