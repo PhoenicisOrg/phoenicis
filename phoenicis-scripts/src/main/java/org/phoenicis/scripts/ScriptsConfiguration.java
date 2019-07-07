@@ -59,13 +59,6 @@ public class ScriptsConfiguration {
     }
 
     @Bean
-    public PhoenicisScriptEngineFactory nashornScriptEngineFactory() {
-        return new PhoenicisScriptEngineFactory(ScriptEngineType.NASHORN, Arrays.asList(new ScriptUtilitiesInjector(),
-                new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
-                new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
-    }
-
-    @Bean
     public ScriptFetcher scriptFetcher() {
         return new ScriptFetcher(repositoryConfiguration.repositoryManager());
     }
@@ -79,10 +72,5 @@ public class ScriptsConfiguration {
     @Bean
     ScriptInterpreter graalScriptInterpreter() {
         return new PhoenicisScriptInterpreter(graalScriptEngineFactory());
-    }
-
-    @Bean
-    ScriptInterpreter nashornScriptInterpreter() {
-        return new PhoenicisScriptInterpreter(nashornScriptEngineFactory());
     }
 }
