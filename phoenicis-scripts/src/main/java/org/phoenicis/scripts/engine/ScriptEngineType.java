@@ -20,7 +20,9 @@ public enum ScriptEngineType {
     GRAAL("graal.js") {
         @Override
         public PhoenicisScriptEngine createScriptEngine() {
-            return new PolyglotScriptEngine("js", Map.of("js.nashorn-compat", "true"));
+            return new PolyglotScriptEngine("js",
+                    Map.of("js.nashorn-compat", "true",
+                            "js.experimental-foreign-object-prototype", "true"));
         }
     };
 
