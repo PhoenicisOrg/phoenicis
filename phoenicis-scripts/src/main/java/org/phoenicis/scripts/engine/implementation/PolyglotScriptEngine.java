@@ -43,7 +43,8 @@ public class PolyglotScriptEngine implements PhoenicisScriptEngine {
         this.language = language;
         this.context = Context.newBuilder(language)
                 .allowExperimentalOptions(true)
-                .options(options).allowHostAccess(true).build();
+                .allowHostAccess(true)
+                .options(options).build();
     }
 
     @Override
