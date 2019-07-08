@@ -19,6 +19,7 @@
 package org.phoenicis.tools.system;
 
 import org.phoenicis.configuration.security.Safe;
+import java.awt.GraphicsEnvironment;
 
 @Safe
 public class ScreenManager {
@@ -27,11 +28,11 @@ public class ScreenManager {
      *
      * @return the current screen resolution
      */
-    public int double getScreenWidth() {
+    public int getScreenWidth() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
     }
 
-     public int double getScreenHeight() {
+     public int getScreenHeight() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
     }
 }
