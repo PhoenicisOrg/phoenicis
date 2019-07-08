@@ -24,12 +24,12 @@ public class IncludeInjector implements EngineInjector {
         final Map<String, Object> includedScripts = new HashMap<>();
 
         phoenicisScriptEngine.put("include", (Function<String, Object>) argument -> {
-            final String script = scriptFetcher.getScript(argument);
-            if (script == null) {
-                throwException(new ScriptException(argument + " is not found"));
-            }
-
             if (!includedScripts.containsKey(argument)) {
+                final String script = scriptFetcher.getScript(argument);
+                if (script == null) {
+                    throwException(new ScriptException(argument + " is not found"));
+                }
+
                 includedScripts.put(argument,
                         phoenicisScriptEngine.evalAndReturn("//# sourceURL=" + argument + "\n" + script,
                                 this::throwException));
