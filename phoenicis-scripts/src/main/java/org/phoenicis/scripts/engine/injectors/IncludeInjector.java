@@ -4,8 +4,8 @@ import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -20,7 +20,8 @@ public class IncludeInjector implements EngineInjector {
 
     @Override
     public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
-        final Set<String> includedScripts = new HashSet<>();
+        // store included scripts (include path -> JS object)
+        final Map<String, Object> includedScripts = new HashMap<>();
 
         phoenicisScriptEngine.put("include", (Function<String, Object>) argument -> {
             final String script = scriptFetcher.getScript(argument);
@@ -28,12 +29,13 @@ public class IncludeInjector implements EngineInjector {
                 throwException(new ScriptException(argument + " is not found"));
             }
 
-            if (includedScripts.add(argument)) {
-                return phoenicisScriptEngine.evalAndReturn("//# sourceURL=" + argument + "\n" + script,
-                        this::throwException);
+            if (!includedScripts.containsKey(argument)) {
+                includedScripts.put(argument,
+                        phoenicisScriptEngine.evalAndReturn("//# sourceURL=" + argument + "\n" + script,
+                                this::throwException));
             }
 
-            return null;
+            return includedScripts.get(argument);
         }, this::throwException);
     }
 }
