@@ -31,6 +31,7 @@ public class ScreenManager {
     public int getScreenWidth() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
     }
+
     /**
      * Fetch the screen height in pixels
      *
