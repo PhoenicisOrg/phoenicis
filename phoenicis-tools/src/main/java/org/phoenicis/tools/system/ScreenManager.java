@@ -24,14 +24,18 @@ import java.awt.GraphicsEnvironment;
 @Safe
 public class ScreenManager {
     /**
-     * Fetch the screen resolution and sets the virtual desktop to match it
+     * Fetch the screen width in pixels
      *
-     * @return the current screen resolution
+     * @return the current screen width
      */
     public int getScreenWidth() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
     }
-
+    /**
+     * Fetch the screen height in pixels
+     *
+     * @return the current screen height
+     */
     public int getScreenHeight() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
     }
