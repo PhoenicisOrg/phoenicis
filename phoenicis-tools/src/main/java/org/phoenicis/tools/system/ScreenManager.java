@@ -32,7 +32,7 @@ public class ScreenManager {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
     }
 
-     public int getScreenHeight() {
+    public int getScreenHeight() {
         return GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
     }
 }
