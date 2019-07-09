@@ -28,6 +28,7 @@ import org.phoenicis.tools.files.*;
 import org.phoenicis.tools.http.Downloader;
 import org.phoenicis.tools.lnk.LnkParser;
 import org.phoenicis.tools.system.ArchitectureFetcher;
+import org.phoenicis.tools.system.ScreenManager;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
 import org.phoenicis.tools.system.SystemConfiguration;
 import org.phoenicis.tools.system.opener.AutomaticOpener;
@@ -154,5 +155,10 @@ public class ToolsConfiguration {
     @Bean
     public LnkParser lnkParser() {
         return new LnkParser(new org.phoenicis.lnk.LnkParser());
+    }
+
+    @Bean
+    public ScreenManager screenManager() {
+        return new ScreenManager();
     }
 }
