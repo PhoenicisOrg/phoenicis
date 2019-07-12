@@ -27,9 +27,10 @@ import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.files.*;
 import org.phoenicis.tools.http.Downloader;
 import org.phoenicis.tools.lnk.LnkParser;
+import org.phoenicis.tools.processes.ProcessUtils;
 import org.phoenicis.tools.system.ArchitectureFetcher;
-import org.phoenicis.tools.system.ScreenManager;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
+import org.phoenicis.tools.system.ScreenManager;
 import org.phoenicis.tools.system.SystemConfiguration;
 import org.phoenicis.tools.system.opener.AutomaticOpener;
 import org.phoenicis.tools.system.opener.Opener;
@@ -133,6 +134,11 @@ public class ToolsConfiguration {
     @Bean
     public TerminalOpener terminalOpener() {
         return systemConfiguration.terminalOpener();
+    }
+
+    @Bean
+    public ProcessUtils processUtils() {
+        return new ProcessUtils();
     }
 
     @Bean
