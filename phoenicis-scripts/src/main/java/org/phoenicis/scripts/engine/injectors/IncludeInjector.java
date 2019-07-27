@@ -27,7 +27,7 @@ public class IncludeInjector implements EngineInjector {
             if (!includedScripts.containsKey(argument)) {
                 final String script = scriptFetcher.getScript(argument);
                 if (script == null) {
-                    throwException(new ScriptException(argument + " is not found"));
+                    throwException(new ScriptException("Script '" + argument + "' is not found"));
                 }
 
                 includedScripts.put(argument,
