@@ -1,5 +1,6 @@
 package org.phoenicis.scripts.engine.injectors;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
@@ -30,9 +31,22 @@ public class IncludeInjector implements EngineInjector {
                     throwException(new ScriptException("Script '" + argument + "' is not found"));
                 }
 
-                includedScripts.put(argument,
-                        phoenicisScriptEngine.evalAndReturn("//# sourceURL=" + argument + "\n" + script,
-                                this::throwException));
+                // wrap the loaded script in a function to prevent it from influencing the main script
+                String extendedString = String.format("(module) => { %s }", script);
+                Value includeFunction = (Value) phoenicisScriptEngine.evalAndReturn(extendedString,
+                        this::throwException);
+
+                // create an empty JS object
+                Value module = (Value) phoenicisScriptEngine.evalAndReturn("({})", this::throwException);
+
+                // execute the included function -> populates "module"
+                includeFunction.execute(module);
+
+                if (module.hasMember("default")) {
+                    includedScripts.put(argument, module.getMember("default"));
+                } else {
+                    includedScripts.put(argument, module);
+                }
             }
 
             return includedScripts.get(argument);
