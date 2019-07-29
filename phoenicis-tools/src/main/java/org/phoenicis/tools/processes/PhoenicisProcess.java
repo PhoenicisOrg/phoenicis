@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 /**
- * A wrapper class around the Java {@link Process} class allowing for a save access to the underlying process from the scripts
+ * A wrapper class around the Java {@link Process} class allowing for a save access to the underlying process from the
+ * scripts
  */
 public class PhoenicisProcess {
     /**
