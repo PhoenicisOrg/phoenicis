@@ -29,13 +29,6 @@ public class PhoenicisProcessBuilder {
      */
     private String outputPath;
 
-    /**
-     * Constructor
-     */
-    public PhoenicisProcessBuilder() {
-        super();
-    }
-
     public PhoenicisProcessBuilder withCommand(final List<String> command) {
         this.command = command;
 
@@ -81,8 +74,8 @@ public class PhoenicisProcessBuilder {
             throw new IllegalArgumentException("Base path is either does not exist or is no directory");
         }
 
-        if (this.environment == null) {
-            throw new IllegalArgumentException("Environment can't be null");
+        if (environment == null) {
+            environment = Map.of();
         }
 
         final ProcessBuilder processBuilder = new ProcessBuilder()
