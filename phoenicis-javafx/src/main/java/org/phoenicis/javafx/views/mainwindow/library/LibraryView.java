@@ -345,7 +345,8 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
 
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        final String scriptInclude = "include(\"engines." + engineId + "\".shortcuts." + engineId + "\");";
+        final String scriptInclude = "const Shortcut = include(\"engines." + engineId + "\".shortcuts." + engineId
+                + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
                 ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
