@@ -26,9 +26,8 @@ import org.phoenicis.engines.dto.EngineCategoryDTO;
 import org.phoenicis.engines.dto.EngineSubCategoryDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,146 +36,139 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
- * manages the several engines provided by the repository
+ * Manages the several engines provided by the repository
  */
 @Safe
 public class EnginesManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(EnginesManager.class);
-    private final ScriptInterpreter scriptInterpreter;
+    private final PhoenicisScriptEngineFactory phoenicisScriptEngineFactory;
+    private final ExecutorService executorService;
     private final ObjectMapper objectMapper;
 
     /**
-     * constructor
+     * Constructor
      *
-     * @param scriptInterpreter to access the javascript engine implementation
+     * @param phoenicisScriptEngineFactory The used script engine factory
+     * @param executorService The executor service to allow for parallelization
      * @param objectMapper to parse the available versions
      */
-    public EnginesManager(ScriptInterpreter scriptInterpreter, ObjectMapper objectMapper) {
-        this.scriptInterpreter = scriptInterpreter;
+    public EnginesManager(PhoenicisScriptEngineFactory phoenicisScriptEngineFactory, ExecutorService executorService,
+            ObjectMapper objectMapper) {
+        super();
+
+        this.phoenicisScriptEngineFactory = phoenicisScriptEngineFactory;
+        this.executorService = executorService;
         this.objectMapper = objectMapper;
     }
 
     /**
-     * fetches the required engine
+     * Fetches the required engine
      *
-     * @param engineId engine ID (e.g. "wine")
-     * @param doneCallback callback which will be executed with the fetched engine
-     * @param errorCallback callback which will be executed if an error occurs
+     * @param engineId The engine ID (e.g. "wine")
+     * @param doneCallback The callback which will be executed with the fetched engine
+     * @param errorCallback The callback which will be executed if an error occurs
      */
     public void getEngine(String engineId, Consumer<Engine> doneCallback, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+        executorService.execute(() -> {
+            final PhoenicisScriptEngine phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
 
-        final String include = String.format("include(\"engines.%s.engine.implementation\");", engineId);
+            final String include = String.format("include(\"engines.%s.engine.implementation\");", engineId);
 
-        interactiveScriptSession.eval(include,
-                output -> {
-                    final Value engineClass = (Value) output;
+            final Value engineClass = (Value) phoenicisScriptEngine.evalAndReturn(include, errorCallback);
 
-                    final Engine engine = engineClass.newInstance().as(Engine.class);
+            final Engine engine = engineClass.newInstance().as(Engine.class);
 
-                    doneCallback.accept(engine);
-                },
-                errorCallback);
+            doneCallback.accept(engine);
+        });
     }
 
     /**
-     * fetches the available versions of a certain engine
+     * Fetches the available versions of a certain engine
      *
-     * @param engineId engine ID (e.g. "wine")
-     * @param callback callback which will be executed with the fetched engine versions
-     * @param errorCallback callback which will be executed if an error occurs
+     * @param engineId The engine ID (e.g. "wine")
+     * @param callback The callback which will be executed with the fetched engine versions
+     * @param errorCallback The callback which will be executed if an error occurs
      */
     public void fetchAvailableVersions(String engineId, Consumer<List<EngineSubCategoryDTO>> callback,
             Consumer<Exception> errorCallback) {
-        this.getEngine(engineId, engine -> callback.accept(unSerialize(engine.getAvailableVersions())), errorCallback);
+        this.getEngine(engineId, engine -> callback.accept(deserialize(engine.getAvailableVersions())), errorCallback);
     }
 
     /**
-     * fetches all available engines from the repository
+     * Fetches all available engines from the repository
      *
-     * @param categoryDTOS engine categories from the repository
-     * @return available engines
+     * @param categoryDTOS The engine categories from the repository
+     * @return The available engines
      */
     public List<EngineCategoryDTO> getAvailableEngines(List<CategoryDTO> categoryDTOS) {
-        List<EngineCategoryDTO> engines = new ArrayList<>();
-        for (CategoryDTO categoryDTO : categoryDTOS) {
-            final String engineName = categoryDTO.getName();
-            final EngineCategoryDTO engineCategoryDTO = new EngineCategoryDTO.Builder()
-                    .withName(engineName)
-                    .withDescription(engineName)
-                    .withSubCategories(new ArrayList<>())
-                    .build();
-            engines.add(engineCategoryDTO);
-        }
-        return engines;
+        return categoryDTOS.stream()
+                .map(category -> {
+                    final String engineName = category.getName();
+
+                    return new EngineCategoryDTO.Builder()
+                            .withName(engineName)
+                            .withDescription(engineName)
+                            .withSubCategories(new ArrayList<>())
+                            .build();
+                })
+                .collect(Collectors.toList());
     }
 
     /**
-     * reads available engine versions from JSON
+     * Reads the available engine versions from JSON
      *
-     * @param json JSON file
-     * @return available engine versions
+     * @param json The JSON file
+     * @return The available engine versions
      */
-    private List<EngineSubCategoryDTO> unSerialize(Object json) {
+    private List<EngineSubCategoryDTO> deserialize(Object json) {
         try {
             return objectMapper.readValue(json.toString(), new TypeReference<List<EngineSubCategoryDTO>>() {
                 // Default
             });
         } catch (IOException e) {
-            LOGGER.debug("Unable to unserialize engine json");
+            LOGGER.debug("Unable to deserialize engine json");
             return Collections.emptyList();
         }
     }
 
     /**
-     * fetches the available engines
+     * Fetches the available engines
      *
-     * @param repositoryDTO
-     * @param callback
-     * @param errorCallback callback which will be executed if an error occurs
+     * @param repositoryDTO The repository containing the engines
+     * @param callback The callback which receives the fetched engines
+     * @param errorCallback The callback which is executed if an error occurs
      */
-    public void fetchAvailableEngines(RepositoryDTO repositoryDTO,
-            Consumer<Map<String, Engine>> callback, Consumer<Exception> errorCallback) {
-        final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
+    public void fetchAvailableEngines(RepositoryDTO repositoryDTO, Consumer<Map<String, Engine>> callback,
+            Consumer<Exception> errorCallback) {
+        final List<String> engineIds = repositoryDTO.getTypes().stream()
+                .filter(type -> type.getId().equals("engines"))
+                .flatMap(type -> type.getCategories().stream())
+                .map(engine -> engine.getId().replaceAll("^.*\\.", ""))
+                .collect(Collectors.toList());
 
-        interactiveScriptSession.eval(this.createFetchScript(repositoryDTO),
-                output -> callback.accept(((Value) output).as(Map.class)), errorCallback);
+        executorService.execute(() -> {
+            final PhoenicisScriptEngine phoenicisScriptEngine = phoenicisScriptEngineFactory.createEngine();
+
+            Map<String, Engine> result = engineIds.stream()
+                    .collect(Collectors.toMap(
+                            Function.identity(),
+                            engineId -> {
+                                final String include = String
+                                        .format("include(\"engines.%s.engine.implementation\");", engineId);
+
+                                final Value engineClass = (Value) phoenicisScriptEngine.evalAndReturn(include,
+                                        errorCallback);
+
+                                return engineClass.newInstance().as(Engine.class);
+                            }));
+
+            callback.accept(result);
+        });
     }
-
-    /**
-     * retrieves a Javascript string which can be used to fetch the available engines
-     *
-     * @param repositoryDTO repository containing the engines
-     * @return Javascript
-     */
-    private String createFetchScript(RepositoryDTO repositoryDTO) {
-        // get engine CategoryDTOs
-        List<CategoryDTO> categoryDTOS = new ArrayList<>();
-        for (TypeDTO typeDTO : repositoryDTO.getTypes()) {
-            if (typeDTO.getId().equals("engines")) {
-                categoryDTOS = typeDTO.getCategories();
-            }
-        }
-
-        StringBuilder script = new StringBuilder();
-        script.append("(function () {\n");
-        script.append("const engines = {};\n");
-        script.append("let Engine = null;\n");
-        for (CategoryDTO engine : categoryDTOS) {
-            final String engineId = engine.getId().replaceAll("^.*\\.", "");
-            script.append("Engine = include(\"engines." + engineId + ".engine.implementation\");\n");
-            script.append("if (!(\"" + engineId + "\" in engines))\n");
-            script.append("{\n");
-            script.append("engines[\"" + engineId + "\"] = new Engine();\n");
-            script.append("}\n");
-        }
-        script.append("return engines;\n");
-        script.append("})();\n");
-
-        return script.toString();
-    }
-
 }

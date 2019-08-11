@@ -1,11 +1,12 @@
 package org.phoenicis.scripts.engine.injectors;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.interpreter.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -20,20 +21,35 @@ public class IncludeInjector implements EngineInjector {
 
     @Override
     public void injectInto(PhoenicisScriptEngine phoenicisScriptEngine) {
-        final Set<String> includedScripts = new HashSet<>();
+        // store included scripts (include path -> JS object)
+        final Map<String, Object> includedScripts = new HashMap<>();
 
         phoenicisScriptEngine.put("include", (Function<String, Object>) argument -> {
-            final String script = scriptFetcher.getScript(argument);
-            if (script == null) {
-                throwException(new ScriptException(argument + " is not found"));
-            }
+            if (!includedScripts.containsKey(argument)) {
+                final String script = scriptFetcher.getScript(argument);
+                if (script == null) {
+                    throwException(new ScriptException("Script '" + argument + "' is not found"));
+                }
 
-            if (includedScripts.add(argument)) {
-                return phoenicisScriptEngine.evalAndReturn("//# sourceURL=" + argument + "\n" + script,
+                // wrap the loaded script in a function to prevent it from influencing the main script
+                String extendedString = String.format("(module) => { %s }", script);
+                Value includeFunction = (Value) phoenicisScriptEngine.evalAndReturn(extendedString,
                         this::throwException);
+
+                // create an empty JS object
+                Value module = (Value) phoenicisScriptEngine.evalAndReturn("({})", this::throwException);
+
+                // execute the included function -> populates "module"
+                includeFunction.execute(module);
+
+                if (module.hasMember("default")) {
+                    includedScripts.put(argument, module.getMember("default"));
+                } else {
+                    includedScripts.put(argument, module);
+                }
             }
 
-            return null;
+            return includedScripts.get(argument);
         }, this::throwException);
     }
 }

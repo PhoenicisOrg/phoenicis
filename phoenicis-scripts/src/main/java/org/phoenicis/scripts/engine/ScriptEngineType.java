@@ -1,6 +1,5 @@
 package org.phoenicis.scripts.engine;
 
-import org.phoenicis.scripts.engine.implementation.JSAScriptEngine;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
 import org.phoenicis.scripts.engine.implementation.PolyglotScriptEngine;
 
@@ -10,17 +9,12 @@ import java.util.Map;
  * The supported script engine types
  */
 public enum ScriptEngineType {
-    NASHORN("nashorn") {
-        @Override
-        public PhoenicisScriptEngine createScriptEngine() {
-            return new JSAScriptEngine("nashorn");
-        }
-    },
-
     GRAAL("graal.js") {
         @Override
         public PhoenicisScriptEngine createScriptEngine() {
-            return new PolyglotScriptEngine("js", Map.of("js.nashorn-compat", "true"));
+            return new PolyglotScriptEngine("js",
+                    Map.of("js.nashorn-compat", "true",
+                            "js.experimental-foreign-object-prototype", "true"));
         }
     };
 

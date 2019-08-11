@@ -38,7 +38,8 @@ public class EnginesConfiguration {
 
     @Bean
     public EnginesManager enginesSource() {
-        return new EnginesManager(scriptsConfiguration.scriptInterpreter(),
+        return new EnginesManager(scriptsConfiguration.graalScriptEngineFactory(),
+                multithreadingConfiguration.scriptExecutorService(),
                 phoenicisGlobalConfiguration.objectMapper());
     }
 

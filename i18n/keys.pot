@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-30 11:00+0000\n"
+"POT-Creation-Date: 2019-08-11 09:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,8 @@ msgid "Stack trace:"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:386
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:398
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:387
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:399
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
@@ -36,8 +36,8 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:194
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:211
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:195
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:212
 msgid "Error"
 msgstr ""
 
@@ -194,27 +194,27 @@ msgstr ""
 msgid "Create a new shortcut"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:365
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:374
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:168
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:366
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:375
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:169
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:178
 msgid "Error while creating shortcut"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:411
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:229
-#, java-format
-msgid "Uninstall {0}"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:412
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:230
 #, java-format
+msgid "Uninstall {0}"
+msgstr ""
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:413
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:231
+#, java-format
 msgid "Are you sure you want to uninstall {0}?"
 msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:417
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:235
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:418
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:236
 #, java-format
 msgid "Error while uninstalling {0}"
 msgstr ""
