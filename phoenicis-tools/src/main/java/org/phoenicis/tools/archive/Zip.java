@@ -19,85 +19,76 @@
 package org.phoenicis.tools.archive;
 
 import com.google.common.io.CountingInputStream;
-import org.apache.commons.compress.archivers.ArchiveInputStream;
-import org.apache.commons.compress.archivers.ArchiveStreamFactory;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.entities.ProgressEntity;
-import org.phoenicis.tools.stream.CursorFinderInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
-import java.util.LinkedList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Safe
 public class Zip {
     private static final String ZIP_ERROR_MESSAGE = "Unable to open input stream";
-    private static final byte[] ZIP_MAGICK_BYTE = new byte[] { 0x50, 0x4B, 0x03, 0x04 };
     private final Logger LOGGER = LoggerFactory.getLogger(Zip.class);
 
-    List<File> uncompressZipFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
-        try (CountingInputStream inputStream = new CountingInputStream(new FileInputStream(inputFile))) {
-            final long finalSize = FileUtils.sizeOf(inputFile);
-            List<File> files = uncompress(inputStream, inputStream, outputDir, finalSize, stateCallback);
+    public List<File> uncompressZipFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
+        final long finalSize = FileUtils.sizeOf(inputFile);
+        final AtomicLong counter = new AtomicLong(0);
 
-            return files;
+        LOGGER.info(String.format("Attempting to unzip file \"%s\" to directory \"%s\".",
+                inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
+
+        Path targetDirPath = outputDir.toPath();
+        try (ZipFile zipFile = new ZipFile(inputFile)) {
+            return Collections.list(zipFile.getEntries()).parallelStream()
+                    .map(e -> unzipEntry(zipFile, e, targetDirPath, counter, finalSize, stateCallback))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             throw new ArchiveException(ZIP_ERROR_MESSAGE, e);
         }
     }
 
-    /**
-     * Uncompress a tar
-     *
-     * @param countingInputStream to count the number of byte extracted
-     * @param outputDir The directory where files should be extracted
-     * @return A list of extracted files
-     * @throws ArchiveException if the process fails
-     */
-    private List<File> uncompress(final InputStream inputStream, CountingInputStream countingInputStream,
-            final File outputDir, long finalSize, Consumer<ProgressEntity> stateCallback) {
-        final List<File> uncompressedFiles = new LinkedList<>();
-        try (InputStream cursorInputStream = new CursorFinderInputStream(inputStream, ZIP_MAGICK_BYTE);
-                ArchiveInputStream debInputStream = new ArchiveStreamFactory().createArchiveInputStream("zip",
-                        cursorInputStream)) {
-            ZipArchiveEntry entry;
-            while ((entry = (ZipArchiveEntry) debInputStream.getNextEntry()) != null) {
-                final File outputFile = new File(outputDir, entry.getName());
-                if (entry.isDirectory()) {
-                    LOGGER.info(
-                            String.format("Attempting to write output directory %s.", outputFile.getAbsolutePath()));
+    private File unzipEntry(ZipFile zipFile, ZipArchiveEntry entry, Path targetDir, AtomicLong counter,
+            double finalSize, Consumer<ProgressEntity> stateCallback) {
+        try {
+            Path targetPath = targetDir.resolve(Paths.get(entry.getName()));
 
-                    if (!outputFile.exists()) {
-                        LOGGER.info(String.format("Attempting to createPrefix output directory %s.",
-                                outputFile.getAbsolutePath()));
-                        Files.createDirectories(outputFile.toPath());
-                    }
-                } else {
-                    LOGGER.info(String.format("Creating output file %s.", outputFile.getAbsolutePath()));
-                    outputFile.getParentFile().mkdirs();
-                    try (final OutputStream outputFileStream = new FileOutputStream(outputFile)) {
-                        IOUtils.copy(debInputStream, outputFileStream);
-                    }
+            if (Files.isDirectory(targetPath)) {
+                LOGGER.info(String.format("Attempting to create output directory %s.", targetPath.toString()));
 
+                Files.createDirectories(targetPath);
+            } else {
+                Files.createDirectories(targetPath.getParent());
+
+                try (CountingInputStream in = new CountingInputStream(zipFile.getInputStream(entry))) {
+                    LOGGER.info(String.format("Creating output file %s.", targetPath.toString()));
+
+                    Files.copy(in, targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+                    double count = counter.addAndGet(in.getCount());
+
+                    stateCallback
+                            .accept(new ProgressEntity.Builder()
+                                    .withPercent(count / finalSize * 100.0D)
+                                    .withProgressText("Extracting " + entry.getName()).build());
                 }
-                uncompressedFiles.add(outputFile);
-
-                stateCallback
-                        .accept(new ProgressEntity.Builder()
-                                .withPercent(
-                                        (double) countingInputStream.getCount() / (double) finalSize * (double) 100)
-                                .withProgressText("Extracting " + outputFile.getName()).build());
-
             }
-            return uncompressedFiles;
-        } catch (IOException | org.apache.commons.compress.archivers.ArchiveException e) {
+
+            return targetPath.toFile();
+        } catch (IOException e) {
             throw new ArchiveException("Unable to extract the file", e);
         }
     }
