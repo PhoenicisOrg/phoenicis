@@ -19,7 +19,7 @@
 package org.phoenicis.scripts.wizard;
 
 import org.apache.commons.io.IOUtils;
-import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.exceptions.ScriptException;
 import org.phoenicis.scripts.ui.*;
 
 import java.io.File;
