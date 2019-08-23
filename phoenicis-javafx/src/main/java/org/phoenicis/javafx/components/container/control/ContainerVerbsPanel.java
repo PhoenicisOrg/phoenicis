@@ -13,6 +13,8 @@ import org.phoenicis.javafx.utils.CollectionBindings;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 
+import java.util.Comparator;
+
 /**
  * A component used to install verbs in an existing container
  */
@@ -33,7 +35,7 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     private final ObjectProperty<ApplicationDTO> verbs;
 
     /**
-     * A list of all verbs
+     * A list of all verbs sorted according to their names
      */
     private final ObservableList<ScriptDTO> verbScripts;
 
@@ -53,7 +55,9 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
         this.verbs = new SimpleObjectProperty<>();
         this.lockVerbs = new SimpleBooleanProperty();
 
-        this.verbScripts = CollectionBindings.mapToList(verbsProperty(), ApplicationDTO::getScripts);
+        this.verbScripts = CollectionBindings
+                .mapToList(verbsProperty(), ApplicationDTO::getScripts)
+                .sorted(Comparator.comparing(ScriptDTO::getScriptName));
     }
 
     /**
