@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import javafx.application.Platform;
+import javafx.scene.control.ButtonType;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
@@ -29,6 +30,7 @@ public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
 
     public UiQuestionFactoryJavaFX(String title) {
         super();
+
         this.wizardTitle = title;
     }
 
@@ -45,5 +47,28 @@ public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
 
             confirmMessage.showAndCallback();
         });
+    }
+
+    /**
+     * Creates a question UI (yes/no decision)
+     * <p>
+     * Warning: This method needs to be called inside the JavaFX thread, otherwise an exception will be thrown.
+     * To ensure that the method will be called inside the JavaFX thread it can be encapsulated
+     * inside a <code>Platform.runLater(...)</code> call.
+     *
+     * @param questionText The question text
+     * @return True if the user selects "yes", false if the user selects "no"
+     */
+    @Override
+    public boolean create(String questionText) {
+        final SimpleConfirmDialog confirmMessage = SimpleConfirmDialog.builder()
+                .withTitle(wizardTitle)
+                .withMessage(questionText)
+                .withResizable(true)
+                .build();
+
+        final ButtonType result = confirmMessage.showAndWait().orElse(ButtonType.CANCEL);
+
+        return result == ButtonType.OK;
     }
 }

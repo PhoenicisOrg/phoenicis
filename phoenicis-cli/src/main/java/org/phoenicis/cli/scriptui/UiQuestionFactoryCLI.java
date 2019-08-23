@@ -32,6 +32,17 @@ public class UiQuestionFactoryCLI implements UiQuestionFactory {
 
     @Override
     public void create(String questionText, Runnable yesCallback, Runnable noCallback) {
+        final boolean answer = create(questionText);
+
+        if (answer) {
+            yesCallback.run();
+        } else {
+            noCallback.run();
+        }
+    }
+
+    @Override
+    public boolean create(String questionText) {
         String answer = "";
 
         while (!"yes".equals(answer) && !"no".equals(answer)) {
@@ -40,15 +51,8 @@ public class UiQuestionFactoryCLI implements UiQuestionFactory {
 
             Scanner input = new Scanner(System.in);
             answer = input.nextLine();
-
-            switch (answer) {
-                case "yes":
-                    yesCallback.run();
-                    break;
-                case "no":
-                    noCallback.run();
-                    break;
-            }
         }
+
+        return "yes".equals(answer);
     }
 }

@@ -19,7 +19,10 @@
 package org.phoenicis.tests;
 
 import org.phoenicis.cli.scriptui.CliMessageSender;
-import org.phoenicis.scripts.ui.*;
+import org.phoenicis.scripts.ui.SetupUiFactory;
+import org.phoenicis.scripts.ui.UiConfiguration;
+import org.phoenicis.scripts.ui.UiMessageSender;
+import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -40,6 +43,16 @@ class TestUiConfiguration implements UiConfiguration {
     @Override
     @Bean
     public UiQuestionFactory uiQuestionFactory() {
-        return (questionText, yesCallback, noCallback) -> yesCallback.run();
+        return new UiQuestionFactory() {
+            @Override
+            public void create(String questionText, Runnable yesCallback, Runnable noCallback) {
+                yesCallback.run();
+            }
+
+            @Override
+            public boolean create(String questionText) {
+                return true;
+            }
+        };
     }
 }

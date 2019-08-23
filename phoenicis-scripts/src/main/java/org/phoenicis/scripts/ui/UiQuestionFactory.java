@@ -18,17 +18,27 @@
 
 package org.phoenicis.scripts.ui;
 
+import com.google.common.util.concurrent.Runnables;
+
 public interface UiQuestionFactory {
     /**
-     * creates a question UI (yes/no decision)
-     * @param questionText question
-     * @param yesCallback called when user selects "yes"
-     * @param noCallback called when user selects "no"
+     * Creates a question UI (yes/no decision)
+     *
+     * @param questionText The question text
+     * @param yesCallback The callback for when the user selects "yes"
+     * @param noCallback The callback for when the user selects "no"
      */
     void create(String questionText, Runnable yesCallback, Runnable noCallback);
 
+    /**
+     * Creates a question UI (yes/no decision)
+     *
+     * @param questionText The question text
+     * @return True if the user selects "yes", false if the user selects "no"
+     */
+    boolean create(String questionText);
+
     default void create(String questionText, Runnable yesCallback) {
-        create(questionText, yesCallback, () -> {
-        });
+        create(questionText, yesCallback, Runnables.doNothing());
     }
 }
