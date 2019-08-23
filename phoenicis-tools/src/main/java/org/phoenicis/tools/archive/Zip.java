@@ -54,7 +54,7 @@ public class Zip {
         Path targetDirPath = outputDir.toPath();
         try (ZipFile zipFile = new ZipFile(inputFile)) {
             return Collections.list(zipFile.getEntries()).parallelStream()
-                    .map(e -> unzipEntry(zipFile, e, targetDirPath, counter, finalSize, stateCallback))
+                    .map(entry -> unzipEntry(zipFile, entry, targetDirPath, counter, finalSize, stateCallback))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             throw new ArchiveException(ZIP_ERROR_MESSAGE, e);
@@ -66,7 +66,7 @@ public class Zip {
         try {
             Path targetPath = targetDir.resolve(Paths.get(entry.getName()));
 
-            if (Files.isDirectory(targetPath)) {
+            if (entry.isDirectory()) {
                 LOGGER.info(String.format("Attempting to create output directory %s.", targetPath.toString()));
 
                 Files.createDirectories(targetPath);
@@ -89,7 +89,7 @@ public class Zip {
 
             return targetPath.toFile();
         } catch (IOException e) {
-            throw new ArchiveException("Unable to extract the file", e);
+            throw new ArchiveException(String.format("Unable to extract file \"%s\"", entry.getName()), e);
         }
     }
 }
