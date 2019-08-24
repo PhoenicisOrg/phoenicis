@@ -120,8 +120,9 @@ public interface Engine {
      * Registers as verb as being "installed"
      *
      * @param verbId The ID of the verb
+     * @param container The container where the verb has been installed
      */
-    void registerVerb(String verbId);
+    void registerVerb(String verbId, String container);
 
     /**
      * Checks whether a given verb has been registered as being "installed"
