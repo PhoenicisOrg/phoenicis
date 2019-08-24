@@ -127,7 +127,8 @@ public interface Engine {
      * Checks whether a given verb has been registered as being "installed"
      *
      * @param verbId The ID of the verb
+     * @param container The container where the verb has been installed
      * @return True if the verb has been registered as being "installed", false otherwise
      */
-    boolean isVerbRegistered(String verbId);
+    boolean isVerbRegistered(String verbId, String container);
 }

@@ -145,9 +145,12 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
     private void updateVerbs(final GridPane verbs) {
         verbs.getChildren().clear();
 
+        String engineId = getControl().getContainer().getEngine();
+        String container = getControl().getContainer().getName();
+
         for (ScriptDTO verb : getControl().getVerbScripts()) {
-            final boolean alreadyInstalled = getControl().getVerbsManager().isVerbInstalled(
-                    getControl().getContainer().getEngine(), verb.getId());
+            final boolean alreadyInstalled = getControl().getVerbsManager()
+                    .isVerbInstalled(engineId, verb.getId(), container);
 
             final int row = verbs.getRowCount();
 

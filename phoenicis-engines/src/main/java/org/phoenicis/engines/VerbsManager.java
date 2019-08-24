@@ -136,7 +136,7 @@ public class VerbsManager {
         callback.accept(verbs);
     }
 
-    public boolean isVerbInstalled(String engineId, String verbId) {
+    public boolean isVerbInstalled(String engineId, String verbId, String container) {
         final PhoenicisScriptEngine scriptEngine = scriptEngineFactory.createEngine();
 
         final String include = String.format("include(\"engines.%s.engine.implementation\");", engineId);
@@ -146,6 +146,6 @@ public class VerbsManager {
 
         final Engine engine = engineClass.newInstance().as(Engine.class);
 
-        return engine.isVerbRegistered(verbId);
+        return engine.isVerbRegistered(verbId, container);
     }
 }
