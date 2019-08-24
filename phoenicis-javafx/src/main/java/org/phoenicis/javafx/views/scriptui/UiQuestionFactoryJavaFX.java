@@ -21,8 +21,11 @@ package org.phoenicis.javafx.views.scriptui;
 import javafx.application.Platform;
 import javafx.scene.control.ButtonType;
 import org.phoenicis.configuration.security.Safe;
+import org.phoenicis.javafx.dialogs.MultipleChoiceDialog;
 import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
+
+import java.util.List;
 
 @Safe
 public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
@@ -70,5 +73,23 @@ public class UiQuestionFactoryJavaFX implements UiQuestionFactory {
         final ButtonType result = confirmMessage.showAndWait().orElse(ButtonType.CANCEL);
 
         return result == ButtonType.OK;
+    }
+
+    @Override
+    public String create(String questionText, List<String> choices) {
+        final MultipleChoiceDialog confirmMessage = MultipleChoiceDialog.builder()
+                .withTitle(wizardTitle)
+                .withMessage(questionText)
+                .withChoiceItems(choices)
+                .withResizable(true)
+                .build();
+
+        final ButtonType result = confirmMessage.showAndWait().orElse(ButtonType.CANCEL);
+
+        if (result == ButtonType.OK) {
+            return confirmMessage.getSelectedItem();
+        } else {
+            return null;
+        }
     }
 }

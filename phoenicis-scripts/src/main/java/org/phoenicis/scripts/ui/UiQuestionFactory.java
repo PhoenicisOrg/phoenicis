@@ -20,6 +20,8 @@ package org.phoenicis.scripts.ui;
 
 import com.google.common.util.concurrent.Runnables;
 
+import java.util.List;
+
 public interface UiQuestionFactory {
     /**
      * Creates a question UI (yes/no decision)
@@ -37,6 +39,14 @@ public interface UiQuestionFactory {
      * @return True if the user selects "yes", false if the user selects "no"
      */
     boolean create(String questionText);
+
+    /**
+     * Creates a question UI (multiple-choice decision)
+     * @param questionText The question text
+     * @param choices The choices
+     * @return The selected choice or null if the user canceled the question
+     */
+    String create(String questionText, List<String> choices);
 
     default void create(String questionText, Runnable yesCallback) {
         create(questionText, yesCallback, Runnables.doNothing());

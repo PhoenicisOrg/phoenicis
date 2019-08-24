@@ -26,6 +26,8 @@ import org.phoenicis.scripts.ui.UiQuestionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.List;
+
 @Configuration
 class TestUiConfiguration implements UiConfiguration {
     @Override
@@ -52,6 +54,15 @@ class TestUiConfiguration implements UiConfiguration {
             @Override
             public boolean create(String questionText) {
                 return true;
+            }
+
+            @Override
+            public String create(String questionText, List<String> choices) {
+                if (choices.isEmpty()) {
+                    return null;
+                }
+
+                return choices.get(0);
             }
         };
     }

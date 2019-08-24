@@ -21,7 +21,11 @@ package org.phoenicis.cli.scriptui;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.scripts.ui.UiQuestionFactory;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Safe
 public class UiQuestionFactoryCLI implements UiQuestionFactory {
@@ -54,5 +58,30 @@ public class UiQuestionFactoryCLI implements UiQuestionFactory {
         }
 
         return "yes".equals(answer);
+    }
+
+    @Override
+    public String create(String questionText, List<String> choices) {
+        Map<String, String> choiceMap = IntStream
+                .range(0, choices.size())
+                .boxed()
+                .collect(Collectors.toMap(
+                        index -> Integer.toString(index + 1),
+                        choices::get));
+
+        String answer = "";
+        while (!"0".equals(answer) && !choiceMap.containsKey(answer)) {
+            System.out.println(questionText);
+            System.out.print("Please enter:");
+            System.out.println("0\tCancel");
+            for (Map.Entry<String, String> entry : choiceMap.entrySet()) {
+                System.out.println(String.format("%s\t%s", entry.getKey(), entry.getValue()));
+            }
+
+            Scanner input = new Scanner(System.in);
+            answer = input.nextLine();
+        }
+
+        return "0".equals(answer) ? null : choiceMap.get(answer);
     }
 }
