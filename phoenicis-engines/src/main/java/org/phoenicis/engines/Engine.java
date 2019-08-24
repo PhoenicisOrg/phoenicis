@@ -115,4 +115,19 @@ public interface Engine {
      * @param wizard setup wizard
      */
     void setWizard(SetupWizard wizard);
+
+    /**
+     * Registers as verb as being "installed"
+     *
+     * @param verbId The ID of the verb
+     */
+    void registerVerb(String verbId);
+
+    /**
+     * Checks whether a given verb has been registered as being "installed"
+     *
+     * @param verbId The ID of the verb
+     * @return True if the verb has been registered as being "installed", false otherwise
+     */
+    boolean isVerbRegistered(String verbId);
 }
