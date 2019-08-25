@@ -74,7 +74,7 @@ public class GraphicsPropertiesFetcher {
         GL.createCapabilities();
 
         graphicsProperties.vendor = glGetString(GL_VENDOR);
-        raphicsProperties.renderer = glGetString(GL_RENDERER);
+        graphicsProperties.renderer = glGetString(GL_RENDERER);
         graphicsProperties.openGLVersion = glGetString(GL_VERSION);
         graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0, graphicsProperties.openGLVersion.indexOf(' '));
 
