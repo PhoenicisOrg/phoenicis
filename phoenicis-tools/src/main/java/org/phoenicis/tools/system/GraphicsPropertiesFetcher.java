@@ -69,7 +69,7 @@ public class GraphicsPropertiesFetcher {
     /**
      * Fetch graphics card vendor and OpenGL version
      */
-    private void FetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
+    private void fetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
         glfwMakeContextCurrent(this.window);
 
         GL.createCapabilities();
@@ -84,7 +84,7 @@ public class GraphicsPropertiesFetcher {
     /**
      * Fetch Vulkan version
      */
-    private void FetchVulkanVersion(GraphicsProperties graphicsProperties) {
+    private void fetchVulkanVersion(GraphicsProperties graphicsProperties) {
         if (!glfwVulkanSupported()) {
             return;
         }
@@ -101,13 +101,13 @@ public class GraphicsPropertiesFetcher {
      * 
      * @return The current graphics properties inside a GraphicsProperties object
      */
-    public GraphicsProperties GetProperties() {
+    public GraphicsProperties getProperties() {
         GraphicsProperties graphicsProperties = new GraphicsProperties();
 
         init();
 
-        FetchVendorRendererOpenGLVersion(graphicsProperties);
-        FetchVulkanVersion(graphicsProperties);
+        fetchVendorRendererOpenGLVersion(graphicsProperties);
+        fetchVulkanVersion(graphicsProperties);
 
         terminate();
 
