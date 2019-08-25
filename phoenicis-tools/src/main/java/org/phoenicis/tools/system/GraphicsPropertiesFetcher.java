@@ -35,7 +35,7 @@ import static org.lwjgl.glfw.GLFWVulkan.*;
 // Code from LWJGL tutorial
 @Safe
 public class GraphicsPropertiesFetcher {
-    private long window;
+    private long window = NULL;
 
     /**
      * Create an invisible glfx window and context, from which info will be retrieved
@@ -46,7 +46,7 @@ public class GraphicsPropertiesFetcher {
         if (!glfwInit())
             throw new IllegalStateException("Unable to initialize GLFW");
 
-        glfwDefaultWindowHints(); 
+        glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
         this.window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
@@ -63,6 +63,7 @@ public class GraphicsPropertiesFetcher {
 
         glfwTerminate();
         glfwSetErrorCallback(null).free();
+        this.window = NULL;
     }
 
     /**
@@ -76,9 +77,8 @@ public class GraphicsPropertiesFetcher {
         graphicsProperties.vendor = glGetString(GL_VENDOR);
         graphicsProperties.renderer = glGetString(GL_RENDERER);
         graphicsProperties.openGLVersion = glGetString(GL_VERSION);
-        graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0, graphicsProperties.openGLVersion.indexOf(' '));
-
-        GL.destroy();
+        graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0,
+                graphicsProperties.openGLVersion.indexOf(' '));
     }
 
     /**
@@ -91,9 +91,9 @@ public class GraphicsPropertiesFetcher {
 
         int version = VK.getInstanceVersionSupported();
 
-        graphicsProperties.vulkanVersion = String.valueOf(version >> 22) + "." + 
-                                           String.valueOf((version >> 12) & 0x3ff) + "." + 
-                                           String.valueOf(version & 0xfff);
+        graphicsProperties.vulkanVersion = String.valueOf(version >> 22) + "." +
+                String.valueOf((version >> 12) & 0x3ff) + "." +
+                String.valueOf(version & 0xfff);
     }
 
     /**
