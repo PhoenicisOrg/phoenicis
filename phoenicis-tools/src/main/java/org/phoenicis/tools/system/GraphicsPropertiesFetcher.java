@@ -49,8 +49,8 @@ public class GraphicsPropertiesFetcher {
         glfwDefaultWindowHints(); 
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-        window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
-        if (window == NULL)
+        this.window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
+        if (this.window == NULL)
             throw new RuntimeException("Failed to create the GLFW window for testing graphic card capabilities");
     }
 
@@ -58,8 +58,8 @@ public class GraphicsPropertiesFetcher {
      * Destroy glfw window and context
      */
     private void terminate() {
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
+        glfwFreeCallbacks(this.window);
+        glfwDestroyWindow(this.window);
 
         glfwTerminate();
         glfwSetErrorCallback(null).free();
@@ -69,7 +69,7 @@ public class GraphicsPropertiesFetcher {
      * Fetch graphics card vendor and OpenGL version
      */
     private void FetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(this.window);
 
         GL.createCapabilities();
 
