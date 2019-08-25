@@ -68,12 +68,13 @@ public class GraphicsPropertiesFetcher {
     /**
      * Fetch graphics card vendor and OpenGL version
      */
-    private void FetchVendorOpenGLVersion(GraphicsProperties graphicsProperties) {
+    private void FetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
         glfwMakeContextCurrent(window);
 
         GL.createCapabilities();
 
         graphicsProperties.vendor = glGetString(GL_VENDOR);
+        raphicsProperties.renderer = glGetString(GL_RENDERER);
         graphicsProperties.openGLVersion = glGetString(GL_VERSION);
         graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0, graphicsProperties.openGLVersion.indexOf(' '));
 
@@ -105,7 +106,7 @@ public class GraphicsPropertiesFetcher {
 
         init();
 
-        FetchVendorOpenGLVersion(graphicsProperties);
+        FetchVendorRendererOpenGLVersion(graphicsProperties);
         FetchVulkanVersion(graphicsProperties);
 
         terminate();
