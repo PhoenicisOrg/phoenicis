@@ -20,8 +20,7 @@ package org.phoenicis.scripts.interpreter;
 
 import org.phoenicis.repository.RepositoryManager;
 import org.phoenicis.repository.dto.ScriptDTO;
-
-import java.util.List;
+import org.phoenicis.scripts.exceptions.ScriptException;
 
 public class ScriptFetcher {
     private final RepositoryManager repositoryManager;

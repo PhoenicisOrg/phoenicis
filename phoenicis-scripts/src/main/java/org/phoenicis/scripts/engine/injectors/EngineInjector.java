@@ -1,6 +1,7 @@
 package org.phoenicis.scripts.engine.injectors;
 
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
+import org.phoenicis.scripts.exceptions.ScriptException;
 
 /**
  * Injects some code into a Script Engine
@@ -19,6 +20,6 @@ public interface EngineInjector {
      * @param parentException Parent exception
      */
     default void throwException(Exception parentException) {
-        throw new org.phoenicis.scripts.interpreter.ScriptException(parentException);
+        throw new ScriptException(parentException);
     }
 }

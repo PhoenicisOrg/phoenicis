@@ -1,6 +1,6 @@
 package org.phoenicis.engines;
 
-import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.exceptions.ScriptException;
 
 /**
  * Interface which must be implemented by all Verbs in Javascript
