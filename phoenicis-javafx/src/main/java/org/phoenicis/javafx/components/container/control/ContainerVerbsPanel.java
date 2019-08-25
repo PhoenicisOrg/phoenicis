@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
@@ -37,7 +38,7 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     /**
      * A list of all verbs sorted according to their names
      */
-    private final ObservableList<ScriptDTO> verbScripts;
+    private final SortedList<ScriptDTO> verbScripts;
 
     /**
      * A boolean signifying whether all verb buttons should be locked
