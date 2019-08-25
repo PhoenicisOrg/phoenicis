@@ -108,7 +108,7 @@ public class GraphicsPropertiesFetcher {
      * @return The current graphics properties inside a GraphicsProperties object
      */
     public GraphicsProperties getProperties() {
-        GraphicsProperties graphicsProperties = new GraphicsProperties();
+        final GraphicsProperties graphicsProperties = new GraphicsProperties();
 
         init();
 
