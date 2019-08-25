@@ -18,10 +18,10 @@
 
 package org.phoenicis.library;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -42,23 +42,31 @@ public class ShortcutRunner {
     public void run(ShortcutDTO shortcutDTO, List<String> arguments, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
-                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("run", arguments);
-                }, errorCallback), errorCallback);
+        interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
+                result -> {
+                    Value shortcutReaderClass = (Value) result;
+
+                    ShortcutReader shortcutReader = shortcutReaderClass.newInstance().as(ShortcutReader.class);
+
+                    shortcutReader.of(shortcutDTO);
+                    shortcutReader.run(arguments);
+                },
+                errorCallback);
     }
 
     public void stop(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
-                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("stop");
-                }, errorCallback), errorCallback);
+        interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
+                result -> {
+                    Value shortcutReaderClass = (Value) result;
+
+                    ShortcutReader shortcutReader = shortcutReaderClass.newInstance().as(ShortcutReader.class);
+
+                    shortcutReader.of(shortcutDTO);
+                    shortcutReader.stop();
+                },
+                errorCallback);
     }
 
 }

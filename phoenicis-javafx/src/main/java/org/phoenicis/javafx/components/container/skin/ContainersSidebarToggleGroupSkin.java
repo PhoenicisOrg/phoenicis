@@ -4,7 +4,6 @@ import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.containers.ContainersSidebar;
 
 import java.util.Optional;
 

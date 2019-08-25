@@ -19,7 +19,6 @@
 package org.phoenicis.containers;
 
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
-import org.phoenicis.engines.EnginesConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
@@ -32,9 +31,6 @@ import org.springframework.context.annotation.Configuration;
 public class ContainersConfiguration {
     @Autowired
     private LibraryConfiguration libraryConfiguration;
-
-    @Autowired
-    private EnginesConfiguration enginesConfiguration;
 
     @Autowired
     private MultithreadingConfiguration multithreadingConfiguration;
@@ -53,7 +49,6 @@ public class ContainersConfiguration {
         return new GenericContainersManager(toolsConfiguration.compatibleConfigFileFormatFactory(),
                 libraryConfiguration.libraryManager(),
                 libraryConfiguration.shortcutManager(),
-                toolsConfiguration.fileUtilities(),
                 scriptsConfiguration.scriptInterpreter(),
                 phoenicisGlobalConfiguration.objectMapper());
     }
@@ -62,10 +57,5 @@ public class ContainersConfiguration {
     public ContainersManager backgroundContainersManager() {
         return new BackgroundContainersManager(containersManager(),
                 multithreadingConfiguration.containersExecutorService());
-    }
-
-    @Bean
-    public ContainerEngineController containerEngineController() {
-        return new ContainerEngineController(enginesConfiguration.enginesSource());
     }
 }

@@ -18,12 +18,14 @@
 
 package org.phoenicis.engines;
 
+import org.graalvm.polyglot.Value;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
+import org.phoenicis.scripts.exceptions.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,15 +40,17 @@ public class VerbsManager {
     private final ScriptInterpreter scriptInterpreter;
 
     /**
-     * constructor
-     * @param scriptInterpreter
+     * Constructor
+     *
+     * @param scriptInterpreter The underlying script interpreter
      */
     public VerbsManager(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter = scriptInterpreter;
     }
 
     /**
-     * installs a Verb in a given container
+     * Installs a Verb in a given container
+     *
      * @param engineId ID of the engine which provides the Verb (e.g. "Wine")
      * @param container name of the container
      * @param verbId ID of the Verb
@@ -57,17 +61,53 @@ public class VerbsManager {
             Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval(
-                "include([\"engines\", \"" + engineId + "\", \"verbs\", \"" + verbId + "\"]);",
-                ignored -> interactiveScriptSession.eval("new Verb()", output -> {
-                    final Verb verbObject = (Verb) output;
-                    verbObject.install(container);
+        final String script = String.format("include(\"%s\");", verbId);
+
+        interactiveScriptSession.eval(script,
+                output -> {
+                    final Value verbClass = (Value) output;
+
+                    final Verb verb = verbClass.newInstance().as(Verb.class);
+
+                    try {
+                        verb.install(container);
+                    } catch (ScriptException se) {
+                        errorCallback.accept(se);
+                    }
+
                     doneCallback.run();
-                }, errorCallback), errorCallback);
+                },
+                errorCallback);
     }
 
     /**
-     * fetches the available Verbs
+     * Installs a list of Verbs in a given container
+     *
+     * @param engineId ID of the engine which provides the Verbs (e.g. "Wine")
+     * @param container name of the container
+     * @param verbIds A list of verb ids
+     * @param doneCallback callback executed after the scripts ran
+     * @param errorCallback callback executed in case of an error
+     */
+    public void installVerbs(String engineId, String container, List<String> verbIds, Runnable doneCallback,
+            Consumer<Exception> errorCallback) {
+        if (verbIds.isEmpty()) {
+            doneCallback.run();
+        } else {
+            final String verbId = verbIds.get(0);
+
+            final List<String> remainingVerbIds = verbIds.subList(1, verbIds.size());
+
+            installVerb(engineId, container, verbId,
+                    // recursively install the remaining verbs in the list
+                    () -> installVerbs(engineId, container, remainingVerbIds, doneCallback, errorCallback),
+                    errorCallback);
+        }
+    }
+
+    /**
+     * Fetches the available Verbs
+     *
      * @param repositoryDTO
      * @param callback
      */
@@ -82,8 +122,8 @@ public class VerbsManager {
         }
         for (CategoryDTO engine : categoryDTOS) {
             for (ApplicationDTO applicationDTO : engine.getApplications()) {
-                if (applicationDTO.getId().equals("verbs")) {
-                    verbs.put(engine.getId(), applicationDTO);
+                if (applicationDTO.getId().equals(engine.getId() + ".verbs")) {
+                    verbs.put(engine.getId().replaceAll("^.*\\.", ""), applicationDTO);
                 }
             }
         }

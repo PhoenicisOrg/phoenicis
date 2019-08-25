@@ -42,12 +42,13 @@ public class LocalRepository implements Repository {
     private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
     // file name of the icon for a type or category
     private static final String ICON_NAME = "icon.png";
-    private static final String ID_REGEX = "[^a-zA-Z0-9_]";
 
     private final File repositoryDirectory;
     private final ObjectMapper objectMapper;
 
     private final URI repositorySource;
+
+    private static final String INVALID_ID_CHARS_REGEX = "[^a-zA-Z0-9_.]";
 
     private LocalRepository(File repositoryDirectory, URI repositorySource, ObjectMapper objectMapper) {
         this.repositoryDirectory = repositoryDirectory;
@@ -112,9 +113,9 @@ public class LocalRepository implements Repository {
 
                     if (StringUtils.isBlank(jsonTypeDTO.getId())) {
                         if (!StringUtils.isBlank(jsonTypeDTO.getName())) {
-                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(ID_REGEX, ""));
+                            typeDTOBuilder.withId(jsonTypeDTO.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                         } else {
-                            typeDTOBuilder.withId(typeDirectory.getName().replaceAll(ID_REGEX, ""));
+                            typeDTOBuilder.withId(typeDirectory.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                         }
                     }
 
@@ -155,9 +156,10 @@ public class LocalRepository implements Repository {
 
                     if (StringUtils.isBlank(jsonCategoryDTO.getId())) {
                         if (!StringUtils.isBlank(jsonCategoryDTO.getName())) {
-                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(ID_REGEX, ""));
+                            categoryDTOBuilder.withId(jsonCategoryDTO.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                         } else {
-                            categoryDTOBuilder.withId(categoryDirectory.getName().replaceAll(ID_REGEX, ""));
+                            categoryDTOBuilder
+                                    .withId(categoryDirectory.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                         }
                     }
 
@@ -203,9 +205,11 @@ public class LocalRepository implements Repository {
 
                 if (StringUtils.isBlank(applicationDTOBuilder.getId())) {
                     if (!StringUtils.isBlank(applicationDTOBuilder.getName())) {
-                        applicationDTOBuilder.withId(applicationDTOBuilder.getName().replaceAll(ID_REGEX, ""));
+                        applicationDTOBuilder
+                                .withId(applicationDTOBuilder.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     } else {
-                        applicationDTOBuilder.withId(applicationDirectory.getName().replaceAll(ID_REGEX, ""));
+                        applicationDTOBuilder
+                                .withId(applicationDirectory.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     }
                 }
 
@@ -292,9 +296,10 @@ public class LocalRepository implements Repository {
 
                 if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
                     if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {
-                        scriptDTOBuilder.withId(scriptDTOBuilder.getScriptName().replaceAll(ID_REGEX, ""));
+                        scriptDTOBuilder
+                                .withId(scriptDTOBuilder.getScriptName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     } else {
-                        scriptDTOBuilder.withId(scriptDirectory.getName().replaceAll(ID_REGEX, ""));
+                        scriptDTOBuilder.withId(scriptDirectory.getName().replaceAll(INVALID_ID_CHARS_REGEX, ""));
                     }
                 }
 

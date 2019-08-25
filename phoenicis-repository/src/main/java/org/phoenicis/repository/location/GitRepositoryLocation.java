@@ -44,8 +44,8 @@ public class GitRepositoryLocation extends RepositoryLocation<GitRepository> {
 
     @Override
     public GitRepository createRepository(String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory,
-            ClasspathRepository.Factory classPathRepositoryFactory, FileUtilities fileUtilities) {
-        return new GitRepository(gitRepositoryUri, branch, cacheDirectoryPath, localRepositoryFactory, fileUtilities);
+            ClasspathRepository.Factory classPathRepositoryFactory) {
+        return new GitRepository(gitRepositoryUri, branch, cacheDirectoryPath, localRepositoryFactory);
     }
 
     public URI getGitRepositoryUri() {

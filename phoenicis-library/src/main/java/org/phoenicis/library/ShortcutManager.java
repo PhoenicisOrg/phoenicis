@@ -19,13 +19,13 @@
 package org.phoenicis.library;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.apache.commons.io.FileUtils;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.library.dto.ShortcutInfoDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -120,12 +120,16 @@ public class ShortcutManager {
     public void uninstallFromShortcut(ShortcutDTO shortcutDTO, Consumer<Exception> errorCallback) {
         final InteractiveScriptSession interactiveScriptSession = scriptInterpreter.createInteractiveSession();
 
-        interactiveScriptSession.eval("include([\"engines\", \"wine\", \"shortcuts\", \"reader\"]);",
-                ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                    final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                    shortcutReader.callMember("of", shortcutDTO);
-                    shortcutReader.callMember("uninstall");
-                }, errorCallback), errorCallback);
+        interactiveScriptSession.eval("include(\"engines.wine.shortcuts.reader\");",
+                result -> {
+                    Value shortcutReaderClass = (Value) result;
+
+                    ShortcutReader shortcutReader = shortcutReaderClass.newInstance().as(ShortcutReader.class);
+
+                    shortcutReader.of(shortcutDTO);
+                    shortcutReader.uninstall();
+                },
+                errorCallback);
     }
 
     public void deleteShortcut(ShortcutDTO shortcutDTO) {
@@ -216,6 +220,7 @@ public class ShortcutManager {
 
     /**
      * creates a file with a resource fallback
+     *
      * @param path file path
      * @param resource resource which shall be used if file path cannot be accessed
      * @return created file

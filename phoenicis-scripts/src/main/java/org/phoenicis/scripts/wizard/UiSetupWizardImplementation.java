@@ -19,7 +19,7 @@
 package org.phoenicis.scripts.wizard;
 
 import org.apache.commons.io.IOUtils;
-import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.exceptions.ScriptException;
 import org.phoenicis.scripts.ui.*;
 
 import java.io.File;
@@ -149,7 +149,7 @@ public class UiSetupWizardImplementation implements SetupWizard {
     public Void presentation(String programName, String programEditor, String applicationHomepage,
             String scriptorName) {
         final String htmlToShow = "<body>" + tr("Installation wizard for {0}", programName)
-                + ".<br><br>" + tr("Installation script by {0}", programEditor) + "<br><br>"
+                + ".<br><br>" + tr("Program by {0}", programEditor) + "<br><br>"
                 + tr("For more information about this program, visit:")
                 + String.format("<br><a href=\"%1$s\">%1$s</a><br><br>", applicationHomepage)
                 + tr("Installation script by {0}", scriptorName) + "<br><br>" + "<br><br>"
@@ -256,7 +256,9 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public MenuItem menu(String textToShow, List<String> menuItems, String defaultValue) {
-        return messageSender.runAndWait(message -> setupUi.showMenuStep(message, textToShow, menuItems, defaultValue));
+        final List<String> copiedMenuItems = List.copyOf(menuItems);
+        return messageSender
+                .runAndWait(message -> setupUi.showMenuStep(message, textToShow, copiedMenuItems, defaultValue));
     }
 
     /**
@@ -281,8 +283,9 @@ public class UiSetupWizardImplementation implements SetupWizard {
      */
     @Override
     public String browse(String textToShow, String directory, List<String> allowedExtensions) {
+        final List<String> copiedAllowedExtensions = allowedExtensions != null ? List.copyOf(allowedExtensions) : null;
         return messageSender.runAndWait(
-                message -> setupUi.showBrowseStep(message, textToShow, new File(directory), allowedExtensions));
+                message -> setupUi.showBrowseStep(message, textToShow, new File(directory), copiedAllowedExtensions));
     }
 
     /**

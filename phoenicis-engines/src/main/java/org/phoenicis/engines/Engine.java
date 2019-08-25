@@ -11,6 +11,7 @@ public interface Engine {
 
     /**
      * returns the local directory (e.g. ~/.Phoenicis/engines/wine/upstream-linux-x86/3.0)
+     *
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      * @return local directory
@@ -19,6 +20,7 @@ public interface Engine {
 
     /**
      * returns true if the engine is installed
+     *
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      * @return is engine version installed
@@ -27,13 +29,22 @@ public interface Engine {
 
     /**
      * installs the given engine version
+     *
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      */
     void install(String subCategory, String version);
 
     /**
+     * changes the engine version of the given container
+     *
+     * @param containerName the name of the container
+     */
+    void changeVersion(String containerName);
+
+    /**
      * deletes the given engine version
+     *
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      */
@@ -41,24 +52,28 @@ public interface Engine {
 
     /**
      * fetches the available versions
+     *
      * @return content of JSON file (format like the file provided by webservice.wine.url)
      */
     String getAvailableVersions();
 
     /**
      * returns the current working container (i.e. name of container directory without full path)
+     *
      * @return working container
      */
     String getWorkingContainer();
 
     /**
      * sets the working container (i.e. name of container directory without full path)
+     *
      * @param workingContainer working container
      */
     void setWorkingContainer(String workingContainer);
 
     /**
      * returns path of a container
+     *
      * @param containerName name of the container
      * @return path of container
      */
@@ -66,6 +81,7 @@ public interface Engine {
 
     /**
      * creates a container
+     *
      * @param subCategory e.g. upstream-linux-x86
      * @param version e.g. 3.0
      * @param containerName name of the container
@@ -74,6 +90,7 @@ public interface Engine {
 
     /**
      * runs an executable with this engine
+     *
      * @param executable executable
      * @param args program arguments
      * @param workingDir working directory
@@ -87,12 +104,14 @@ public interface Engine {
 
     /**
      * returns the setup wizard
+     *
      * @return setup wizard
      */
     SetupWizard getWizard();
 
     /**
      * sets the setup wizard
+     *
      * @param wizard setup wizard
      */
     void setWizard(SetupWizard wizard);

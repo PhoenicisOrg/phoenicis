@@ -73,13 +73,17 @@ public class ClasspathRepositoryTest {
 
     @Test
     public void fetchInstallableApplicationsGraphicsPhotofiltreScriptContent() {
-        assertEquals("include([\"utils\", \"functions\", \"quick_script\", \"online_installer_script\"]);\n" + "\n"
-                + "new OnlineInstallerScript()\n" + "    .name(\"Photofiltre\")\n"
-                + "    .editor(\"Antonio Da Cruz\")\n" + "    .applicationHomepage(\"http://photofiltre.free.fr\")\n"
+        assertEquals("const OnlineInstallerScript = include(\"engines.wine.quick_script.online_installer_script\");\n"
+                + "\n"
+                + "new OnlineInstallerScript()\n"
+                + "    .name(\"Photofiltre\")\n"
+                + "    .editor(\"Antonio Da Cruz\")\n"
+                + "    .applicationHomepage(\"http://photofiltre.free.fr\")\n"
                 + "    .author(\"Quentin PÂRIS\")\n"
                 + "    .url(\"http://photofiltre.free.fr/utils/pf-setup-fr-652.exe\")\n"
-                + "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n" + "    .category(\"Graphics\")\n"
-                + "    .executable(\"PhotoFiltre.exe\")\n" + "    .go();",
+                + "    .checksum(\"dc965875d698cd3f528423846f837d0dcf39616d\")\n"
+                + "    .category(\"Graphics\")\n"
+                + "    .executable(\"PhotoFiltre.exe\");",
                 repository.fetchInstallableApplications().getTypes().get(0).getCategories().get(1).getApplications()
                         .get(0).getScripts()
                         .get(0).getScript().trim());

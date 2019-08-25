@@ -18,7 +18,7 @@
 
 package org.phoenicis.scripts.ui;
 
-import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.exceptions.ScriptException;
 
 import java.util.concurrent.Semaphore;
 

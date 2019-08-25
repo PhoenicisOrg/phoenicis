@@ -3,7 +3,6 @@ package org.phoenicis.javafx.components.library.skin;
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
-import org.phoenicis.javafx.views.mainwindow.library.LibrarySidebar;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class LibrarySidebarToggleGroupSkin extends
     protected Optional<ToggleButton> createAllButton() {
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
-        allCategoryButton.setId("allButton");
+        allCategoryButton.setId("all-button");
         allCategoryButton.setOnMouseClicked(event -> getControl().setNothingSelected());
 
         return Optional.of(allCategoryButton);
@@ -43,8 +42,9 @@ public class LibrarySidebarToggleGroupSkin extends
     @Override
     protected ToggleButton convertToToggleButton(ShortcutCategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
-
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
+        // TODO: store category ID in shortcut.info?
+        categoryButton.setId(
+                String.format("applications-%s", SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId())));
         categoryButton.setOnMouseClicked(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

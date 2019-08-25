@@ -39,7 +39,7 @@ public class LocalRepositoryLocation extends RepositoryLocation<LocalRepository>
 
     @Override
     public LocalRepository createRepository(String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory,
-            ClasspathRepository.Factory classPathRepositoryFactory, FileUtilities fileUtilities) {
+            ClasspathRepository.Factory classPathRepositoryFactory) {
         return localRepositoryFactory.createInstance(repositoryLocation);
     }
 

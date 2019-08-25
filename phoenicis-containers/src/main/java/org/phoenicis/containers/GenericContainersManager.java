@@ -20,20 +20,20 @@ package org.phoenicis.containers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.containers.dto.WinePrefixContainerDTO;
 import org.phoenicis.library.LibraryManager;
 import org.phoenicis.library.ShortcutManager;
+import org.phoenicis.library.ShortcutReader;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.interpreter.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.tools.config.CompatibleConfigFileFormatFactory;
 import org.phoenicis.tools.config.ConfigFile;
-import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -60,47 +60,42 @@ public class GenericContainersManager implements ContainersManager {
     private final CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory;
     private final LibraryManager libraryManager;
     private final ShortcutManager shortcutManager;
-    private final FileUtilities fileUtilities;
     private final ScriptInterpreter scriptInterpreter;
     private ObjectMapper objectMapper;
 
     /**
      * constructor
+     *
      * @param compatibleConfigFileFormatFactory
      * @param libraryManager
      * @param shortcutManager
-     * @param fileUtilities
      * @param scriptInterpreter
      * @param objectMapper
      */
     public GenericContainersManager(CompatibleConfigFileFormatFactory compatibleConfigFileFormatFactory,
             LibraryManager libraryManager,
             ShortcutManager shortcutManager,
-            FileUtilities fileUtilities,
             ScriptInterpreter scriptInterpreter,
             ObjectMapper objectMapper) {
         this.compatibleConfigFileFormatFactory = compatibleConfigFileFormatFactory;
         this.libraryManager = libraryManager;
         this.shortcutManager = shortcutManager;
-        this.fileUtilities = fileUtilities;
         this.scriptInterpreter = scriptInterpreter;
         this.objectMapper = objectMapper;
     }
 
     /**
      * {@inheritDoc}
-     * @param callback
-     * @param errorCallback
      */
     @Override
-    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> callback, Consumer<Exception> errorCallback) {
+    public void fetchContainers(Consumer<List<ContainerCategoryDTO>> onSuccess, Consumer<Exception> onError) {
         final File containersFile = new File(containersPath);
         containersFile.mkdirs();
 
         final File[] engineDirectories = containersFile.listFiles();
 
         if (engineDirectories == null) {
-            callback.accept(Collections.emptyList());
+            onSuccess.accept(Collections.emptyList());
         } else {
             final List<ContainerCategoryDTO> containerCategories = new ArrayList<>();
             for (File engineDirectory : engineDirectories) {
@@ -112,46 +107,59 @@ public class GenericContainersManager implements ContainersManager {
                 }
             }
 
-            callback.accept(containerCategories);
+            onSuccess.accept(containerCategories);
         }
     }
 
     /**
      * {@inheritDoc}
-     * @param container
-     * @param errorCallback
      */
     @Override
-    public void deleteContainer(ContainerDTO container, Consumer<Exception> errorCallback) {
+    public void deleteContainer(ContainerDTO container, Consumer<ContainerDTO> onSuccess, Consumer<Exception> onError) {
         try {
-            this.fileUtilities.remove(new File(container.getPath()));
+            final File containerFile = new File(container.getPath());
+
+            FileUtils.deleteDirectory(containerFile);
         } catch (IOException e) {
             LOGGER.error("Cannot delete container (" + container.getPath() + ")! Exception: " + e.toString());
-            errorCallback.accept(e);
+            onError.accept(e);
         }
+
         // TODO: better way to get engine ID
         final String engineId = container.getEngine().toLowerCase();
 
-        List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
-        categories.stream().flatMap(shortcutCategoryDTO -> shortcutCategoryDTO.getShortcuts().stream())
-                .forEach(shortcutDTO -> {
+        final List<ShortcutCategoryDTO> categories = this.libraryManager.fetchShortcuts();
+
+        // remove the shortcuts leading to the container
+        categories.stream().flatMap(shortcutCategory -> shortcutCategory.getShortcuts().stream())
+                .forEach(shortcut -> {
                     final InteractiveScriptSession interactiveScriptSession = this.scriptInterpreter
                             .createInteractiveSession();
-                    interactiveScriptSession.eval(
-                            "include([\"engines\", \"" + engineId + "\", \"shortcuts\", \"reader\"]);",
-                            ignored -> interactiveScriptSession.eval("new ShortcutReader()", output -> {
-                                final ScriptObjectMirror shortcutReader = (ScriptObjectMirror) output;
-                                shortcutReader.callMember("of", shortcutDTO);
-                                final String containerName = (String) shortcutReader.callMember("container");
+
+                    interactiveScriptSession.eval("include(\"engines." + engineId + ".shortcuts.reader\");",
+                            result -> {
+                                final org.graalvm.polyglot.Value shortcutReaderClass = (org.graalvm.polyglot.Value) result;
+
+                                final ShortcutReader shortcutReader = shortcutReaderClass.newInstance()
+                                        .as(ShortcutReader.class);
+
+                                shortcutReader.of(shortcut);
+
+                                final String containerName = shortcutReader.getContainer();
+
                                 if (containerName.equals(container.getName())) {
-                                    this.shortcutManager.deleteShortcut(shortcutDTO);
+                                    this.shortcutManager.deleteShortcut(shortcut);
                                 }
-                            }, errorCallback), errorCallback);
+                            },
+                            onError);
                 });
+
+        onSuccess.accept(container);
     }
 
     /**
      * fetches all containers in a given directory
+     *
      * @param directory
      * @return found containers
      */
@@ -193,7 +201,7 @@ public class GenericContainersManager implements ContainersManager {
             }
             containers.sort(ContainerDTO.nameComparator());
         }
+
         return containers;
     }
-
 }

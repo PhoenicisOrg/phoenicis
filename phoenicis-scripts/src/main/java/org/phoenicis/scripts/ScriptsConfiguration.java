@@ -20,12 +20,13 @@ package org.phoenicis.scripts;
 
 import org.phoenicis.multithreading.MultithreadingConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
+import org.phoenicis.scripts.interpreter.PhoenicisScriptInterpreter;
+import org.phoenicis.scripts.engine.ScriptEngineType;
+import org.phoenicis.scripts.engine.injectors.*;
 import org.phoenicis.scripts.interpreter.BackgroundScriptInterpreter;
 import org.phoenicis.scripts.interpreter.ScriptFetcher;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
-import org.phoenicis.scripts.nashorn.NashornEngineFactory;
-import org.phoenicis.scripts.nashorn.NashornScriptInterpreter;
-import org.phoenicis.scripts.nashorn.builtins.*;
 import org.phoenicis.scripts.wizard.WizardConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -51,8 +52,8 @@ public class ScriptsConfiguration {
     private MultithreadingConfiguration multithreadingConfiguration;
 
     @Bean
-    public NashornEngineFactory scriptEngineFactory() {
-        return new NashornEngineFactory(Arrays.asList(new ScriptUtilitiesInjector(),
+    public PhoenicisScriptEngineFactory graalScriptEngineFactory() {
+        return new PhoenicisScriptEngineFactory(ScriptEngineType.GRAAL, Arrays.asList(new ScriptUtilitiesInjector(),
                 new BeanInjector(applicationContext), new SetupWizardInjector(wizardConfiguration.setupWizardFactory()),
                 new IncludeInjector(scriptFetcher()), new LocalisationInjector()));
     }
@@ -64,12 +65,12 @@ public class ScriptsConfiguration {
 
     @Bean
     public ScriptInterpreter scriptInterpreter() {
-        return new BackgroundScriptInterpreter(nashornInterpreter(),
+        return new BackgroundScriptInterpreter(graalScriptInterpreter(),
                 multithreadingConfiguration.scriptExecutorService());
     }
 
     @Bean
-    ScriptInterpreter nashornInterpreter() {
-        return new NashornScriptInterpreter(scriptEngineFactory());
+    ScriptInterpreter graalScriptInterpreter() {
+        return new PhoenicisScriptInterpreter(graalScriptEngineFactory());
     }
 }

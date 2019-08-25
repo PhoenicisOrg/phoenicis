@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.components.application.skin;
 
 import javafx.scene.control.ToggleButton;
+import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.repository.dto.CategoryDTO;
@@ -10,7 +11,7 @@ import java.util.Optional;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 /**
- * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link ApplicationsSidebar}
+ * A {@link SidebarToggleGroupBaseSkin} implementation class used inside the {@link ApplicationSidebar}
  */
 public class ApplicationSidebarToggleGroupSkin extends
         SidebarToggleGroupBaseSkin<CategoryDTO, ApplicationSidebarToggleGroup, ApplicationSidebarToggleGroupSkin> {
@@ -30,7 +31,7 @@ public class ApplicationSidebarToggleGroupSkin extends
     protected Optional<ToggleButton> createAllButton() {
         final ToggleButton allCategoryButton = createSidebarToggleButton(tr("All"));
 
-        allCategoryButton.setId("allButton");
+        allCategoryButton.setId("all-button");
         allCategoryButton.setOnAction(event -> getControl().setNothingSelected());
 
         return Optional.of(allCategoryButton);
@@ -43,7 +44,7 @@ public class ApplicationSidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(CategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(String.format("%sButton", category.getId().toLowerCase()));
+        categoryButton.setId(SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()));
         categoryButton.setOnAction(event -> getControl().setSelectedElement(category));
 
         return categoryButton;

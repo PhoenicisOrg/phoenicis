@@ -4,7 +4,7 @@ import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.setting.skin.UserInterfacePanelSkin;
-import org.phoenicis.javafx.views.common.themes.Theme;
+import org.phoenicis.javafx.themes.Theme;
 
 /**
  * A panel containing the user interface settings

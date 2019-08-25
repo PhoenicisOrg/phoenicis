@@ -18,7 +18,7 @@ Required extensions:
 
 ```
 cd phoenicis-dist/src/flatpak/
-flatpak-builder build-dir org.phoenicis.playonlinux.json --force-clean --user --install
+flatpak-builder build-dir org.phoenicis.playonlinux.yml --force-clean --user --install
 ```
 run with:
 ```

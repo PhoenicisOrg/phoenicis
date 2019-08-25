@@ -24,19 +24,21 @@ PHOENICIS_OPERATING_SYSTEM="$(uname)"
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
     PHOENICIS_APPTITLE="Phoenicis PlayOnMac"
     JPACKAGER_OS="osx"
+    JAR_RELATIVE_PATH="../Java"
 fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     PHOENICIS_APPTITLE="Phoenicis PlayOnLinux"
     JPACKAGER_OS="linux"
+    JAR_RELATIVE_PATH="/usr/share/phoenicis/app"
 fi
 
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
 PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
-PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn"
-PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION")
-
+PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,org.graalvm.truffle,java.management"
+PHOENICIS_RUNTIME_OPTIONS="-XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=$JAR_RELATIVE_PATH/compiler.jar"
+PHOENICIS_JPACKAGER_ARGUMENTS=("-i" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--output" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--version" "$VERSION" "--jvm-args" "$PHOENICIS_RUNTIME_OPTIONS")
 
 _download_jpackager() {
     mkdir -p "$PHOENICIS_JPACKAGER"
@@ -77,7 +79,7 @@ Version: $VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl
+Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind, libc6:i386
 Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
 Description: This program is a front-end for wine.
  It permits you to install Windows Games and softwares

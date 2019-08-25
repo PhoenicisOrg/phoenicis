@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.phoenicis.repository.types.ClasspathRepository;
 import org.phoenicis.repository.types.LocalRepository;
 import org.phoenicis.repository.types.Repository;
-import org.phoenicis.tools.files.FileUtilities;
 
 /**
  * Required basic functionality and information for a repository location
@@ -43,11 +42,10 @@ public abstract class RepositoryLocation<E extends Repository> {
      * @param cacheDirectoryPath The directory where remote repositories are locally cached
      * @param localRepositoryFactory Factory for {@link LocalRepository} instances
      * @param classPathRepositoryFactory Factory for {@link ClasspathRepository} instances
-     * @param fileUtilities FileUtilities object
      * @return The newly created repository
      */
     public abstract E createRepository(String cacheDirectoryPath, LocalRepository.Factory localRepositoryFactory,
-            ClasspathRepository.Factory classPathRepositoryFactory, FileUtilities fileUtilities);
+            ClasspathRepository.Factory classPathRepositoryFactory);
 
     /**
      * Returns a String to be displayed to the user, containing all available information about the location of the
