@@ -30,7 +30,7 @@ public class GraphicsProperties {
     public String renderer;
     public String openGLVersion;
     public String vulkanVersion;
-    
+
     public GraphicsProperties() {
         this.vendor = "Unknown";
         this.renderer = "Unknown";

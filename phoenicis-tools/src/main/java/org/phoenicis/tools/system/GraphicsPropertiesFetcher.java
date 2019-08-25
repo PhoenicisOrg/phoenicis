@@ -21,6 +21,8 @@ package org.phoenicis.tools.system;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.GraphicsProperties;
 
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -55,7 +57,8 @@ public class GraphicsPropertiesFetcher {
 
         this.window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
         if (this.window == NULL)
-            throw new IllegalStateException(tr("Failed to create the GLFW window for testing graphic card capabilities"));
+            throw new IllegalStateException(
+                    tr("Failed to create the GLFW window for testing graphic card capabilities"));
     }
 
     /**
@@ -74,7 +77,7 @@ public class GraphicsPropertiesFetcher {
      * Fetch graphics card vendor and OpenGL version
      */
     private void fetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
-        //Allow LWJGL to connect with the glfw OpenGL context and to use gl* function
+        // Allow LWJGL to connect with the glfw OpenGL context and to use gl* function
         glfwMakeContextCurrent(this.window);
         GL.createCapabilities();
 
@@ -82,7 +85,7 @@ public class GraphicsPropertiesFetcher {
         graphicsProperties.renderer = glGetString(GL_RENDERER);
         graphicsProperties.openGLVersion = glGetString(GL_VERSION);
         graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0,
-                graphicsProperties.openGLVersion.indexOf(' ')); //We only take to version number
+                graphicsProperties.openGLVersion.indexOf(' ')); // We only take to version number
     }
 
     /**
@@ -93,10 +96,10 @@ public class GraphicsPropertiesFetcher {
             return;
         }
 
-        //Gets normally maximum Vulkan version fully supported
-        int version = VK.getInstanceVersionSupported(); 
+        // Gets normally maximum Vulkan version fully supported
+        int version = VK.getInstanceVersionSupported();
 
-        //Convert the uint32 into a readable String (source: vulkaninfo source code)
+        // Convert the uint32 into a readable String (source: vulkaninfo source code)
         graphicsProperties.vulkanVersion = String.valueOf(version >> 22) + "." +
                 String.valueOf((version >> 12) & 0x3ff) + "." +
                 String.valueOf(version & 0xfff);
