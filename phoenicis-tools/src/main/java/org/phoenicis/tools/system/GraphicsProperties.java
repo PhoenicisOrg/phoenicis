@@ -22,15 +22,15 @@ import org.phoenicis.configuration.security.Safe;
 
 @Safe
 public class GraphicsProperties {
+    public String vendor;
+    public String renderer;
+    public String openGLVersion;
+    public String vulkanVersion;
+    
     public GraphicsProperties() {
         vendor = "Unknown";
         renderer = "Unknown";
         openGLVersion = "Unsupported";
         vulkanVersion = "Unsupported";
     }
-
-    public String vendor;
-    public String renderer;
-    public String openGLVersion;
-    public String vulkanVersion;
 }
