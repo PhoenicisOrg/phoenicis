@@ -24,27 +24,13 @@ import org.phoenicis.configuration.security.Safe;
 public class GraphicsProperties {
     public GraphicsProperties() {
         vendor = "Unknown";
+        renderer = "Unknown";
         openGLVersion = "Unsupported";
         vulkanVersion = "Unsupported";
     }
 
-    public String toString() {
-        return vendor + " " + openGLVersion + " " + vulkanVersion;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public String getOpenGLVersion() {
-        return openGLVersion;
-    }
-
-    public String getVulkan() {
-        return vulkanVersion;
-    }
-
     public String vendor;
+    public String renderer;
     public String openGLVersion;
     public String vulkanVersion;
 }
