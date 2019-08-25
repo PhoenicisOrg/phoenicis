@@ -34,24 +34,28 @@ import static org.lwjgl.glfw.GLFWVulkan.*;
 
 // Code from LWJGL tutorial
 @Safe
+/**
+ * This class fetch the required properties to fill the class GraphicsProperties,
+ * using LWJGL to create a dummy window and context in order to access OpenGL and Vulkan properties.
+ */
 public class GraphicsPropertiesFetcher {
     private long window = NULL;
 
     /**
-     * Create an invisible glfx window and context, from which info will be retrieved
+     * Create an invisible glfx window and context, from which infos will be retrieved
      */
     private void init() {
         GLFWErrorCallback.createPrint(System.err).set();
 
         if (!glfwInit())
-            throw new IllegalStateException("Unable to initialize GLFW");
+            throw new IllegalStateException(tr("Unable to initialize GLFW for testing graphic card capabilities"));
 
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
         this.window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
         if (this.window == NULL)
-            throw new RuntimeException("Failed to create the GLFW window for testing graphic card capabilities");
+            throw new IllegalStateException(tr("Failed to create the GLFW window for testing graphic card capabilities"));
     }
 
     /**
@@ -70,15 +74,15 @@ public class GraphicsPropertiesFetcher {
      * Fetch graphics card vendor and OpenGL version
      */
     private void fetchVendorRendererOpenGLVersion(GraphicsProperties graphicsProperties) {
+        //Allow LWJGL to connect with the glfw OpenGL context and to use gl* function
         glfwMakeContextCurrent(this.window);
-
         GL.createCapabilities();
 
         graphicsProperties.vendor = glGetString(GL_VENDOR);
         graphicsProperties.renderer = glGetString(GL_RENDERER);
         graphicsProperties.openGLVersion = glGetString(GL_VERSION);
         graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0,
-                graphicsProperties.openGLVersion.indexOf(' '));
+                graphicsProperties.openGLVersion.indexOf(' ')); //We only take to version number
     }
 
     /**
@@ -89,8 +93,10 @@ public class GraphicsPropertiesFetcher {
             return;
         }
 
-        int version = VK.getInstanceVersionSupported();
+        //Gets normally maximum Vulkan version fully supported
+        int version = VK.getInstanceVersionSupported(); 
 
+        //Convert the uint32 into a readable String (source: vulkaninfo source code)
         graphicsProperties.vulkanVersion = String.valueOf(version >> 22) + "." +
                 String.valueOf((version >> 12) & 0x3ff) + "." +
                 String.valueOf(version & 0xfff);
