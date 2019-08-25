@@ -21,6 +21,10 @@ package org.phoenicis.tools.system;
 import org.phoenicis.configuration.security.Safe;
 
 @Safe
+/**
+ * This class contains some information about the graphics capabilities of the GPU:
+ * the GPU vendor, name (renderer), the OpenGL and Vulkan version
+ */
 public class GraphicsProperties {
     public String vendor;
     public String renderer;
