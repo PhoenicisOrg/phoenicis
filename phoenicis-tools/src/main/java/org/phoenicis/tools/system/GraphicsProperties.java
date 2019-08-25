@@ -28,9 +28,9 @@ public class GraphicsProperties {
     public String vulkanVersion;
     
     public GraphicsProperties() {
-        vendor = "Unknown";
-        renderer = "Unknown";
-        openGLVersion = "Unsupported";
-        vulkanVersion = "Unsupported";
+        this.vendor = "Unknown";
+        this.renderer = "Unknown";
+        this.openGLVersion = "Unsupported";
+        this.vulkanVersion = "Unsupported";
     }
 }
