@@ -33,8 +33,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -48,21 +50,50 @@ public class Zip {
         final long finalSize = FileUtils.sizeOf(inputFile);
         final AtomicLong counter = new AtomicLong(0);
 
+        final BlockingDeque<ZipExtractionResult> queue = new LinkedBlockingDeque<>();
+        final ExecutorService uiExecutor = Executors.newSingleThreadExecutor();
+
         LOGGER.info(String.format("Attempting to unzip file \"%s\" to directory \"%s\".",
                 inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
-        Path targetDirPath = outputDir.toPath();
+        final Path targetDirPath = outputDir.toPath();
+
         try (ZipFile zipFile = new ZipFile(inputFile)) {
-            return Collections.list(zipFile.getEntries()).parallelStream()
-                    .map(entry -> unzipEntry(zipFile, entry, targetDirPath, counter, finalSize, stateCallback))
-                    .collect(Collectors.toList());
-        } catch (IOException e) {
+            final Future<List<File>> result = uiExecutor
+                    .submit(() -> Collections.list(zipFile.getEntries()).parallelStream()
+                            .map(entry -> unzipEntry(zipFile, entry, targetDirPath, queue))
+                            .collect(Collectors.toList()));
+
+            double maxTotalExtractedBytes = 0;
+            List<ZipExtractionResult> fetched = new ArrayList<>();
+            while (!result.isDone() || !queue.isEmpty()) {
+                queue.drainTo(fetched);
+
+                for (ZipExtractionResult zipExtractionResult : fetched) {
+                    double totalExtractedBytes = counter.getAndAdd(zipExtractionResult.getExtractedBytes());
+
+                    // ensure that the progressbar only increases and never decreases
+                    if (totalExtractedBytes > maxTotalExtractedBytes) {
+                        maxTotalExtractedBytes = totalExtractedBytes;
+
+                        stateCallback
+                                .accept(new ProgressEntity.Builder()
+                                        .withPercent(totalExtractedBytes / finalSize * 100.0D)
+                                        .withProgressText("Extracting " + zipExtractionResult.getFileName()).build());
+                    }
+                }
+
+                Thread.sleep(25);
+            }
+
+            return result.get();
+        } catch (IOException | InterruptedException | ExecutionException e) {
             throw new ArchiveException(ZIP_ERROR_MESSAGE, e);
         }
     }
 
-    private File unzipEntry(ZipFile zipFile, ZipArchiveEntry entry, Path targetDir, AtomicLong counter,
-            double finalSize, Consumer<ProgressEntity> stateCallback) {
+    private File unzipEntry(ZipFile zipFile, ZipArchiveEntry entry, Path targetDir,
+            BlockingDeque<ZipExtractionResult> queue) {
         try {
             Path targetPath = targetDir.resolve(Paths.get(entry.getName()));
 
@@ -78,18 +109,33 @@ public class Zip {
 
                     Files.copy(in, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-                    double count = counter.addAndGet(in.getCount());
-
-                    stateCallback
-                            .accept(new ProgressEntity.Builder()
-                                    .withPercent(count / finalSize * 100.0D)
-                                    .withProgressText("Extracting " + entry.getName()).build());
+                    // enqueue the extraction information
+                    queue.add(new ZipExtractionResult(in.getCount(), entry.getName()));
                 }
             }
 
             return targetPath.toFile();
         } catch (IOException e) {
             throw new ArchiveException(String.format("Unable to extract file \"%s\"", entry.getName()), e);
+        }
+    }
+
+    private class ZipExtractionResult {
+        private final long extractedBytes;
+
+        private final String fileName;
+
+        public ZipExtractionResult(long extractedBytes, String fileName) {
+            this.extractedBytes = extractedBytes;
+            this.fileName = fileName;
+        }
+
+        public long getExtractedBytes() {
+            return extractedBytes;
+        }
+
+        public String getFileName() {
+            return fileName;
         }
     }
 }
