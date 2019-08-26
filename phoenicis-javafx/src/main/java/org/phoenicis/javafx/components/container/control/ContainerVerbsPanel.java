@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.VerbsManager;
 import org.phoenicis.javafx.components.common.control.ControlBase;
@@ -12,6 +13,8 @@ import org.phoenicis.javafx.components.container.skin.ContainerVerbsPanelSkin;
 import org.phoenicis.javafx.utils.CollectionBindings;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
+
+import java.util.Comparator;
 
 /**
  * A component used to install verbs in an existing container
@@ -33,9 +36,9 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
     private final ObjectProperty<ApplicationDTO> verbs;
 
     /**
-     * A list of all verbs
+     * A list of all verbs sorted according to their names
      */
-    private final ObservableList<ScriptDTO> verbScripts;
+    private final SortedList<ScriptDTO> verbScripts;
 
     /**
      * A boolean signifying whether all verb buttons should be locked
@@ -53,7 +56,9 @@ public class ContainerVerbsPanel extends ControlBase<ContainerVerbsPanel, Contai
         this.verbs = new SimpleObjectProperty<>();
         this.lockVerbs = new SimpleBooleanProperty();
 
-        this.verbScripts = CollectionBindings.mapToList(verbsProperty(), ApplicationDTO::getScripts);
+        this.verbScripts = CollectionBindings
+                .mapToList(verbsProperty(), ApplicationDTO::getScripts)
+                .sorted(Comparator.comparing(ScriptDTO::getScriptName));
     }
 
     /**
