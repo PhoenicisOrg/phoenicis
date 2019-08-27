@@ -54,6 +54,7 @@ public class GraphicsPropertiesFetcher {
         if (!glfwInit())
             throw new IllegalStateException(tr("Unable to initialize GLFW for testing graphic card capabilities"));
 
+        //We will now fetch maximum supported OpenGL core context version (3.2 -> 4.6)
         ArrayList<ArrayList<Integer>> openglCoreVersion = new ArrayList<ArrayList<Integer>>(); // Versions that
                                                                                                // distinguish core and
                                                                                                // compatibility
@@ -61,6 +62,7 @@ public class GraphicsPropertiesFetcher {
         openglCoreVersion.add(new ArrayList<Integer>(Arrays.asList(6, 5, 4, 3, 2, 1, 0))); // OpenGL 4.x
         openglCoreVersion.add(new ArrayList<Integer>(Arrays.asList(3, 2))); // OpenGL 3.x
 
+        //We run through the versions than should provide a core context
         boolean found = false;
         for (int i = 0; i < openglCoreVersion.size(); ++i) {
             if (!found) {
@@ -83,6 +85,8 @@ public class GraphicsPropertiesFetcher {
                         this.window = NULL;
                         break;
                     }
+                    
+                    //No core context found, the context is then 3.1 or less, see fetchVendorRendererOpenGLVersion
                 }
             }
         }
@@ -118,7 +122,8 @@ public class GraphicsPropertiesFetcher {
 
         graphicsProperties.vendor = glGetString(GL_VENDOR);
         graphicsProperties.renderer = glGetString(GL_RENDERER);
-        graphicsProperties.openglVersion = glGetString(GL_VERSION);
+        graphicsProperties.openglVersion = glGetString(GL_VERSION); //The version can be inferior to openglCoreVersion
+                                                                    //If the compatibiltity context is not available for large OpenGL version
         graphicsProperties.openglVersion = graphicsProperties.openglVersion.substring(0,
                 graphicsProperties.openglVersion.indexOf(' ')); // We only take to version number
     }
