@@ -193,5 +193,11 @@
             <version>${lwjgl.version}</version>
             <classifier>${lwjgl.natives}</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.lwjgl</groupId>
+            <artifactId>lwjgl-vulkan</artifactId>
+            <version>${lwjgl.version}</version>
+            <classifier>${lwjgl.natives.vulkan}</classifier>
+        </dependency>
     </dependencies>
 </project>
