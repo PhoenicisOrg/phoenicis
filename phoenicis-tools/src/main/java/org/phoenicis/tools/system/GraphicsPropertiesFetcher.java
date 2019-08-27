@@ -21,6 +21,8 @@ package org.phoenicis.tools.system;
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.GraphicsProperties;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 import org.lwjgl.*;
@@ -46,11 +48,44 @@ public class GraphicsPropertiesFetcher {
     /**
      * Create an invisible glfx window and context, from which infos will be retrieved
      */
-    private void init() {
+    private void init(GraphicsProperties graphicsProperties) {
         GLFWErrorCallback.createPrint(System.err).set();
 
         if (!glfwInit())
             throw new IllegalStateException(tr("Unable to initialize GLFW for testing graphic card capabilities"));
+
+        ArrayList<ArrayList<Integer>> openglCoreVersion = new ArrayList<ArrayList<Integer>>(); // Versions that
+                                                                                               // distinguish core and
+                                                                                               // compatibility
+
+        openglCoreVersion.add(new ArrayList<Integer>(Arrays.asList(6, 5, 4, 3, 2, 1, 0))); // OpenGL 4.x
+        openglCoreVersion.add(new ArrayList<Integer>(Arrays.asList(3, 2))); // OpenGL 3.x
+
+        boolean found = false;
+        for (int i = 0; i < openglCoreVersion.size(); ++i) {
+            if (!found) {
+                for (int j = 0; i < openglCoreVersion.get(i).size(); ++j) {
+                    glfwDefaultWindowHints();
+                    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, -i + 4);
+                    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, openglCoreVersion.get(i).get(j));
+                    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+                    this.window = glfwCreateWindow(300, 300, "Test Window", NULL, NULL);
+
+                    if (this.window != NULL) {
+                        // We found a working core context
+                        found = true;
+                        graphicsProperties.openglCoreVersion = String.valueOf(-i + 4) + "."
+                                + String.valueOf(openglCoreVersion.get(i).get(j));
+                        glfwFreeCallbacks(this.window);
+                        glfwDestroyWindow(this.window);
+                        this.window = NULL;
+                        break;
+                    }
+                }
+            }
+        }
 
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
@@ -83,9 +118,9 @@ public class GraphicsPropertiesFetcher {
 
         graphicsProperties.vendor = glGetString(GL_VENDOR);
         graphicsProperties.renderer = glGetString(GL_RENDERER);
-        graphicsProperties.openGLVersion = glGetString(GL_VERSION);
-        graphicsProperties.openGLVersion = graphicsProperties.openGLVersion.substring(0,
-                graphicsProperties.openGLVersion.indexOf(' ')); // We only take to version number
+        graphicsProperties.openglVersion = glGetString(GL_VERSION);
+        graphicsProperties.openglVersion = graphicsProperties.openglVersion.substring(0,
+                graphicsProperties.openglVersion.indexOf(' ')); // We only take to version number
     }
 
     /**
@@ -113,7 +148,7 @@ public class GraphicsPropertiesFetcher {
     public GraphicsProperties getProperties() {
         final GraphicsProperties graphicsProperties = new GraphicsProperties();
 
-        init();
+        init(graphicsProperties);
 
         fetchVendorRendererOpenGLVersion(graphicsProperties);
         fetchVulkanVersion(graphicsProperties);

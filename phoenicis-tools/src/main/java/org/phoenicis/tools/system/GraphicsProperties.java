@@ -28,13 +28,15 @@ import org.phoenicis.configuration.security.Safe;
 public class GraphicsProperties {
     public String vendor;
     public String renderer;
-    public String openGLVersion;
+    public String openglVersion;
+    public String openglCoreVersion;
     public String vulkanVersion;
 
     public GraphicsProperties() {
         this.vendor = "Unknown";
         this.renderer = "Unknown";
-        this.openGLVersion = "Unsupported";
+        this.openglVersion = "Unsupported";
+        this.openglCoreVersion = "Unsupported";
         this.vulkanVersion = "Unsupported";
     }
 }
