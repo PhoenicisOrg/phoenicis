@@ -1,0 +1,114 @@
+package org.phoenicis.javafx.components.common.skin;
+
+import javafx.beans.Observable;
+import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import org.phoenicis.javafx.components.common.control.KeyAttributeList;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
+
+public class KeyAttributeListSkin extends SkinBase<KeyAttributeList, KeyAttributeListSkin> {
+    /**
+     * Constructor for all SkinBase instances
+     *
+     * @param control The control belonging to the skin
+     */
+    public KeyAttributeListSkin(KeyAttributeList control) {
+        super(control);
+    }
+
+    @Override
+    public void initialise() {
+        final TableView<KeyAttributeList.KeyAttributePair> table = createTable();
+
+        final Button addButton = new Button(tr("Add"));
+        addButton.setOnAction(event -> {
+            getControl().getKeyAttributes().add(new KeyAttributeList.KeyAttributePair("key", "new value"));
+
+            Optional.ofNullable(getControl().getOnChange())
+                    .ifPresent(consumer -> consumer.accept(getControl().getAttributeMap()));
+        });
+
+        final Button removeButton = new Button(tr("Remove"));
+        removeButton.setOnAction(event -> {
+            final List<KeyAttributeList.KeyAttributePair> selectedItems = table.getSelectionModel().getSelectedItems();
+
+            getControl().getKeyAttributes().removeAll(selectedItems);
+
+            Optional.ofNullable(getControl().getOnChange())
+                    .ifPresent(consumer -> consumer.accept(getControl().getAttributeMap()));
+        });
+
+        final HBox buttonContainer = new HBox(addButton, removeButton);
+        buttonContainer.setAlignment(Pos.CENTER_RIGHT);
+
+        getControl().onChangeProperty().addListener(
+                (Observable invalidation) -> updateChildren(table, buttonContainer));
+
+        updateChildren(table, buttonContainer);
+    }
+
+    private void updateChildren(TableView<KeyAttributeList.KeyAttributePair> table, HBox buttonContainer) {
+        if (getControl().isEditable()) {
+            final VBox rootContainer = new VBox(table, buttonContainer);
+
+            getChildren().setAll(rootContainer);
+        } else {
+            getChildren().setAll(table);
+        }
+    }
+
+    private TableView<KeyAttributeList.KeyAttributePair> createTable() {
+        final TableView<KeyAttributeList.KeyAttributePair> table = new TableView<>();
+
+        final TableColumn<KeyAttributeList.KeyAttributePair, String> keyColumn = new TableColumn<>(tr("Key"));
+        keyColumn.setCellValueFactory(new PropertyValueFactory<>("key"));
+        keyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        keyColumn.setOnEditCommit(event -> {
+            final ObservableList<KeyAttributeList.KeyAttributePair> items = event.getTableView().getItems();
+
+            final KeyAttributeList.KeyAttributePair entry = items.get(event.getTablePosition().getRow());
+
+            entry.setKey(event.getNewValue());
+
+            Optional.ofNullable(getControl().getOnChange())
+                    .ifPresent(consumer -> consumer.accept(getControl().getAttributeMap()));
+        });
+
+        final TableColumn<KeyAttributeList.KeyAttributePair, String> attributeColumn = new TableColumn<>(
+                tr("Attribute"));
+        attributeColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+        attributeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        attributeColumn.setOnEditCommit(event -> {
+            final ObservableList<KeyAttributeList.KeyAttributePair> items = event.getTableView().getItems();
+
+            final KeyAttributeList.KeyAttributePair entry = items.get(event.getTablePosition().getRow());
+
+            entry.setValue(event.getNewValue());
+
+            Optional.ofNullable(getControl().getOnChange())
+                    .ifPresent(consumer -> consumer.accept(getControl().getAttributeMap()));
+        });
+
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.getColumns().setAll(Arrays.asList(keyColumn, attributeColumn));
+
+        table.editableProperty().bind(getControl().editableProperty());
+
+        Bindings.bindContentBidirectional(table.getItems(), getControl().getKeyAttributes());
+
+        return table;
+    }
+}
