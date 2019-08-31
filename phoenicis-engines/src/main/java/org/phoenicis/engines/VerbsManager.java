@@ -25,7 +25,7 @@ import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
 import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
-import org.phoenicis.scripts.interpreter.ScriptException;
+import org.phoenicis.scripts.exceptions.ScriptException;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.phoenicis.scripts.session.InteractiveScriptSession;
 

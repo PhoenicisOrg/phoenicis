@@ -16,8 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package org.phoenicis.scripts.interpreter;
+package org.phoenicis.scripts.exceptions;
 
+/**
+ * A generic script execution exception
+ */
 public class ScriptException extends RuntimeException {
     public ScriptException(Exception e) {
         super(e);
