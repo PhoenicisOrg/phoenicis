@@ -34,7 +34,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -54,38 +53,28 @@ public class Zip {
 
         try (ZipFile zipFile = new ZipFile(inputFile)) {
             final long finalSize = FileUtils.sizeOf(inputFile);
+
             final AtomicLong extractedBytesCounter = new AtomicLong(0);
+            final Consumer<ZipExtractionResult> unzipCallback = zipExtractionResult -> {
+                final double currentExtractedBytes = extractedBytesCounter
+                        .addAndGet(zipExtractionResult.getExtractedBytes());
 
-            final BlockingQueue<ZipExtractionResult> queue = new LinkedBlockingQueue<>();
-            final ExecutorService uiExecutor = Executors.newSingleThreadExecutor();
+                stateCallback
+                        .accept(new ProgressEntity.Builder()
+                                .withPercent(currentExtractedBytes / finalSize * 100.0D)
+                                .withProgressText(tr("Extracted {0}", zipExtractionResult.getFileName())).build());
+            };
 
-            final Future<List<File>> result = uiExecutor
-                    .submit(() -> Collections.list(zipFile.getEntries()).parallelStream()
-                            .map(entry -> unzipEntry(zipFile, entry, targetDirPath, queue))
-                            .collect(Collectors.toList()));
-
-            while (!result.isDone()) {
-                final ZipExtractionResult zipExtractionResult = queue.poll(100, TimeUnit.MILLISECONDS);
-
-                if (zipExtractionResult != null) {
-                    final double currentExtractedBytes = extractedBytesCounter
-                            .getAndAdd(zipExtractionResult.getExtractedBytes());
-
-                    stateCallback
-                            .accept(new ProgressEntity.Builder()
-                                    .withPercent(currentExtractedBytes / finalSize * 100.0D)
-                                    .withProgressText(tr("Extracted {0}", zipExtractionResult.getFileName())).build());
-                }
-            }
-
-            return result.get();
-        } catch (IOException | InterruptedException | ExecutionException e) {
+            return Collections.list(zipFile.getEntries()).stream()
+                    .map(entry -> unzipEntry(zipFile, entry, targetDirPath, unzipCallback))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
             throw new ArchiveException(ZIP_ERROR_MESSAGE, e);
         }
     }
 
     private File unzipEntry(ZipFile zipFile, ZipArchiveEntry entry, Path targetDirectory,
-            BlockingQueue<ZipExtractionResult> queue) {
+            Consumer<ZipExtractionResult> unzipCallback) {
         final String fileName = entry.getName();
         final long compressedSize = entry.getCompressedSize();
 
@@ -103,8 +92,8 @@ public class Zip {
 
                     Files.copy(in, targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-                    // enqueue the extraction information
-                    queue.add(new ZipExtractionResult(compressedSize, fileName));
+                    // update progress bar
+                    unzipCallback.accept(new ZipExtractionResult(compressedSize, fileName));
                 }
             }
 
