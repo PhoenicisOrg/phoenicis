@@ -67,10 +67,8 @@ public class VerbsManager {
                 output -> {
                     final Value verbClass = (Value) output;
 
-                    final Verb verb = verbClass.newInstance().as(Verb.class);
-
                     try {
-                        verb.install(container);
+                        verbClass.invokeMember("install", container);
                     } catch (ScriptException se) {
                         errorCallback.accept(se);
                     }
