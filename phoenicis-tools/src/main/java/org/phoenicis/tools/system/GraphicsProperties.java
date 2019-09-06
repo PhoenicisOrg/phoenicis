@@ -26,11 +26,11 @@ import org.phoenicis.configuration.security.Safe;
  * the GPU vendor, name (renderer), the OpenGL and Vulkan version
  */
 public class GraphicsProperties {
-    public String vendor;
-    public String renderer;
-    public String openglVersion;
-    public String openglCoreVersion;
-    public String vulkanVersion;
+    private String vendor;
+    private String renderer;
+    private String openglVersion;
+    private String openglCoreVersion;
+    private String vulkanVersion;
 
     public GraphicsProperties() {
         this.vendor = "Unknown";
@@ -38,5 +38,45 @@ public class GraphicsProperties {
         this.openglVersion = "Unsupported";
         this.openglCoreVersion = "Unsupported";
         this.vulkanVersion = "Unsupported";
+    }
+    
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+	
+    public void setRenderer(String renderer) {
+        this.renderer = renderer;
+    }
+	
+    public void setOpenGLVersion(String openglVersion) {
+        this.openglVersion = openglVersion;
+    }
+	
+    public void setOpenGLCoreVersion(String openglCoreVersion) {
+        this.openglCoreVersion = openglCoreVersion;
+    }
+	
+    public void setVulkanVersion(String vulkanVersion) {
+        this.vulkanVersion = vulkanVersion;
+    }
+	
+    public String getVendor() {
+        return this.vendor;
+    }
+	
+    public String getRenderer() {
+        return this.renderer;
+    }
+	
+    public String getOpenGLVersion() {
+        return this.openglVersion;
+    }
+	
+    public String getOpenGLCoreVersion() {
+        return this.openglCoreVersion;
+    }
+	
+    public String getVulkanVersion() {
+        return this.vulkanVersion;
     }
 }
