@@ -78,8 +78,8 @@ public class GraphicsPropertiesFetcher {
                     if (this.window != NULL) {
                         // We found a working core context
                         found = true;
-                        graphicsProperties.openglCoreVersion = String.valueOf(-i + 4) + "."
-                                + String.valueOf(openglCoreVersion.get(i).get(j));
+                        graphicsProperties.setOpenGLCoreVersion(String.valueOf(-i + 4) + "."
+                                + String.valueOf(openglCoreVersion.get(i).get(j)));
                         glfwFreeCallbacks(this.window);
                         glfwDestroyWindow(this.window);
                         this.window = NULL;
@@ -120,13 +120,13 @@ public class GraphicsPropertiesFetcher {
         glfwMakeContextCurrent(this.window);
         GL.createCapabilities();
 
-        graphicsProperties.vendor = glGetString(GL_VENDOR);
-        graphicsProperties.renderer = glGetString(GL_RENDERER);
-        graphicsProperties.openglVersion = glGetString(GL_VERSION); // The version can be inferior to openglCoreVersion
+        graphicsProperties.setVendor(glGetString(GL_VENDOR));
+        graphicsProperties.setRenderer(glGetString(GL_RENDERER));
+        graphicsProperties.setOpenGLVersion(glGetString(GL_VERSION)); // The version can be inferior to openglCoreVersion
                                                                     // If the compatibiltity context is not available
                                                                     // for large OpenGL version
-        graphicsProperties.openglVersion = graphicsProperties.openglVersion.substring(0,
-                graphicsProperties.openglVersion.indexOf(' ')); // We only take to version number
+        graphicsProperties.setOpenGLVersion(graphicsProperties.getOpenGLVersion().substring(0,
+                graphicsProperties.getOpenGLVersion().indexOf(' '))); // We only take to version number
     }
 
     /**
@@ -141,9 +141,9 @@ public class GraphicsPropertiesFetcher {
         int version = VK.getInstanceVersionSupported();
 
         // Convert the uint32 into a readable String (source: vulkaninfo source code)
-        graphicsProperties.vulkanVersion = String.valueOf(version >> 22) + "." +
+        graphicsProperties.setVulkanVersion(String.valueOf(version >> 22) + "." +
                 String.valueOf((version >> 12) & 0x3ff) + "." +
-                String.valueOf(version & 0xfff);
+                String.valueOf(version & 0xfff));
     }
 
     /**
