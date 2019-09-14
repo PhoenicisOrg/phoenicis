@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 16:28+0000\n"
-"PO-Revision-Date: 2019-08-22 18:34\n"
+"POT-Creation-Date: 2019-09-12 19:43+0000\n"
+"PO-Revision-Date: 2019-09-14 18:32\n"
 "Last-Translator: plata\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -53,6 +53,11 @@ msgstr "{0} ist nicht verantwortlich für irgendetwas, das durch die Nutzung die
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click Next to start."
 msgstr "Klicken Sie Weiter um zu beginnen."
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
+#, java-format
+msgid "Extracted {0}"
+msgstr "{0} extrahiert"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
@@ -337,23 +342,23 @@ msgstr "Verbs"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
 msgid "Install selected"
-msgstr ""
+msgstr "Ausgewählte installieren"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
-msgstr ""
+msgstr "Verben installieren"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
 msgid "Are you sure you want to install the following Verbs:"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie die folgenden Verben installieren möchten:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
 msgid "Error installing Verbs"
-msgstr ""
+msgstr "Fehler beim Installieren der Verben"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
 msgid "Clear selection"
-msgstr ""
+msgstr "Auswahl aufheben"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
@@ -550,15 +555,15 @@ msgstr "Repository-Einstellungen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
 msgid "Priority"
-msgstr ""
+msgstr "Priorität"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
 msgid "Repository name"
-msgstr ""
+msgstr "Repository Name"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
 msgid "Move the repository up or down to change its priority"
-msgstr ""
+msgstr "Verschiebe das Repository nach oben oder nach unten, um dessen Priorität zu ändern"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
 msgid "Add"
@@ -574,11 +579,11 @@ msgstr "Voreinstellungen wiederherstellen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
-msgstr ""
+msgstr "Standard-Repositories wiederherstellen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
 msgid "Are you sure you want to restore the default repositories?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie die Standard-Repositories wiederherstellen möchten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
 msgid "Fetch updates from the repositories to retrieve latest script versions"
@@ -652,7 +657,7 @@ msgstr "Sind Sie sicher, dass Sie alle {0} Fenster schließen möchten?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Die Bibliothek konnte nicht geladen werden, bitte versuche es erneut."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
