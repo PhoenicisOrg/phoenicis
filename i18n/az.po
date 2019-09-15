@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-19 16:28+0000\n"
-"PO-Revision-Date: 2019-08-22 18:34\n"
+"POT-Creation-Date: 2019-09-12 19:43+0000\n"
+"PO-Revision-Date: 2019-09-15 18:28\n"
 "Last-Translator: plata\n"
 "Language-Team: Azerbaijani\n"
 "Language: az_AZ\n"
@@ -52,6 +52,11 @@ msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click Next to start."
+msgstr ""
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
+#, java-format
+msgid "Extracted {0}"
 msgstr ""
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
