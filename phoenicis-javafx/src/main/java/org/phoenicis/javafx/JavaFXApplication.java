@@ -22,6 +22,7 @@ import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -43,6 +44,7 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
+        primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setTitle("Phoenicis");
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
