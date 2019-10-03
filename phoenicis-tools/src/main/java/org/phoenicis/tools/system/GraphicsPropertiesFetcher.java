@@ -20,6 +20,8 @@ package org.phoenicis.tools.system;
 
 import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.GraphicsProperties;
+import org.phoenicis.tools.system.ArchitectureFetcher;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -153,13 +155,18 @@ public class GraphicsPropertiesFetcher {
      */
     public GraphicsProperties getProperties() {
         final GraphicsProperties graphicsProperties = new GraphicsProperties();
+        
+        Architecture arch = fetchCurrentArchitecture();
+        OperatingSystem os = fetchCurrentOperationSystem()
+        
+        if (arch == Architecture.AMD64 && (os == "linux" || os == "darwin)) {
+            init(graphicsProperties);
 
-        init(graphicsProperties);
+            fetchVendorRendererOpenGLVersion(graphicsProperties);
+            fetchVulkanVersion(graphicsProperties);
 
-        fetchVendorRendererOpenGLVersion(graphicsProperties);
-        fetchVulkanVersion(graphicsProperties);
-
-        terminate();
+            terminate();
+        }
 
         return graphicsProperties;
     }
