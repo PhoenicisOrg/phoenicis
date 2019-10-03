@@ -28,34 +28,6 @@
         <project.root>${project.basedir}/../</project.root>
         <lwjgl.version>3.2.2</lwjgl.version>
     </properties>
-    <profiles>
-          <profile>
-              <id>lwjgl-natives-linux-amd64</id>
-              <activation>
-                  <os>
-                      <family>unix</family>
-                      <arch>amd64</arch>
-                  </os>
-              </activation>
-              <properties>
-                  <lwjgl.natives>natives-linux</lwjgl.natives>
-                  <lwjgl.natives.vulkan></lwjgl.natives.vulkan>
-              </properties>
-          </profile>
-          <profile>
-              <id>lwjgl-natives-macos-amd64</id>
-              <activation>
-                  <os>
-                      <family>mac</family>
-                      <arch>amd64</arch>
-                  </os>
-              </activation>
-              <properties>
-                  <lwjgl.natives>natives-macos</lwjgl.natives>
-                  <lwjgl.natives.vulkan>natives-macos</lwjgl.natives.vulkan>
-              </properties>
-          </profile>
-      </profiles>
     <dependencies>
         <dependency>
             <groupId>com.sun.activation</groupId>
@@ -200,4 +172,32 @@
             <classifier>${lwjgl.natives.vulkan}</classifier>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>lwjgl-natives-linux-amd64</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <lwjgl.natives>natives-linux</lwjgl.natives>
+                <lwjgl.natives.vulkan></lwjgl.natives.vulkan>
+            </properties>
+        </profile>
+        <profile>
+            <id>lwjgl-natives-macos-amd64</id>
+            <activation>
+                <os>
+                    <family>mac</family>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <properties>
+                <lwjgl.natives>natives-macos</lwjgl.natives>
+                <lwjgl.natives.vulkan>natives-macos</lwjgl.natives.vulkan>
+            </properties>
+        </profile>
+    </profiles>
 </project>

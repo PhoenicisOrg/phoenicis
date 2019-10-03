@@ -22,6 +22,8 @@ import org.phoenicis.configuration.security.Safe;
 import org.phoenicis.tools.system.GraphicsProperties;
 import org.phoenicis.tools.system.ArchitectureFetcher;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
+import org.phoenicis.entities.Architecture;
+import org.phoenicis.entities.OperatingSystem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -124,9 +126,10 @@ public class GraphicsPropertiesFetcher {
 
         graphicsProperties.setVendor(glGetString(GL_VENDOR));
         graphicsProperties.setRenderer(glGetString(GL_RENDERER));
-        graphicsProperties.setOpenGLVersion(glGetString(GL_VERSION)); // The version can be inferior to openglCoreVersion
-                                                                    // If the compatibiltity context is not available
-                                                                    // for large OpenGL version
+        graphicsProperties.setOpenGLVersion(glGetString(GL_VERSION)); // The version can be inferior to
+                                                                      // openglCoreVersion
+                                                                      // If the compatibiltity context is not available
+                                                                      // for large OpenGL version
         graphicsProperties.setOpenGLVersion(graphicsProperties.getOpenGLVersion().substring(0,
                 graphicsProperties.getOpenGLVersion().indexOf(' '))); // We only take to version number
     }
@@ -155,11 +158,14 @@ public class GraphicsPropertiesFetcher {
      */
     public GraphicsProperties getProperties() {
         final GraphicsProperties graphicsProperties = new GraphicsProperties();
-        
-        Architecture arch = fetchCurrentArchitecture();
-        OperatingSystem os = fetchCurrentOperationSystem()
-        
-        if (arch == Architecture.AMD64 && (os == "linux" || os == "darwin)) {
+
+        final OperatingSystemFetcher operatingSystemFetcher = new OperatingSystemFetcher();
+        OperatingSystem os = operatingSystemFetcher.fetchCurrentOperationSystem();
+
+        final ArchitectureFetcher architectureFetcher = new ArchitectureFetcher(operatingSystemFetcher);
+        Architecture arch = architectureFetcher.fetchCurrentArchitecture();
+
+        if (arch == Architecture.AMD64 && (os == OperatingSystem.LINUX || os == OperatingSystem.MACOSX)) {
             init(graphicsProperties);
 
             fetchVendorRendererOpenGLVersion(graphicsProperties);

@@ -39,43 +39,43 @@ public class GraphicsProperties {
         this.openglCoreVersion = "Unsupported";
         this.vulkanVersion = "Unsupported";
     }
-    
+
     public void setVendor(String vendor) {
         this.vendor = vendor;
     }
-	
+
     public void setRenderer(String renderer) {
         this.renderer = renderer;
     }
-	
+
     public void setOpenGLVersion(String openglVersion) {
         this.openglVersion = openglVersion;
     }
-	
+
     public void setOpenGLCoreVersion(String openglCoreVersion) {
         this.openglCoreVersion = openglCoreVersion;
     }
-	
+
     public void setVulkanVersion(String vulkanVersion) {
         this.vulkanVersion = vulkanVersion;
     }
-	
+
     public String getVendor() {
         return this.vendor;
     }
-	
+
     public String getRenderer() {
         return this.renderer;
     }
-	
+
     public String getOpenGLVersion() {
         return this.openglVersion;
     }
-	
+
     public String getOpenGLCoreVersion() {
         return this.openglCoreVersion;
     }
-	
+
     public String getVulkanVersion() {
         return this.vulkanVersion;
     }
