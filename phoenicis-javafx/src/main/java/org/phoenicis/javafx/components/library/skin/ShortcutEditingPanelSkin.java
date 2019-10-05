@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.beans.Observable;
 import javafx.beans.binding.StringBinding;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.geometry.VPos;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import org.apache.commons.lang.StringUtils;
+import org.phoenicis.javafx.components.common.control.KeyAttributeList;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.library.control.ShortcutEditingPanel;
 import org.phoenicis.javafx.utils.CollectionBindings;
@@ -47,6 +49,8 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
      */
     private final ObservableMap<String, Object> shortcutProperties;
 
+    private final ObservableMap<String, String> environmentAttributes;
+
     /**
      * Constructor
      *
@@ -57,6 +61,7 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
 
         this.description = StringBindings.map(getControl().shortcutProperty(),
                 shortcut -> shortcut.getInfo().getDescription());
+
         this.shortcutProperties = CollectionBindings.mapToMap(getControl().shortcutProperty(), shortcut -> {
             try {
                 return getControl().getObjectMapper()
@@ -69,6 +74,8 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
                 return Map.of();
             }
         });
+
+        this.environmentAttributes = FXCollections.observableHashMap();
     }
 
     /**
@@ -82,6 +89,12 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
 
         final GridPane propertiesGrid = createPropertiesGrid();
 
+        final Label environmentLabel = new Label(tr("Environment"));
+        environmentLabel.getStyleClass().add("sectionTitle");
+        environmentLabel.setWrapText(true);
+
+        final KeyAttributeList environmentAttributeList = createKeyAttributeList();
+
         final Region spacer = new Region();
         spacer.getStyleClass().add("detailsButtonSpacer");
 
@@ -89,7 +102,8 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
         saveButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutChanged()).ifPresent(
                 onShortcutChanged -> onShortcutChanged.accept(getControl().getShortcut())));
 
-        final VBox container = new VBox(descriptionLabel, propertiesGrid, spacer, saveButton);
+        final VBox container = new VBox(descriptionLabel, propertiesGrid, environmentLabel, environmentAttributeList,
+                spacer, saveButton);
 
         getChildren().setAll(container);
     }
@@ -114,6 +128,34 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
         updateProperties(propertiesGrid);
 
         return propertiesGrid;
+    }
+
+    private KeyAttributeList createKeyAttributeList() {
+        final KeyAttributeList keyAttributeList = new KeyAttributeList();
+
+        keyAttributeList.setEditable(true);
+
+        keyAttributeList.setOnChange(environment -> {
+            // update shortcut if a part of the environment list has changed
+            shortcutProperties.replace("environment", environment);
+
+            try {
+                final ShortcutDTO shortcut = getControl().getShortcut();
+                final String json = new ObjectMapper().writeValueAsString(shortcutProperties);
+
+                getControl().setShortcut(new ShortcutDTO.Builder(shortcut)
+                        .withScript(json).build());
+            } catch (JsonProcessingException e) {
+                LOGGER.error("Creating new shortcut String failed.", e);
+            }
+        });
+
+        this.environmentAttributes.addListener(
+                (Observable invalidated) -> keyAttributeList.setAttributeMap(this.environmentAttributes));
+
+        keyAttributeList.setAttributeMap(this.environmentAttributes);
+
+        return keyAttributeList;
     }
 
     /**
@@ -161,32 +203,43 @@ public class ShortcutEditingPanelSkin extends SkinBase<ShortcutEditingPanel, Sho
         for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
             final int row = propertiesGrid.getRowCount();
 
-            final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
-            keyLabel.getStyleClass().add("captionTitle");
-            GridPane.setValignment(keyLabel, VPos.TOP);
+            if (!"environment".equals(entry.getKey())) {
+                final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
+                keyLabel.getStyleClass().add("captionTitle");
+                GridPane.setValignment(keyLabel, VPos.TOP);
 
-            final TextArea valueLabel = new TextArea(entry.getValue().toString());
-            valueLabel.setWrapText(true);
-            valueLabel.setPrefRowCount(entry.getValue().toString().length() / 25);
+                final TextArea valueLabel = new TextArea(entry.getValue().toString());
+                valueLabel.setWrapText(true);
+                valueLabel.setPrefRowCount(entry.getValue().toString().length() / 25);
 
-            valueLabel.focusedProperty().addListener((observable, oldValue, newValue) -> {
-                // update shortcut if TextArea looses focus (doesn't save yet)
-                if (!newValue) {
-                    shortcutProperties.replace(entry.getKey(), valueLabel.getText());
+                valueLabel.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                    // update shortcut if TextArea looses focus (doesn't save yet)
+                    if (!newValue) {
+                        shortcutProperties.replace(entry.getKey(), valueLabel.getText());
 
-                    try {
-                        final ShortcutDTO shortcut = getControl().getShortcut();
-                        final String json = new ObjectMapper().writeValueAsString(shortcutProperties);
+                        try {
+                            final ShortcutDTO shortcut = getControl().getShortcut();
+                            final String json = new ObjectMapper().writeValueAsString(shortcutProperties);
 
-                        getControl().setShortcut(new ShortcutDTO.Builder(shortcut)
-                                .withScript(json).build());
-                    } catch (JsonProcessingException e) {
-                        LOGGER.error("Creating new shortcut String failed.", e);
+                            getControl().setShortcut(new ShortcutDTO.Builder(shortcut)
+                                    .withScript(json).build());
+                        } catch (JsonProcessingException e) {
+                            LOGGER.error("Creating new shortcut String failed.", e);
+                        }
                     }
-                }
-            });
+                });
 
-            propertiesGrid.addRow(row, keyLabel, valueLabel);
+                propertiesGrid.addRow(row, keyLabel, valueLabel);
+            }
+        }
+
+        // set the environment
+        this.environmentAttributes.clear();
+
+        if (shortcutProperties.containsKey("environment")) {
+            final Map<String, String> environment = (Map<String, String>) shortcutProperties.get("environment");
+
+            this.environmentAttributes.putAll(environment);
         }
     }
 
