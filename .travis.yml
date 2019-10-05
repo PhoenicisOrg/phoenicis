@@ -34,6 +34,11 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk12
+    - stage: Build + test
+      name: Linux OpenJDK 13
+      os: linux
+      dist: trusty
+      jdk: openjdk13
 
     # packages
     - stage: Packages
