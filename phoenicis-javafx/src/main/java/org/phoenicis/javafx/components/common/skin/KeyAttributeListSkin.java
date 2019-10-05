@@ -4,11 +4,8 @@ import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.phoenicis.javafx.components.common.control.KeyAttributeList;
@@ -75,7 +72,7 @@ public class KeyAttributeListSkin extends SkinBase<KeyAttributeList, KeyAttribut
 
         final TableColumn<KeyAttributeList.KeyAttributePair, String> keyColumn = new TableColumn<>(tr("Key"));
         keyColumn.setCellValueFactory(new PropertyValueFactory<>("key"));
-        keyColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        keyColumn.setCellFactory(param -> new KeyAttributeListSkin.EditingCell());
         keyColumn.setOnEditCommit(event -> {
             final ObservableList<KeyAttributeList.KeyAttributePair> items = event.getTableView().getItems();
 
@@ -90,7 +87,7 @@ public class KeyAttributeListSkin extends SkinBase<KeyAttributeList, KeyAttribut
         final TableColumn<KeyAttributeList.KeyAttributePair, String> attributeColumn = new TableColumn<>(
                 tr("Attribute"));
         attributeColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-        attributeColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        attributeColumn.setCellFactory(param -> new KeyAttributeListSkin.EditingCell());
         attributeColumn.setOnEditCommit(event -> {
             final ObservableList<KeyAttributeList.KeyAttributePair> items = event.getTableView().getItems();
 
@@ -110,5 +107,69 @@ public class KeyAttributeListSkin extends SkinBase<KeyAttributeList, KeyAttribut
         Bindings.bindContentBidirectional(table.getItems(), getControl().getKeyAttributes());
 
         return table;
+    }
+
+    /**
+     * Taken from: https://docs.oracle.com/javafx/2/ui_controls/table-view.htm
+     */
+    private static class EditingCell extends TableCell<KeyAttributeList.KeyAttributePair, String> {
+        private TextField textField;
+
+        @Override
+        public void startEdit() {
+            if (!isEmpty()) {
+                super.startEdit();
+
+                createTextField();
+                setText(null);
+                setGraphic(this.textField);
+
+                this.textField.selectAll();
+            }
+        }
+
+        @Override
+        public void cancelEdit() {
+            super.cancelEdit();
+
+            setText(getItem());
+            setGraphic(null);
+        }
+
+        @Override
+        public void updateItem(String item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (isEditing()) {
+                    if (textField != null) {
+                        textField.setText(getString());
+                    }
+
+                    setText(null);
+                    setGraphic(textField);
+                } else {
+                    setText(getString());
+                    setGraphic(null);
+                }
+            }
+        }
+
+        private void createTextField() {
+            textField = new TextField(getString());
+            textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
+            textField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue) {
+                    commitEdit(textField.getText());
+                }
+            });
+        }
+
+        private String getString() {
+            return getItem() == null ? "" : getItem();
+        }
     }
 }
