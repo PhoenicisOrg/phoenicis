@@ -38,7 +38,7 @@ Helper classes for parallel programming.
 Repository management.
 
 ### phoenicis-scripts
-Execution of/interaction with JS (e.g. Nashorn interpreter).
+Execution of/interaction with JS (e.g. Graal VM interpreter).
 
 ### phoenicis-settings
 Load/save settings.
