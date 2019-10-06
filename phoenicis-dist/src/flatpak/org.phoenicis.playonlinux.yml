@@ -70,4 +70,5 @@ modules:
       - type: script
         dest-filename: phoenicis-playonlinux
         commands:
-          - /app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -classpath /app/phoenicis/lib --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"
+          # do not use Wine runtime (e.g. Notepad++ crashes otherwise)
+          - /app/jre/bin/java -Dapplication.environment.wineRuntime=false --module-path /app/phoenicis/lib/ --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -classpath /app/phoenicis/lib --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"
