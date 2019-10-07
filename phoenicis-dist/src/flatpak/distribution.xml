@@ -36,17 +36,26 @@
             </includes>
 			<outputDirectory></outputDirectory>
         </fileSet>
+        <!-- graal dependencies -->
+        <fileSet>
+            <directory>${project.build.directory}/lib</directory>
+            <includes>
+                <include>compiler.jar</include>
+                <include>truffle-api.jar</include>
+                <include>graal-sdk.jar</include>
+            </includes>
+			<outputDirectory>lib</outputDirectory>
+        </fileSet>
     </fileSets>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
-			<excludes>
-				<exclude>commons-logging:commons-logging:*</exclude>
-				<exclude>xml-apis:xml-apis:*</exclude>
-				<exclude>xml-apis:xmlParserAPIs:*</exclude>
-				<exclude>xerces:xercesImpl:*</exclude>
-			</excludes>
+            <excludes>
+                <exclude>org.graalvm.compiler:compiler</exclude>
+                <exclude>org.graalvm.truffle:truffle-api</exclude>
+                <exclude>org.graalvm.sdk:graal-sdk</exclude>
+            </excludes>
 		</dependencySet>
 	</dependencySets>
 	<moduleSets>
