@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-05 19:21+0000\n"
-"PO-Revision-Date: 2019-10-10 16:28\n"
+"PO-Revision-Date: 2019-10-11 16:25\n"
 "Last-Translator: plata\n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -346,98 +346,98 @@ msgstr "Seçilenleri kur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
-msgstr ""
+msgstr "Fiilleri Kur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
 msgid "Are you sure you want to install the following Verbs:"
-msgstr ""
+msgstr "Aşağıdaki fiilleri yüklemek istediğinizden emin misiniz:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
 msgid "Error installing Verbs"
-msgstr ""
+msgstr "Fiiller kurulurken hata"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
 msgid "Clear selection"
-msgstr ""
+msgstr "Seçimi temizle"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
 msgid "Engine tools"
-msgstr ""
+msgstr "Motor araçları"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
 msgid "Engine Settings"
-msgstr ""
+msgstr "Motor Ayarları"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
 msgid "Tools"
-msgstr ""
+msgstr "Araçlar"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:57
 msgid "Run executable"
-msgstr ""
+msgstr "Yürütebiliri çalıştır"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:63
 msgid "Choose executable..."
-msgstr ""
+msgstr "Yürütülebilir dosya seç..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:55
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:52
 msgid "Categories"
-msgstr ""
+msgstr "Kategoriler"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:62
 msgid "Testing"
-msgstr ""
+msgstr "Deneniyor"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:65
 msgid "Patch required"
-msgstr ""
+msgstr "Yama gerekli"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
 msgid "Commercial"
-msgstr ""
+msgstr "Ticari"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
 msgid "All Operating Systems"
-msgstr ""
+msgstr "Tüm İşletim Sistemleri"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:75
 msgid "Filters"
-msgstr ""
+msgstr "Süzgeçler"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:127
 msgid "Installers"
-msgstr ""
+msgstr "Kurucular"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:183
 #, java-format
 msgid "Source: {0}"
-msgstr ""
+msgstr "Kaynak: {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
 msgid "Install"
-msgstr ""
+msgstr "Kur"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:193
 msgid "Error while trying to download the installer"
-msgstr ""
+msgstr "Yükleyiciyi indirmeye çalışırken hata"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:242
 msgid "The script ended unexpectedly"
-msgstr ""
+msgstr "Komut beklenmedik bir şekilde sona erdi"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
 msgid "Please specify a name!"
-msgstr ""
+msgstr "Lütfen bir isim belirtin!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
 msgid "Please specify a category!"
-msgstr ""
+msgstr "Lütfen bir kategori belirtin!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
 msgid "Please specify a valid miniature!"
@@ -663,44 +663,45 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:85
 msgid "Loading engine tools failed."
-msgstr ""
+msgstr "Motor yükleme araçları başarısız."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
-msgstr ""
+msgstr "Tüm {0} pencereleri kapatmak istediğinizden emin misiniz?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Kütüphane yüklenemiyor, lütfen tekrar deneyin."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
 msgid "Install {0}"
-msgstr ""
+msgstr "Kur {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:95
 #, java-format
 msgid "Are you sure you want to install {0}?"
-msgstr ""
+msgstr "{0} kurmak istediğinizden emin misiniz?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:120
 #, java-format
 msgid "Delete {0}"
-msgstr ""
+msgstr "Sil {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:121
 #, java-format
 msgid "Are you sure you want to delete {0}?"
-msgstr ""
+msgstr "{0} silmek istediğinizden emin misiniz?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:151
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:153
 msgid "Loading engines failed."
-msgstr ""
+msgstr "Motor yüklemeleri başarısız."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:61
 msgid "Connecting to the repository failed.\n"
 "Please check your connection and try again."
-msgstr ""
+msgstr "Depoya bağlanma başarısız oldu.\n"
+"Lütfen bağlantınızı kontrol edin ve tekrar deneyin."
 
