@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-05 19:21+0000\n"
-"PO-Revision-Date: 2019-10-06 10:32\n"
+"PO-Revision-Date: 2019-10-11 16:25\n"
 "Last-Translator: plata\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -95,7 +95,7 @@ msgstr "Библиотека"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:143
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:179
 msgid "Edit"
-msgstr ""
+msgstr "Редактировать"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:161
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:146
@@ -277,7 +277,7 @@ msgstr "Вы действительно хотите удалить {0} конт
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:172
 msgid "Error during engine engine version change"
-msgstr ""
+msgstr "Ошибка при изменении версии движка"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:197
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:209
@@ -303,7 +303,7 @@ msgstr "Удалить контейнер"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
 msgid "Change engine version"
-msgstr ""
+msgstr "Измените версию движка"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:78
 msgid "Open in file browser"
@@ -338,7 +338,7 @@ msgstr "Сборка Вайна:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
 msgid "Verbs"
-msgstr ""
+msgstr "Библиотеки"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
 msgid "Install selected"
@@ -346,15 +346,15 @@ msgstr "Установить выбранное"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
-msgstr ""
+msgstr "Установка библиотек"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
 msgid "Are you sure you want to install the following Verbs:"
-msgstr ""
+msgstr "Вы уверены, что хотите удалить следующие Библиотеки:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
 msgid "Error installing Verbs"
-msgstr ""
+msgstr "Ошибка установки библиотек"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
 msgid "Clear selection"
@@ -468,7 +468,7 @@ msgstr "Эскиз:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
 msgid "Browse..."
-msgstr ""
+msgstr "Обзор..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
@@ -506,7 +506,7 @@ msgstr "Запустить сценарий"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
 msgid "Open Script..."
-msgstr ""
+msgstr "Открыть сценарий..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:90
 #, java-format
@@ -659,7 +659,7 @@ msgstr "Сбой загрузки параметров движка."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:74
 msgid "Loading Verbs failed."
-msgstr ""
+msgstr "Сбой загрузки библиотек."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:85
 msgid "Loading engine tools failed."
@@ -672,7 +672,7 @@ msgstr "Вы уверены что хотите закрыть все {0} окн
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
 msgid "Unable to load library, please try again."
-msgstr ""
+msgstr "Не удалось загрузить библиотеку, пожалуйста повторите попытку."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
