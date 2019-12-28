@@ -32,7 +32,7 @@ cd phoenicis-javafx/
 mvn exec:java
 ```
 
-For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/Developers/build/).
 
 ## Build and Run in Online IDE
 
