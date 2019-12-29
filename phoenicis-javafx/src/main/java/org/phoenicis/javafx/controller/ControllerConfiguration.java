@@ -71,7 +71,6 @@ public class ControllerConfiguration {
                 containersController(),
                 viewsConfiguration.viewInstallations(),
                 settingsController(),
-                repositoryConfiguration.repositoryManager(),
                 themeConfiguration.themeManager(),
                 javaFxSettingsConfiguration.javaFxSettingsManager());
     }

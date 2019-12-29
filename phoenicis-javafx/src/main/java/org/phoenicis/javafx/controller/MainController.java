@@ -36,9 +36,7 @@ import org.slf4j.LoggerFactory;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
-    private final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final MainWindow mainWindow;
-    private final ThemeManager themeManager;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     private String applicationName;
@@ -50,7 +48,6 @@ public class MainController {
             ContainersController containersController,
             InstallationsFeaturePanel installationsView,
             SettingsController settingsController,
-            RepositoryManager repositoryManager,
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
@@ -67,7 +64,6 @@ public class MainController {
                 themeManager,
                 javaFxSettingsManager);
 
-        this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
