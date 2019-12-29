@@ -19,8 +19,8 @@
 package org.phoenicis.javafx.controller.library;
 
 import javafx.application.Platform;
-import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.library.control.LibraryFeaturePanel;
+import org.phoenicis.javafx.components.library.skin.LibrarySidebarToggleGroupSkin;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.library.LibraryManager;
@@ -97,7 +97,7 @@ public class LibraryController {
             try {
                 StringBuilder cssBuilder = new StringBuilder();
                 for (ShortcutCategoryDTO category : categories) {
-                    cssBuilder.append("#" + SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()) + "{\n");
+                    cssBuilder.append("#" + LibrarySidebarToggleGroupSkin.getToggleButtonId(category.getId()) + "{\n");
                     URI categoryIcon = category.getIcon();
                     if (categoryIcon == null) {
                         cssBuilder
