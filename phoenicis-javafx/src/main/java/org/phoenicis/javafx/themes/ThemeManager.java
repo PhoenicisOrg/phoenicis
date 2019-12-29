@@ -34,6 +34,11 @@ public class ThemeManager {
     private final ObservableList<String> defaultCategoryIconsStylesheets;
 
     /**
+     * The path to the library category icons stylesheet
+     */
+    private final ObservableList<String> defaultLibraryCategoryIconsStylesheets;
+
+    /**
      * The path to the engine icons stylesheet
      */
     private final ObservableList<String> defaultEngineIconsStylesheets;
@@ -59,6 +64,7 @@ public class ThemeManager {
         this.currentTheme = currentTheme;
 
         this.defaultCategoryIconsStylesheets = FXCollections.observableArrayList();
+        this.defaultLibraryCategoryIconsStylesheets = FXCollections.observableArrayList();
         this.defaultEngineIconsStylesheets = FXCollections.observableArrayList();
 
         // the base stylesheets
@@ -68,8 +74,12 @@ public class ThemeManager {
         final ObservableList<String> currentStylesheets = CollectionBindings
                 .mapToList(currentTheme, this::getNonStandardStylesheets);
 
-        this.stylesheets = ConcatenatedList.create(defaultCategoryIconsStylesheets, defaultEngineIconsStylesheets,
-                baseStylesheets, currentStylesheets);
+        this.stylesheets = ConcatenatedList.create(
+                defaultCategoryIconsStylesheets,
+                defaultLibraryCategoryIconsStylesheets,
+                defaultEngineIconsStylesheets,
+                baseStylesheets,
+                currentStylesheets);
 
         final ObjectBinding<Optional<URI>> currentWebEngineUri = ObjectBindings.map(currentTheme,
                 theme -> theme.getResourceUri("description.css"));
@@ -108,6 +118,15 @@ public class ThemeManager {
      */
     public void setDefaultCategoryIconsCss(String defaultCategoryIconsCss) {
         this.defaultCategoryIconsStylesheets.setAll(defaultCategoryIconsCss);
+    }
+
+    /**
+     * Sets the path of the CSS file containing the default library category icons
+     *
+     * @param defaultLibraryCategoryIconsCss The path of the default library category icons
+     */
+    public void setDefaultLibraryCategoryIconsCss(String defaultLibraryCategoryIconsCss) {
+        this.defaultLibraryCategoryIconsStylesheets.setAll(defaultLibraryCategoryIconsCss);
     }
 
     /**

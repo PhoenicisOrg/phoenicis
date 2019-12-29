@@ -80,10 +80,8 @@ public class MainController {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        // set callbacks and ensure that they are really called at least once initially
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
-        repositoryManager.triggerCallbacks();
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
     }

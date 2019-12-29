@@ -66,6 +66,7 @@ public class ShortcutManager {
         final File infoFile = new File(shortcutDirectoryFile, baseName + ".info");
         final File scriptFile = new File(shortcutDirectoryFile, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectoryFile, baseName + ".icon");
+        final File categoryIconFile = new File(shortcutDirectoryFile, baseName + "Category.icon");
         final File miniatureFile = new File(shortcutDirectoryFile, baseName + ".miniature");
 
         if (!shortcutDirectoryFile.exists()) {
@@ -86,6 +87,16 @@ public class ShortcutManager {
                 }
             } catch (IOException | IllegalArgumentException e) {
                 LOGGER.warn("Error while creating shortcut icon", e);
+            }
+            try {
+                if (shortcutDTO.getCategoryIcon() != null) {
+                    File file = createFileWithFallback(shortcutDTO.getCategoryIcon(), "phoenicis.png");
+                    if (file.exists()) {
+                        FileUtils.copyFile(file, categoryIconFile);
+                    }
+                }
+            } catch (IOException | IllegalArgumentException e) {
+                LOGGER.warn("Error while creating shortcut category icon", e);
             }
             try {
                 if (shortcutDTO.getMiniature() != null) {
@@ -139,6 +150,7 @@ public class ShortcutManager {
         final File infoFile = new File(shortcutDirectory, baseName + ".info");
         final File scriptFile = new File(shortcutDirectory, baseName + ".shortcut");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
+        final File categoryIconFile = new File(shortcutDirectory, baseName + "Category.icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
 
         if (infoFile.exists()) {
@@ -151,6 +163,10 @@ public class ShortcutManager {
 
         if (iconFile.exists()) {
             iconFile.delete();
+        }
+
+        if (categoryIconFile.exists()) {
+            categoryIconFile.delete();
         }
 
         if (miniatureFile.exists()) {
@@ -185,6 +201,24 @@ public class ShortcutManager {
                     shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withIcon(iconBackup.toURI()).build();
                 } catch (IOException e) {
                     LOGGER.error("Could not backup icon.", e);
+                }
+            }
+        }
+
+        // backup category icon if it didn't change (deleteShortcut will delete it -> icon lost after shortcut update)
+        final File categoryIconFile = new File(shortcutDirectory, baseName + "Category.icon");
+        final File categoryIconBackup = new File(shortcutDirectory, baseName + "Category.icon_backup");
+        final URI shortcutCategoryIcon = shortcutDTO.getCategoryIcon();
+
+        if (shortcutCategoryIcon != null && shortcutCategoryIcon.getPath() != null) {
+            final boolean keepIcon = shortcutCategoryIcon.getPath().equals(categoryIconFile.getPath());
+            if (keepIcon) {
+                try {
+                    Files.move(categoryIconFile.toPath(), categoryIconBackup.toPath());
+                    shortcutDTO = new ShortcutDTO.Builder(shortcutDTO).withCategoryIcon(categoryIconBackup.toURI())
+                            .build();
+                } catch (IOException e) {
+                    LOGGER.error("Could not backup category icon.", e);
                 }
             }
         }

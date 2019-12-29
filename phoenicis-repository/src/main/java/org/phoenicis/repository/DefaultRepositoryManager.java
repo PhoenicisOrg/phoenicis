@@ -1,12 +1,9 @@
 package org.phoenicis.repository;
 
 import org.phoenicis.configuration.security.Safe;
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.repository.dto.*;
 import org.phoenicis.repository.location.RepositoryLocation;
 import org.phoenicis.repository.types.*;
-import org.phoenicis.tools.files.FileUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,6 +56,16 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public synchronized void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError) {
         this.callbacks.add(new CallbackPair(onRepositoryChange, onError));
+    }
+
+    @Override
+    public TypeDTO getType(List<String> path) {
+        return this.cachedRepository.getType(path);
+    }
+
+    @Override
+    public CategoryDTO getCategory(List<String> path) {
+        return this.cachedRepository.getCategory(path);
     }
 
     @Override

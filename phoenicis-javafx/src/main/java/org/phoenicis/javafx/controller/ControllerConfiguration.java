@@ -97,8 +97,10 @@ public class ControllerConfiguration {
 
     @Bean
     public LibraryController libraryController() {
-        return new LibraryController(viewsConfiguration.viewLibrary(), libraryConfiguration.libraryManager(),
-                repositoryConfiguration.repositoryManager());
+        return new LibraryController(
+                viewsConfiguration.viewLibrary(),
+                libraryConfiguration.libraryManager(),
+                themeConfiguration.themeManager());
     }
 
     @Bean

@@ -44,9 +44,13 @@ public class LibrarySidebarToggleGroupSkin extends
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
         // TODO: store category ID in shortcut.info?
         categoryButton.setId(
-                String.format("applications-%s", SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId())));
+                String.format("applications-%s", LibrarySidebarToggleGroupSkin.getToggleButtonId(category.getId())));
         categoryButton.setOnMouseClicked(event -> getControl().setSelectedElement(category));
 
         return categoryButton;
+    }
+
+    public static String getToggleButtonId(String categoryId) {
+        return String.format("%s-library-button", categoryId.toLowerCase().replace('.', '-'));
     }
 }

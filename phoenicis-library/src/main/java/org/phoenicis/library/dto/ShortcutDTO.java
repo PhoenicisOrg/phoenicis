@@ -34,6 +34,18 @@ public class ShortcutDTO {
     private final String id;
     private final ShortcutInfoDTO info;
     private final URI icon;
+    // it is necessary to store the category icon per shortcut, otherwise category icons in the library could be
+    // overwritten if multiple shortcuts from different sources use the same category
+    // this could lead to a strange behavior in the following case:
+    // an app A with category c and category icon I(a) from repository R1 is installed
+    // if the theme does not specify an icon, I(a) is shown in the library
+    // an app B with category c and category icon I(b) from repository R2 is installed such that I(a) != I(b) (even
+    // though the category is the same)
+    // if the theme does not specify an icon, I(b) is shown in the library
+    // app B is uninstalled
+    // if the theme does not specify an icon, I(b) is still shown in the library even though the situation is the same
+    // as after installing app A
+    private final URI categoryIcon;
     private final URI miniature;
     private final String script;
 
@@ -52,6 +64,7 @@ public class ShortcutDTO {
 
         info = builder.info;
         icon = builder.icon;
+        categoryIcon = builder.categoryIcon;
         miniature = builder.miniature;
         script = builder.script;
     }
@@ -62,6 +75,10 @@ public class ShortcutDTO {
 
     public URI getIcon() {
         return icon;
+    }
+
+    public URI getCategoryIcon() {
+        return categoryIcon;
     }
 
     public URI getMiniature() {
@@ -96,6 +113,7 @@ public class ShortcutDTO {
                 .append(id, that.id)
                 .append(info, that.info)
                 .append(icon, that.icon)
+                .append(categoryIcon, that.categoryIcon)
                 .append(miniature, that.miniature)
                 .append(script, that.script)
                 .isEquals();
@@ -107,6 +125,7 @@ public class ShortcutDTO {
                 .append(id)
                 .append(info)
                 .append(icon)
+                .append(categoryIcon)
                 .append(miniature)
                 .append(script)
                 .toHashCode();
@@ -117,6 +136,7 @@ public class ShortcutDTO {
         private String id;
         private ShortcutInfoDTO info;
         private URI icon;
+        private URI categoryIcon;
         private URI miniature;
         private String script;
 
@@ -128,6 +148,7 @@ public class ShortcutDTO {
             this.info = shortcutDTO.info;
             this.id = shortcutDTO.id;
             this.icon = shortcutDTO.icon;
+            this.categoryIcon = shortcutDTO.categoryIcon;
             this.miniature = shortcutDTO.miniature;
             this.script = shortcutDTO.script;
         }
@@ -144,6 +165,11 @@ public class ShortcutDTO {
 
         public Builder withIcon(URI icon) {
             this.icon = icon;
+            return this;
+        }
+
+        public Builder withCategoryIcon(URI categoryIcon) {
+            this.categoryIcon = categoryIcon;
             return this;
         }
 

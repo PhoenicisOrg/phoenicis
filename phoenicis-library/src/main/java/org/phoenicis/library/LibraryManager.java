@@ -80,8 +80,12 @@ public class LibraryManager {
         List<ShortcutCategoryDTO> shortcuts = new ArrayList<>();
         for (Map.Entry<String, List<ShortcutDTO>> entry : categoryMap.entrySet()) {
             entry.getValue().sort(ShortcutDTO.nameComparator());
-            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder().withId(entry.getKey())
-                    .withName(entry.getKey()).withShortcuts(entry.getValue()).build();
+            ShortcutCategoryDTO category = new ShortcutCategoryDTO.Builder()
+                    .withId(entry.getKey())
+                    .withName(entry.getKey())
+                    .withShortcuts(entry.getValue())
+                    .withIcon(entry.getValue().get(0).getCategoryIcon()) // choose one category icon
+                    .build();
             shortcuts.add(tr(category));
         }
 
@@ -108,6 +112,7 @@ public class LibraryManager {
         final String baseName = FilenameUtils.getBaseName(file.getName());
         final File infoFile = new File(shortcutDirectory, baseName + ".info");
         final File iconFile = new File(shortcutDirectory, baseName + ".icon");
+        final File categoryIconFile = new File(shortcutDirectory, baseName + "Category.icon");
         final File miniatureFile = new File(shortcutDirectory, baseName + ".miniature");
 
         final ShortcutInfoDTO.Builder shortcutInfoDTOBuilder;
@@ -131,6 +136,8 @@ public class LibraryManager {
 
         try {
             final URI icon = iconFile.exists() ? iconFile.toURI() : getClass().getResource("phoenicis.png").toURI();
+            final URI categoryIcon = categoryIconFile.exists() ? categoryIconFile.toURI()
+                    : getClass().getResource("phoenicis.png").toURI();
             final URI miniature = miniatureFile.exists() ? miniatureFile.toURI()
                     : getClass().getResource("defaultMiniature.png").toURI();
 
@@ -139,6 +146,7 @@ public class LibraryManager {
                     .withInfo(shortcutInfoDTO)
                     .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
                     .withIcon(icon)
+                    .withCategoryIcon(categoryIcon)
                     .withMiniature(miniature)
                     .build();
         } catch (URISyntaxException | IOException e) {
