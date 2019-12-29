@@ -80,12 +80,21 @@ public class MainController {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        // set callbacks and ensure that they are really called at least once initially
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
-        repositoryManager.triggerCallbacks();
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
+
+        this.mainWindow.getApplicationsTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && !repositoryManager.isRepositoryLoaded()) {
+                repositoryManager.triggerRepositoryChange();
+            }
+        });
+        this.mainWindow.getContainersTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue && !repositoryManager.isRepositoryLoaded()) {
+                repositoryManager.triggerRepositoryChange();
+            }
+        });
     }
 
     public void show() {

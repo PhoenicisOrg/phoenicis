@@ -41,9 +41,7 @@ public class LibraryController {
         this.libraryManager = libraryManager;
 
         this.libraryManager.setOnUpdate(this::populate);
-
-        repositoryManager.addCallbacks(repository -> this.populate(), this::showError);
-        repositoryManager.triggerCallbacks();
+        this.libraryManager.refresh();
     }
 
     private void populate() {

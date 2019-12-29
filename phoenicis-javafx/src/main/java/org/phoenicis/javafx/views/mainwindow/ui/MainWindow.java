@@ -49,6 +49,12 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainWindow extends Stage {
     private TabPane tabPane;
+    private Tab libraryTab;
+    private Tab applicationsTab;
+    private Tab containersTab;
+    private Tab enginesTab;
+    private Tab installationsTab;
+    private Tab settingsTab;
 
     public MainWindow(String applicationName,
             LibraryFeaturePanel library,
@@ -61,14 +67,25 @@ public class MainWindow extends Stage {
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
 
-        tabPane = new TabPane();
-        tabPane.setId("menuPane");
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        this.tabPane = new TabPane();
+        this.tabPane.setId("menuPane");
+        this.tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        tabPane.getTabs().addAll(createLibraryTab(library), createApplicationsTab(apps),
-                createContainersTab(containers), engines, createInstallationsTab(installations), settings);
+        this.libraryTab = createLibraryTab(library);
+        this.applicationsTab = createApplicationsTab(apps);
+        this.containersTab = createContainersTab(containers);
+        this.enginesTab = engines;
+        this.installationsTab = createInstallationsTab(installations);
+        this.settingsTab = settings;
+        this.tabPane.getTabs().addAll(
+                this.libraryTab,
+                this.applicationsTab,
+                this.containersTab,
+                this.enginesTab,
+                this.installationsTab,
+                this.settingsTab);
 
-        final Scene scene = new PhoenicisScene(tabPane, themeManager, javaFxSettingsManager);
+        final Scene scene = new PhoenicisScene(this.tabPane, themeManager, javaFxSettingsManager);
 
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
@@ -154,6 +171,30 @@ public class MainWindow extends Stage {
     }
 
     public void showInstallations() {
-        tabPane.getSelectionModel().select(4);
+        this.tabPane.getSelectionModel().select(4);
+    }
+
+    public Tab getLibraryTab() {
+        return this.libraryTab;
+    }
+
+    public Tab getApplicationsTab() {
+        return this.applicationsTab;
+    }
+
+    public Tab getContainersTab() {
+        return this.containersTab;
+    }
+
+    public Tab getEnginesTab() {
+        return this.enginesTab;
+    }
+
+    public Tab getInstallationsTab() {
+        return this.installationsTab;
+    }
+
+    public Tab getSettingsTab() {
+        return this.settingsTab;
     }
 }

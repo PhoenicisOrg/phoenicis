@@ -39,6 +39,8 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     private List<CallbackPair> callbacks;
 
+    private boolean isRepositoryLoaded = false;
+
     public DefaultRepositoryManager(ExecutorService executorService, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
             BackgroundRepository.Factory backgroundRepositoryFactory) {
@@ -160,6 +162,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public synchronized void triggerRepositoryChange() {
         this.cachedRepository.clearCache();
+        this.isRepositoryLoaded = true;
         triggerCallbacks();
     }
 
@@ -170,6 +173,11 @@ public class DefaultRepositoryManager implements RepositoryManager {
                 this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
             }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
         }
+    }
+
+    @Override
+    public synchronized boolean isRepositoryLoaded() {
+        return isRepositoryLoaded;
     }
 
     private class CallbackPair {
