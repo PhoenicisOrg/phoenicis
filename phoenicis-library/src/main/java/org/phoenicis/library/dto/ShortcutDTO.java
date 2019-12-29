@@ -37,13 +37,13 @@ public class ShortcutDTO {
     // it is necessary to store the category icon per shortcut, otherwise category icons in the library could be
     // overwritten if multiple shortcuts from different sources use the same category
     // this could lead to a strange behavior in the following case:
-    // an app A with category c and category icon I(a) from repository R1 is installed
-    // if the theme does not specify an icon, I(a) is shown in the library
-    // an app B with category c and category icon I(b) from repository R2 is installed such that I(a) != I(b) (even
-    // though the category is the same)
-    // if the theme does not specify an icon, I(b) is shown in the library
+    // an app A with category C and category icon I(A) from repository R1 is installed
+    // if the theme does not specify an icon, I(A) is shown in the library
+    // an app B with category C and category icon I(B) from repository R2 is installed such that I(A) != I(B) (even
+    // though the category C is the same)
+    // if the theme does not specify an icon, I(B) is shown in the library
     // app B is uninstalled
-    // if the theme does not specify an icon, I(b) is still shown in the library even though the situation is the same
+    // if the theme does not specify an icon, I(B) is still shown in the library even though the situation is the same
     // as after installing app A
     private final URI categoryIcon;
     private final URI miniature;

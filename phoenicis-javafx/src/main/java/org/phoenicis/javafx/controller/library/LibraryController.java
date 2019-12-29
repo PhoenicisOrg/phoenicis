@@ -82,7 +82,7 @@ public class LibraryController {
      * sets the default category icons for the library sidebar buttons
      *
      * We cannot use the default category buttons for this purpose for several reasons:
-     * - It cannot be guaranteed that a the repository which contained the category of a certain app does still exists
+     * - It cannot be guaranteed that the repository which contained the category of a certain app does still exist
      * after the app has been installed (e.g. the repository might have been deleted).
      * - It should not be required to fetch the repository to use the library.
      *
