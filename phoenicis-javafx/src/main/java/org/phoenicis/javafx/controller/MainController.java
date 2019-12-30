@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
@@ -93,16 +94,13 @@ public class MainController {
         // tabs:
         // - apps (apps are stored in the repository)
         // - containers (engine settings etc.)
-        this.mainWindow.getApplicationsTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
+        final ChangeListener<Boolean> tabSelectedListener = (observable, oldValue, newValue) -> {
             if (newValue && !repositoryManager.isRepositoryLoaded()) {
                 repositoryManager.triggerRepositoryChange();
             }
-        });
-        this.mainWindow.getContainersTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue && !repositoryManager.isRepositoryLoaded()) {
-                repositoryManager.triggerRepositoryChange();
-            }
-        });
+        };
+        this.mainWindow.getApplicationsTab().selectedProperty().addListener(tabSelectedListener);
+        this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
     }
 
     public void show() {
