@@ -85,6 +85,14 @@ public class MainController {
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
 
+        // load repository only if it is really required, i.e.
+        // - if one of the following tabs is opened
+        // and
+        // - if the repository has not been loaded already (avoid reload by opening the tab several times)
+        //
+        // tabs:
+        // - apps (apps are stored in the repository)
+        // - containers (engine settings etc.)
         this.mainWindow.getApplicationsTab().selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue && !repositoryManager.isRepositoryLoaded()) {
                 repositoryManager.triggerRepositoryChange();

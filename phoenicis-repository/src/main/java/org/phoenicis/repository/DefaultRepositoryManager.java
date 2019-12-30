@@ -171,6 +171,9 @@ public class DefaultRepositoryManager implements RepositoryManager {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
                 this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
             }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
+            // do not set this in triggerRepositoryChange()
+            // if no callbacks are registered, fetchInstallableApplications is not called and the repository is not
+            // loaded
             this.isRepositoryLoaded = true;
         }
     }
