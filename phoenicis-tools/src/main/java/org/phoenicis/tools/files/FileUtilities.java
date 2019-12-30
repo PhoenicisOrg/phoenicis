@@ -136,7 +136,7 @@ public class FileUtilities extends FilesManipulator {
         final File target = new File(targetPath);
 
         if (!source.exists()) {
-            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", targetPath));
+            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", sourcePath));
         }
 
         assertInDirectory(source);
