@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
@@ -80,12 +81,26 @@ public class MainController {
         this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
 
-        // set callbacks and ensure that they are really called at least once initially
         repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
         });
-        repositoryManager.triggerCallbacks();
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
+
+        // load repository only if it is really required, i.e.
+        // - if one of the following tabs is opened
+        // and
+        // - if the repository has not been loaded already (avoid reload by opening the tab several times)
+        //
+        // tabs:
+        // - apps (apps are stored in the repository)
+        // - containers (engine settings etc.)
+        final ChangeListener<Boolean> tabSelectedListener = (observable, oldValue, newValue) -> {
+            if (newValue && !repositoryManager.isRepositoryLoaded()) {
+                repositoryManager.triggerRepositoryChange();
+            }
+        };
+        this.mainWindow.getApplicationsTab().selectedProperty().addListener(tabSelectedListener);
+        this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
     }
 
     public void show() {

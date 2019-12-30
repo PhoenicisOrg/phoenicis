@@ -89,8 +89,6 @@ public class ContainersController {
 
                     errorDialog.showAndWait();
                 }));
-
-        repositoryManager.triggerCallbacks();
     }
 
     public ContainersFeaturePanel getView() {
