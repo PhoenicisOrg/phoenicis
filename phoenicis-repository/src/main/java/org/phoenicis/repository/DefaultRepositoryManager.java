@@ -162,7 +162,6 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public synchronized void triggerRepositoryChange() {
         this.cachedRepository.clearCache();
-        this.isRepositoryLoaded = true;
         triggerCallbacks();
     }
 
@@ -172,6 +171,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
             this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
                 this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
             }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
+            this.isRepositoryLoaded = true;
         }
     }
 
