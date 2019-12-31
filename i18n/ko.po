@@ -2,16 +2,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-05 19:21+0000\n"
-"PO-Revision-Date: 2019-10-11 16:25\n"
-"Last-Translator: plata\n"
+"POT-Creation-Date: 2019-12-30 18:36+0000\n"
+"PO-Revision-Date: 2019-12-31 17:52\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: crowdin.com\n"
 "X-Crowdin-Project: phoenicis\n"
 "X-Crowdin-Language: ko\n"
 "X-Crowdin-File: /master/i18n/keys.pot\n"
@@ -88,7 +87,7 @@ msgid "Next"
 msgstr "다음"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:105
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:106
 msgid "Library"
 msgstr "라이브러리"
 
@@ -165,21 +164,21 @@ msgstr "다시 시도"
 msgid "Reason: {0}"
 msgstr "사유: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:97
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:114
 msgid "Apps"
 msgstr "앱"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:105
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:122
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
 msgid "Containers"
 msgstr "컨테이너"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:116
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:133
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:144
 msgid "Loading containers failed."
 msgstr "컨테이너 로드 실패"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:128
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:145
 msgid "Installations"
 msgstr "설치"
 
@@ -653,7 +652,7 @@ msgid "Mint-X theme"
 msgstr "Mint-X 테마"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:63
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:111
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:109
 msgid "Loading engine settings failed."
 msgstr "엔진 설정 로드 실패."
 
@@ -665,12 +664,12 @@ msgstr "Verbs 로드 실패."
 msgid "Loading engine tools failed."
 msgstr "엔진 도구 로드 실패."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:114
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr "{0} 의 모든 윈도우를 닫으시겠습니까?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:62
 msgid "Unable to load library, please try again."
 msgstr "라이브러리를 로드 할 수 없습니다. 다시 시도하세요."
 
