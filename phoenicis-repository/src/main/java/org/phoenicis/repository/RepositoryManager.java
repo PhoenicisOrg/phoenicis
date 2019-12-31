@@ -124,4 +124,10 @@ public interface RepositoryManager {
      * In contrast to {@link #triggerRepositoryChange()}, it does not update the repository before.
      */
     void triggerCallbacks();
+
+    /**
+     * This method checks if the repository has been loaded at least once.
+     * @return true if repository has been loaded
+     */
+    boolean isRepositoryLoaded();
 }

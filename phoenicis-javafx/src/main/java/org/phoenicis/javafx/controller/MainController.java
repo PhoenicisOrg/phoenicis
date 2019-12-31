@@ -19,6 +19,7 @@
 package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
@@ -30,8 +31,6 @@ import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
 import org.phoenicis.repository.RepositoryManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -48,6 +47,7 @@ public class MainController {
             ContainersController containersController,
             InstallationsFeaturePanel installationsView,
             SettingsController settingsController,
+            RepositoryManager repositoryManager,
             ThemeManager themeManager,
             JavaFxSettingsManager javaFxSettingsManager) {
         super();
@@ -67,6 +67,22 @@ public class MainController {
         this.javaFxSettingsManager = javaFxSettingsManager;
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
+
+        // load repository only if it is really required, i.e.
+        // - if one of the following tabs is opened
+        // and
+        // - if the repository has not been loaded already (avoid reload by opening the tab several times)
+        //
+        // tabs:
+        // - apps (apps are stored in the repository)
+        // - containers (engine settings etc.)
+        final ChangeListener<Boolean> tabSelectedListener = (observable, oldValue, newValue) -> {
+            if (newValue && !repositoryManager.isRepositoryLoaded()) {
+                repositoryManager.triggerRepositoryChange();
+            }
+        };
+        this.mainWindow.getApplicationsTab().selectedProperty().addListener(tabSelectedListener);
+        this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
     }
 
     public void show() {
