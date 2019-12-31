@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-05 19:21+0000\n"
-"PO-Revision-Date: 2019-12-22 08:42\n"
+"POT-Creation-Date: 2019-12-30 18:36+0000\n"
+"PO-Revision-Date: 2019-12-31 17:52\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -87,7 +87,7 @@ msgid "Next"
 msgstr "Tovább"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:105
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:106
 msgid "Library"
 msgstr "Könyvtár"
 
@@ -164,21 +164,21 @@ msgstr "Újra"
 msgid "Reason: {0}"
 msgstr "Ok: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:97
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:114
 msgid "Apps"
 msgstr "Alkalmazások"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:105
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:122
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
 msgid "Containers"
 msgstr "Tárolók"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:116
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:133
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:144
 msgid "Loading containers failed."
 msgstr "Tartályok betöltése nem sikerült."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:128
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:145
 msgid "Installations"
 msgstr "Telepítések"
 
@@ -652,7 +652,7 @@ msgid "Mint-X theme"
 msgstr "Mint-X téma"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:63
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:111
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:109
 msgid "Loading engine settings failed."
 msgstr "Szolgáltatási beállítások betöltése sikertelen."
 
@@ -664,12 +664,12 @@ msgstr "Az igék betöltése sikertelen."
 msgid "Loading engine tools failed."
 msgstr "Szolgáltatási eszközök betöltése sikertelen."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:99
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/MainController.java:114
 #, java-format
 msgid "Are you sure you want to close all {0} windows?"
 msgstr "Biztosan szeretné a(z) {0} összes ablak bezárása?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:64
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:62
 msgid "Unable to load library, please try again."
 msgstr "Nem lehet betölteni a könyvtárat, próbálja újra."
 
