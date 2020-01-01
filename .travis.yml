@@ -86,7 +86,7 @@ jobs:
       env: NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
       language: ruby
       rvm:
-        - 2.5
+        - 2.7
       before_install: cd docs
       script:
         - bundle exec jekyll build
