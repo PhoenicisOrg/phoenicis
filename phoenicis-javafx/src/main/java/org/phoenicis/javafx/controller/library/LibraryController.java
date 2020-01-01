@@ -34,6 +34,7 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -98,13 +99,11 @@ public class LibraryController {
                 StringBuilder cssBuilder = new StringBuilder();
                 for (ShortcutCategoryDTO category : categories) {
                     cssBuilder.append("#" + LibrarySidebarToggleGroupSkin.getToggleButtonId(category.getId()) + "{\n");
-                    URI categoryIcon = category.getIcon();
-                    if (categoryIcon == null) {
-                        cssBuilder
-                                .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                    } else {
-                        cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                    }
+                    final String categoryIconPath = Optional.ofNullable(category.getIcon())
+                            .map(categoryIcon -> categoryIcon.toString())
+                            .orElse("/org/phoenicis/javafx/views/common/phoenicis.png");
+
+                    cssBuilder.append(String.format("-fx-background-image: url('%s');\n", categoryIconPath));
                     cssBuilder.append("}\n");
                 }
                 String css = cssBuilder.toString();
