@@ -20,7 +20,6 @@ package org.phoenicis.javafx.controller;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
-import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.controller.apps.AppsController;
 import org.phoenicis.javafx.controller.containers.ContainersController;
@@ -32,24 +31,11 @@ import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
 import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.CategoryDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
-    private final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
     private final MainWindow mainWindow;
-    private final ThemeManager themeManager;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
     private String applicationName;
@@ -78,11 +64,7 @@ public class MainController {
                 themeManager,
                 javaFxSettingsManager);
 
-        this.themeManager = themeManager;
         this.javaFxSettingsManager = javaFxSettingsManager;
-
-        repositoryManager.addCallbacks(this::setDefaultCategoryIcons, e -> {
-        });
 
         installationsView.setOnInstallationAdded(this.mainWindow::showInstallations);
 
@@ -128,40 +110,6 @@ public class MainController {
                     .build();
 
             confirmDialog.showAndCallback();
-        });
-    }
-
-    /**
-     * sets the default category icons from the repository for the sidebar buttons
-     *
-     * @param repositoryDTO repository
-     */
-    private void setDefaultCategoryIcons(RepositoryDTO repositoryDTO) {
-        Platform.runLater(() -> {
-            try {
-                List<CategoryDTO> categoryDTOS = repositoryDTO.getTypes().get(0).getCategories();
-                StringBuilder cssBuilder = new StringBuilder();
-                for (CategoryDTO category : categoryDTOS) {
-                    cssBuilder.append("#" + SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()) + "{\n");
-                    URI categoryIcon = category.getIcon();
-                    if (categoryIcon == null) {
-                        cssBuilder
-                                .append("-fx-background-image: url('/org/phoenicis/javafx/views/common/phoenicis.png');\n");
-                    } else {
-                        cssBuilder.append("-fx-background-image: url('" + categoryIcon + "');\n");
-                    }
-                    cssBuilder.append("}\n");
-                }
-                String css = cssBuilder.toString();
-                Path temp = Files.createTempFile("defaultCategoryIcons", ".css").toAbsolutePath();
-                File tempFile = temp.toFile();
-                tempFile.deleteOnExit();
-                Files.write(temp, css.getBytes());
-                String defaultCategoryIconsCss = temp.toUri().toString();
-                this.themeManager.setDefaultCategoryIconsCss(defaultCategoryIconsCss);
-            } catch (IOException e) {
-                LOGGER.warn("Could not set default category icons.", e);
-            }
         });
     }
 }
