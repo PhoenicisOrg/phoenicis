@@ -21,6 +21,8 @@ package org.phoenicis.tools.files;
 import com.google.common.collect.Sets;
 import org.apache.commons.io.FileUtils;
 import org.phoenicis.configuration.security.Safe;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.io.File;
@@ -39,6 +41,8 @@ import java.util.Set;
  */
 @Safe
 public class FileUtilities extends FilesManipulator {
+    private final Logger LOGGER = LoggerFactory.getLogger(FileUtilities.class);
+
     @Value("${application.user.tmp}")
     private String tmpDirectory;
 
@@ -162,7 +166,8 @@ public class FileUtilities extends FilesManipulator {
         final File fileToDelete = new File(path);
 
         if (!fileToDelete.exists()) {
-            throw new IllegalArgumentException(String.format("Path \"%s\" does not exist", path));
+            LOGGER.debug(String.format("Cannot remove file or directory: path \"%s\" does not exist", path));
+            return;
         }
 
         assertInDirectory(fileToDelete);
