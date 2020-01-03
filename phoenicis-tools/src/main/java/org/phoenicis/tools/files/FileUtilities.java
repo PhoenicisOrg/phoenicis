@@ -165,12 +165,12 @@ public class FileUtilities extends FilesManipulator {
     public void remove(String path) throws IOException {
         final File fileToDelete = new File(path);
 
+        assertInDirectory(fileToDelete);
+
         if (!fileToDelete.exists()) {
             LOGGER.debug(String.format("Cannot remove file or directory: path \"%s\" does not exist", path));
             return;
         }
-
-        assertInDirectory(fileToDelete);
 
         if (fileToDelete.isDirectory()) {
             FileUtils.deleteDirectory(fileToDelete);
