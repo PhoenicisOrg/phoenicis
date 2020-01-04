@@ -69,19 +69,19 @@ public class GitRepository implements Repository {
     private void cloneOrUpdateWithLock() throws RepositoryException {
         synchronized (mutex) {
             try {
-                LOGGER.info("Begin fetching process of " + this);
+                LOGGER.info("Begin fetching process of '{}' to '{}'", repositoryUri, localFolder);
 
                 boolean lockFileExists = this.lockFile.exists();
 
                 // check that the repository lock file exists
                 if (!lockFileExists) {
-                    LOGGER.info("Creating lock file for " + this);
+                    LOGGER.info("Creating lock file '{}' for git-repository '{}'", lockFile, repositoryUri);
 
                     try {
                         this.lockFile.getParentFile().mkdirs();
                         this.lockFile.createNewFile();
                     } catch (IOException e) {
-                        throw new RepositoryException("Couldn't create lock file " + this.lockFile.getAbsolutePath());
+                        throw new RepositoryException("Couldn't create lock file " + lockFile.getAbsolutePath());
                     }
                 }
                 try (FileOutputStream lockFileStream = new FileOutputStream(lockFile, true)) {
@@ -100,81 +100,64 @@ public class GitRepository implements Repository {
 
         // check that the repository folder exists
         if (!folderExists) {
-            LOGGER.info("Creating local folder for " + this);
+            LOGGER.info("Creating local folder '{}' for git-repository '{}'", localFolder, repositoryUri);
 
             if (!this.localFolder.mkdirs()) {
                 throw new RepositoryException("Couldn't create local folder for " + this);
             }
         }
-        Git gitRepository = null;
 
-        /*
-         * if the repository folder previously didn't exist, clone the
-         * repository now and checkout the correct branch
-         */
         if (!folderExists) {
-            LOGGER.info("Cloning " + this);
+            LOGGER.info("Cloning git-repository '{}' to '{}'", repositoryUri, localFolder);
 
-            try {
-                gitRepository = Git.cloneRepository().setURI(this.repositoryUri.toString())
-                        .setDirectory(this.localFolder)
-                        .setBranch(this.branch).call();
+            try (final Git gitRepository = Git.cloneRepository()
+                    .setURI(this.repositoryUri.toString())
+                    .setDirectory(this.localFolder)
+                    .setBranch(this.branch).call()) {
+                LOGGER.info("Finished cloning git-repository '{}' to '{}'", repositoryUri, localFolder);
             } catch (GitAPIException e) {
                 throw new RepositoryException(
-                        String.format("Folder '%s' is no git-repository", this.localFolder.getAbsolutePath()), e);
-            } finally {
-                // close repository to free resources
-                if (gitRepository != null) {
-                    gitRepository.close();
-                }
+                        String.format("Folder '%s' is no git-repository", localFolder.getAbsolutePath()), e);
             }
-        }
-        /*
-         * otherwise open the folder and pull the newest updates from the
-         * repository
-         */
-        else {
+        } else {
+            LOGGER.info("Opening git-repository at '{}'", localFolder);
+
             // if anything doesn't work here, we still have our local checkout
             // e.g. could be that the git repository cannot be accessed, there is not Internet connection etc.
             // TODO: it might make sense to ensure that our local checkout is not empty / a valid git repository
-            try {
-                LOGGER.info("Opening " + this);
-
-                gitRepository = Git.open(localFolder);
-
-                LOGGER.info("Pulling new commits from " + this);
+            try (final Git gitRepository = Git.open(localFolder)) {
+                LOGGER.info("Pulling new commits to '{}'", localFolder);
 
                 gitRepository.pull().call();
+
+                LOGGER.info("Finished pulling new commits to '{}'", localFolder);
             } catch (Exception e) {
                 LOGGER.warn("Could not update {0}. Local checkout will be used.", e);
-            } finally {
-                // close repository to free resources
-                if (gitRepository != null) {
-                    gitRepository.close();
-                }
             }
         }
     }
 
     @Override
     public RepositoryDTO fetchInstallableApplications() {
-        RepositoryDTO result;
         try {
             this.cloneOrUpdateWithLock();
-            result = localRepositoryFactory.createInstance(this.localFolder, this.repositoryUri)
+
+            final RepositoryDTO result = localRepositoryFactory
+                    .createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
+
+            return result;
         } catch (RepositoryException e) {
             throw new RepositoryException("Could not clone or update git repository", e);
         }
-        return result;
     }
 
     @Override
     public void onDelete() {
         try {
-            FileUtils.deleteDirectory(this.localFolder);
+            FileUtils.deleteDirectory(localFolder);
 
-            LOGGER.info("Deleted " + this);
+            LOGGER.info("Deleted local folder '{}' for git-repository '{}'", localFolder, repositoryUri);
         } catch (IOException e) {
             LOGGER.error("Couldn't delete " + this, e);
         }
@@ -182,8 +165,8 @@ public class GitRepository implements Repository {
 
     @Override
     public String toString() {
-        return String.format("git-repository %s, local folder: %s, branch: %s", this.repositoryUri,
-                this.localFolder.getAbsolutePath(), this.branch);
+        return String.format("GitRepository(url: '%s', folder: '%s', branch: '%s')", repositoryUri, localFolder,
+                branch);
     }
 
     @Override
