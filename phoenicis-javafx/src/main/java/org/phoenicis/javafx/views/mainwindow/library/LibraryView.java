@@ -413,15 +413,18 @@ public class LibraryView extends MainWindowView<LibrarySidebar> {
                 .withMessage(tr("Are you sure you want to uninstall {0}?", shortcutName))
                 .withOwner(content.getScene().getWindow())
                 .withResizable(true)
-                .withYesCallback(() -> shortcutManager.uninstallFromShortcut(shortcut, e -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Error while uninstalling {0}", shortcutName))
-                            .withException(e)
-                            .withOwner(content.getScene().getWindow())
-                            .build();
+                .withYesCallback(() -> {
+                    shortcutManager.uninstallFromShortcut(shortcut, e -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error while uninstalling {0}", shortcutName))
+                                .withException(e)
+                                .withOwner(content.getScene().getWindow())
+                                .build();
 
-                    errorDialog.showAndWait();
-                }))
+                        errorDialog.showAndWait();
+                    });
+                    closeDetailsView();
+                })
                 .build();
 
         confirmMessage.showAndCallback();
