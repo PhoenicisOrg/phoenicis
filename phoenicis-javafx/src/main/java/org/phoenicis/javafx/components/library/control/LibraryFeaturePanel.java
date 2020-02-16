@@ -231,15 +231,18 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
                 .withMessage(tr("Are you sure you want to uninstall {0}?", shortcutName))
                 .withOwner(getScene().getWindow())
                 .withResizable(true)
-                .withYesCallback(() -> getShortcutManager().uninstallFromShortcut(shortcut, e -> {
-                    final ErrorDialog errorDialog = ErrorDialog.builder()
-                            .withMessage(tr("Error while uninstalling {0}", shortcutName))
-                            .withException(e)
-                            .withOwner(getScene().getWindow())
-                            .build();
+                .withYesCallback(() -> {
+                    getShortcutManager().uninstallFromShortcut(shortcut, e -> {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("Error while uninstalling {0}", shortcutName))
+                                .withException(e)
+                                .withOwner(getScene().getWindow())
+                                .build();
 
-                    errorDialog.showAndWait();
-                }))
+                        errorDialog.showAndWait();
+                    });
+                    // TODO: how can the feature panel close itself?
+                })
                 .build();
 
         confirmMessage.showAndCallback();
