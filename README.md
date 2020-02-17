@@ -12,6 +12,8 @@ Supported operating systems:
 Supported engines:
 * Wine
 
+<a href='https://flathub.org/apps/details/org.phoenicis.playonlinux'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
+
 ------------
 
 ## Build and Run locally
@@ -30,7 +32,7 @@ cd phoenicis-javafx/
 mvn exec:java
 ```
 
-For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/).
+For more details (e.g. regarding dependencies) consider the [documentation](https://phoenicisorg.github.io/phoenicis/Developers/build/).
 
 ## Build and Run in Online IDE
 

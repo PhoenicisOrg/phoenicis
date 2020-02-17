@@ -44,9 +44,19 @@ public class ApplicationSidebarToggleGroupSkin extends
     protected ToggleButton convertToToggleButton(CategoryDTO category) {
         final ToggleButton categoryButton = createSidebarToggleButton(category.getName());
 
-        categoryButton.setId(SidebarToggleGroupBaseSkin.getToggleButtonId(category.getId()));
+        categoryButton.setId(ApplicationSidebarToggleGroupSkin.getToggleButtonId(category.getId()));
         categoryButton.setOnAction(event -> getControl().setSelectedElement(category));
 
         return categoryButton;
+    }
+
+    /**
+     * Creates a button ID which can be used e.g. to assign icons via CSS based on the category ID
+     *
+     * @param categoryId The category ID which should be used
+     * @return The created button ID
+     */
+    public static String getToggleButtonId(String categoryId) {
+        return String.format("applications-%s", SidebarToggleGroupBaseSkin.getToggleButtonId(categoryId));
     }
 }

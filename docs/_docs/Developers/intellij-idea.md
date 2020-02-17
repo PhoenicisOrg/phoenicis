@@ -19,7 +19,7 @@ add: JavaFXApplication with:
 * Main class: `org.phoenicis.javafx.JavaFXApplication`
 * VM options: 
 ```
---add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.scripting.nashorn,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path phoenicis-dist/target/lib -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar
+--add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path phoenicis-dist/target/lib -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar
 ```
 * Program arguments: empty
 * Working directory: `/path/to/phoenicis`
