@@ -14,6 +14,8 @@ import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.container.control.ContainerEngineSettingsPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -22,6 +24,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class ContainerEngineSettingsPanelSkin
         extends SkinBase<ContainerEngineSettingsPanel, ContainerEngineSettingsPanelSkin> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContainerEngineSettingsPanelSkin.class);
+
     /**
      * Constructor
      *
@@ -85,7 +89,15 @@ public class ContainerEngineSettingsPanelSkin
 
             // if the container is not specified set no default values
             if (container != null) {
-                engineSettingComboBox.setValue(engineSetting.getCurrentOption(container.getName()));
+                try {
+                    engineSettingComboBox.setValue(engineSetting.getCurrentOption(container.getName()));
+                } catch (Exception e) {
+                    engineSettingComboBox.getSelectionModel().select(0);
+                    LOGGER.warn(
+                            String.format("Could not fetch current option for engine setting \"%s\", will use default.",
+                                    engineSetting.getText()));
+                    LOGGER.debug("Caused by: ", e);
+                }
                 engineSettingComboBox.valueProperty().addListener((Observable invalidation) -> Platform.runLater(() -> {
                     getControl().setLockEngineSettings(true);
 

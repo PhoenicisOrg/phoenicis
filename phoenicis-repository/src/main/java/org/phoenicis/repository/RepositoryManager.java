@@ -1,9 +1,7 @@
 package org.phoenicis.repository;
 
-import org.phoenicis.repository.dto.ApplicationDTO;
-import org.phoenicis.repository.dto.RepositoryDTO;
+import org.phoenicis.repository.dto.*;
 import org.phoenicis.repository.location.RepositoryLocation;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.repository.types.Repository;
 
 import java.util.List;
@@ -24,6 +22,24 @@ public interface RepositoryManager {
      * @param onError The callback that should be called when the repository change failed
      */
     void addCallbacks(Consumer<RepositoryDTO> onRepositoryChange, Consumer<Exception> onError);
+
+    /**
+     * This method returns the {@link org.phoenicis.repository.dto.TypeDTO}, which can be found at the given
+     * path.
+     *
+     * @param path The path, where the searched TypeDTO can be found
+     * @return The found TypeDTO
+     */
+    TypeDTO getType(List<String> path);
+
+    /**
+     * This method returns the {@link org.phoenicis.repository.dto.CategoryDTO}, which can be found at the given
+     * path.
+     *
+     * @param path The path, where the searched CategoryDTO can be found
+     * @return The found CategoryDTO
+     */
+    CategoryDTO getCategory(List<String> path);
 
     /**
      * This method returns the {@link org.phoenicis.repository.dto.ApplicationDTO}, which can be found at the given
@@ -108,4 +124,10 @@ public interface RepositoryManager {
      * In contrast to {@link #triggerRepositoryChange()}, it does not update the repository before.
      */
     void triggerCallbacks();
+
+    /**
+     * This method checks if the repository has been loaded at least once.
+     * @return true if repository has been loaded
+     */
+    boolean isRepositoryLoaded();
 }

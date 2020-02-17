@@ -3,6 +3,7 @@ package org.phoenicis.javafx.components.library.skin;
 import com.fasterxml.jackson.core.type.TypeReference;
 import javafx.beans.Observable;
 import javafx.beans.binding.StringBinding;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
@@ -13,6 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.apache.commons.lang.StringUtils;
+import org.phoenicis.javafx.components.common.control.KeyAttributeList;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
 import org.phoenicis.javafx.components.library.control.ShortcutInformationPanel;
 import org.phoenicis.javafx.utils.CollectionBindings;
@@ -44,6 +46,8 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
      */
     private final ObservableMap<String, Object> shortcutProperties;
 
+    private final ObservableMap<String, String> environmentAttributes;
+
     /**
      * Constructor
      *
@@ -54,6 +58,7 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
 
         this.description = StringBindings.map(getControl().shortcutProperty(),
                 shortcut -> shortcut.getInfo().getDescription());
+
         this.shortcutProperties = CollectionBindings.mapToMap(getControl().shortcutProperty(), shortcut -> {
             try {
                 return getControl().getObjectMapper()
@@ -66,6 +71,8 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
                 return Map.of();
             }
         });
+
+        this.environmentAttributes = FXCollections.observableHashMap();
     }
 
     /**
@@ -79,12 +86,19 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
 
         final GridPane propertiesGrid = createPropertiesGrid();
 
+        final Label environmentLabel = new Label(tr("Environment"));
+        environmentLabel.getStyleClass().add("sectionTitle");
+        environmentLabel.setWrapText(true);
+
+        final KeyAttributeList environmentAttributeList = createKeyAttributeList();
+
         final Region spacer = new Region();
         spacer.getStyleClass().add("detailsButtonSpacer");
 
         final GridPane controlButtons = createControlButtons();
 
-        final VBox container = new VBox(descriptionLabel, propertiesGrid, spacer, controlButtons);
+        final VBox container = new VBox(descriptionLabel, propertiesGrid, environmentLabel, environmentAttributeList,
+                spacer, controlButtons);
 
         getChildren().setAll(container);
     }
@@ -109,6 +123,17 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         updateProperties(propertiesGrid);
 
         return propertiesGrid;
+    }
+
+    private KeyAttributeList createKeyAttributeList() {
+        final KeyAttributeList keyAttributeList = new KeyAttributeList();
+
+        this.environmentAttributes.addListener(
+                (Observable invalidated) -> keyAttributeList.setAttributeMap(this.environmentAttributes));
+
+        keyAttributeList.setAttributeMap(this.environmentAttributes);
+
+        return keyAttributeList;
     }
 
     /**
@@ -173,14 +198,25 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
             final int row = propertiesGrid.getRowCount();
 
-            final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
-            keyLabel.getStyleClass().add("captionTitle");
-            GridPane.setValignment(keyLabel, VPos.TOP);
+            if (!entry.getKey().equals("environment")) {
+                final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
+                keyLabel.getStyleClass().add("captionTitle");
+                GridPane.setValignment(keyLabel, VPos.TOP);
 
-            final Label valueLabel = new Label(entry.getValue().toString());
-            valueLabel.setWrapText(true);
+                final Label valueLabel = new Label(entry.getValue().toString());
+                valueLabel.setWrapText(true);
 
-            propertiesGrid.addRow(row, keyLabel, valueLabel);
+                propertiesGrid.addRow(row, keyLabel, valueLabel);
+            }
+        }
+
+        // set the environment
+        this.environmentAttributes.clear();
+
+        if (shortcutProperties.containsKey("environment")) {
+            final Map<String, String> environment = (Map<String, String>) shortcutProperties.get("environment");
+
+            this.environmentAttributes.putAll(environment);
         }
     }
 

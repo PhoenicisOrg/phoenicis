@@ -170,33 +170,35 @@ public class GenericContainersManager implements ContainersManager {
 
         if (containerDirectories != null) {
             for (File containerDirectory : containerDirectories) {
-                final ConfigFile configFile = compatibleConfigFileFormatFactory
-                        .open(new File(containerDirectory, "phoenicis.cfg"));
-                final String containerPath = containerDirectory.getAbsolutePath();
-                final String containerName = containerPath.substring(containerPath.lastIndexOf('/') + 1);
+                if (!containerDirectory.isHidden()) {
+                    final ConfigFile configFile = compatibleConfigFileFormatFactory
+                            .open(new File(containerDirectory, "phoenicis.cfg"));
+                    final String containerPath = containerDirectory.getAbsolutePath();
+                    final String containerName = containerPath.substring(containerPath.lastIndexOf('/') + 1);
 
-                // find shortcuts which use this container
-                List<ShortcutDTO> shortcutDTOS = libraryManager.fetchShortcuts().stream()
-                        .flatMap(shortcutCategory -> shortcutCategory.getShortcuts().stream()).filter(shortcut -> {
-                            boolean toAdd = false;
-                            try {
-                                final Map<String, Object> shortcutProperties = objectMapper
-                                        .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
-                                        });
-                                toAdd = shortcutProperties.get("winePrefix").equals(containerName);
-                            } catch (IOException e) {
-                                LOGGER.warn("Could not parse shortcut script JSON", e);
-                            }
-                            return toAdd;
-                        }).collect(Collectors.toList());
+                    // find shortcuts which use this container
+                    List<ShortcutDTO> shortcutDTOS = libraryManager.fetchShortcuts().stream()
+                            .flatMap(shortcutCategory -> shortcutCategory.getShortcuts().stream()).filter(shortcut -> {
+                                boolean toAdd = false;
+                                try {
+                                    final Map<String, Object> shortcutProperties = objectMapper
+                                            .readValue(shortcut.getScript(), new TypeReference<Map<String, Object>>() {
+                                            });
+                                    toAdd = shortcutProperties.get("winePrefix").equals(containerName);
+                                } catch (IOException e) {
+                                    LOGGER.warn("Could not parse shortcut script JSON", e);
+                                }
+                                return toAdd;
+                            }).collect(Collectors.toList());
 
-                if (directory.getName().equals("wineprefix")) {
-                    containers.add(new WinePrefixContainerDTO.Builder().withName(containerDirectory.getName())
-                            .withPath(containerPath).withInstalledShortcuts(shortcutDTOS)
-                            .withArchitecture(configFile.readValue("wineArchitecture", ""))
-                            .withDistribution(configFile.readValue("wineDistribution", ""))
-                            .withVersion(configFile.readValue("wineVersion", ""))
-                            .build());
+                    if (directory.getName().equals("wineprefix")) {
+                        containers.add(new WinePrefixContainerDTO.Builder().withName(containerDirectory.getName())
+                                .withPath(containerPath).withInstalledShortcuts(shortcutDTOS)
+                                .withArchitecture(configFile.readValue("wineArchitecture", ""))
+                                .withDistribution(configFile.readValue("wineDistribution", ""))
+                                .withVersion(configFile.readValue("wineVersion", ""))
+                                .build());
+                    }
                 }
             }
             containers.sort(ContainerDTO.nameComparator());

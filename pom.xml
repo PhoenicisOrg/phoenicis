@@ -48,14 +48,14 @@
         <project.settings>${project.root}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
-        <slf4j.version>1.7.28</slf4j.version>
-        <surefire.version>3.0.0-M3</surefire.version>
+        <slf4j.version>1.7.30</slf4j.version>
+        <surefire.version>3.0.0-M4</surefire.version>
         <logback.version>1.2.3</logback.version>
-        <junit.version>4.12</junit.version>
-        <mockito.version>3.0.0</mockito.version>
-        <spring.version>5.1.9.RELEASE</spring.version>
-        <formatter-maven-plugin.version>2.10.0</formatter-maven-plugin.version>
-        <graalvm.version>19.2.0</graalvm.version>
+        <junit.version>4.13</junit.version>
+        <mockito.version>3.2.4</mockito.version>
+        <spring.version>5.2.3.RELEASE</spring.version>
+        <formatter-maven-plugin.version>2.11.0</formatter-maven-plugin.version>
+        <graalvm.version>19.3.1</graalvm.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -74,7 +74,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.9.9</version>
+                <version>2.9.10.1</version>
             </dependency>
             <dependency>
                 <groupId>com.googlecode.gettext-commons</groupId>
@@ -144,7 +144,7 @@
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>2.10.0</version>
+                <version>2.11.0</version>
                 <executions>
                     <execution>
                         <phase>validate</phase>
@@ -204,7 +204,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.4</version>
+                <version>0.8.5</version>
                 <executions>
                     <execution>
                         <id>agent</id>

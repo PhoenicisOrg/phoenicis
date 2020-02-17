@@ -152,7 +152,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
                 + "\");";
 
         interactiveScriptSession.eval(scriptInclude,
-                ignored -> interactiveScriptSession.eval("new " + engine + "Shortcut()",
+                ignored -> interactiveScriptSession.eval("new Shortcut()",
                         output -> {
                             final Value shortcutObject = (Value) output;
 
