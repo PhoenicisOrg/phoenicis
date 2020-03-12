@@ -1,15 +1,14 @@
 package org.phoenicis.javafx.utils;
 
 import com.google.common.collect.ImmutableMap;
-import javafx.beans.Observable;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * A <code>switch</code> like {@link ObjectBinding}
@@ -26,12 +25,12 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
     /**
      * The <code>default</code> case
      */
-    private final ObjectProperty<C> defaultCase;
+    private final C defaultCase;
 
     /**
      * A map containing all known cases
      */
-    private final Map<V, ObjectProperty<C>> cases;
+    private final Map<Class<? extends V>, Function<V, C>> cases;
 
     /**
      * Constructor
@@ -40,7 +39,7 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
      * @param defaultCase The <code>default</code> case
      * @param cases A map containing all known cases
      */
-    private SwitchBinding(ObjectProperty<V> value, ObjectProperty<C> defaultCase, Map<V, ObjectProperty<C>> cases) {
+    private SwitchBinding(ObjectProperty<V> value, C defaultCase, Map<Class<? extends V>, Function<V, C>> cases) {
         super();
 
         this.value = value;
@@ -79,11 +78,6 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
     private void initialize() {
         // bind to the value
         bind(value);
-
-        // bind to the cases
-        for (Observable currentCase : cases.values()) {
-            bind(currentCase);
-        }
     }
 
     /**
@@ -93,11 +87,11 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
     protected C computeValue() {
         final V current = value.getValue();
 
-        final ObjectProperty<C> result = defaultCase != null
-                ? cases.getOrDefault(current, defaultCase)
-                : cases.get(current);
+        final Function<V, C> result = defaultCase != null
+                ? cases.getOrDefault(current.getClass(), x -> defaultCase)
+                : cases.get(current.getClass());
 
-        return result.getValue();
+        return result.apply(current);
     }
 
     /**
@@ -105,11 +99,6 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
      */
     @Override
     public void dispose() {
-        // unbind from the cases
-        for (Observable currentCase : cases.values()) {
-            super.unbind(currentCase);
-        }
-
         // unbind from the value
         super.unbind(value);
     }
@@ -147,7 +136,7 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
         /**
          * A map containing all known cases
          */
-        private final Map<V, ObjectProperty<C>> cases;
+        private final Map<Class<? extends V>, Function<V, C>> cases;
 
         /**
          * The analysed {@link ObjectProperty}
@@ -157,7 +146,7 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
         /**
          * The <code>default</code> case
          */
-        private ObjectProperty<C> defaultCase;
+        private C defaultCase;
 
         /**
          * Constructor
@@ -198,21 +187,8 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
          * @param result The resulting value if the guard/case is fulfilled
          * @return The current {@link SwitchBindingBuilder} instance
          */
-        public SwitchBindingBuilder<V, C> withCase(V guard, ObjectProperty<C> result) {
-            this.cases.put(guard, result);
-
-            return this;
-        }
-
-        /**
-         * Adds a new case for the switch binding.
-         *
-         * @param guard The guard/case
-         * @param result The resulting value if the guard/case is fulfilled
-         * @return The current {@link SwitchBindingBuilder} instance
-         */
-        public SwitchBindingBuilder<V, C> withCase(V guard, C result) {
-            this.cases.put(guard, new SimpleObjectProperty<>(result));
+        public <K extends V> SwitchBindingBuilder<V, C> withCase(Class<K> guard, Function<K, C> result) {
+            this.cases.put(guard, (Function<V, C>) result);
 
             return this;
         }
@@ -223,7 +199,7 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
          * @param result The resulting value if no other guard/case is fulfilled
          * @return The current {@link SwitchBindingBuilder} instance
          */
-        public SwitchBindingBuilder<V, C> withDefaultCase(ObjectProperty<C> result) {
+        public SwitchBindingBuilder<V, C> withDefaultCase(C result) {
             this.defaultCase = result;
 
             return this;
@@ -235,7 +211,7 @@ public class SwitchBinding<V, C> extends ObjectBinding<C> {
          * @return The current {@link SwitchBindingBuilder} instance
          */
         public SwitchBindingBuilder<V, C> withEmptyDefaultCase() {
-            return withDefaultCase(new SimpleObjectProperty<>());
+            return withDefaultCase(null);
         }
 
         /**
