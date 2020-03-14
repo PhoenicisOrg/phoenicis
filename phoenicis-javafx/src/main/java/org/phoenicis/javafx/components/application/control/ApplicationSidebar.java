@@ -6,6 +6,7 @@ import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationSidebarSkin;
 import org.phoenicis.javafx.components.application.utils.CategoryFilter;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
+import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 /**
@@ -47,9 +48,10 @@ public class ApplicationSidebar extends ExtendedSidebarBase<CategoryDTO, Applica
      * Constructor
      *
      * @param items The items shown inside a toggle button group in the sidebar
+     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
      */
-    public ApplicationSidebar(ObservableList<CategoryDTO> items) {
-        super(items);
+    public ApplicationSidebar(ObservableList<CategoryDTO> items, ObjectProperty<ListWidgetType> selectedListWidget) {
+        super(items, new SimpleStringProperty(), selectedListWidget);
 
         this.fuzzySearchRatio = new SimpleDoubleProperty();
         this.operatingSystem = new SimpleObjectProperty<>();

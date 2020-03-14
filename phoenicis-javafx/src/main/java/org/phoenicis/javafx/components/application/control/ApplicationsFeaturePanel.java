@@ -6,9 +6,13 @@ import javafx.collections.ObservableList;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationsFeaturePanelSkin;
 import org.phoenicis.javafx.components.application.utils.ApplicationFilter;
+import org.phoenicis.javafx.components.common.actions.CloseAction;
+import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
+import org.phoenicis.library.dto.ShortcutDTO;
+import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 
@@ -78,6 +82,16 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     private final ObjectProperty<ScriptInterpreter> scriptInterpreter;
 
     /**
+     * The currently selected shortcut
+     */
+    private final ObjectProperty<ApplicationDTO> selectedApplication;
+
+    /**
+     * The currently selected details panel action
+     */
+    private final ObjectProperty<DetailsPanelAction> selectedDetailsPanelAction;
+
+    /**
      * Constructor
      */
     public ApplicationsFeaturePanel() {
@@ -95,6 +109,8 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
         this.containAllOSCompatibleApplications = new SimpleBooleanProperty();
         this.categories = FXCollections.observableArrayList();
         this.scriptInterpreter = new SimpleObjectProperty<>();
+        this.selectedApplication = new SimpleObjectProperty<>();
+        this.selectedDetailsPanelAction = new SimpleObjectProperty<>(new CloseAction());
     }
 
     /**
@@ -247,5 +263,39 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
 
     public void setScriptInterpreter(ScriptInterpreter scriptInterpreter) {
         this.scriptInterpreter.set(scriptInterpreter);
+    }
+
+    public ApplicationDTO getSelectedApplication() {
+        return this.selectedApplication.get();
+    }
+
+    public ObjectProperty<ApplicationDTO> selectedApplicationProperty() {
+        return this.selectedApplication;
+    }
+
+    public void setSelectedApplication(ApplicationDTO selectedApplication) {
+        this.selectedApplication.setValue(selectedApplication);
+    }
+
+    public DetailsPanelAction getSelectedDetailsPanelAction() {
+        return this.selectedDetailsPanelAction.get();
+    }
+
+    public ObjectProperty<DetailsPanelAction> selectedDetailsPanelActionProperty() {
+        return this.selectedDetailsPanelAction;
+    }
+
+    public void setSelectedDetailsPanelAction(DetailsPanelAction selectedDetailsPanelAction) {
+        this.selectedDetailsPanelAction.setValue(selectedDetailsPanelAction);
+    }
+
+    /**
+     * Closes the currently opened details panel
+     */
+    public void closeDetailsPanel() {
+        // deselect the currently selected application
+        setSelectedApplication(null);
+        // close the details panel
+        setSelectedDetailsPanelAction(new CloseAction());
     }
 }

@@ -151,9 +151,8 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         final ObservableList<ListWidgetElement<ShortcutDTO>> listWidgetEntries = new MappedList<>(sortedShortcuts,
                 ListWidgetElement::create);
 
-        final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
-
-        combinedListWidget.selectedListWidgetProperty().bindBidirectional(this.selectedListWidget);
+        final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries,
+                this.selectedListWidget);
 
         // bind direction: controller property -> skin property
         getControl().selectedShortcutProperty().addListener((observable, oldValue, newValue) -> {
