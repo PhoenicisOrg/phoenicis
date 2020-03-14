@@ -144,7 +144,7 @@ public class InstallationsFeaturePanelSkin
             if (installation != null) {
                 combinedListWidget.select(getControl().getSelectedInstallation());
             } else {
-                combinedListWidget.setSelectedElement(null);
+                combinedListWidget.deselect();
             }
         });
 

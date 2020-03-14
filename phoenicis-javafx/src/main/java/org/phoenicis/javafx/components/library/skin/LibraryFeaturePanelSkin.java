@@ -21,12 +21,11 @@ import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
-import org.phoenicis.javafx.components.library.control.*;
 import org.phoenicis.javafx.components.library.actions.ShortcutCreationAction;
 import org.phoenicis.javafx.components.library.actions.ShortcutDetailsAction;
 import org.phoenicis.javafx.components.library.actions.ShortcutEditingAction;
+import org.phoenicis.javafx.components.library.control.*;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.utils.ObjectBindings;
 import org.phoenicis.javafx.utils.StringBindings;
@@ -44,19 +43,9 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePanel, LibraryFeaturePanelSkin> {
     /**
-     * The currently selected list widget
+     * The type of the currently shown list widget
      */
     private final ObjectProperty<ListWidgetType> selectedListWidget;
-
-    /**
-     * The currently selected details panel action
-     */
-    private final ObjectProperty<DetailsPanelAction> selectedDetailsPanelAction;
-
-    /**
-     * The currently selected element inside the list widget
-     */
-    private final ObjectProperty<ListWidgetSelection<ShortcutDTO>> selectedListWidgetElement;
 
     /**
      * Constructor
@@ -67,36 +56,6 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         super(control);
 
         this.selectedListWidget = new SimpleObjectProperty<>();
-        this.selectedDetailsPanelAction = new SimpleObjectProperty<>(new CloseAction());
-
-        this.selectedListWidgetElement = selectedListWidgetElement();
-    }
-
-    /**
-     * Creates an {@link ObjectProperty} instance for the currently selected element inside the list widgets
-     *
-     * @return The created {@link ObjectProperty} instance
-     */
-    private ObjectProperty<ListWidgetSelection<ShortcutDTO>> selectedListWidgetElement() {
-        final ObjectProperty<ListWidgetSelection<ShortcutDTO>> selectedListWidgetElement = new SimpleObjectProperty<>();
-
-        selectedListWidgetElement.addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                final ShortcutDTO selectedItem = newValue.getItem();
-                final MouseEvent event = newValue.getEvent();
-
-                this.selectedDetailsPanelAction.setValue(new ShortcutDetailsAction(selectedItem));
-
-                if (event.getClickCount() == 2) {
-                    getControl().runShortcut(selectedItem);
-                }
-            }
-        });
-
-        getControl().selectedShortcutProperty().bind(ObjectBindings
-                .map(selectedListWidgetElement, ListWidgetSelection::getItem));
-
-        return selectedListWidgetElement;
     }
 
     /**
@@ -114,9 +73,10 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
 
         sidebar.setOnCreateShortcut(() -> {
             // deselect the currently selected shortcut
-            this.selectedListWidgetElement.setValue(null);
+            getControl().setSelectedShortcut(null);
+
             // open the shortcut creation details panel
-            this.selectedDetailsPanelAction.setValue(new ShortcutCreationAction());
+            getControl().setSelectedDetailsPanelAction(new ShortcutCreationAction());
         });
 
         sidebar.setOnOpenConsole(getControl()::openConsole);
@@ -193,9 +153,34 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
 
         final CombinedListWidget<ShortcutDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
 
-        combinedListWidget.selectedListWidgetProperty().bind(this.selectedListWidget);
+        combinedListWidget.selectedListWidgetProperty().bindBidirectional(this.selectedListWidget);
 
-        this.selectedListWidgetElement.bindBidirectional(combinedListWidget.selectedElementProperty());
+        // bind direction: controller property -> skin property
+        getControl().selectedShortcutProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                combinedListWidget.select(newValue);
+            } else {
+                combinedListWidget.deselect();
+            }
+        });
+
+        // bind direction: skin property -> controller properties
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final ShortcutDTO selectedItem = newValue.getItem();
+                final MouseEvent event = newValue.getEvent();
+
+                getControl().setSelectedShortcut(selectedItem);
+                getControl().setSelectedDetailsPanelAction(new ShortcutDetailsAction(selectedItem));
+
+                if (event.getClickCount() == 2) {
+                    getControl().runShortcut(selectedItem);
+                }
+            } else {
+                getControl().setSelectedShortcut(null);
+                getControl().setSelectedDetailsPanelAction(new CloseAction());
+            }
+        });
 
         return combinedListWidget;
     }
@@ -205,10 +190,11 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
      */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
-        return SwitchBinding.<DetailsPanelAction, DetailsPanel> builder(this.selectedDetailsPanelAction)
-                .withCase(ShortcutDetailsAction.class, action -> createShortcutInformationDetailsPanel(action))
+        return SwitchBinding
+                .<DetailsPanelAction, DetailsPanel> builder(getControl().selectedDetailsPanelActionProperty())
+                .withCase(ShortcutDetailsAction.class, this::createShortcutInformationDetailsPanel)
                 .withCase(ShortcutCreationAction.class, action -> createShortcutCreationDetailsPanel())
-                .withCase(ShortcutEditingAction.class, action -> createShortcutEditingDetailsPanel(action))
+                .withCase(ShortcutEditingAction.class, this::createShortcutEditingDetailsPanel)
                 .withCase(CloseAction.class, action -> null)
                 .build();
     }
@@ -224,7 +210,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
 
         detailsPanel.setTitle(tr("Create a new shortcut"));
         detailsPanel.setContent(shortcutCreationPanel);
-        detailsPanel.setOnClose(this::closeDetailsPanel);
+        detailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
@@ -245,7 +231,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         detailsPanel.titleProperty().bind(StringBindings
                 .map(getControl().selectedShortcutProperty(), shortcut -> shortcut.getInfo().getName()));
         detailsPanel.setContent(shortcutEditingPanel);
-        detailsPanel.setOnClose(this::closeDetailsPanel);
+        detailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
@@ -261,26 +247,18 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         shortcutInformationPanel.setOnShortcutRun(getControl()::runShortcut);
         shortcutInformationPanel.setOnShortcutStop(getControl()::stopShortcut);
         shortcutInformationPanel.setOnShortcutUninstall(getControl()::uninstallShortcut);
-        shortcutInformationPanel.setOnShortcutEdit(
-                shortcut -> this.selectedDetailsPanelAction
-                        .setValue(new ShortcutEditingAction(getControl().getSelectedShortcut())));
+        shortcutInformationPanel.setOnShortcutEdit(shortcut -> getControl()
+                .setSelectedDetailsPanelAction(new ShortcutEditingAction(getControl().getSelectedShortcut())));
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 
         detailsPanel.titleProperty().bind(StringBindings
                 .map(getControl().selectedShortcutProperty(), shortcut -> shortcut.getInfo().getName()));
         detailsPanel.setContent(shortcutInformationPanel);
-        detailsPanel.setOnClose(this::closeDetailsPanel);
+        detailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
         return detailsPanel;
-    }
-
-    private void closeDetailsPanel() {
-        // deselect the currently selected shortcut
-        this.selectedListWidgetElement.setValue(null);
-        // close the details panel
-        this.selectedDetailsPanelAction.setValue(new CloseAction());
     }
 }

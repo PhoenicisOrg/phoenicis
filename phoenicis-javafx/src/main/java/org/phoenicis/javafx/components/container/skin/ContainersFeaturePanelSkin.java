@@ -150,7 +150,7 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
             if (container != null) {
                 listWidget.select(getControl().getSelectedContainer());
             } else {
-                listWidget.setSelectedElement(null);
+                listWidget.deselect();
             }
         });
 

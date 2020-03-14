@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import org.apache.commons.lang.StringUtils;
 import org.graalvm.polyglot.Value;
+import org.phoenicis.javafx.components.common.actions.CloseAction;
+import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.library.skin.LibraryFeaturePanelSkin;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
@@ -101,6 +103,11 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
     private final ObjectProperty<ShortcutDTO> selectedShortcut;
 
     /**
+     * The currently selected details panel action
+     */
+    private final ObjectProperty<DetailsPanelAction> selectedDetailsPanelAction;
+
+    /**
      * Constructor
      */
     public LibraryFeaturePanel() {
@@ -119,6 +126,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         this.shortcutManager = new SimpleObjectProperty<>();
         this.selectedTab = new SimpleObjectProperty<>();
         this.selectedShortcut = new SimpleObjectProperty<>();
+        this.selectedDetailsPanelAction = new SimpleObjectProperty<>(new CloseAction());
     }
 
     /**
@@ -393,5 +401,27 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
 
     public void setSelectedShortcut(ShortcutDTO selectedShortcut) {
         this.selectedShortcut.set(selectedShortcut);
+    }
+
+    public DetailsPanelAction getSelectedDetailsPanelAction() {
+        return this.selectedDetailsPanelAction.get();
+    }
+
+    public ObjectProperty<DetailsPanelAction> selectedDetailsPanelActionProperty() {
+        return this.selectedDetailsPanelAction;
+    }
+
+    public void setSelectedDetailsPanelAction(DetailsPanelAction detailsPanelAction) {
+        this.selectedDetailsPanelAction.set(detailsPanelAction);
+    }
+
+    /**
+     * Closes the currently opened details panel
+     */
+    public void closeDetailsPanel() {
+        // deselect the currently selected shortcut
+        setSelectedShortcut(null);
+        // close the details panel
+        setSelectedDetailsPanelAction(new CloseAction());
     }
 }
