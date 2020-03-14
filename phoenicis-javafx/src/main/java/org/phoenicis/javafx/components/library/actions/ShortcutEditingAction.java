@@ -19,6 +19,6 @@ public class ShortcutEditingAction implements DetailsPanelAction {
     }
 
     public ShortcutDTO getShortcut() {
-        return shortcut;
+        return this.shortcut;
     }
 }
