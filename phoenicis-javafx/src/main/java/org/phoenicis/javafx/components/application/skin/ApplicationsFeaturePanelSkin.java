@@ -8,7 +8,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.actions.ApplicationInformation;
@@ -147,7 +146,6 @@ public class ApplicationsFeaturePanelSkin
         combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final ApplicationDTO selectedItem = newValue.getItem();
-                final MouseEvent event = newValue.getEvent();
 
                 getControl().setSelectedApplication(selectedItem);
                 getControl().setOpenedDetailsPanel(new ApplicationInformation(selectedItem));

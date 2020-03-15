@@ -10,7 +10,6 @@ import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
@@ -129,7 +128,6 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 final ContainerDTO selectedItem = newValue.getItem();
-                final MouseEvent event = newValue.getEvent();
 
                 getControl().setSelectedContainer(selectedItem);
                 getControl().setOpenedDetailsPanel(new ContainerInformation(selectedItem));
