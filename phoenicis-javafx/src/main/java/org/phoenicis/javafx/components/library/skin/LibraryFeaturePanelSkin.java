@@ -14,17 +14,17 @@ import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.common.actions.CloseAction;
-import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
-import org.phoenicis.javafx.components.library.actions.ShortcutCreationAction;
-import org.phoenicis.javafx.components.library.actions.ShortcutDetailsAction;
-import org.phoenicis.javafx.components.library.actions.ShortcutEditingAction;
+import org.phoenicis.javafx.components.library.actions.ShortcutCreation;
+import org.phoenicis.javafx.components.library.actions.ShortcutInformation;
+import org.phoenicis.javafx.components.library.actions.ShortcutEditing;
 import org.phoenicis.javafx.components.library.control.*;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.utils.ObjectBindings;
@@ -76,7 +76,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
             getControl().setSelectedShortcut(null);
 
             // open the shortcut creation details panel
-            getControl().setSelectedDetailsPanelAction(new ShortcutCreationAction());
+            getControl().setOpenedDetailsPanel(new ShortcutCreation());
         });
 
         sidebar.setOnOpenConsole(getControl()::openConsole);
@@ -170,14 +170,14 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
                 final MouseEvent event = newValue.getEvent();
 
                 getControl().setSelectedShortcut(selectedItem);
-                getControl().setSelectedDetailsPanelAction(new ShortcutDetailsAction(selectedItem));
+                getControl().setOpenedDetailsPanel(new ShortcutInformation(selectedItem));
 
                 if (event.getClickCount() == 2) {
                     getControl().runShortcut(selectedItem);
                 }
             } else {
                 getControl().setSelectedShortcut(null);
-                getControl().setSelectedDetailsPanelAction(new CloseAction());
+                getControl().setOpenedDetailsPanel(new None());
             }
         });
 
@@ -190,11 +190,11 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
         return SwitchBinding
-                .<DetailsPanelAction, DetailsPanel> builder(getControl().selectedDetailsPanelActionProperty())
-                .withCase(ShortcutDetailsAction.class, this::createShortcutInformationDetailsPanel)
-                .withCase(ShortcutCreationAction.class, action -> createShortcutCreationDetailsPanel())
-                .withCase(ShortcutEditingAction.class, this::createShortcutEditingDetailsPanel)
-                .withCase(CloseAction.class, action -> null)
+                .<OpenDetailsPanel, DetailsPanel> builder(getControl().openedDetailsPanelProperty())
+                .withCase(ShortcutInformation.class, this::createShortcutInformationDetailsPanel)
+                .withCase(ShortcutCreation.class, action -> createShortcutCreationDetailsPanel())
+                .withCase(ShortcutEditing.class, this::createShortcutEditingDetailsPanel)
+                .withCase(None.class, action -> null)
                 .build();
     }
 
@@ -216,7 +216,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         return detailsPanel;
     }
 
-    private DetailsPanel createShortcutEditingDetailsPanel(ShortcutEditingAction action) {
+    private DetailsPanel createShortcutEditingDetailsPanel(ShortcutEditing action) {
         final ShortcutEditingPanel shortcutEditingPanel = new ShortcutEditingPanel();
 
         shortcutEditingPanel.onShortcutChangedProperty().bind(ObjectBindings
@@ -237,7 +237,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         return detailsPanel;
     }
 
-    private DetailsPanel createShortcutInformationDetailsPanel(ShortcutDetailsAction action) {
+    private DetailsPanel createShortcutInformationDetailsPanel(ShortcutInformation action) {
         final ShortcutInformationPanel shortcutInformationPanel = new ShortcutInformationPanel();
 
         shortcutInformationPanel.setShortcut(action.getShortcut());
@@ -247,7 +247,7 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
         shortcutInformationPanel.setOnShortcutStop(getControl()::stopShortcut);
         shortcutInformationPanel.setOnShortcutUninstall(getControl()::uninstallShortcut);
         shortcutInformationPanel.setOnShortcutEdit(shortcut -> getControl()
-                .setSelectedDetailsPanelAction(new ShortcutEditingAction(getControl().getSelectedShortcut())));
+                .setOpenedDetailsPanel(new ShortcutEditing(getControl().getSelectedShortcut())));
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 

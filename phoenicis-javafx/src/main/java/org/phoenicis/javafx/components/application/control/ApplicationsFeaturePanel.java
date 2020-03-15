@@ -6,12 +6,11 @@ import javafx.collections.ObservableList;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationsFeaturePanelSkin;
 import org.phoenicis.javafx.components.application.utils.ApplicationFilter;
-import org.phoenicis.javafx.components.common.actions.CloseAction;
-import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
-import org.phoenicis.library.dto.ShortcutDTO;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
@@ -89,7 +88,7 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     /**
      * The currently selected details panel action
      */
-    private final ObjectProperty<DetailsPanelAction> selectedDetailsPanelAction;
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 
     /**
      * Constructor
@@ -110,7 +109,7 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
         this.categories = FXCollections.observableArrayList();
         this.scriptInterpreter = new SimpleObjectProperty<>();
         this.selectedApplication = new SimpleObjectProperty<>();
-        this.selectedDetailsPanelAction = new SimpleObjectProperty<>(new CloseAction());
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -277,16 +276,16 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
         this.selectedApplication.setValue(selectedApplication);
     }
 
-    public DetailsPanelAction getSelectedDetailsPanelAction() {
-        return this.selectedDetailsPanelAction.get();
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
     }
 
-    public ObjectProperty<DetailsPanelAction> selectedDetailsPanelActionProperty() {
-        return this.selectedDetailsPanelAction;
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
     }
 
-    public void setSelectedDetailsPanelAction(DetailsPanelAction selectedDetailsPanelAction) {
-        this.selectedDetailsPanelAction.setValue(selectedDetailsPanelAction);
+    public void setOpenedDetailsPanel(OpenDetailsPanel selectedOpenDetailsPanel) {
+        this.openedDetailsPanel.setValue(selectedOpenDetailsPanel);
     }
 
     /**
@@ -296,6 +295,6 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
         // deselect the currently selected application
         setSelectedApplication(null);
         // close the details panel
-        setSelectedDetailsPanelAction(new CloseAction());
+        setOpenedDetailsPanel(new None());
     }
 }

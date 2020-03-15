@@ -1,18 +1,18 @@
 package org.phoenicis.javafx.components.library.actions;
 
-import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 /**
- * Action to open the "Shortcut Editing" details panel
+ * Indicator to open the "Shortcut Editing" details panel
  */
-public class ShortcutEditingAction implements DetailsPanelAction {
+public class ShortcutEditing implements OpenDetailsPanel {
     /**
      * The shortcut whose details are to be edited
      */
     private final ShortcutDTO shortcut;
 
-    public ShortcutEditingAction(ShortcutDTO shortcut) {
+    public ShortcutEditing(ShortcutDTO shortcut) {
         super();
 
         this.shortcut = shortcut;

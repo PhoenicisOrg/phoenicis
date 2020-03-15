@@ -11,12 +11,12 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
-import org.phoenicis.javafx.components.application.actions.ApplicationInformationAction;
+import org.phoenicis.javafx.components.application.actions.ApplicationInformation;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
-import org.phoenicis.javafx.components.common.actions.CloseAction;
-import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
@@ -150,10 +150,10 @@ public class ApplicationsFeaturePanelSkin
                 final MouseEvent event = newValue.getEvent();
 
                 getControl().setSelectedApplication(selectedItem);
-                getControl().setSelectedDetailsPanelAction(new ApplicationInformationAction(selectedItem));
+                getControl().setOpenedDetailsPanel(new ApplicationInformation(selectedItem));
             } else {
                 getControl().setSelectedApplication(null);
-                getControl().setSelectedDetailsPanelAction(new CloseAction());
+                getControl().setOpenedDetailsPanel(new None());
             }
         });
 
@@ -166,13 +166,13 @@ public class ApplicationsFeaturePanelSkin
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
         return SwitchBinding
-                .<DetailsPanelAction, DetailsPanel> builder(getControl().selectedDetailsPanelActionProperty())
-                .withCase(ApplicationInformationAction.class, this::createApplicationInformationDetailsPanel)
-                .withCase(CloseAction.class, action -> null)
+                .<OpenDetailsPanel, DetailsPanel> builder(getControl().openedDetailsPanelProperty())
+                .withCase(ApplicationInformation.class, this::createApplicationInformationDetailsPanel)
+                .withCase(None.class, action -> null)
                 .build();
     }
 
-    private DetailsPanel createApplicationInformationDetailsPanel(ApplicationInformationAction action) {
+    private DetailsPanel createApplicationInformationDetailsPanel(ApplicationInformation action) {
         final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel();
 
         applicationPanel.scriptInterpreterProperty().bind(getControl().scriptInterpreterProperty());

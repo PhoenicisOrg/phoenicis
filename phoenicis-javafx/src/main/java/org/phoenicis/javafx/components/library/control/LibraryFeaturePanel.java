@@ -11,8 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import org.apache.commons.lang.StringUtils;
 import org.graalvm.polyglot.Value;
-import org.phoenicis.javafx.components.common.actions.CloseAction;
-import org.phoenicis.javafx.components.common.actions.DetailsPanelAction;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.library.skin.LibraryFeaturePanelSkin;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
@@ -105,7 +105,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
     /**
      * The currently selected details panel action
      */
-    private final ObjectProperty<DetailsPanelAction> selectedDetailsPanelAction;
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 
     /**
      * Constructor
@@ -126,7 +126,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         this.shortcutManager = new SimpleObjectProperty<>();
         this.selectedTab = new SimpleObjectProperty<>();
         this.selectedShortcut = new SimpleObjectProperty<>();
-        this.selectedDetailsPanelAction = new SimpleObjectProperty<>(new CloseAction());
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -403,16 +403,16 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         this.selectedShortcut.set(selectedShortcut);
     }
 
-    public DetailsPanelAction getSelectedDetailsPanelAction() {
-        return this.selectedDetailsPanelAction.get();
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
     }
 
-    public ObjectProperty<DetailsPanelAction> selectedDetailsPanelActionProperty() {
-        return this.selectedDetailsPanelAction;
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
     }
 
-    public void setSelectedDetailsPanelAction(DetailsPanelAction detailsPanelAction) {
-        this.selectedDetailsPanelAction.set(detailsPanelAction);
+    public void setOpenedDetailsPanel(OpenDetailsPanel openDetailsPanel) {
+        this.openedDetailsPanel.set(openDetailsPanel);
     }
 
     /**
@@ -422,6 +422,6 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         // deselect the currently selected shortcut
         setSelectedShortcut(null);
         // close the details panel
-        setSelectedDetailsPanelAction(new CloseAction());
+        setOpenedDetailsPanel(new None());
     }
 }
