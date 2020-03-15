@@ -13,6 +13,8 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.container.skin.ContainersFeaturePanelSkin;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -88,6 +90,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     private final ObjectProperty<ContainerDTO> selectedContainer;
 
     /**
+     * The currently selected details panel action
+     */
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
+
+    /**
      * Constructor
      */
     public ContainersFeaturePanel() {
@@ -104,6 +111,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.verbs = FXCollections.observableHashMap();
         this.engineTools = FXCollections.observableHashMap();
         this.selectedContainer = new SimpleObjectProperty<>();
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -314,5 +322,27 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
 
     public void setSelectedContainer(ContainerDTO selectedContainer) {
         this.selectedContainer.set(selectedContainer);
+    }
+
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
+    }
+
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
+    }
+
+    public void setOpenedDetailsPanel(OpenDetailsPanel action) {
+        this.openedDetailsPanel.setValue(action);
+    }
+
+    /**
+     * Closes the currently opened details panel
+     */
+    public void closeDetailsPanel() {
+        // deselect the currently selected container
+        setSelectedContainer(null);
+        // close the details panel
+        setOpenedDetailsPanel(new None());
     }
 }

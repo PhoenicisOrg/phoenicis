@@ -2,7 +2,6 @@ package org.phoenicis.javafx.components.container.skin;
 
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,24 +10,26 @@ import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
 import org.phoenicis.containers.dto.ContainerDTO;
 import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.components.container.actions.ContainerInformation;
 import org.phoenicis.javafx.components.container.control.ContainerInformationPanel;
 import org.phoenicis.javafx.components.container.control.ContainerSidebar;
 import org.phoenicis.javafx.components.container.control.ContainersFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.utils.ObjectBindings;
-import org.phoenicis.javafx.utils.StringBindings;
+import org.phoenicis.javafx.utils.SwitchBinding;
 import org.phoenicis.repository.dto.ApplicationDTO;
 
 import java.util.Comparator;
@@ -45,11 +46,6 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
     private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     /**
-     * The currently selected element inside the list widget
-     */
-    private final ObjectProperty<ListWidgetSelection<ContainerDTO>> selectedListWidgetElement;
-
-    /**
      * Constructor
      *
      * @param control The control belonging to the skin
@@ -58,24 +54,6 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         super(control);
 
         this.selectedListWidget = new SimpleObjectProperty<>();
-        this.selectedListWidgetElement = createSelectedListWidgetElement();
-    }
-
-    private ObjectProperty<ListWidgetSelection<ContainerDTO>> createSelectedListWidgetElement() {
-        final ObjectProperty<ListWidgetSelection<ContainerDTO>> selectedListWidgetElement = new SimpleObjectProperty<>();
-
-        // this can't be replaced by a binding because the container can be changed otherwise
-        selectedListWidgetElement.addListener((Observable invalidation) -> {
-            final ListWidgetSelection<ContainerDTO> selection = selectedListWidgetElement.getValue();
-
-            if (selection != null) {
-                getControl().setSelectedContainer(selection.getItem());
-            } else {
-                getControl().setSelectedContainer(null);
-            }
-        });
-
-        return selectedListWidgetElement;
     }
 
     /**
@@ -135,26 +113,33 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         final ObservableList<ListWidgetElement<ContainerDTO>> listWidgetEntries = new MappedList<>(filteredContainers,
                 ListWidgetElement::create);
 
-        final CombinedListWidget<ContainerDTO> listWidget = new CombinedListWidget<>(listWidgetEntries);
+        final CombinedListWidget<ContainerDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries,
+                this.selectedListWidget);
 
-        listWidget.selectedElementProperty().bindBidirectional(this.selectedListWidgetElement);
-        listWidget.selectedListWidgetProperty().bind(this.selectedListWidget);
-
-        /*
-         * whenever a selected container is set inside the control,
-         * automatically select it in the combined list widget
-         */
-        getControl().selectedContainerProperty().addListener((Observable invalidation) -> {
-            final ContainerDTO container = getControl().getSelectedContainer();
-
-            if (container != null) {
-                listWidget.select(getControl().getSelectedContainer());
+        // bind direction: controller property -> skin property
+        getControl().selectedContainerProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                combinedListWidget.select(newValue);
             } else {
-                listWidget.deselect();
+                combinedListWidget.deselect();
             }
         });
 
-        return new SimpleObjectProperty<>(listWidget);
+        // bind direction: skin property -> controller properties
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final ContainerDTO selectedItem = newValue.getItem();
+                final MouseEvent event = newValue.getEvent();
+
+                getControl().setSelectedContainer(selectedItem);
+                getControl().setOpenedDetailsPanel(new ContainerInformation(selectedItem));
+            } else {
+                getControl().setSelectedContainer(null);
+                getControl().setOpenedDetailsPanel(new None());
+            }
+        });
+
+        return new SimpleObjectProperty<>(combinedListWidget);
     }
 
     /**
@@ -162,12 +147,20 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
      */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
+        return SwitchBinding
+                .<OpenDetailsPanel, DetailsPanel> builder(getControl().openedDetailsPanelProperty())
+                .withCase(ContainerInformation.class, this::createContainerInformationDetailsPanel)
+                .withCase(None.class, action -> null)
+                .build();
+    }
+
+    private DetailsPanel createContainerInformationDetailsPanel(ContainerInformation action) {
+        final ContainerDTO container = action.getContainer();
+
         final ContainerInformationPanel containerInformationPanel = new ContainerInformationPanel();
 
-        final ObjectBinding<ContainerDTO> container = ObjectBindings
-                .map(this.selectedListWidgetElement, ListWidgetSelection::getItem);
+        containerInformationPanel.setContainer(container);
 
-        containerInformationPanel.containerProperty().bind(container);
         containerInformationPanel.enginesManagerProperty().bind(getControl().enginesManagerProperty());
         containerInformationPanel.verbsManagerProperty().bind(getControl().verbsManagerProperty());
         containerInformationPanel.engineToolsManagerProperty().bind(getControl().engineToolsManagerProperty());
@@ -182,26 +175,19 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
         getControl().getEngineTools()
                 .addListener((Observable invalidation) -> updateEngineTools(containerInformationPanel));
 
-        container.addListener((Observable invalidation) -> {
-            updateEngineSettings(containerInformationPanel);
-            updateVerbs(containerInformationPanel);
-            updateEngineTools(containerInformationPanel);
-        });
-
         updateEngineSettings(containerInformationPanel);
         updateVerbs(containerInformationPanel);
         updateEngineTools(containerInformationPanel);
 
         final DetailsPanel containerDetailsPanel = new DetailsPanel();
 
-        containerDetailsPanel.titleProperty().bind(StringBindings.map(container, ContainerDTO::getName));
+        containerDetailsPanel.setTitle(container.getName());
         containerDetailsPanel.setContent(containerInformationPanel);
-        containerDetailsPanel.setOnClose(() -> this.selectedListWidgetElement.setValue(null));
+        containerDetailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         containerDetailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
-        return Bindings.when(Bindings.isNotNull(container))
-                .then(containerDetailsPanel).otherwise(new SimpleObjectProperty<>());
+        return containerDetailsPanel;
     }
 
     /**
@@ -212,8 +198,7 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
      */
     private void updateEngineSettings(final ContainerInformationPanel containerInformationPanel) {
         final ObservableMap<String, List<EngineSetting>> engineSettings = getControl().getEngineSettings();
-        final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
-                .map(ListWidgetSelection::getItem).orElse(null);
+        final ContainerDTO container = containerInformationPanel.getContainer();
 
         if (container != null && engineSettings.containsKey(container.getEngine().toLowerCase())) {
             containerInformationPanel.getEngineSettings()
@@ -229,9 +214,8 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
      * @param containerInformationPanel The information panel showing the details for the currently selected container
      */
     private void updateVerbs(final ContainerInformationPanel containerInformationPanel) {
-        ObservableMap<String, ApplicationDTO> verbs = getControl().getVerbs();
-        final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
-                .map(ListWidgetSelection::getItem).orElse(null);
+        final ObservableMap<String, ApplicationDTO> verbs = getControl().getVerbs();
+        final ContainerDTO container = containerInformationPanel.getContainer();
 
         if (container != null && verbs.containsKey(container.getEngine().toLowerCase())) {
             containerInformationPanel.setVerbs(verbs.get(container.getEngine().toLowerCase()));
@@ -247,9 +231,8 @@ public class ContainersFeaturePanelSkin extends FeaturePanelSkin<ContainersFeatu
      * @param containerInformationPanel The information panel showing the details for the currently selected container
      */
     private void updateEngineTools(final ContainerInformationPanel containerInformationPanel) {
-        ObservableMap<String, ApplicationDTO> engineTools = getControl().getEngineTools();
-        final ContainerDTO container = Optional.ofNullable(this.selectedListWidgetElement.getValue())
-                .map(ListWidgetSelection::getItem).orElse(null);
+        final ObservableMap<String, ApplicationDTO> engineTools = getControl().getEngineTools();
+        final ContainerDTO container = containerInformationPanel.getContainer();
 
         if (container != null && engineTools.containsKey(container.getEngine().toLowerCase())) {
             containerInformationPanel.setEngineTools(engineTools.get(container.getEngine().toLowerCase()));
