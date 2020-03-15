@@ -337,8 +337,9 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     }
 
     /**
-     * Closes the currently opened details panel
+     * {@inheritDoc}
      */
+    @Override
     public void closeDetailsPanel() {
         // deselect the currently selected container
         setSelectedContainer(null);

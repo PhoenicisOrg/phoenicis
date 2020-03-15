@@ -176,8 +176,9 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
     }
 
     /**
-     * Closes the currently opened details panel
+     * {@inheritDoc}
      */
+    @Override
     public void closeDetailsPanel() {
         // deselect the currently selected installation
         setSelectedInstallation(null);

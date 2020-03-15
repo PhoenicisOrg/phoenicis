@@ -289,8 +289,9 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     }
 
     /**
-     * Closes the currently opened details panel
+     * {@inheritDoc}
      */
+    @Override
     public void closeDetailsPanel() {
         // deselect the currently selected application
         setSelectedApplication(null);

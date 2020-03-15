@@ -416,8 +416,9 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
     }
 
     /**
-     * Closes the currently opened details panel
+     * {@inheritDoc}
      */
+    @Override
     public void closeDetailsPanel() {
         // deselect the currently selected shortcut
         setSelectedShortcut(null);
