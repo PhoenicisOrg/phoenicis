@@ -1,8 +1,6 @@
 package org.phoenicis.javafx.components.installation.skin;
 
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -12,18 +10,19 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.common.actions.None;
+import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
+import org.phoenicis.javafx.components.installation.actions.Installation;
 import org.phoenicis.javafx.components.installation.control.InstallationSidebar;
 import org.phoenicis.javafx.components.installation.control.InstallationsFeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.utils.ObjectBindings;
-import org.phoenicis.javafx.utils.StringBindings;
+import org.phoenicis.javafx.utils.SwitchBinding;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationCategoryDTO;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 
@@ -41,11 +40,6 @@ public class InstallationsFeaturePanelSkin
     private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     /**
-     * The currently selected element inside the list widget
-     */
-    private final ObjectProperty<ListWidgetSelection<InstallationDTO>> selectedListWidgetElement;
-
-    /**
      * Constructor
      *
      * @param control The control belonging to the skin
@@ -54,24 +48,6 @@ public class InstallationsFeaturePanelSkin
         super(control);
 
         this.selectedListWidget = new SimpleObjectProperty<>();
-        this.selectedListWidgetElement = createSelectedListWidgetElement();
-    }
-
-    private ObjectProperty<ListWidgetSelection<InstallationDTO>> createSelectedListWidgetElement() {
-        final ObjectProperty<ListWidgetSelection<InstallationDTO>> selectedListWidgetElement = new SimpleObjectProperty<>();
-
-        // this can't be replaced by a binding because the installation can be changed otherwise
-        selectedListWidgetElement.addListener((Observable invalidation) -> {
-            final ListWidgetSelection<InstallationDTO> selection = selectedListWidgetElement.getValue();
-
-            if (selection != null) {
-                getControl().setSelectedInstallation(selection.getItem());
-            } else {
-                getControl().setSelectedInstallation(null);
-            }
-        });
-
-        return selectedListWidgetElement;
     }
 
     /**
@@ -84,8 +60,6 @@ public class InstallationsFeaturePanelSkin
 
         final InstallationSidebar sidebar = new InstallationSidebar(getControl().getFilter(), sortedCategories,
                 this.selectedListWidget);
-
-        sidebar.javaFxSettingsManagerProperty().bind(getControl().javaFxSettingsManagerProperty());
 
         // set the default selection
         sidebar.setSelectedListWidget(Optional
@@ -129,22 +103,28 @@ public class InstallationsFeaturePanelSkin
                 sortedInstallations,
                 ListWidgetElement::create);
 
-        final CombinedListWidget<InstallationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries);
+        final CombinedListWidget<InstallationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries,
+                this.selectedListWidget);
 
-        combinedListWidget.selectedElementProperty().bindBidirectional(this.selectedListWidgetElement);
-        combinedListWidget.selectedListWidgetProperty().bind(this.selectedListWidget);
-
-        /*
-         * whenever a selected installation is set inside the control,
-         * automatically select it in the combined list widget
-         */
-        getControl().selectedInstallationProperty().addListener((Observable invalidation) -> {
-            final InstallationDTO installation = getControl().getSelectedInstallation();
-
-            if (installation != null) {
-                combinedListWidget.select(getControl().getSelectedInstallation());
+        // bind direction: controller property -> skin property
+        getControl().selectedInstallationProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                combinedListWidget.select(newValue);
             } else {
                 combinedListWidget.deselect();
+            }
+        });
+
+        // bind direction: skin property -> controller properties
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final InstallationDTO selectedItem = newValue.getItem();
+
+                getControl().setSelectedInstallation(selectedItem);
+                getControl().setOpenedDetailsPanel(new Installation(selectedItem));
+            } else {
+                getControl().setSelectedInstallation(null);
+                getControl().setOpenedDetailsPanel(new None());
             }
         });
 
@@ -156,20 +136,25 @@ public class InstallationsFeaturePanelSkin
      */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
-        final ObjectBinding<InstallationDTO> installation = ObjectBindings
-                .map(this.selectedListWidgetElement, ListWidgetSelection::getItem);
+        return SwitchBinding
+                .<OpenDetailsPanel, DetailsPanel> builder(getControl().openedDetailsPanelProperty())
+                .withCase(Installation.class, this::createInstallationDetailsPanel)
+                .withCase(None.class, action -> null)
+                .build();
+    }
+
+    private DetailsPanel createInstallationDetailsPanel(Installation action) {
+        final InstallationDTO installation = action.getInstallation();
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 
-        detailsPanel.titleProperty().bind(StringBindings.map(installation, InstallationDTO::getName));
-        detailsPanel.contentProperty().bind(ObjectBindings.map(installation, InstallationDTO::getNode));
+        detailsPanel.setTitle(installation.getName());
+        detailsPanel.setContent(installation.getNode());
 
-        detailsPanel.setOnClose(() -> this.selectedListWidgetElement.setValue(null));
+        detailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
-        return Bindings.when(Bindings.isNotNull(installation))
-                .then(new SimpleObjectProperty<>(detailsPanel))
-                .otherwise(new SimpleObjectProperty<>());
+        return detailsPanel;
     }
 }
