@@ -13,8 +13,8 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.VerbsManager;
-import org.phoenicis.javafx.components.common.actions.None;
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.container.skin.ContainersFeaturePanelSkin;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -90,7 +90,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     private final ObjectProperty<ContainerDTO> selectedContainer;
 
     /**
-     * The currently selected details panel action
+     * The currently opened details panel
      */
     private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 

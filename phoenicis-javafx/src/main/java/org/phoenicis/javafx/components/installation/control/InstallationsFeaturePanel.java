@@ -5,8 +5,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.common.actions.None;
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.installation.skin.InstallationsFeaturePanelSkin;
 import org.phoenicis.javafx.components.installation.utils.InstallationsUtils;
@@ -48,7 +48,7 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
     private final ObjectProperty<InstallationDTO> selectedInstallation;
 
     /**
-     * The currently selected installation details panel
+     * The currently opened installation details panel
      */
     private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 

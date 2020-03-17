@@ -6,8 +6,8 @@ import javafx.collections.ObservableList;
 import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.components.application.skin.ApplicationsFeaturePanelSkin;
 import org.phoenicis.javafx.components.application.utils.ApplicationFilter;
-import org.phoenicis.javafx.components.common.actions.None;
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
@@ -81,12 +81,12 @@ public class ApplicationsFeaturePanel extends FeaturePanel<ApplicationsFeaturePa
     private final ObjectProperty<ScriptInterpreter> scriptInterpreter;
 
     /**
-     * The currently selected shortcut
+     * The currently selected application
      */
     private final ObjectProperty<ApplicationDTO> selectedApplication;
 
     /**
-     * The currently selected details panel action
+     * The currently opened details panel
      */
     private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 

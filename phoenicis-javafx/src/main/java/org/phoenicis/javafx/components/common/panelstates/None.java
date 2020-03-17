@@ -1,4 +1,4 @@
-package org.phoenicis.javafx.components.common.actions;
+package org.phoenicis.javafx.components.common.panelstates;
 
 /**
  * Indicator to close/hide the currently open details panel

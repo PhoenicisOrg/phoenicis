@@ -1,6 +1,6 @@
-package org.phoenicis.javafx.components.installation.actions;
+package org.phoenicis.javafx.components.installation.panelstates;
 
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.views.mainwindow.installations.dto.InstallationDTO;
 
 /**

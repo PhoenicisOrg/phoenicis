@@ -1,7 +1,7 @@
-package org.phoenicis.javafx.components.container.actions;
+package org.phoenicis.javafx.components.container.panelstates;
 
 import org.phoenicis.containers.dto.ContainerDTO;
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 
 /**
  * Indicator to open the "Container Details" details panel

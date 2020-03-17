@@ -1,6 +1,6 @@
-package org.phoenicis.javafx.components.library.actions;
+package org.phoenicis.javafx.components.library.panelstates;
 
-import org.phoenicis.javafx.components.common.actions.OpenDetailsPanel;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 /**
