@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-01-01 14:43+0000\n"
-"PO-Revision-Date: 2020-01-01 17:53\n"
+"PO-Revision-Date: 2020-03-15 17:15\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -481,7 +481,7 @@ msgstr "Ausführbare Datei:"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:89
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
 msgid "Environment"
-msgstr ""
+msgstr "Umgebung"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
 msgid "Run"
@@ -532,11 +532,11 @@ msgstr "Entfernen"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
 msgid "Key"
-msgstr ""
+msgstr "Schlüssel"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
 msgid "Attribute"
-msgstr ""
+msgstr "Attribut"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
