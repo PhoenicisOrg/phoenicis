@@ -11,6 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import org.apache.commons.lang.StringUtils;
 import org.graalvm.polyglot.Value;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.library.skin.LibraryFeaturePanelSkin;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
@@ -101,6 +103,11 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
     private final ObjectProperty<ShortcutDTO> selectedShortcut;
 
     /**
+     * The currently opened details panel
+     */
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
+
+    /**
      * Constructor
      */
     public LibraryFeaturePanel() {
@@ -119,6 +126,7 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         this.shortcutManager = new SimpleObjectProperty<>();
         this.selectedTab = new SimpleObjectProperty<>();
         this.selectedShortcut = new SimpleObjectProperty<>();
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -393,5 +401,28 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
 
     public void setSelectedShortcut(ShortcutDTO selectedShortcut) {
         this.selectedShortcut.set(selectedShortcut);
+    }
+
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
+    }
+
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
+    }
+
+    public void setOpenedDetailsPanel(OpenDetailsPanel openDetailsPanel) {
+        this.openedDetailsPanel.set(openDetailsPanel);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void closeDetailsPanel() {
+        // deselect the currently selected shortcut
+        setSelectedShortcut(null);
+        // close the details panel
+        setOpenedDetailsPanel(new None());
     }
 }

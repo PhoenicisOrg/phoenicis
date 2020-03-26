@@ -5,6 +5,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.installation.skin.InstallationsFeaturePanelSkin;
 import org.phoenicis.javafx.components.installation.utils.InstallationsUtils;
@@ -36,14 +38,19 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
     private final ObservableList<InstallationCategoryDTO> installationCategories;
 
     /**
+     * Callback for when a new installation is added
+     */
+    private final ObjectProperty<Runnable> onInstallationAdded;
+
+    /**
      * The currently selected installation category
      */
     private final ObjectProperty<InstallationDTO> selectedInstallation;
 
     /**
-     * Callback for when a new installation is added
+     * The currently opened installation details panel
      */
-    private final ObjectProperty<Runnable> onInstallationAdded;
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
 
     /**
      * Constructor
@@ -54,8 +61,9 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
         this.filter = new SimpleObjectProperty<>();
         this.javaFxSettingsManager = new SimpleObjectProperty<>();
         this.installationCategories = FXCollections.observableArrayList();
-        this.selectedInstallation = new SimpleObjectProperty<>();
         this.onInstallationAdded = new SimpleObjectProperty<>();
+        this.selectedInstallation = new SimpleObjectProperty<>();
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -131,6 +139,18 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
         return this.installationCategories;
     }
 
+    public Runnable getOnInstallationAdded() {
+        return this.onInstallationAdded.get();
+    }
+
+    public ObjectProperty<Runnable> onInstallationAddedProperty() {
+        return this.onInstallationAdded;
+    }
+
+    public void setOnInstallationAdded(Runnable onInstallationAdded) {
+        this.onInstallationAdded.set(onInstallationAdded);
+    }
+
     public InstallationDTO getSelectedInstallation() {
         return this.selectedInstallation.get();
     }
@@ -143,15 +163,26 @@ public class InstallationsFeaturePanel extends FeaturePanel<InstallationsFeature
         this.selectedInstallation.set(selectedInstallation);
     }
 
-    public Runnable getOnInstallationAdded() {
-        return this.onInstallationAdded.get();
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
     }
 
-    public ObjectProperty<Runnable> onInstallationAddedProperty() {
-        return this.onInstallationAdded;
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
     }
 
-    public void setOnInstallationAdded(Runnable onInstallationAdded) {
-        this.onInstallationAdded.set(onInstallationAdded);
+    public void setOpenedDetailsPanel(OpenDetailsPanel openDetailsPanel) {
+        this.openedDetailsPanel.set(openDetailsPanel);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void closeDetailsPanel() {
+        // deselect the currently selected installation
+        setSelectedInstallation(null);
+        // close the details panel
+        setOpenedDetailsPanel(new None());
     }
 }
