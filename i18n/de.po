@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-01 14:43+0000\n"
-"PO-Revision-Date: 2020-03-15 17:15\n"
+"POT-Creation-Date: 2020-03-26 21:24+0000\n"
+"PO-Revision-Date: 2020-03-27 10:46\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -86,66 +86,6 @@ msgstr "Abbrechen"
 msgid "Next"
 msgstr "Weiter"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:105
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:106
-msgid "Library"
-msgstr "Bibliothek"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:143
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:179
-msgid "Edit"
-msgstr "Bearbeiten"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:161
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:146
-msgid "My applications"
-msgstr "Meine Anwendungen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:244
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:221
-msgid "Create a new shortcut"
-msgstr "Neue Verknüpfung erstellen"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:366
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:375
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:169
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:178
-msgid "Error while creating shortcut"
-msgstr "Fehler beim Erstellen der Verknüpfung"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:387
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:399
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:195
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:212
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
-msgid "Error"
-msgstr "Fehler"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:412
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:230
-#, java-format
-msgid "Uninstall {0}"
-msgstr "{0} deinstallieren"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:413
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:231
-#, java-format
-msgid "Are you sure you want to uninstall {0}?"
-msgstr "Sind Sie sicher, dass Sie {0} deinstallieren möchten?"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/library/LibraryView.java:418
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:236
-#, java-format
-msgid "Error while uninstalling {0}"
-msgstr "Fehler bei der Deinstallation von {0}"
-
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:89
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:49
 msgid "Engines"
@@ -164,6 +104,10 @@ msgstr "Wiederholen"
 msgid "Reason: {0}"
 msgstr "Grund: {0}"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:106
+msgid "Library"
+msgstr "Bibliothek"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:114
 msgid "Apps"
 msgstr "Anwendungen"
@@ -174,7 +118,7 @@ msgid "Containers"
 msgstr "Container"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:133
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:144
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
 msgid "Loading containers failed."
 msgstr "Laden der Container fehlgeschlagen."
 
@@ -264,22 +208,35 @@ msgstr "Netzwerk"
 msgid "About"
 msgstr "Über"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:124
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
 #, java-format
 msgid "Delete {0} container"
 msgstr "Container {0} löschen"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:125
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
 msgstr "Sind Sie sicher, dass Sie den Container {0} löschen möchten?"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:172
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:140
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:203
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:220
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
+msgid "Error"
+msgstr "Fehler"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
 msgid "Error during engine engine version change"
 msgstr "Fehler beim Ändern der Engine Version"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:197
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:209
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
 #, java-format
 msgid "Cannot open container {0} in file browser"
 msgstr "Container {0} kann nicht in Dateimanager geöffnet werden"
@@ -430,6 +387,34 @@ msgstr "Fehler beim Herunterladen des Skripts"
 msgid "The script ended unexpectedly"
 msgstr "Das Skript wurde unerwartet beendet"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
+msgid "Error while creating shortcut"
+msgstr "Fehler beim Erstellen der Verknüpfung"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
+#, java-format
+msgid "Uninstall {0}"
+msgstr "{0} deinstallieren"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
+#, java-format
+msgid "Are you sure you want to uninstall {0}?"
+msgstr "Sind Sie sicher, dass Sie {0} deinstallieren möchten?"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
+#, java-format
+msgid "Error while uninstalling {0}"
+msgstr "Fehler bei der Deinstallation von {0}"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:110
+msgid "My applications"
+msgstr "Meine Anwendungen"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:210
+msgid "Create a new shortcut"
+msgstr "Neue Verknüpfung erstellen"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
 msgid "Please specify a name!"
 msgstr "Bitte einen Namen angeben!"
@@ -494,6 +479,10 @@ msgstr "Schließen"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
 msgid "Uninstall"
 msgstr "Deinstallieren"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:179
+msgid "Edit"
+msgstr "Bearbeiten"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:71
 msgid "Create shortcut"
