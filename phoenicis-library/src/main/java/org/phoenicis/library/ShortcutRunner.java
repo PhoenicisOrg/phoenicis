@@ -35,8 +35,20 @@ public class ShortcutRunner {
         this.libraryManager = libraryManager;
     }
 
-    public void run(String shortcutName, List<String> arguments, Consumer<Exception> errorCallback) {
-        run(libraryManager.fetchShortcutsFromName(shortcutName), arguments, errorCallback);
+    public boolean shortcutExists(String shortcutName) {
+        final ShortcutDTO shortcut = libraryManager.fetchShortcutsFromName(shortcutName);
+        return shortcut != null;
+    }
+
+    public boolean run(String shortcutName, List<String> arguments, Consumer<Exception> errorCallback) {
+        final ShortcutDTO shortcut = libraryManager.fetchShortcutsFromName(shortcutName);
+
+        if (shortcut == null) {
+            return false;
+        } else {
+            run(shortcut, arguments, errorCallback);
+            return true;
+        }
     }
 
     public void run(ShortcutDTO shortcutDTO, List<String> arguments, Consumer<Exception> errorCallback) {
