@@ -35,6 +35,11 @@ public class ShortcutRunner {
         this.libraryManager = libraryManager;
     }
 
+    /**
+     * Checks if a shortcut with the given name exists
+     * @param shortcutName name of the shortcut
+     * @return true if shortcut exists
+     */
     public boolean shortcutExists(String shortcutName) {
         final ShortcutDTO shortcut = libraryManager.fetchShortcutsFromName(shortcutName);
         return shortcut != null;
