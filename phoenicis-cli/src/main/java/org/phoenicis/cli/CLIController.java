@@ -23,10 +23,10 @@ import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
 import org.graalvm.polyglot.Value;
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.Installer;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -35,8 +35,6 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class CLIController implements AutoCloseable {
     private final ConfigurableApplicationContext applicationContext;
