@@ -62,7 +62,7 @@ public interface Repository {
     }
 
     /**
-     * fetches the TypeDTO for a given path (e.g. ["Applications"])
+     * fetches the TypeDTO for a given path (e.g. ["applications"])
      * @param path path in the JS namespace
      * @return TypeDTO
      */
@@ -79,7 +79,7 @@ public interface Repository {
     }
 
     /**
-     * fetches the CategoryDTO for a given path (e.g. ["Applications", "Development"])
+     * fetches the CategoryDTO for a given path (e.g. ["applications", "applications.development"])
      * @param path path in the JS namespace
      * @return CategoryDTO
      */
@@ -101,7 +101,8 @@ public interface Repository {
     }
 
     /**
-     * fetches the ApplicationDTO for a given path (e.g. ["Applications", "Development", "Notepad++"])
+     * fetches the ApplicationDTO for a given path (e.g. ["applications", "applications.development",
+     * "applications.development.notepadplusplus"])
      * @param path path in the JS namespace
      * @return ApplicationDTO
      */
@@ -123,7 +124,8 @@ public interface Repository {
     }
 
     /**
-     * fetches the ScriptDTO for a given path (e.g. ["Applications", "Development", "Notepad++", "Online"])
+     * fetches the ScriptDTO for a given path (e.g. ["applications", "applications.development",
+     * "applications.development.notepadplusplus", "applications.development.notepadplusplus.online"])
      * @param path path in the JS namespace
      * @return ScriptDTO
      */
