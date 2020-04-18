@@ -36,42 +36,12 @@
             </includes>
 			<outputDirectory></outputDirectory>
         </fileSet>
-        <!-- graal dependencies -->
         <fileSet>
             <directory>${project.build.directory}/lib</directory>
             <includes>
-                <include>compiler.jar</include>
-                <include>truffle-api.jar</include>
-                <include>graal-sdk.jar</include>
+                <include>*.jar</include>
             </includes>
 			<outputDirectory>lib</outputDirectory>
         </fileSet>
     </fileSets>
-	<dependencySets>
-		<dependencySet>
-			<outputDirectory>lib</outputDirectory>
-			<unpack>false</unpack>
-            <excludes>
-                <exclude>org.graalvm.compiler:compiler</exclude>
-                <exclude>org.graalvm.truffle:truffle-api</exclude>
-                <exclude>org.graalvm.sdk:graal-sdk</exclude>
-            </excludes>
-		</dependencySet>
-	</dependencySets>
-	<moduleSets>
-		<moduleSet>
-			<!-- Enable access to all projects in the current multimodule build! -->
-			<useAllReactorProjects>true</useAllReactorProjects>
-
-			<!-- Now, select which projects to include in this module-set. -->
-			<includes>
-				<include>org.phoenicis:phoenicis-javafx</include>
-			</includes>
-			<binaries>
-				<outputDirectory>lib</outputDirectory>
-				<unpack>false</unpack>
-				<includeDependencies>false</includeDependencies>
-			</binaries>
-		</moduleSet>
-	</moduleSets>
 </assembly>
