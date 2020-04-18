@@ -1,6 +1,6 @@
 {
   "scriptName": "Online",
-  "id": "online",
+  "id": "applications.graphics.photofiltre.online",
   "compatibleOperatingSystems": ["MACOSX", "LINUX"],
   "testingOperatingSystems": [],
   "free": true,
