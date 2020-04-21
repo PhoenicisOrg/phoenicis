@@ -22,11 +22,13 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -35,6 +37,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CLIController implements AutoCloseable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CLIController.class);
     private final ConfigurableApplicationContext applicationContext;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
@@ -54,6 +57,12 @@ public class CLIController implements AutoCloseable {
         arguments.remove(0);
 
         final ShortcutRunner shortcutRunner = applicationContext.getBean(ShortcutRunner.class);
+
+        if (!shortcutRunner.shortcutExists(shortcutName)) {
+            LOGGER.error("Requested shortcut does not exist: " + shortcutName);
+            return;
+        }
+
         shortcutRunner.run(shortcutName, arguments, e -> {
             throw new IllegalStateException(e);
         });
@@ -85,6 +94,12 @@ public class CLIController implements AutoCloseable {
 
         final ScriptDTO scriptDTO = repositoryManager
                 .getScript(Arrays.asList(typeName, categoryName, appName, scriptName));
+
+        if (scriptDTO == null) {
+            LOGGER.error("Requested app does not exist: " + arguments);
+            return;
+        }
+
         scriptInterpreter.runScript(scriptDTO.getScript(), Throwable::printStackTrace);
     }
 
