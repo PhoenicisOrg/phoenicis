@@ -10,7 +10,7 @@ toc: true
 * Install the dependencies:
 ```
 sudo apt update
-sudo apt install git maven openjdk-13-jdk fakeroot
+sudo apt install git maven openjdk-14-jdk fakeroot
 ```
 
 * Clone the repository from GitHub:
@@ -20,7 +20,7 @@ git clone https://github.com/PhoenicisOrg/phoenicis.git
 
 * Set the Java version:
 ```
-export JAVA_HOME=/usr/lib/jvm/java-13-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-14-openjdk-amd64
 ```
 
 * Build Phoenicis:
