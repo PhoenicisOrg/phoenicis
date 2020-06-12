@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Map;
 
 public class JavaFXApplication extends Application {
     private final static Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
