@@ -21,6 +21,11 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     private final ObjectProperty<Theme> selectedTheme;
 
     /**
+     * True if the advanced mode should be used
+     */
+    private final BooleanProperty advancedMode;
+
+    /**
      * True if the source repository of a script should be shown
      */
     private final BooleanProperty showScriptSource;
@@ -40,16 +45,21 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
      *
      * @param themes A list containing all available themes
      * @param selectedTheme The currently selected theme. This value should never be null
+     * @param advancedMode True if the advanced mode should be used
      * @param showScriptSource True if the source repository of a script should be shown
      * @param scaling The user interface scaling
      * @param onRestoreSettings Callback for the restore settings button
      */
     public UserInterfacePanel(ObservableList<Theme> themes, ObjectProperty<Theme> selectedTheme,
-            BooleanProperty showScriptSource, DoubleProperty scaling, ObjectProperty<Runnable> onRestoreSettings) {
+            BooleanProperty advancedMode,
+            BooleanProperty showScriptSource,
+            DoubleProperty scaling,
+            ObjectProperty<Runnable> onRestoreSettings) {
         super();
 
         this.themes = themes;
         this.selectedTheme = selectedTheme;
+        this.advancedMode = advancedMode;
         this.showScriptSource = showScriptSource;
         this.scaling = scaling;
         this.onRestoreSettings = onRestoreSettings;
@@ -61,7 +71,8 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
      * @param themes A list containing all available themes
      */
     public UserInterfacePanel(ObservableList<Theme> themes) {
-        this(themes, new SimpleObjectProperty<>(), new SimpleBooleanProperty(), new SimpleDoubleProperty(),
+        this(themes, new SimpleObjectProperty<>(), new SimpleBooleanProperty(), new SimpleBooleanProperty(),
+                new SimpleDoubleProperty(),
                 new SimpleObjectProperty<>());
     }
 
@@ -89,8 +100,20 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
         this.selectedTheme.set(selectedTheme);
     }
 
+    public boolean isAdvancedMode() {
+        return this.advancedMode.get();
+    }
+
+    public BooleanProperty advancedModeProperty() {
+        return this.advancedMode;
+    }
+
+    public void setAdvancedMode(boolean advancedMode) {
+        this.advancedMode.set(advancedMode);
+    }
+
     public boolean isShowScriptSource() {
-        return this.showScriptSource.get();
+        return this.advancedMode.get();
     }
 
     public BooleanProperty showScriptSourceProperty() {

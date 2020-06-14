@@ -46,6 +46,13 @@ public class UserInterfacePanelSkin extends SkinBase<UserInterfacePanel, UserInt
 
         final ComboBox<Theme> themeSelection = createThemeSelection();
 
+        // advanced mode
+        final Label advancedModeLabel = new Label(tr("Advanced mode (requires restart)"));
+        advancedModeLabel.getStyleClass().add("captionTitle");
+
+        final CheckBox advancedModeSelection = new CheckBox();
+        advancedModeSelection.selectedProperty().bindBidirectional(getControl().advancedModeProperty());
+
         // view script sources
         final Label showScriptSourceLabel = new Label(tr("View the scripts’ source repository"));
         showScriptSourceLabel.getStyleClass().add("captionTitle");
@@ -68,9 +75,10 @@ public class UserInterfacePanelSkin extends SkinBase<UserInterfacePanel, UserInt
                 event -> Optional.ofNullable(getControl().getOnRestoreSettings()).ifPresent(Runnable::run));
 
         themeGrid.addRow(0, themeLabel, themeSelection);
-        themeGrid.addRow(1, showScriptSourceLabel, showScriptSourceSelection);
-        themeGrid.addRow(2, scalingLabel, scalingSelection);
-        themeGrid.add(restoreDefaultButton, 1, 3);
+        themeGrid.addRow(1, advancedModeLabel, advancedModeSelection);
+        themeGrid.addRow(2, showScriptSourceLabel, showScriptSourceSelection);
+        themeGrid.addRow(3, scalingLabel, scalingSelection);
+        themeGrid.add(restoreDefaultButton, 1, 4);
 
         final VBox container = new VBox(title, themeGrid);
 

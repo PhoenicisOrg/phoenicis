@@ -80,27 +80,34 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
      */
     @Override
     public void initialise() {
-        final Label descriptionLabel = new Label();
-        descriptionLabel.textProperty().bind(description);
-        descriptionLabel.setWrapText(true);
-
-        final GridPane propertiesGrid = createPropertiesGrid();
-
-        final Label environmentLabel = new Label(tr("Environment"));
-        environmentLabel.getStyleClass().add("sectionTitle");
-        environmentLabel.setWrapText(true);
-
-        final KeyAttributeList environmentAttributeList = createKeyAttributeList();
-
-        final Region spacer = new Region();
-        spacer.getStyleClass().add("detailsButtonSpacer");
-
         final GridPane controlButtons = createControlButtons();
 
-        final VBox container = new VBox(descriptionLabel, propertiesGrid, environmentLabel, environmentAttributeList,
-                spacer, controlButtons);
+        if (getControl().getJavaFxSettingsManager().isAdvancedMode()) {
+            final Label descriptionLabel = new Label();
+            descriptionLabel.textProperty().bind(description);
+            descriptionLabel.setWrapText(true);
 
-        getChildren().setAll(container);
+            final GridPane propertiesGrid = createPropertiesGrid();
+
+            final Label environmentLabel = new Label(tr("Environment"));
+            environmentLabel.getStyleClass().add("sectionTitle");
+            environmentLabel.setWrapText(true);
+
+            final KeyAttributeList environmentAttributeList = createKeyAttributeList();
+
+            final Region spacer = new Region();
+            spacer.getStyleClass().add("detailsButtonSpacer");
+
+            final VBox container = new VBox(descriptionLabel, propertiesGrid, environmentLabel,
+                    environmentAttributeList,
+                    spacer, controlButtons);
+
+            getChildren().setAll(container);
+        } else {
+            final VBox container = new VBox(controlButtons);
+
+            getChildren().setAll(container);
+        }
     }
 
     /**

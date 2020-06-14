@@ -71,6 +71,8 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
 
         sidebar.applicationNameProperty().bind(getControl().applicationNameProperty());
 
+        sidebar.javaFxSettingsManagerProperty().bind(getControl().javaFxSettingsManagerProperty());
+
         sidebar.setOnCreateShortcut(() -> {
             // deselect the currently selected shortcut
             getControl().setSelectedShortcut(null);
@@ -239,6 +241,8 @@ public class LibraryFeaturePanelSkin extends FeaturePanelSkin<LibraryFeaturePane
 
     private DetailsPanel createShortcutInformationDetailsPanel(ShortcutInformation action) {
         final ShortcutInformationPanel shortcutInformationPanel = new ShortcutInformationPanel();
+
+        shortcutInformationPanel.javaFxSettingsManagerProperty().bind(getControl().javaFxSettingsManagerProperty());
 
         shortcutInformationPanel.setShortcut(action.getShortcut());
         shortcutInformationPanel.objectMapperProperty().bind(getControl().objectMapperProperty());
