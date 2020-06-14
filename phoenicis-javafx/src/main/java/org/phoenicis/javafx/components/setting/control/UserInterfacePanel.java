@@ -71,7 +71,10 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
      * @param themes A list containing all available themes
      */
     public UserInterfacePanel(ObservableList<Theme> themes) {
-        this(themes, new SimpleObjectProperty<>(), new SimpleBooleanProperty(), new SimpleBooleanProperty(),
+        this(themes,
+                new SimpleObjectProperty<>(),
+                new SimpleBooleanProperty(),
+                new SimpleBooleanProperty(),
                 new SimpleDoubleProperty(),
                 new SimpleObjectProperty<>());
     }
