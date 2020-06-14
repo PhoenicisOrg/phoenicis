@@ -22,8 +22,10 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
+import javafx.application.Platform;
 import org.graalvm.polyglot.Value;
 import org.phoenicis.javafx.controller.MainController;
+import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
 import org.phoenicis.repository.RepositoryManager;
@@ -38,6 +40,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class CLIController implements AutoCloseable {
     private static final Logger LOGGER = LoggerFactory.getLogger(CLIController.class);
@@ -101,42 +105,49 @@ public class CLIController implements AutoCloseable {
     @ShortSwitch("i")
     @AllAvailableArguments
     public void installApp(List<String> arguments) {
-        LOGGER.error("Not implemented");
-        /*
-         * TODO: switch to installations tab and start installation
-         * final String typeName = arguments.get(0);
-         * final String typeId = typeName;
-         * final String categoryName = arguments.get(1);
-         * final String categoryId = typeId + "." + categoryName;
-         * final String appName = arguments.get(2);
-         * final String appId = categoryId + "." + appName;
-         * final String scriptName = arguments.get(3);
-         * final String scriptId = appId + "." + scriptName;
-         * 
-         * final ScriptDTO scriptDTO = repositoryManager
-         * .getScript(Arrays.asList(typeId, categoryId, appId, scriptId));
-         * 
-         * if (scriptDTO == null) {
-         * LOGGER.error("Requested app does not exist: " + arguments);
-         * return;
-         * }
-         * 
-         * final StringBuilder executeBuilder = new StringBuilder();
-         * executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", scriptDTO.getTypeId()));
-         * executeBuilder.append(String.format("CATEGORY_ID=\"%s\";\n", scriptDTO.getCategoryId()));
-         * executeBuilder.append(String.format("APPLICATION_ID=\"%s\";\n", scriptDTO.getApplicationId()));
-         * executeBuilder.append(String.format("SCRIPT_ID=\"%s\";\n", scriptDTO.getId()));
-         * 
-         * executeBuilder.append(scriptDTO.getScript());
-         * executeBuilder.append("\n");
-         * 
-         * scriptInterpreter.createInteractiveSession()
-         * .eval(executeBuilder.toString(), result -> {
-         * Value installer = (Value) result;
-         * 
-         * installer.as(Installer.class).go();
-         * }, Throwable::printStackTrace);
-         */
+        final String typeName = arguments.get(0);
+        final String typeId = typeName;
+        final String categoryName = arguments.get(1);
+        final String categoryId = typeId + "." + categoryName;
+        final String appName = arguments.get(2);
+        final String appId = categoryId + "." + appName;
+        final String scriptName = arguments.get(3);
+        final String scriptId = appId + "." + scriptName;
+
+        final ScriptDTO scriptDTO = repositoryManager
+                .getScript(Arrays.asList(typeId, categoryId, appId, scriptId));
+
+        if (scriptDTO == null) {
+            LOGGER.error("Requested app does not exist: " + arguments);
+            return;
+        }
+
+        final StringBuilder executeBuilder = new StringBuilder();
+        executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", scriptDTO.getTypeId()));
+        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";\n", scriptDTO.getCategoryId()));
+        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";\n", scriptDTO.getApplicationId()));
+        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";\n", scriptDTO.getId()));
+
+        executeBuilder.append(scriptDTO.getScript());
+        executeBuilder.append("\n");
+
+        scriptInterpreter.createInteractiveSession()
+                .eval(executeBuilder.toString(), result -> {
+                    Value installer = (Value) result;
+
+                    installer.as(Installer.class).go();
+                }, e -> Platform.runLater(() -> {
+                    // no exception if installation is cancelled
+                    if (!(e.getCause() instanceof InterruptedException)) {
+                        final ErrorDialog errorDialog = ErrorDialog.builder()
+                                .withMessage(tr("The script ended unexpectedly"))
+                                .withException(e)
+                                .build();
+
+                        errorDialog.showAndWait();
+                    }
+                }));
+
     }
 
     @Override
