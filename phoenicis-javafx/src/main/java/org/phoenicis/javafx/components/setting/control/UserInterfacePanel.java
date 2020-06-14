@@ -113,7 +113,7 @@ public class UserInterfacePanel extends ControlBase<UserInterfacePanel, UserInte
     }
 
     public boolean isShowScriptSource() {
-        return this.advancedMode.get();
+        return this.showScriptSource.get();
     }
 
     public BooleanProperty showScriptSourceProperty() {
