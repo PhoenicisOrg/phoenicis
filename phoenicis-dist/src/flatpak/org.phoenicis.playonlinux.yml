@@ -51,6 +51,19 @@ modules:
       - type: archive
         url: https://www.cabextract.org.uk/cabextract-1.6.tar.gz
         sha256: cee661b56555350d26943c5e127fc75dd290b7f75689d5ebc1f04957c4af55fb
+  # terminal emulator for "Open Terminal" in engine tools (containers)
+  - name: terminal-emu-source
+    sources:
+      - type: archive
+        url: https://iweb.dl.sourceforge.net/project/rxvt/rxvt-dev/2.7.10/rxvt-2.7.10.tar.gz
+        sha256: 616ad56502820264e6933d07bc4eb752aa6940ec14add6e780ffccf15f38d449
+  - name: terminal-emu-script
+    buildsystem: simple
+    build-commands:
+      - echo "#!/bin/bash" > /app/bin/x-terminal-emulator
+      - echo "MY_ARGS=\$(echo \$@)" >> /app/bin/x-terminal-emulator
+      - echo "/app/bin/rxvt -e \$MY_ARGS" >> /app/bin/x-terminal-emulator
+      - chmod 755 /app/bin/x-terminal-emulator
   - name: playonlinux
     buildsystem: simple
     build-commands:
