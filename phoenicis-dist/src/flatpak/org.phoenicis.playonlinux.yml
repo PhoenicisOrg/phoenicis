@@ -4,6 +4,8 @@ runtime: org.freedesktop.Platform
 runtime-version: '19.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
+  - org.freedesktop.Sdk.Compat.i386
+  - org.freedesktop.Sdk.Extension.toolchain-i386
   - org.freedesktop.Sdk.Extension.openjdk11
 add-extensions:
   # support 32-bit apps
@@ -40,6 +42,14 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   - --device=all
+x-compat-i386-opts: &compat_i386_opts
+  prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
+  ldflags: -L/app/lib32
+  append-path: /usr/lib/sdk/toolchain-i386/bin
+  env:
+    CC: i686-unknown-linux-gnu-gcc
+    CXX: i686-unknown-linux-gnu-g++
+  libdir: /app/lib32
 modules:
   - name: openjdk
     buildsystem: simple
@@ -51,6 +61,26 @@ modules:
       - type: archive
         url: https://www.cabextract.org.uk/cabextract-1.6.tar.gz
         sha256: cee661b56555350d26943c5e127fc75dd290b7f75689d5ebc1f04957c4af55fb
+  - name: openldap
+    config-opts: &openldap_config_opts
+      - --disable-static
+      - --disable-slapd
+      - --disable-slurpd
+      - --disable-bdb
+      - --disable-hdb
+    cleanup: &openldap_cleanup
+      - /bin
+    sources: &openldap_sources
+      - type: archive
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.50.tgz
+        sha256: 5cb57d958bf5c55a678c6a0f06821e0e5504d5a92e6a33240841fbca1db586b8
+  - name: openldap-32bit
+    build-options:
+      arch:
+        x86_64: *compat_i386_opts
+    config-opts: *openldap_config_opts
+    cleanup: *openldap_cleanup
+    sources: *openldap_sources
   # terminal emulator for "Open Terminal" in engine tools (containers)
   - name: terminal-emu-source
     sources:
