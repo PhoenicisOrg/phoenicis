@@ -14,4 +14,3 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         level: error
         reporter: github-pr-review
-        tool_name: 'testtool'
