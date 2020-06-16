@@ -8,7 +8,7 @@ public interface EngineSetting {
      * fetches the text which shall be shown for the setting
      * @return text
      */
-                   String getText();
+    String getText();
 
     /**
      * fetches the available options for this setting
