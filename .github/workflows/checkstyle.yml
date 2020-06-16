@@ -13,5 +13,6 @@ jobs:
       uses: nikitasavinov/checkstyle-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        level: error
         reporter: 'github-pr-check'
         tool_name: 'testtool'
