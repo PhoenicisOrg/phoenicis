@@ -158,13 +158,6 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         final GridPane controlButtons = new GridPane();
         controlButtons.getStyleClass().add("shortcut-control-button-group");
 
-        ColumnConstraints runColumn = new ColumnConstraintsWithPercentage(25);
-        ColumnConstraints stopColumn = new ColumnConstraintsWithPercentage(25);
-        ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(25);
-        ColumnConstraints editColumn = new ColumnConstraintsWithPercentage(25);
-
-        controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn, editColumn);
-
         final Button runButton = new Button(tr("Run"));
         runButton.getStyleClass().addAll("shortcutButton", "runButton");
         runButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutRun())
@@ -183,13 +176,28 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
                 .ifPresent(onShortcutUninstall -> onShortcutUninstall.accept(getControl().getShortcut())));
         GridPane.setHalignment(uninstallButton, HPos.CENTER);
 
-        final Button editButton = new Button(tr("Edit"));
-        editButton.getStyleClass().addAll("shortcutButton", "editButton");
-        editButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutEdit())
-                .ifPresent(onShortcutEdit -> onShortcutEdit.accept(getControl().getShortcut())));
-        GridPane.setHalignment(editButton, HPos.CENTER);
+        if (getControl().getJavaFxSettingsManager().isAdvancedMode()) {
+            final Button editButton = new Button(tr("Edit"));
+            editButton.getStyleClass().addAll("shortcutButton", "editButton");
+            editButton.setOnMouseClicked(event -> Optional.ofNullable(getControl().getOnShortcutEdit())
+                    .ifPresent(onShortcutEdit -> onShortcutEdit.accept(getControl().getShortcut())));
+            GridPane.setHalignment(editButton, HPos.CENTER);
 
-        controlButtons.addRow(0, runButton, stopButton, uninstallButton, editButton);
+            ColumnConstraints runColumn = new ColumnConstraintsWithPercentage(100 / 4);
+            ColumnConstraints stopColumn = new ColumnConstraintsWithPercentage(100 / 4);
+            ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(100 / 4);
+            ColumnConstraints editColumn = new ColumnConstraintsWithPercentage(100 / 4);
+            controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn, editColumn);
+
+            controlButtons.addRow(0, runButton, stopButton, uninstallButton, editButton);
+        } else {
+            ColumnConstraints runColumn = new ColumnConstraintsWithPercentage(100 / 3);
+            ColumnConstraints stopColumn = new ColumnConstraintsWithPercentage(100 / 3);
+            ColumnConstraints uninstallColumn = new ColumnConstraintsWithPercentage(100 / 3);
+            controlButtons.getColumnConstraints().addAll(runColumn, stopColumn, uninstallColumn);
+
+            controlButtons.addRow(0, runButton, stopButton, uninstallButton);
+        }
 
         return controlButtons;
     }
