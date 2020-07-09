@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.components.library.skin.LibrarySidebarSkin;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.views.mainwindow.library.LibraryFilter;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
@@ -22,6 +23,11 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
      * The name of the application, i.e. either Phoenicis PlayOnLinux or Phoenicis PlayOnMac
      */
     private final StringProperty applicationName;
+
+    /**
+     * The JavaFX settings manager
+     */
+    private final ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager;
 
     /**
      * The selected shortcut category
@@ -61,6 +67,7 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
         super(items, filter.searchTermProperty(), selectedListWidget);
 
         this.applicationName = new SimpleStringProperty();
+        this.javaFxSettingsManager = new SimpleObjectProperty<>();
         this.onCreateShortcut = new SimpleObjectProperty<>();
         this.onScriptRun = new SimpleObjectProperty<>();
         this.onOpenConsole = new SimpleObjectProperty<>();
@@ -87,6 +94,18 @@ public class LibrarySidebar extends ExtendedSidebarBase<ShortcutCategoryDTO, Lib
 
     public void setApplicationName(String applicationName) {
         this.applicationName.set(applicationName);
+    }
+
+    public JavaFxSettingsManager getJavaFxSettingsManager() {
+        return this.javaFxSettingsManager.get();
+    }
+
+    public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
+        return this.javaFxSettingsManager;
+    }
+
+    public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {
+        this.javaFxSettingsManager.set(javaFxSettingsManager);
     }
 
     public ShortcutCategoryDTO getSelectedShortcutCategory() {

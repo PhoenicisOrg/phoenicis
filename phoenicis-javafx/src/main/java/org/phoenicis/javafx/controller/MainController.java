@@ -82,7 +82,9 @@ public class MainController {
             }
         };
         this.mainWindow.getApplicationsTab().selectedProperty().addListener(tabSelectedListener);
-        this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
+        if (javaFxSettingsManager.isAdvancedMode()) {
+            this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
+        }
     }
 
     public void show() {
