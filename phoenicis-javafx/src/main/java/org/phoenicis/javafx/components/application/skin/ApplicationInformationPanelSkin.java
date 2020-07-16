@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.graalvm.polyglot.Value;
@@ -23,6 +25,8 @@ import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.Installer;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
+import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
 
@@ -198,7 +202,29 @@ public class ApplicationInformationPanelSkin
                 }
             });
 
-            scriptGrid.addRow(i, scriptName, installButton);
+            OperatingSystem curOs = new OperatingSystemFetcher().fetchCurrentOperationSystem();
+            Label lTesting = new Label();
+            if (script.getTestingOperatingSystems().contains(curOs)) {
+                assignIcon(lTesting, "Testing", "testing.png", 30);
+            }
+            Label lCommercial = new Label();
+            if (!script.isFree()) {
+                assignIcon(lCommercial, "Commercial", "commercial.png", 30);
+            }
+            Label lPatch = new Label();
+            if (script.isRequiresPatch()) {
+                assignIcon(lPatch, "Patch required", "patch.png", 30);
+            }
+            Label lOs = new Label();
+            if (!script.getCompatibleOperatingSystems().contains(curOs)) {
+                assignIcon(lOs, "All Operating Systems", "os.png", 30);
+            }
+            Label lSpace = new Label();
+            lSpace.setPrefSize(30, 30);
+
+            javafx.scene.layout.HBox iconBox = new javafx.scene.layout.HBox(lTesting, lCommercial, lPatch, lOs, lSpace);
+
+            scriptGrid.addRow(i, scriptName, iconBox, installButton);
         }
     }
 
@@ -246,5 +272,15 @@ public class ApplicationInformationPanelSkin
                         errorDialog.showAndWait();
                     }
                 }));
+    }
+
+    private void assignIcon(Label label, String tooltip, String imageName, double height) {
+        String imageDir = "/org/phoenicis/javafx/filter/";
+        Image image = new Image(getClass().getResourceAsStream(imageDir + imageName));
+        ImageView iv = new ImageView(image);
+        iv.setFitHeight(height);
+        iv.setFitWidth(height);
+        label.setGraphic(iv);
+        label.setTooltip(new Tooltip(tr(tooltip)));
     }
 }
