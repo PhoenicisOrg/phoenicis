@@ -59,17 +59,19 @@ public class ApplicationSidebarSkin
     }
 
     private SidebarGroup<CheckBox> createFilterGroup() {
-        final CheckBox testingCheck = createCheckBox(tr("Testing"));
+        final CheckBox testingCheck = createCheckBox(tr("Testing"), tr("Also show apps in testing state"));
         getControl().containTestingApplicationsProperty().bind(testingCheck.selectedProperty());
 
-        final CheckBox requiresPatchCheck = createCheckBox(tr("Patch required"));
+        final CheckBox requiresPatchCheck = createCheckBox(tr("Patch required"),
+                tr("Also show apps, where CD patch is necessary"));
         getControl().containRequiresPatchApplicationsProperty().bind(requiresPatchCheck.selectedProperty());
 
-        final CheckBox commercialCheck = createCheckBox(tr("Commercial"));
+        final CheckBox commercialCheck = createCheckBox(tr("Commercial"), tr("Also show apps not free of costs"));
         commercialCheck.setSelected(true);
         getControl().containCommercialApplicationsProperty().bind(commercialCheck.selectedProperty());
 
-        final CheckBox operatingSystemCheck = createCheckBox(tr("All Operating Systems"));
+        final CheckBox operatingSystemCheck = createCheckBox(tr("All Operating Systems"),
+                tr("Also show apps tested on different OS"));
         getControl().containAllOSCompatibleApplicationsProperty().bind(operatingSystemCheck.selectedProperty());
 
         return new SidebarGroup<>(tr("Filters"), FXCollections.observableArrayList(
