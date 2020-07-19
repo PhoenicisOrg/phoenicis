@@ -205,19 +205,19 @@ public class ApplicationInformationPanelSkin
             OperatingSystem curOs = new OperatingSystemFetcher().fetchCurrentOperationSystem();
             Label lTesting = new Label();
             if (script.getTestingOperatingSystems().contains(curOs)) {
-                assignIcon(lTesting, "Testing", "testing.png", 30);
+                assignIcon(lTesting, "Testing", "testingIcon", 30);
             }
             Label lCommercial = new Label();
             if (!script.isFree()) {
-                assignIcon(lCommercial, "Commercial", "commercial.png", 30);
+                assignIcon(lCommercial, "Commercial", "commercialIcon", 30);
             }
             Label lPatch = new Label();
             if (script.isRequiresPatch()) {
-                assignIcon(lPatch, "Patch required", "patch.png", 30);
+                assignIcon(lPatch, "Patch required", "patchIcon", 30);
             }
             Label lOs = new Label();
             if (!script.getCompatibleOperatingSystems().contains(curOs)) {
-                assignIcon(lOs, "All Operating Systems", "os.png", 30);
+                assignIcon(lOs, "All Operating Systems", "osIcon", 30);
             }
             Label lSpace = new Label();
             lSpace.setPrefSize(30, 30);
@@ -274,13 +274,9 @@ public class ApplicationInformationPanelSkin
                 }));
     }
 
-    private void assignIcon(Label label, String tooltip, String imageName, double height) {
-        String imageDir = "/org/phoenicis/javafx/filter/";
-        Image image = new Image(getClass().getResourceAsStream(imageDir + imageName));
-        ImageView iv = new ImageView(image);
-        iv.setFitHeight(height);
-        iv.setFitWidth(height);
-        label.setGraphic(iv);
+    private void assignIcon(Label label, String tooltip, String imageCss, double height) {
+        label.getStyleClass().add(imageCss);
         label.setTooltip(new Tooltip(tr(tooltip)));
+        label.setMinSize(height, height);
     }
 }
