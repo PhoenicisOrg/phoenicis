@@ -3,14 +3,14 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b667020df53c4b80a22d7e5a73f2b1b3)](https://www.codacy.com/app/PhoenicisOrg/phoenicis?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PhoenicisOrg/phoenicis&amp;utm_campaign=Badge_Grade)
 [![Crowdin Badge](https://d322cqt584bo4o.cloudfront.net/phoenicis/localized.svg)](https://crowdin.com/project/phoenicis)
 
-Phoenicis is the designated successor of PlayOnLinux and PlayOnMac 4. It allows you to install and use non-native applications on your favorite operating system.
+Phoenicis is the designated successor of [PlayOnLinux and PlayOnMac 4](https://github.com/PlayOnLinux/POL-POM-4). It allows you to install and use non-native applications on your favorite operating system.
 
 Supported operating systems:
-* Linux
-* Mac OSX
+* [GNU/Linux](https://en.wikipedia.org/wiki/Linux)
+* [macOS](https://en.wikipedia.org/wiki/MacOS)
 
 Supported engines:
-* Wine
+* [Wine](https://www.winehq.org/)
 
 <a href='https://flathub.org/apps/details/org.phoenicis.playonlinux'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
@@ -18,8 +18,8 @@ Supported engines:
 
 ## Build and Run locally
 Dependencies:
-* Java 11+
-* Maven
+* [Java 11+](https://en.wikipedia.org/wiki/Java_(programming_language))
+* [Maven](https://en.wikipedia.org/wiki/Apache_Maven)
 
 Build
 ```
@@ -44,7 +44,8 @@ You can get a complete Phoenicis development setup with Gitpod, a free one-click
 To add or update scripts, please make pull requests to this repository: https://github.com/PhoenicisOrg/scripts
 
 ## Translate
-Phoenicis is localized using Crowdin: https://crowdin.com/project/phoenicis
+Phoenicis is localized using Crowdin: https://crowdin.com/project/phoenicis.
+
 If your language is not listed, please create an [issue](https://github.com/PhoenicisOrg/phoenicis/issues).
 
 ## Community
