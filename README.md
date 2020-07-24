@@ -14,7 +14,25 @@ Supported engines:
 
 <a href='https://flathub.org/apps/details/org.phoenicis.playonlinux'><img width='240' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.png'/></a>
 
-------------
+# What is Phoenicis PlayOnLinux?
+
+Phoenicis PlayOnLinux is a piece of software which allows you to easily install and use numerous games and apps designed to run with Microsoft® Windows®.
+
+Few games are compatible with GNU/Linux at the moment and it certainly is a factor preventing the migration to this system. Phoenicis PlayOnLinux brings a cost-free, accessible and efficient solution to this problem.
+
+# What are Phoenicis PlayOnLinux’s features?
+
+Here is a non-exhaustive list of the interesting points to know:
+* You don’t have to own a [Microsoft Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) license to use PlayOnLinux.
+* Phoenicis PlayOnLinux is based on [Wine](https://www.winehq.org/), and so profits from all its features yet it keeps the user from having to deal with its complexity.
+* Phoenicis PlayOnLinux is [free software](https://en.wikipedia.org/wiki/Free_software).
+* Phoenicis PlayOnLinux uses [Java](https://en.wikipedia.org/wiki/Java_(programming_language)).
+
+Nevertheless, Phoenicis PlayOnLinux has some bugs, as every piece of software:
+* Occasional performance decrease (image may be less fluid and graphics less detailed).
+* Not all games are supported. Nevertheless, you can use our manual installation module.
+
+For more information, visit http://www.playonlinux.com
 
 ## Build and Run locally
 Dependencies:
