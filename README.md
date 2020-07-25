@@ -6,8 +6,8 @@
 Phoenicis is the designated successor of [PlayOnLinux and PlayOnMac 4](https://github.com/PlayOnLinux/POL-POM-4). It allows you to install and use non-native applications on your favorite operating system.
 
 Supported operating systems:
-* [GNU/Linux](https://en.wikipedia.org/wiki/Linux)
-* [macOS](https://en.wikipedia.org/wiki/MacOS)
+* GNU/Linux
+* macOS
 
 Supported engines:
 * [Wine](https://www.winehq.org/)
@@ -23,10 +23,10 @@ Few games are compatible with GNU/Linux at the moment and it certainly is a fact
 # What are Phoenicis PlayOnLinux’s features?
 
 Here is a non-exhaustive list of the interesting points to know:
-* You don’t have to own a [Microsoft Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) license to use PlayOnLinux.
+* You don’t have to own a Microsoft Windows license to use PlayOnLinux.
 * Phoenicis PlayOnLinux is based on [Wine](https://www.winehq.org/), and so profits from all its features yet it keeps the user from having to deal with its complexity.
 * Phoenicis PlayOnLinux is [free software](https://en.wikipedia.org/wiki/Free_software).
-* Phoenicis PlayOnLinux uses [Java](https://en.wikipedia.org/wiki/Java_(programming_language)).
+* Phoenicis PlayOnLinux uses Java.
 
 Nevertheless, Phoenicis PlayOnLinux has some bugs, as every piece of software:
 * Occasional performance decrease (image may be less fluid and graphics less detailed).
@@ -36,8 +36,8 @@ For more information, visit http://www.playonlinux.com
 
 ## Build and Run locally
 Dependencies:
-* [Java 11+](https://en.wikipedia.org/wiki/Java_(programming_language))
-* [Maven](https://en.wikipedia.org/wiki/Apache_Maven)
+* Java 11+
+* Maven
 
 Build
 ```
