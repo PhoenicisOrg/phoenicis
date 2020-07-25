@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-09 18:01+0000\n"
-"PO-Revision-Date: 2020-07-09 18:04\n"
+"PO-Revision-Date: 2020-07-25 09:03\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -122,7 +122,7 @@ msgstr "Tárolók"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:145
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
 msgid "Loading containers failed."
-msgstr "Tartályok betöltése nem sikerült."
+msgstr "Tárolók betöltése nem sikerült."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:157
 msgid "Installations"
@@ -213,7 +213,7 @@ msgstr "Névjegy"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
 #, java-format
 msgid "Delete {0} container"
-msgstr "A(z) {0} tartály eltávolítása"
+msgstr "A(z) {0} tároló eltávolítása"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
 #, java-format
