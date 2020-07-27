@@ -2,7 +2,6 @@ package org.phoenicis.javafx.components.common.skin;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.control.Tooltip;
 import org.phoenicis.javafx.components.common.control.ExtendedSidebarBase;
 import org.phoenicis.javafx.components.common.control.SearchBox;
 import org.phoenicis.javafx.components.common.widgets.control.ListWidgetSelector;
@@ -33,22 +32,6 @@ public abstract class ExtendedSidebarSkinBase<E, C extends ExtendedSidebarBase<E
      */
     protected static CheckBox createCheckBox(String text) {
         final CheckBox checkBox = new CheckBox(text);
-
-        checkBox.getStyleClass().add("sidebarCheckBox");
-
-        return checkBox;
-    }
-
-    /**
-     * Creates a new {@link CheckBox} with containing the given {@link String text} and {@link String tooltip}
-     *
-     * @param text The text
-     * @param tooltip The tooltip text
-     * @return The new {@link CheckBox}
-     */
-    protected static CheckBox createCheckBox(String text, String tooltip) {
-        final CheckBox checkBox = new CheckBox(text);
-        checkBox.setTooltip(new Tooltip(tooltip));
 
         checkBox.getStyleClass().add("sidebarCheckBox");
 

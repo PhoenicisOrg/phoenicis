@@ -205,24 +205,32 @@ public class ApplicationInformationPanelSkin
             OperatingSystem curOs = new OperatingSystemFetcher().fetchCurrentOperationSystem();
             Label lTesting = new Label();
             if (script.getTestingOperatingSystems().contains(curOs)) {
-                assignIcon(lTesting, "Testing", "testingIcon", 30);
+                lTesting.getStyleClass().add("testingIcon");
+                lTesting.setTooltip(new Tooltip(tr("Testing")));
+                lTesting.setMinSize(30, 30);
             }
             Label lCommercial = new Label();
             if (!script.isFree()) {
-                assignIcon(lCommercial, "Commercial", "commercialIcon", 30);
+                lCommercial.getStyleClass().add("commercialIcon");
+                lCommercial.setTooltip(new Tooltip(tr("Commercial")));
+                lCommercial.setMinSize(30, 30);
             }
             Label lPatch = new Label();
             if (script.isRequiresPatch()) {
-                assignIcon(lPatch, "Patch required", "patchIcon", 30);
+                lPatch.getStyleClass().add("patchIcon");
+                lPatch.setTooltip(new Tooltip(tr("Patch required")));
+                lPatch.setMinSize(30, 30);
             }
             Label lOs = new Label();
             if (!script.getCompatibleOperatingSystems().contains(curOs)) {
-                assignIcon(lOs, "All Operating Systems", "osIcon", 30);
+                lOs.getStyleClass().add("osIcon");
+                lOs.setTooltip(new Tooltip(tr("All Operating Systems")));
+                lOs.setMinSize(30, 30);
             }
             Label lSpace = new Label();
             lSpace.setPrefSize(30, 30);
 
-            javafx.scene.layout.HBox iconBox = new javafx.scene.layout.HBox(lTesting, lCommercial, lPatch, lOs, lSpace);
+            HBox iconBox = new HBox(lTesting, lCommercial, lPatch, lOs, lSpace);
 
             scriptGrid.addRow(i, scriptName, iconBox, installButton);
         }
@@ -272,11 +280,5 @@ public class ApplicationInformationPanelSkin
                         errorDialog.showAndWait();
                     }
                 }));
-    }
-
-    private void assignIcon(Label label, String tooltip, String imageCss, double height) {
-        label.getStyleClass().add(imageCss);
-        label.setTooltip(new Tooltip(tr(tooltip)));
-        label.setMinSize(height, height);
     }
 }
