@@ -52,7 +52,7 @@
         <surefire.version>3.0.0-M5</surefire.version>
         <logback.version>1.2.3</logback.version>
         <junit.version>4.13</junit.version>
-        <mockito.version>3.4.4</mockito.version>
+        <mockito.version>3.5.9</mockito.version>
         <spring.version>5.2.8.RELEASE</spring.version>
         <formatter-maven-plugin.version>2.12.1</formatter-maven-plugin.version>
         <graalvm.version>20.1.0</graalvm.version>
