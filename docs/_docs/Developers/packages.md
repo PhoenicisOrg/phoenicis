@@ -4,12 +4,13 @@ category: Developers
 order: 2
 ---
 
-The packaging is done in phoenicis-dist. 
+Run the build before packaging.
 
-The built packages are located in the target/packages folder:
-- .zip
-- .deb
-
+### deb
+```
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
+```
 
 ### Flatpak
 Required extensions:
