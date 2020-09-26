@@ -57,7 +57,7 @@ if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
 fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
-    jpackage --image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"  --linux-bundle-name "phoenicis-playonlinux"
+    jpackage "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"
 
     packageName="Phoenicis_$VERSION"
     cd "$PHOENICIS_TARGET"
