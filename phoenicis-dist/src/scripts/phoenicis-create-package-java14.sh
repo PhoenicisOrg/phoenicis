@@ -32,12 +32,14 @@ if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
     PHOENICIS_APPTITLE="Phoenicis PlayOnMac"
     JPACKAGER_OS="osx"
     JAR_RELATIVE_PATH="../Java"
+    TYPE="DMG"
 fi
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
     PHOENICIS_APPTITLE="Phoenicis PlayOnLinux"
     JPACKAGER_OS="linux"
     JAR_RELATIVE_PATH="/usr/share/phoenicis/app"
+    TYPE="DEB"
 fi
 
 PHOENICIS_TARGET="$SCRIPT_PATH/../../target"
@@ -45,7 +47,7 @@ PHOENICIS_JPACKAGER="$SCRIPT_PATH/../../target/jpackager"
 PHOENICIS_RESOURCES="$SCRIPT_PATH/../resources"
 PHOENICIS_MODULES="jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom"
 PHOENICIS_RUNTIME_OPTIONS="-XX:G1PeriodicGCInterval=5000 -XX:G1PeriodicGCSystemLoadThreshold=0 -XX:MaxHeapFreeRatio=10 -XX:MinHeapFreeRatio=5 -XX:-ShrinkHeapInSteps -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=$JAR_RELATIVE_PATH/compiler.jar --module-path=../Java --add-modules=$PHOENICIS_MODULES"
-PHOENICIS_JPACKAGER_ARGUMENTS=("--type" "app-image" "--input" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--dest" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--app-version" "$VERSION" "--java-options" "$PHOENICIS_RUNTIME_OPTIONS")
+PHOENICIS_JPACKAGER_ARGUMENTS=("--type" "$TYPE" "--input" "$PHOENICIS_TARGET/lib" "--main-jar" "phoenicis-javafx-$VERSION.jar" "-n" "$PHOENICIS_APPTITLE" "--dest" "$PHOENICIS_TARGET/packages/" "--add-modules" "$PHOENICIS_MODULES" "-p" "$PHOENICIS_TARGET/lib/" "--app-version" "$VERSION" "--java-options" "$PHOENICIS_RUNTIME_OPTIONS")
 
 
 
