@@ -7,6 +7,12 @@ order: 2
 Run the build before packaging.
 
 ### deb
+Install required packages:
+```
+sudo apt install -y fakeroot openjdk-11-jdk-headless
+```
+
+build with:
 ```
 cd phoenicis-dist/src/scripts
 bash phoenicis-create-package.sh
