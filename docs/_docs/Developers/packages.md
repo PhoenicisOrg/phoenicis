@@ -4,12 +4,29 @@ category: Developers
 order: 2
 ---
 
-The packaging is done in phoenicis-dist. 
+Run the build before packaging.
 
-The built packages are located in the target/packages folder:
-- .zip
-- .deb
+### deb
+Install required packages:
+```
+sudo apt install -y fakeroot openjdk-11-jdk-headless
+```
 
+build with:
+```
+cd phoenicis-dist/src/scripts
+bash phoenicis-create-package.sh
+```
+
+**NOTE:** Currently, the native Ubuntu OpenJDK has issues with differing hashes. Use e.g. [SDKMAN!](https://sdkman.io/) to install a different JDK for packaging:
+```
+cd
+sudo apt install -y curl
+curl -s "https://get.sdkman.io" | bash
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+sdk install java 11.0.8.hs-adpt
+export JAVA_HOME=~/.sdkman/candidates/java/current/
+```
 
 ### Flatpak
 Required extensions:
