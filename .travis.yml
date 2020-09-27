@@ -27,24 +27,24 @@ jobs:
     - stage: Build + test
       name: Linux OpenJDK 11
       os: linux
-      dist: trusty
+      dist: focal
       jdk: openjdk11
     - stage: Build + test
       name: Linux OpenJDK 12
       os: linux
-      dist: trusty
+      dist: focal
       jdk: openjdk12
     - stage: Build + test
       name: Linux OpenJDK 13
       os: linux
-      dist: trusty
+      dist: focal
       jdk: openjdk13
 
     # packages
     - stage: Packages
       name: Flatpak
       os: linux
-      dist: xenial
+      dist: focal
       jdk: openjdk11
       before_install:
         - sudo add-apt-repository ppa:alexlarsson/flatpak -y
@@ -65,7 +65,7 @@ jobs:
     - stage: Packages
       name: deb
       os: linux
-      dist: xenial
+      dist: focal
       jdk: openjdk11
       before_install:
         - sudo apt-get update -q
