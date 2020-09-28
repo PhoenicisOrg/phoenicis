@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-27 20:40+0000\n"
-"PO-Revision-Date: 2020-07-30 07:05\n"
+"POT-Creation-Date: 2020-09-27 13:23+0000\n"
+"PO-Revision-Date: 2020-09-28 12:09\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -106,25 +106,25 @@ msgstr "Повтор"
 msgid "Reason: {0}"
 msgstr "Причина: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:118
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:121
 msgid "Library"
 msgstr "Библиотека"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:126
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:129
 msgid "Apps"
 msgstr "Приложения"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:134
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:137
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
 msgid "Containers"
 msgstr "Контейнеры"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:145
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
 msgid "Loading containers failed."
 msgstr "Сбой загрузки контейнеров."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:157
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
 msgid "Installations"
 msgstr "Установки"
 
