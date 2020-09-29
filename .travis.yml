@@ -4,6 +4,7 @@ language: java
 branches:
   only:
     - master
+    - release/5.0-alpha-3
 
 jobs:
   include:
