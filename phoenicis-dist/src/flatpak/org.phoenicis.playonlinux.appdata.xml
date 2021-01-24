@@ -22,6 +22,7 @@
   <project_license>LGPL-3.0</project_license>
   <developer_name>PhoenicisOrg</developer_name>
   <releases>
+    <release version="5.0-alpha-3" type="development" date="2020-09-29"/>
     <release version="5.0-alpha-2" type="development" date="2018-12-29"/>
   </releases>
   <screenshots>
