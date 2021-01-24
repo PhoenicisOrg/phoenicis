@@ -1,4 +1,4 @@
-name: Java CI
+name: CI - Ubuntu (Java 11)
 
 on: [push]
 
