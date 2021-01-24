@@ -1,0 +1,25 @@
+name: Lint .java files
+on: push
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+        
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Run Maven formatter
+        run: mvn -Pcheck-formatted validate formatter:validate
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v6
+        with:
+          author_name: PhoenicisBot
+          author_email: phoenicis-bot@phoenicis.org
+          message: 'Lint .java files'
+          add: '*.java'
