@@ -30,6 +30,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package
   macos-java-11:
+    name: Mac OS (Java 11)
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
