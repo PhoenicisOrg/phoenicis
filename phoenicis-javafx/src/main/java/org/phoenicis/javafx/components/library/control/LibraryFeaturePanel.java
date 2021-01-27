@@ -146,6 +146,17 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
         // get container
         // TODO: smarter way using container manager
         final String executablePath = shortcutCreationDTO.getExecutable().getAbsolutePath();
+        if (!executablePath.startsWith(getContainersPath())) {
+            Platform.runLater(() -> {
+                final ErrorDialog errorDialog = ErrorDialog.builder()
+                        .withMessage(tr("Creating shortcut to executable outside of a container is not supported"))
+                        .withOwner(getScene().getWindow())
+                        .build();
+
+                errorDialog.showAndWait();
+            });
+            return;
+        }
         final String pathInContainers = executablePath.replace(getContainersPath(), "");
         final String[] split = pathInContainers.split("/");
         final String engineContainer = split[0];
@@ -156,11 +167,13 @@ public class LibraryFeaturePanel extends FeaturePanel<LibraryFeaturePanel, Libra
 
         final InteractiveScriptSession interactiveScriptSession = getScriptInterpreter().createInteractiveSession();
 
-        final String scriptInclude = "const Shortcut = include(\"engines." + engineId + ".shortcuts." + engineId
-                + "\");";
+        final String scriptInclude = "";
 
         interactiveScriptSession.eval(scriptInclude,
-                ignored -> interactiveScriptSession.eval("new Shortcut()",
+                ignored -> interactiveScriptSession.eval(
+                        "const Shortcut = include(\"engines." + engineId + ".shortcuts." + engineId
+                                + "\");" +
+                                "new Shortcut()",
                         output -> {
                             final Value shortcutObject = (Value) output;
 
