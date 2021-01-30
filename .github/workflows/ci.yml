@@ -31,7 +31,7 @@ jobs:
         run: mvn clean package
   flatpak:
     name: Flatpak
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -54,7 +54,7 @@ jobs:
       - name: Build flatpak
         run: |
           cd phoenicis-dist/src/flatpak
-          flatpak-builder build-dir org.phoenicis.playonlinux.yml
+          flatpak-builder build-dir org.phoenicis.playonlinux.yml --force-clean
   macos-java-11:
     name: Mac OS (Java 11)
     runs-on: macos-latest
