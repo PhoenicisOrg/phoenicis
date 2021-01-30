@@ -53,7 +53,7 @@ jobs:
           flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-460-39/x86_64/1.4
       - name: Build flatpak
         run: |
-          cd phoenicis-dist/src/flatpak/
+          cd phoenicis-dist/src/flatpak
           flatpak-builder build-dir org.phoenicis.playonlinux.yml
   macos-java-11:
     name: Mac OS (Java 11)
