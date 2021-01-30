@@ -1,4 +1,3 @@
----
 app-id: org.phoenicis.playonlinux
 runtime: org.freedesktop.Platform
 runtime-version: '20.08'
