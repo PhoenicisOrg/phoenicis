@@ -29,7 +29,6 @@ jobs:
         run: exit 0
 
       - name: Commit changes
-        if: ${{ success() }}
         uses: EndBug/add-and-commit@v6
         with:
           author_name: PhoenicisBot
