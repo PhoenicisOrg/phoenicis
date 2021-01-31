@@ -24,17 +24,13 @@ jobs:
         run: mvn -Pupdate-translations validate
 
       - name: Check changes
-        # disable fail fast
-        shell: bash {0}
+        id: check-changes
+        continue-on-error: true
         # check if anything except "POT creation date" has changed
         run: git diff --numstat i18n/keys.pot |  awk '{ if($1 == 1 && $2 == 1) { exit 1 } else exit 0 }'
 
-      - name: Exit
-        if: ${{ failure() }}
-        # nothing to do
-        run: exit 0
-
       - name: Commit changes
+        if: steps.check-changes.outcome == 'success' && steps.check-changes.conclusion == 'success'
         uses: EndBug/add-and-commit@v6
         with:
           author_name: PhoenicisBot
