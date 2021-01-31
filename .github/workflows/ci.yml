@@ -1,0 +1,72 @@
+name: CI
+
+on: [push]
+
+jobs:
+  ubuntu-java-11:
+    name: Ubuntu (Java 11)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Maven
+        run: mvn clean package
+      - name: Create package
+        run: |
+          cd phoenicis-dist/src/scripts
+          bash phoenicis-create-package.sh
+  ubuntu-java-15:
+    name: Ubuntu (Java 15)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 15
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+      - name: Build with Maven
+        run: mvn clean package
+  flatpak:
+    name: Flatpak
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Maven
+        run: mvn clean package -DskipTests # no need to run tests again
+      - name: Install dependencies
+        run: |
+          sudo apt-get install -y flatpak flatpak-builder elfutils
+          flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+          flatpak --user -y install flathub org.freedesktop.Platform/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Compat.i386/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-460-39/x86_64/1.4
+      - name: Build flatpak
+        run: |
+          cd phoenicis-dist/src/flatpak
+          flatpak-builder build-dir org.phoenicis.playonlinux.yml --force-clean
+  macos-java-11:
+    name: Mac OS (Java 11)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build with Maven
+        run: mvn clean package
+      - name: Create package
+        run: |
+          cd phoenicis-dist/src/scripts
+          bash phoenicis-create-package.sh
