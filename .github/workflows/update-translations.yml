@@ -35,4 +35,4 @@ jobs:
           author_name: PhoenicisBot
           author_email: git@phoenicis.org
           message: 'Update translations'
-          add: '*.java'
+          add: '*.pot'
