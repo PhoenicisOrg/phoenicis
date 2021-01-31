@@ -24,6 +24,8 @@ jobs:
         run: mvn -Pupdate-translations validate
 
       - name: Check changes
+        # disable fail fast
+        shell: bash {0}
         # check if anything except "POT creation date" has changed
         run: git diff --numstat i18n/keys.pot |  awk '{ if($1 == 1 && $2 == 1) { exit 1 } else exit 0 }'
 
