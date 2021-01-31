@@ -43,7 +43,7 @@ public class JavaFXApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
-                primaryStage.setTitle("Phoenicis");
+        primaryStage.setTitle("Phoenicis");
         loadFonts();
         ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
                 AppConfiguration.class);
@@ -52,10 +52,10 @@ public class JavaFXApplication extends Application {
         mainController.show();
         mainController.setOnClose(() -> {
             try {
-                applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class    ).setCloseImmediately(true);
+                applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
                 applicationContext.close();
             } catch (Exception e) {
-                LOGGER.warn("Exception while closing the application.",  e);
+                LOGGER.warn("Exception while closing the application.", e);
             }
         });
     }
@@ -63,7 +63,7 @@ public class JavaFXApplication extends Application {
     private void loadFonts() {
         Font.loadFont(getClass().getResource("views/common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
         Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Medium.ttf").toExternalForm(), 12);
-     Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
+        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
         Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Bold.ttf").toExternalForm(), 12);
     }
 
