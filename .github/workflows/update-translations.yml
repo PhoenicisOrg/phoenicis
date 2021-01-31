@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-      - gh-action-i18n-update
 
 jobs:
   run:
