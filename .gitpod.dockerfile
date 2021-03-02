@@ -4,7 +4,7 @@ USER root
 RUN dpkg --add-architecture i386 \
   && apt-get update \
   && apt-get install -y --no-install-recommends \
-    cabextract=1.9.* \
+    cabextract=1.* \
     libxext6=2* \
     libxext6:i386=2* \
     libfreetype6=2.10* \
