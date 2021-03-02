@@ -6,7 +6,7 @@ RUN dpkg --add-architecture i386 \
   && apt-get install -y --no-install-recommends \
     cabextract=1.* \
     libxext6=2* \
-    libxext6:i386=2* \
+    libxext6:i386 \
     libfreetype6=2.10* \
     libfreetype6:i386=2.10* \
     fakeroot=1.24* \
