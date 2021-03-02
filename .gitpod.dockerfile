@@ -1,9 +1,8 @@
-FROM gitpod/workspace-full-vnc:latest
+FROM gitpod/workspace-full-vnc:branch-pr-349
 
 USER root
-RUN dpkg --add-architecture i386 \
-  && apt-get update \
-  && apt-get install -y \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
     cabextract \
     libxext6 \
     libxext6:i386 \

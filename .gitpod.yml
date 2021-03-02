@@ -11,5 +11,6 @@ tasks:
 - init: >
     mvn install
   command: >
+    mvn clean package &&
     cd phoenicis-dist/src/scripts &&
     sh phoenicis-create-package.sh
