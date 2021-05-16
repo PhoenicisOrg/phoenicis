@@ -20,12 +20,13 @@ add-extensions:
 
   org.freedesktop.Platform.GL32:
     directory: lib/i386-linux-gnu/GL
-    version: '20.08'
+    version: '1.4'
+    versions: '20.08;1.4'
     subdirectories: true
     no-autodownload: true
     autodelete: false
     add-ld-path: lib
-    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d
     download-if: active-gl-driver
     enable-if: active-gl-driver
 command: phoenicis-playonlinux
