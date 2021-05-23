@@ -4,10 +4,10 @@ on:
     - cron: "0 * * * *"
 jobs:
   auto-merge:
-    name: Auto-merge minor and patch updates
     runs-on: ubuntu-latest
     steps:
       - uses: koj-co/dependabot-pr-action@master
         with:
           token: ${{ secrets.DEPENDABOT_AUTO_MERGE }}
+          approve: true
           merge: true
