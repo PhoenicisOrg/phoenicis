@@ -9,5 +9,4 @@ jobs:
       - uses: koj-co/dependabot-pr-action@master
         with:
           token: ${{ secrets.DEPENDABOT_AUTO_MERGE }}
-          approve: true
           merge: true
