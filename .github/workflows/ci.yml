@@ -76,6 +76,6 @@ jobs:
           bash phoenicis-create-package.sh
       - uses: actions/upload-artifact@v2
         with:
-          name: Ubuntu
-          path: "**/phoenicis-dist/target/packages/*"
+          name: Mac OS
+          path: "**/*.pkg"
           if-no-files-found: error
