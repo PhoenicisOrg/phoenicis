@@ -20,7 +20,8 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Ubuntu
-          path: "*.deb"
+          path: "**/*.deb"
+          if-no-files-found: error
   ubuntu-java-15:
     name: Ubuntu (Java 15)
     runs-on: ubuntu-latest
@@ -76,4 +77,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Ubuntu
-          path: "*.dmg"
+          path: "**/*.dmg"
+          if-no-files-found: error
