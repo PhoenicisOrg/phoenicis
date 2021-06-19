@@ -17,6 +17,10 @@ jobs:
         run: |
           cd phoenicis-dist/src/scripts
           bash phoenicis-create-package.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Ubuntu
+          path: "*.deb"
   ubuntu-java-15:
     name: Ubuntu (Java 15)
     runs-on: ubuntu-latest
@@ -69,3 +73,7 @@ jobs:
         run: |
           cd phoenicis-dist/src/scripts
           bash phoenicis-create-package.sh
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Ubuntu
+          path: "*.dmg"
