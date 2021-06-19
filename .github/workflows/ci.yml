@@ -20,7 +20,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Ubuntu
-          path: "**/*.deb"
+          path: phoenicis-dist/target/*.deb
           if-no-files-found: error
   ubuntu-java-15:
     name: Ubuntu (Java 15)
@@ -77,5 +77,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: Mac OS
-          path: "*/Phoenicis PlayOnMac.app"
+          path: phoenicis-dist/target/packages/*.app
           if-no-files-found: error
