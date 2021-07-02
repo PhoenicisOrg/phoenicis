@@ -54,7 +54,7 @@
         <junit.version>4.13.2</junit.version>
         <mockito.version>3.11.2</mockito.version>
         <spring.version>5.3.8</spring.version>
-        <formatter-maven-plugin.version>2.15.0</formatter-maven-plugin.version>
+        <formatter-maven-plugin.version>2.16.0</formatter-maven-plugin.version>
         <graalvm.version>21.1.0</graalvm.version>
     </properties>
     <dependencyManagement>
