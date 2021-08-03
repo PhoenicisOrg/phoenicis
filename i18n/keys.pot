@@ -300,7 +300,7 @@ msgid "Are you sure you want to delete the {0} container?"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
-msgid "Error during engine engine version change"
+msgid "Error during engine version change"
 msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205

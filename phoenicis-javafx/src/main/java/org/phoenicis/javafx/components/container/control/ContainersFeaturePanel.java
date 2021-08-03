@@ -177,7 +177,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
                     engine -> engine.changeVersion(container.getName()),
                     exception -> Platform.runLater(() -> {
                         final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("Error during engine engine version change"))
+                                .withMessage(tr("Error during engine version change"))
                                 .withException(exception)
                                 .withOwner(getScene().getWindow())
                                 .build();
