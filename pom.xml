@@ -145,18 +145,18 @@
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
                 <version>3.0.0</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>sort</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <nrOfIndentSpace>4</nrOfIndentSpace>
                     <createBackupFile>false</createBackupFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -170,14 +170,6 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
                 <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <revisionOnScmFailure>unknown</revisionOnScmFailure>
                     <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
@@ -185,11 +177,22 @@
                     <doUpdate>false</doUpdate>
                     <timestampFormat>{0, date, yyyy-MM-dd HH:mm}</timestampFormat>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <version>${formatter-maven-plugin.version}</version>
+                <configuration>
+                    <configFile>../settings/POL_Formatter_Settings.xml</configFile>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -197,14 +200,17 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <configFile>../settings/POL_Formatter_Settings.xml</configFile>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.7</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/org/phoenicis/javafx/**</exclude>
+                        <exclude>**/org/phoenicis/app/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>agent</id>
@@ -213,12 +219,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <excludes>
-                        <exclude>**/org/phoenicis/javafx/**</exclude>
-                        <exclude>**/org/phoenicis/app/**</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -250,13 +250,16 @@
                         <groupId>net.revelc.code.formatter</groupId>
                         <artifactId>formatter-maven-plugin</artifactId>
                         <version>${formatter-maven-plugin.version}</version>
+                        <configuration>
+                            <configFile>../settings/POL_Formatter_Settings.xml</configFile>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>validate</id>
-                                <phase>validate</phase>
                                 <goals>
                                     <goal>validate</goal>
                                 </goals>
+                                <phase>validate</phase>
                             </execution>
                             <execution>
                                 <id>format</id>
@@ -265,9 +268,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <configFile>../settings/POL_Formatter_Settings.xml</configFile>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
