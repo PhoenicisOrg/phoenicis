@@ -112,17 +112,17 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
+                    <groupId>org.bouncycastle</groupId>
                     <artifactId>bcprov-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
                 </exclusion>
                 <exclusion>
+                    <groupId>org.bouncycastle</groupId>
                     <artifactId>bcpkix-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
                 </exclusion>
                 <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
                     <!-- Jackson is already included by Phoenicis -->
                     <artifactId>jackson-core</artifactId>
-                    <groupId>com.fasterxml.jackson.core</groupId>
                 </exclusion>
             </exclusions>
         </dependency>

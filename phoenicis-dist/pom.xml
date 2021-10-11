@@ -46,10 +46,10 @@
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
                             <excludeArtifactIds>bcprov-jdk16, bcmail-jdk16, bcpg-jdk16, commons-logging, xml-apis, xmlParserAPIs, xercesImpl, truffle-api, graal-sdk</excludeArtifactIds>
@@ -65,10 +65,10 @@
                 <executions>
                     <execution>
                         <id>copy-graal-dependencies</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
@@ -108,10 +108,10 @@
                 <executions>
                     <execution>
                         <id>distribution</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <finalName>phoenicis-flatpak</finalName>
