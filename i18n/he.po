@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-08 07:02+0000\n"
-"PO-Revision-Date: 2021-10-13 16:05\n"
+"PO-Revision-Date: 2021-10-14 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -230,356 +230,356 @@ msgstr "על אודות"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:12
 msgid "Standard theme"
-msgstr ""
+msgstr "ערכת נושא סטנדרטית"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:14
 msgid "Dark theme"
-msgstr ""
+msgstr "ערכת נושא כהה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:15
 msgid "Breeze Dark theme"
-msgstr ""
+msgstr "ערכת הנושא Breeze Dark"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:17
 msgid "Unity theme"
-msgstr ""
+msgstr "ערכת הנושא Unity"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:19
 msgid "Mint-X theme"
-msgstr ""
+msgstr "ערכת הנושא Mint-X"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:33
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
 msgid "Add"
-msgstr ""
+msgstr "הוספה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:41
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:230
 msgid "Remove"
-msgstr ""
+msgstr "הסרה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
 msgid "Key"
-msgstr ""
+msgstr "מפתח"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
 msgid "Attribute"
-msgstr ""
+msgstr "תכונה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:59
 msgid "Repository Settings"
-msgstr ""
+msgstr "הגדרות מאגר"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
 msgid "Priority"
-msgstr ""
+msgstr "עדיפות"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
 msgid "Repository name"
-msgstr ""
+msgstr "שם המאגר"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
 msgid "Move the repository up or down to change its priority"
-msgstr ""
+msgstr "העברת המאגר למעלה או למטה תשנה את העדיפות שלו"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:239
 msgid "Restore defaults"
-msgstr ""
+msgstr "שחזור לברירת המחדל"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
 msgid "Restore default repositories"
-msgstr ""
+msgstr "שחזור למאגרי ברירת המחדל"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
 msgid "Are you sure you want to restore the default repositories?"
-msgstr ""
+msgstr "לשחזר למאגרי ברירת המחדל?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
 msgid "Fetch updates from the repositories to retrieve latest script versions"
-msgstr ""
+msgstr "משיכת עדכונים מהמאגרים לקבלת גרסאות התסריטים העדכניות"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:273
 msgid "Refresh Repositories"
-msgstr ""
+msgstr "ריענון המאגרים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:35
 msgid "User Interface Settings"
-msgstr ""
+msgstr "הגדרות ממשק המשתמש"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:44
 msgid "Theme"
-msgstr ""
+msgstr "ערכת נושא"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
 msgid "Advanced mode (requires restart)"
-msgstr ""
+msgstr "מצב מתקדם (דורש הפעלה מחדש)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
 msgid "View the scripts’ source repository"
-msgstr ""
+msgstr "צפייה בקוד המקור של התסריט"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:64
 msgid "Scale the user interface"
-msgstr ""
+msgstr "התאמת קנה המידה של ממשק המשתמש"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:73
 msgid "Restore defaults (requires restart)"
-msgstr ""
+msgstr "שחזור לברירת המחדל (דורש הפעלה מחדש)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:93
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:136
 msgid "Name:"
-msgstr ""
+msgstr "שם:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
 msgid "Version:"
-msgstr ""
+msgstr "גרסה:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
 msgid "Git Revision:"
-msgstr ""
+msgstr "Git Revision:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
 msgid "Build Timestamp:"
-msgstr ""
+msgstr "חותמת זמן לבנייה:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:56
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:56
 msgid "Categories"
-msgstr ""
+msgstr "קטגוריות"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:31
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
 msgid "All"
-msgstr ""
+msgstr "הכול"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
 #, java-format
 msgid "Delete {0} container"
-msgstr ""
+msgstr "מחיקת המכולה {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
-msgstr ""
+msgstr "למחוק את מכולת {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
 msgid "Error during engine version change"
-msgstr ""
+msgstr "שגיאה במהלך שינוי גרסת המנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr ""
+msgstr "לא ניתן לפתוח את המכולה {0} בסייר הקבצים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
 msgid "Verbs"
-msgstr ""
+msgstr "מתפעלים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
 msgid "Install selected"
-msgstr ""
+msgstr "התקנת הנבחרים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
 msgid "Install Verbs"
-msgstr ""
+msgstr "התקנת מתפעלים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
 msgid "Are you sure you want to install the following Verbs:"
-msgstr ""
+msgstr "האם להתקין את המתפעלים הבאים:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
 msgid "Error installing Verbs"
-msgstr ""
+msgstr "שגיאה בהתקנת המתפעלים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
 msgid "Clear selection"
-msgstr ""
+msgstr "ניקוי הבחירה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:90
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
 msgid "Information"
-msgstr ""
+msgstr "מידע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
 msgid "Engine Settings"
-msgstr ""
+msgstr "הגדרות מנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
 msgid "Engine tools"
-msgstr ""
+msgstr "כלי מנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
 msgid "Tools"
-msgstr ""
+msgstr "כלים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:57
 msgid "Run executable"
-msgstr ""
+msgstr "הרצת קובץ בר־הרצה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:63
 msgid "Choose executable..."
-msgstr ""
+msgstr "בחירת קובץ בר־הרצה..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:69
 msgid "Delete container"
-msgstr ""
+msgstr "מחיקת המכולה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
 msgid "Change engine version"
-msgstr ""
+msgstr "שינוי גרסת המנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:78
 msgid "Open in file browser"
-msgstr ""
+msgstr "פתיחה בסייר הקבצים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:111
 msgid "Path:"
-msgstr ""
+msgstr "נתיב:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:129
 msgid "Installed shortcuts:"
-msgstr ""
+msgstr "קיצורי דרך מותקנים:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:151
 msgid "Wine version:"
-msgstr ""
+msgstr "גרסת Wine:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:170
 msgid "Wine architecture:"
-msgstr ""
+msgstr "ארכיטקטורת Wine:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:189
 msgid "Wine distribution:"
-msgstr ""
+msgstr "הפצת Wine:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:63
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:209
 msgid "Testing"
-msgstr ""
+msgstr "בדיקה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
 msgid "Also show apps in testing state"
-msgstr ""
+msgstr "להציג גם יישומים בשלבי בדיקה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
 msgid "Patch required"
-msgstr ""
+msgstr "נדרש טלאי"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
 msgid "Also show apps, where CD patch is necessary"
-msgstr ""
+msgstr "להציג גם יישומים להם נחוץ טלאי מתקליטור"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
 msgid "Commercial"
-msgstr ""
+msgstr "מסחרי"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
 msgid "Also show apps not free of costs"
-msgstr ""
+msgstr "להציג גם יישומים בתשלום"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
 msgid "All Operating Systems"
-msgstr ""
+msgstr "כל מערכות ההפעלה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
 msgid "Also show apps tested on different OS"
-msgstr ""
+msgstr "להציג גם יישומים שנבדקו על מערכת הפעלה אחרת"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
 msgid "Filters"
-msgstr ""
+msgstr "מסננים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:131
 msgid "Installers"
-msgstr ""
+msgstr "אשפי התקנה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
 #, java-format
 msgid "Source: {0}"
-msgstr ""
+msgstr "מקור: {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
 msgid "Install"
-msgstr ""
+msgstr "התקנה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:197
 msgid "Error while trying to download the installer"
-msgstr ""
+msgstr "שגיאה במהלך ניסיון להוריד את אשף ההתקנה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:276
 msgid "The script ended unexpectedly"
-msgstr ""
+msgstr "התסריט נעצר בהפתעה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:61
 msgid "Installed"
-msgstr ""
+msgstr "מותקן"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:66
 msgid "Not installed"
-msgstr ""
+msgstr "לא מותקן"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
 msgid "An error occurred while installing the engine"
-msgstr ""
+msgstr "אירעה שגיאה במהלך התקנת המנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
 msgid "Delete"
-msgstr ""
+msgstr "מחיקה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
 msgid "An error occurred while deleting the engine"
-msgstr ""
+msgstr "אירעה שגיאה במהלך מחיקת המנוע"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
 msgid "Error while creating shortcut"
-msgstr ""
+msgstr "שגיאה במהלך יצירת קיצור הדרך"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
 #, java-format
 msgid "Uninstall {0}"
-msgstr ""
+msgstr "הסרת {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
 #, java-format
 msgid "Are you sure you want to uninstall {0}?"
-msgstr ""
+msgstr "להסיר את {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
 #, java-format
 msgid "Error while uninstalling {0}"
-msgstr ""
+msgstr "שגיאה במהלך הסרת {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:112
 msgid "My applications"
-msgstr ""
+msgstr "היישומים שלי"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:212
 msgid "Create a new shortcut"
-msgstr ""
+msgstr "יצירת קיצור דרך חדש"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
 msgid "Please specify a name!"
-msgstr ""
+msgstr "נא לציין שם!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
 msgid "Please specify a category!"
-msgstr ""
+msgstr "נא לציין קטגוריה!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
 msgid "Please specify a valid miniature!"
@@ -587,19 +587,19 @@ msgstr ""
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:69
 msgid "Please specify a valid executable!"
-msgstr ""
+msgstr "נא לציין קובץ בר־הרצה תקין!"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:72
 msgid "Create"
-msgstr ""
+msgstr "יצירה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:157
 msgid "Category:"
-msgstr ""
+msgstr "קטגוריה:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:178
 msgid "Description:"
-msgstr ""
+msgstr "תיאור:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
@@ -610,107 +610,107 @@ msgstr ""
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
 msgid "Browse..."
-msgstr ""
+msgstr "עיון..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
 msgid "Images"
-msgstr ""
+msgstr "תמונות"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:243
 msgid "Executable:"
-msgstr ""
+msgstr "קובץ בר־הרצה:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:92
 msgid "Environment"
-msgstr ""
+msgstr "סביבה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:101
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
 msgid "Run"
-msgstr ""
+msgstr "הפעלה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:167
 msgid "Close"
-msgstr ""
+msgstr "סגירה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
 msgid "Uninstall"
-msgstr ""
+msgstr "הסרה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:180
 msgid "Edit"
-msgstr ""
+msgstr "עריכה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:75
 msgid "Create shortcut"
-msgstr ""
+msgstr "יצירת קיצור דרך"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
 msgid "Run a script"
-msgstr ""
+msgstr "הרצת תסריט"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:84
 msgid "Open Script..."
-msgstr ""
+msgstr "פתיחת תסריט..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:94
 #, java-format
 msgid "{0} console"
-msgstr ""
+msgstr "שורת פקודה {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:99
 msgid "Advanced Tools"
-msgstr ""
+msgstr "כלים מתקדמים"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
 #, java-format
 msgid "Extracted {0}"
-msgstr ""
+msgstr "חולצו {0}"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
-msgstr ""
+msgstr "כעת באימות הקובץ..."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
 msgid "Installation wizard for {0}"
-msgstr ""
+msgstr "אשף ההתקנה של {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "Program by {0}"
-msgstr ""
+msgstr "תכנית מאת {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
-msgstr ""
+msgstr "למידע נוסף על התוכנית:"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:155
 #, java-format
 msgid "Installation script by {0}"
-msgstr ""
+msgstr "תסריט התקנה מאת {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:156
 #, java-format
 msgid "{0} will be installed in: {1}"
-msgstr ""
+msgstr "התקנת {0} תתבצע בעוד: {1}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:157
 #, java-format
 msgid "{0} is not responsible for anything that might happen as a result of using these scripts."
-msgstr ""
+msgstr "כל הדברים שעלולים לקרות כתוצאה משימוש בתסריטים הללו אינם באחריות {0}."
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:159
 msgid "Click Next to start."
-msgstr ""
+msgstr "יש ללחוץ על המשך כדי להתחיל."
 
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
 #: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
 msgid "input"
-msgstr ""
+msgstr "קלט"
 
