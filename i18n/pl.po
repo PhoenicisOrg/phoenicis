@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-08 07:02+0000\n"
-"PO-Revision-Date: 2021-10-08 07:03\n"
+"PO-Revision-Date: 2021-10-14 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -311,7 +311,7 @@ msgstr "Motyw"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
 msgid "Advanced mode (requires restart)"
-msgstr ""
+msgstr "Tryb zaawansowany (wymaga restartu)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
 msgid "View the scripts’ source repository"
@@ -469,7 +469,7 @@ msgstr "Testowane"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
 msgid "Also show apps in testing state"
-msgstr ""
+msgstr "Pokazuj również aplikacje w stanie testowania"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
@@ -478,7 +478,7 @@ msgstr "Wymagana poprawka"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
 msgid "Also show apps, where CD patch is necessary"
-msgstr ""
+msgstr "Wyświetlaj również aplikacje, gdzie konieczne jest wprowadzenie patch-a CD"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
@@ -487,7 +487,7 @@ msgstr "Komercyjne"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
 msgid "Also show apps not free of costs"
-msgstr ""
+msgstr "Pokazuj również aplikacje nie zwolnione z kosztów"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
@@ -496,7 +496,7 @@ msgstr "Wszystkie systemy operacyjne"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
 msgid "Also show apps tested on different OS"
-msgstr ""
+msgstr "Pokazuj również aplikacje testowane w innym systemie operacyjnym"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
 msgid "Filters"
