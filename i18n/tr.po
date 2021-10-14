@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-10-08 07:02+0000\n"
-"PO-Revision-Date: 2021-10-08 07:03\n"
+"PO-Revision-Date: 2021-10-14 16:04\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -370,7 +370,7 @@ msgstr "{0} konteyneri silmek istediğinizden emin misiniz?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
 msgid "Error during engine version change"
-msgstr ""
+msgstr "Çalıştırılan sürüm değişikliği sırasında hata"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
