@@ -18,3 +18,4 @@ jobs:
         uses: ridedott/merge-me-action@v2
         with:
           GITHUB_TOKEN: ${{ secrets.DEPENDABOT_AUTO_MERGE }}
+          ENABLE_GITHUB_API_PREVIEW: true
