@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-12 07:02+0000\n"
-"PO-Revision-Date: 2021-11-12 07:03\n"
+"PO-Revision-Date: 2021-11-17 09:35\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -25,7 +25,7 @@ msgstr "אשף ההתקנה של {0}"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "Program by {0}"
-msgstr "תכנית מאת {0}"
+msgstr ""
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
