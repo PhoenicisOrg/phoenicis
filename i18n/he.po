@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-12 07:02+0000\n"
-"PO-Revision-Date: 2021-11-17 09:35\n"
+"PO-Revision-Date: 2021-11-18 09:34\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -25,7 +25,7 @@ msgstr "אשף ההתקנה של {0}"
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:152
 #, java-format
 msgid "Program by {0}"
-msgstr ""
+msgstr "תוכנית מאת {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:153
 msgid "For more information about this program, visit:"
@@ -62,7 +62,7 @@ msgstr "חולצו {0}"
 
 #: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
 msgid "Verifying the file..."
-msgstr "כעת באימות הקובץ..."
+msgstr "אימות הקובץ מתבצע..."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
@@ -109,7 +109,7 @@ msgstr "שמירה"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
 msgid "Miniature:"
-msgstr ""
+msgstr "נתיב לתמונה הממוזערת:"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
