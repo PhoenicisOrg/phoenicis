@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-12 07:02+0000\n"
-"PO-Revision-Date: 2021-11-12 07:04\n"
+"POT-Creation-Date: 2021-11-22 07:02+0000\n"
+"PO-Revision-Date: 2021-11-22 07:03\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -16,6 +16,15 @@ msgstr ""
 "X-Crowdin-Language: zh-TW\n"
 "X-Crowdin-File: /master/i18n/keys.pot\n"
 "X-Crowdin-File-ID: 3\n"
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
+msgid "Verifying the file..."
+msgstr "驗證此檔案中..."
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
+#, java-format
+msgid "Extracted {0}"
+msgstr "已提取 {0}"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
@@ -50,31 +59,162 @@ msgstr "{0} 已無任何回應，其導致的原因可能是使用這些腳本�
 msgid "Click Next to start."
 msgstr "點擊下一步按鈕開始。"
 
-#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
-#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
-msgid "input"
-msgstr "輸入"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:65
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
+msgid "Settings"
+msgstr "設定值"
 
-#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
+msgid "User Interface"
+msgstr "使用者介面"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:103
+msgid "Repositories"
+msgstr "儲存庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:105
+msgid "File Associations"
+msgstr "檔案關聯"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:106
+msgid "Network"
+msgstr "網路"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:108
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
+msgid "About"
+msgstr "關於"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
+msgid "Choose Directory..."
+msgstr "選擇目錄..."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
+msgid "Choose the location of the local repository"
+msgstr "選擇本機儲存庫的位置"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
+msgid "Local repository"
+msgstr "本機儲存庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:28
+msgid "Git repository"
+msgstr "Git 儲存庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:38
+msgid "Classpath repository"
+msgstr "類別路徑儲存庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
+msgid "Please select the repository type you want to add"
+msgstr "請選擇想要加入的儲存庫類型"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
+msgid "Repository type:"
+msgstr "儲存庫類型："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
+msgid "Choose repository type..."
+msgstr "選擇儲存庫類型..."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:42
+msgid "Add a new Repository"
+msgstr "加入新的儲存庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
+msgid "Git-URL:"
+msgstr "Git 網址："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
+msgid "Git-Branch:"
+msgstr "Git 分支："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
+msgid "Choose the location of the git repository"
+msgstr "選擇 git 儲存庫的位置"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
+msgid "Classpath:"
+msgstr "類別路徑："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
+msgid "Choose the location of your classpath repository"
+msgstr "選擇類別路徑的位置"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:49
+msgid "Engines"
+msgstr "引擎"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
+msgid "Console"
+msgstr "終端機"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
+msgid "Retry"
+msgstr "重試"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:61
 #, java-format
-msgid "Extracted {0}"
-msgstr "已提取 {0}"
+msgid "Reason: {0}"
+msgstr "原因：{0}"
 
-#: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
-msgid "Verifying the file..."
-msgstr "驗證此檔案中..."
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:121
+msgid "Library"
+msgstr "函式庫"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
-msgid "Error while creating shortcut"
-msgstr "建立捷徑時發生錯誤"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:129
+msgid "Apps"
+msgstr "應用程式"
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:137
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
+msgid "Containers"
+msgstr "容器"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
+msgid "Loading containers failed."
+msgstr "載入容器失敗。"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
+msgid "Installations"
+msgstr "安裝"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:62
+msgid "Question"
+msgstr "問題"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
+msgid "Click or drag-and-drop file here"
+msgstr "點擊或將檔案拖放到這裡"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:92
+msgid "Allowed file types"
+msgstr "允許的檔案類型"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
+msgid "I agree"
+msgstr "我同意"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
+msgid "Cancel"
+msgstr "取消"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:106
+msgid "Next"
+msgstr "下一步"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:74
+msgid "Stack trace:"
+msgstr "堆疊追蹤："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:203
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:220
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:140
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
@@ -82,159 +222,59 @@ msgstr "建立捷徑時發生錯誤"
 msgid "Error"
 msgstr "錯誤"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
-#, java-format
-msgid "Uninstall {0}"
-msgstr "解除安裝 {0}"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
+msgid "Install"
+msgstr "安裝"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
-#, java-format
-msgid "Are you sure you want to uninstall {0}?"
-msgstr "你確定要解除安裝 {0} 嗎？"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
+msgid "An error occurred while installing the engine"
+msgstr "安裝引擎時發生錯誤"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
-#, java-format
-msgid "Error while uninstalling {0}"
-msgstr "解除安裝 {0} 時發生錯誤"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
+msgid "Delete"
+msgstr "刪除"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:92
-msgid "Environment"
-msgstr "環境"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
+msgid "An error occurred while deleting the engine"
+msgstr "刪除引擎時發生錯誤"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:101
-msgid "Save"
-msgstr "儲存"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
-msgid "Miniature:"
-msgstr "縮圖："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
-msgid "Browse..."
-msgstr "瀏覽..."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
-msgid "Images"
-msgstr "影像"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:112
-msgid "My applications"
-msgstr "我的應用程式"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:212
-msgid "Create a new shortcut"
-msgstr "建立新捷徑"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:56
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:56
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
-msgid "Categories"
-msgstr "分類"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:75
-msgid "Create shortcut"
-msgstr "建立捷徑"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
-msgid "Run a script"
-msgstr "執行腳本"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:84
-msgid "Open Script..."
-msgstr "開啟腳本"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:94
-#, java-format
-msgid "{0} console"
-msgstr "{0} 終端機"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:99
-msgid "Advanced Tools"
-msgstr "進階工具"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
-msgid "Run"
-msgstr "執行"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:167
-msgid "Close"
-msgstr "關閉"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
-msgid "Uninstall"
-msgstr "解除安裝"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:180
-msgid "Edit"
-msgstr "編輯"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
-msgid "Please specify a name!"
-msgstr "請指定一個名稱！"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
-msgid "Please specify a category!"
-msgstr "請指定一個分類！"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
-msgid "Please specify a valid miniature!"
-msgstr "請指定一個有效個縮圖！"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:69
-msgid "Please specify a valid executable!"
-msgstr "請指定一個有效的可執行檔！"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:72
-msgid "Create"
-msgstr "建立"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:136
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:93
-msgid "Name:"
-msgstr "名稱："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:157
-msgid "Category:"
-msgstr "分類："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:178
-msgid "Description:"
-msgstr "描述："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:243
-msgid "Executable:"
-msgstr "可執行檔："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:31
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
-msgid "All"
-msgstr "全部"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:108
-msgid "About"
-msgstr "關於"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
 msgid "Version:"
 msgstr "版本："
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
-msgid "Git Revision:"
-msgstr "Git 修訂版："
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:61
+msgid "Installed"
+msgstr "已安裝"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
-msgid "Build Timestamp:"
-msgstr "建立時間戳記："
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:66
+msgid "Not installed"
+msgstr "未安裝"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:35
+msgid "User Interface Settings"
+msgstr "使用者介面設定值"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:44
+msgid "Theme"
+msgstr "佈景主題"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
+msgid "Advanced mode (requires restart)"
+msgstr "進階模式 (需要重新啟動程式)"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
+msgid "View the scripts’ source repository"
+msgstr "檢視腳本的原始碼庫"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:64
+msgid "Scale the user interface"
+msgstr "縮放使用者介面"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:73
+msgid "Restore defaults (requires restart)"
+msgstr "還原預設值 (需要重新啟動程式)"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:59
 msgid "Repository Settings"
@@ -282,129 +322,154 @@ msgstr "從儲存庫拉取更新以取得最新版本的腳本"
 msgid "Refresh Repositories"
 msgstr "重新整理儲存庫"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:35
-msgid "User Interface Settings"
-msgstr "使用者介面設定值"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:136
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:93
+msgid "Name:"
+msgstr "名稱："
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:44
-msgid "Theme"
-msgstr "佈景主題"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
+msgid "Git Revision:"
+msgstr "Git 修訂版："
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
-msgid "Advanced mode (requires restart)"
-msgstr "進階模式 (需要重新啟動程式)"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
+msgid "Build Timestamp:"
+msgstr "建立時間戳記："
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
-msgid "View the scripts’ source repository"
-msgstr "檢視腳本的原始碼庫"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
+msgid "Error while creating shortcut"
+msgstr "建立捷徑時發生錯誤"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:64
-msgid "Scale the user interface"
-msgstr "縮放使用者介面"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:73
-msgid "Restore defaults (requires restart)"
-msgstr "還原預設值 (需要重新啟動程式)"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:65
-msgid "Settings"
-msgstr "設定值"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
-msgid "Key"
-msgstr "鍵值"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
-msgid "Attribute"
-msgstr "屬性"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:131
-msgid "Installers"
-msgstr "安裝程式"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
 #, java-format
-msgid "Source: {0}"
-msgstr "來源：{0}"
+msgid "Uninstall {0}"
+msgstr "解除安裝 {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
-msgid "Install"
-msgstr "安裝"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
+#, java-format
+msgid "Are you sure you want to uninstall {0}?"
+msgstr "你確定要解除安裝 {0} 嗎？"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:197
-msgid "Error while trying to download the installer"
-msgstr "嘗試下載安裝程式時發生錯誤"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
+#, java-format
+msgid "Error while uninstalling {0}"
+msgstr "解除安裝 {0} 時發生錯誤"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:209
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:63
-msgid "Testing"
-msgstr "測試"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:112
+msgid "My applications"
+msgstr "我的應用程式"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
-msgid "Commercial"
-msgstr "商業"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:212
+msgid "Create a new shortcut"
+msgstr "建立新捷徑"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
-msgid "Patch required"
-msgstr "需要的修補檔"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:56
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:56
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
+msgid "Categories"
+msgstr "分類"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
-msgid "All Operating Systems"
-msgstr "全部作業系統"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:75
+msgid "Create shortcut"
+msgstr "建立捷徑"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:276
-msgid "The script ended unexpectedly"
-msgstr "腳本異常中止"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
+msgid "Run a script"
+msgstr "執行腳本"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
-msgid "Also show apps in testing state"
-msgstr "測試狀態中也顯示應用程式"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:84
+msgid "Open Script..."
+msgstr "開啟腳本"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
-msgid "Also show apps, where CD patch is necessary"
-msgstr "也顯示應用程式，那麼 CD 路徑則為必要項目"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:94
+#, java-format
+msgid "{0} console"
+msgstr "{0} 終端機"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
-msgid "Also show apps not free of costs"
-msgstr "也顯示需要付費的應用程式"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:99
+msgid "Advanced Tools"
+msgstr "進階工具"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
-msgid "Also show apps tested on different OS"
-msgstr "不同的作業系統也顯示已測試的應用程式"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:92
+msgid "Environment"
+msgstr "環境"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
-msgid "Filters"
-msgstr "篩選"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:101
+msgid "Save"
+msgstr "儲存"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
-msgid "An error occurred while installing the engine"
-msgstr "安裝引擎時發生錯誤"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
+msgid "Miniature:"
+msgstr "縮圖："
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
-msgid "Delete"
-msgstr "刪除"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
+msgid "Browse..."
+msgstr "瀏覽..."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
-msgid "An error occurred while deleting the engine"
-msgstr "刪除引擎時發生錯誤"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
+msgid "Images"
+msgstr "影像"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:49
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:89
-msgid "Engines"
-msgstr "引擎"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:31
+msgid "All"
+msgstr "全部"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:61
-msgid "Installed"
-msgstr "已安裝"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
+msgid "Please specify a name!"
+msgstr "請指定一個名稱！"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:66
-msgid "Not installed"
-msgstr "未安裝"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
+msgid "Please specify a category!"
+msgstr "請指定一個分類！"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
+msgid "Please specify a valid miniature!"
+msgstr "請指定一個有效個縮圖！"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:69
+msgid "Please specify a valid executable!"
+msgstr "請指定一個有效的可執行檔！"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:72
+msgid "Create"
+msgstr "建立"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:157
+msgid "Category:"
+msgstr "分類："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:178
+msgid "Description:"
+msgstr "描述："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:243
+msgid "Executable:"
+msgstr "可執行檔："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
+msgid "Run"
+msgstr "執行"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:167
+msgid "Close"
+msgstr "關閉"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
+msgid "Uninstall"
+msgstr "解除安裝"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:180
+msgid "Edit"
+msgstr "編輯"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
 #, java-format
@@ -416,11 +481,6 @@ msgstr "刪除 {0} 容器"
 msgid "Are you sure you want to delete the {0} container?"
 msgstr "你確定要刪除 {0} 容器嗎？"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
-msgid "Loading containers failed."
-msgstr "載入容器失敗。"
-
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
 msgid "Error during engine version change"
 msgstr ""
@@ -431,55 +491,10 @@ msgstr ""
 msgid "Cannot open container {0} in file browser"
 msgstr "無法用檔案瀏覽器開啟容器 {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:137
-msgid "Containers"
-msgstr "容器"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:90
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:90
 msgid "Information"
 msgstr "資訊"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
-msgid "Engine Settings"
-msgstr "引擎設定值"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
-msgid "Verbs"
-msgstr "動詞"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
-msgid "Engine tools"
-msgstr "引擎工具"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
-msgid "Tools"
-msgstr "工具"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
-msgid "Install selected"
-msgstr "安裝已選擇項目"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
-msgid "Install Verbs"
-msgstr "安裝動詞"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
-msgid "Are you sure you want to install the following Verbs:"
-msgstr "你確定要安裝下列的動詞："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
-msgid "Error installing Verbs"
-msgstr "安裝動詞時發生錯誤"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
-msgid "Clear selection"
-msgstr "清除選擇項目"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:69
 msgid "Delete container"
@@ -513,6 +528,36 @@ msgstr "Wine 架構："
 msgid "Wine distribution:"
 msgstr "Wine 發行版本："
 
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
+msgid "Verbs"
+msgstr "動詞"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
+msgid "Install selected"
+msgstr "安裝已選擇項目"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
+msgid "Install Verbs"
+msgstr "安裝動詞"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
+msgid "Are you sure you want to install the following Verbs:"
+msgstr "你確定要安裝下列的動詞："
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
+msgid "Error installing Verbs"
+msgstr "安裝動詞時發生錯誤"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
+msgid "Clear selection"
+msgstr "清除選擇項目"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
+msgid "Tools"
+msgstr "工具"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:57
 msgid "Run executable"
 msgstr "執行可執行檔"
@@ -521,13 +566,86 @@ msgstr "執行可執行檔"
 msgid "Choose executable..."
 msgstr "選擇可執行檔..."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:74
-msgid "Stack trace:"
-msgstr "堆疊追蹤："
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
+msgid "Engine Settings"
+msgstr "引擎設定值"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:75
-msgid "Unable to load library, please try again."
-msgstr "無法載入函式庫，請再試一次。"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
+msgid "Engine tools"
+msgstr "引擎工具"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:63
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:209
+msgid "Testing"
+msgstr "測試"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
+msgid "Also show apps in testing state"
+msgstr "測試狀態中也顯示應用程式"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
+msgid "Patch required"
+msgstr "需要的修補檔"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
+msgid "Also show apps, where CD patch is necessary"
+msgstr "也顯示應用程式，那麼 CD 路徑則為必要項目"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
+msgid "Commercial"
+msgstr "商業"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
+msgid "Also show apps not free of costs"
+msgstr "也顯示需要付費的應用程式"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
+msgid "All Operating Systems"
+msgstr "全部作業系統"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
+msgid "Also show apps tested on different OS"
+msgstr "不同的作業系統也顯示已測試的應用程式"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
+msgid "Filters"
+msgstr "篩選"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:131
+msgid "Installers"
+msgstr "安裝程式"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
+#, java-format
+msgid "Source: {0}"
+msgstr "來源：{0}"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:197
+msgid "Error while trying to download the installer"
+msgstr "嘗試下載安裝程式時發生錯誤"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:276
+msgid "The script ended unexpectedly"
+msgstr "腳本異常中止"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
+msgid "Key"
+msgstr "鍵值"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
+msgid "Attribute"
+msgstr "屬性"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:75
+msgid "Connecting to the repository failed.\n"
+"Please check your connection and try again."
+msgstr "連線到儲存庫失敗。\n"
+"請檢查網路連線並再試一次。"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:94
 #, java-format
@@ -567,132 +685,9 @@ msgstr "載入動詞失敗。"
 msgid "Loading engine tools failed."
 msgstr "載入引擎工具失敗。"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/apps/AppsController.java:75
-msgid "Connecting to the repository failed.\n"
-"Please check your connection and try again."
-msgstr "連線到儲存庫失敗。\n"
-"請檢查網路連線並再試一次。"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
-msgid "Retry"
-msgstr "重試"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:61
-#, java-format
-msgid "Reason: {0}"
-msgstr "原因：{0}"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:121
-msgid "Library"
-msgstr "函式庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:129
-msgid "Apps"
-msgstr "應用程式"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
-msgid "Installations"
-msgstr "安裝"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
-msgid "Console"
-msgstr "終端機"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:46
-msgid "Choose Directory..."
-msgstr "選擇目錄..."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/LocalRepositoryDetailsPanel.java:64
-msgid "Choose the location of the local repository"
-msgstr "選擇本機儲存庫的位置"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:18
-msgid "Local repository"
-msgstr "本機儲存庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:28
-msgid "Git repository"
-msgstr "Git 儲存庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/RepositoryType.java:38
-msgid "Classpath repository"
-msgstr "類別路徑儲存庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
-msgid "Classpath:"
-msgstr "類別路徑："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
-msgid "Choose the location of your classpath repository"
-msgstr "選擇類別路徑的位置"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
-msgid "Please select the repository type you want to add"
-msgstr "請選擇想要加入的儲存庫類型"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
-msgid "Repository type:"
-msgstr "儲存庫類型："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
-msgid "Choose repository type..."
-msgstr "選擇儲存庫類型..."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
-msgid "Git-URL:"
-msgstr "Git 網址："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:53
-msgid "Git-Branch:"
-msgstr "Git 分支："
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:69
-msgid "Choose the location of the git repository"
-msgstr "選擇 git 儲存庫的位置"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/AddRepositoryDialog.java:42
-msgid "Add a new Repository"
-msgstr "加入新的儲存庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
-msgid "User Interface"
-msgstr "使用者介面"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:103
-msgid "Repositories"
-msgstr "儲存庫"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:105
-msgid "File Associations"
-msgstr "檔案關聯"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:106
-msgid "Network"
-msgstr "網路"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
-msgid "I agree"
-msgstr "我同意"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
-msgid "Cancel"
-msgstr "取消"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:106
-msgid "Next"
-msgstr "下一步"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
-msgid "Click or drag-and-drop file here"
-msgstr "點擊或將檔案拖放到這裡"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:92
-msgid "Allowed file types"
-msgstr "允許的檔案類型"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:62
-msgid "Question"
-msgstr "問題"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/library/LibraryController.java:75
+msgid "Unable to load library, please try again."
+msgstr "無法載入函式庫，請再試一次。"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:12
 msgid "Standard theme"
@@ -713,4 +708,9 @@ msgstr "Unity 主題"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:19
 msgid "Mint-X theme"
 msgstr "Mint-X 主題"
+
+#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
+#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
+msgid "input"
+msgstr "輸入"
 
