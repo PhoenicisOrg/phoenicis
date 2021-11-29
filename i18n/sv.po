@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-22 07:02+0000\n"
-"PO-Revision-Date: 2021-11-22 07:03\n"
+"POT-Creation-Date: 2021-11-29 16:53+0000\n"
+"PO-Revision-Date: 2021-11-29 16:55\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -707,9 +707,4 @@ msgstr "Unity-tema"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:19
 msgid "Mint-X theme"
 msgstr "MintX-tema"
-
-#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:28
-#: phoenicis-configuration/src/test/java/org/phoenicis/configuration/localisation/LocalisationTest.java:36
-msgid "input"
-msgstr "inmatning"
 
