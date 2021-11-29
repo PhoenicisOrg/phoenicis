@@ -31,7 +31,6 @@ public class LocalisationTest {
     /*
      * @Before
      * public void setUp() {
-     * I18n bla;
      * mockI18n = mock(I18n.class);
      * PowerMockito.doReturn("output").when(mockI18n).tr("input");
      * PowerMockito.mockStatic(I18nFactory.class);
