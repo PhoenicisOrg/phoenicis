@@ -53,7 +53,7 @@
         <logback.version>1.2.8</logback.version>
         <junit.version>4.13.2</junit.version>
         <mockito.version>4.1.0</mockito.version>
-        <spring.version>5.3.13</spring.version>
+        <spring.version>5.3.14</spring.version>
         <formatter-maven-plugin.version>2.17.1</formatter-maven-plugin.version>
         <graalvm.version>21.3.0</graalvm.version>
     </properties>
