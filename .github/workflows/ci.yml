@@ -78,8 +78,8 @@ jobs:
         run: |
           cd phoenicis-dist/src/scripts
           bash phoenicis-create-package.sh
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Mac OS
-          path: phoenicis-dist/target/packages/*.app
-          if-no-files-found: error
+      #- uses: actions/upload-artifact@v2
+      #  with:
+      #    name: Mac OS
+      #    path: phoenicis-dist/target/packages/*.app
+      #    if-no-files-found: error
