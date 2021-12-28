@@ -56,6 +56,7 @@
         <spring.version>5.3.14</spring.version>
         <formatter-maven-plugin.version>2.17.1</formatter-maven-plugin.version>
         <graalvm.version>21.3.0</graalvm.version>
+        <buildnumber.version>3.0.0</buildnumber.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -120,7 +121,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.codehaus.mojo</groupId>
                                         <artifactId>buildnumber-maven-plugin</artifactId>
-                                        <versionRange>[1.4,)</versionRange>
+                                        <version>${buildnumber.version}</version>
                                         <goals>
                                             <goal>create</goal>
                                         </goals>
@@ -169,13 +170,12 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${buildnumber.version}</version>
                 <configuration>
                     <revisionOnScmFailure>unknown</revisionOnScmFailure>
                     <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
-                    <timestampFormat>{0, date, yyyy-MM-dd HH:mm}</timestampFormat>
                 </configuration>
                 <executions>
                     <execution>
