@@ -55,7 +55,7 @@
         <mockito.version>4.2.0</mockito.version>
         <spring.version>5.3.14</spring.version>
         <formatter-maven-plugin.version>2.17.1</formatter-maven-plugin.version>
-        <graalvm.version>21.0.0</graalvm.version>
+        <graalvm.version>21.3.0</graalvm.version>
         <buildnumber.version>3.0.0</buildnumber.version>
     </properties>
     <dependencyManagement>
