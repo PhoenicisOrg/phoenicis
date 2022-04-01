@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-09 07:02+0000\n"
-"PO-Revision-Date: 2022-02-09 07:03\n"
+"POT-Creation-Date: 2022-04-01 07:02+0000\n"
+"PO-Revision-Date: 2022-04-01 07:04\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
 "Language: hu_HU\n"
@@ -16,6 +16,15 @@ msgstr ""
 "X-Crowdin-Language: hu\n"
 "X-Crowdin-File: /master/i18n/keys.pot\n"
 "X-Crowdin-File-ID: 3\n"
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
+#, java-format
+msgid "Extracted {0}"
+msgstr "Kitömörítve: {0}"
+
+#: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
+msgid "Verifying the file..."
+msgstr "Fájl ellenőrzése…"
 
 #: phoenicis-scripts/src/main/java/org/phoenicis/scripts/wizard/UiSetupWizardImplementation.java:151
 #, java-format
@@ -50,59 +59,490 @@ msgstr "{0} nem vállal felelősséget bármiért, amely a parancsfájlok haszn�
 msgid "Click Next to start."
 msgstr "Kezdéshez kattintson a Tovább gombra."
 
-#: phoenicis-tools/src/main/java/org/phoenicis/tools/checksum/ChecksumCalculator.java:39
-msgid "Verifying the file..."
-msgstr "Fájl ellenőrzése…"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:33
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
+msgid "Add"
+msgstr "Hozzáadás"
 
-#: phoenicis-tools/src/main/java/org/phoenicis/tools/archive/Zip.java:65
-#, java-format
-msgid "Extracted {0}"
-msgstr "Kitömörítve: {0}"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:41
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:230
+msgid "Remove"
+msgstr "Eltávolítás"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:89
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
+msgid "Key"
+msgstr "Kulcs"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
+msgid "Attribute"
+msgstr "Tulajdonság"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
+msgid "Install"
+msgstr "Telepítés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
+msgid "An error occurred while installing the engine"
+msgstr "Hiba történt a szolgáltatás telepítése közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
+msgid "Delete"
+msgstr "Törlés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
+msgid "An error occurred while deleting the engine"
+msgstr "Hiba történt a szolgáltatás törlése közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
+msgid "Version:"
+msgstr "Verzió:"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:49
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/engines/EnginesView.java:89
 msgid "Engines"
 msgstr "Szolgáltatások"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
-msgid "Console"
-msgstr "Vezérlőpult"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:61
+msgid "Installed"
+msgstr "Telepítve"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
-msgid "Retry"
-msgstr "Újra"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:66
+msgid "Not installed"
+msgstr "Nincs telepítve"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:61
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:56
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:56
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
+msgid "Categories"
+msgstr "Osztályok"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:75
+msgid "Create shortcut"
+msgstr "Parancsikon létrehozása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
+msgid "Run a script"
+msgstr "Parancsfájl futtatása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:84
+msgid "Open Script..."
+msgstr "Parancsfájl megnyitása…"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:94
 #, java-format
-msgid "Reason: {0}"
-msgstr "Ok: {0}"
+msgid "{0} console"
+msgstr "A(z) {0} vezérlőpult"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:121
-msgid "Library"
-msgstr "Könyvtár"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:99
+msgid "Advanced Tools"
+msgstr "Haladó eszközök"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:129
-msgid "Apps"
-msgstr "Alkalmazások"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:92
+msgid "Environment"
+msgstr "Környezet"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:137
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:101
+msgid "Save"
+msgstr "Mentés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
+msgid "Miniature:"
+msgstr "Kisméretű:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
+msgid "Browse..."
+msgstr "Tallózás…"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
+msgid "Images"
+msgstr "Képek"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
+msgid "Please specify a name!"
+msgstr "Kérjük, adjon meg egy nevét."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
+msgid "Please specify a category!"
+msgstr "Kérjük, adjon meg egy osztályt."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
+msgid "Please specify a valid miniature!"
+msgstr "Kérjük, adjon meg egy érvényes kisméretűt."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:69
+msgid "Please specify a valid executable!"
+msgstr "Kérjük, adjon meg egy érvényes végrehajtható fájlt."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:72
+msgid "Create"
+msgstr "Létrehozás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:136
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:93
+msgid "Name:"
+msgstr "Név:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:157
+msgid "Category:"
+msgstr "Osztály:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:178
+msgid "Description:"
+msgstr "Leírás:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:243
+msgid "Executable:"
+msgstr "Végrehajtható fájl:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
+msgid "Run"
+msgstr "Fut"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:167
+msgid "Close"
+msgstr "Bezárás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
+msgid "Uninstall"
+msgstr "Eltávolítás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:180
+msgid "Edit"
+msgstr "Szerkesztés"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:112
+msgid "My applications"
+msgstr "Alkalmazásaim"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:212
+msgid "Create a new shortcut"
+msgstr "Új parancsikon létrehozása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:31
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
+msgid "All"
+msgstr "Összes"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
+msgid "Error while creating shortcut"
+msgstr "Hiba történt a parancsikon létrehozása közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:203
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:220
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:140
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
+msgid "Error"
+msgstr "Hiba"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
+#, java-format
+msgid "Uninstall {0}"
+msgstr "A(z) {0} eltávolítása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
+#, java-format
+msgid "Are you sure you want to uninstall {0}?"
+msgstr "Biztosan szeretné a(z) {0} eltávolítása?"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
+#, java-format
+msgid "Error while uninstalling {0}"
+msgstr "Hiba történt a(z) {0} eltávolítása közben."
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:63
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:209
+msgid "Testing"
+msgstr "Bevizsgáló"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
+msgid "Also show apps in testing state"
+msgstr "Alkalmazások megjelenítése tesztelési állapotban"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
+msgid "Patch required"
+msgstr "Javítás szükséges"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
+msgid "Also show apps, where CD patch is necessary"
+msgstr "Alkalmazások megjelenítése ahol CD-javítás szükséges"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
+msgid "Commercial"
+msgstr "Kereskedelmi"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
+msgid "Also show apps not free of costs"
+msgstr "Nem ingyenes alkalmazások megjelenítése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
+msgid "All Operating Systems"
+msgstr "Minden operációs rendszer"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
+msgid "Also show apps tested on different OS"
+msgstr "Más operációs rendszereken tesztelt alkalmazások megjelenítése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
+msgid "Filters"
+msgstr "Szűrők"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:131
+msgid "Installers"
+msgstr "Telepítők"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
+#, java-format
+msgid "Source: {0}"
+msgstr "Forrás: {0}"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:197
+msgid "Error while trying to download the installer"
+msgstr "Hiba történt a telepítő letöltése közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:276
+msgid "The script ended unexpectedly"
+msgstr "A parancsfájlt váratlanul véget ért"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:108
+msgid "About"
+msgstr "Névjegy"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
+msgid "Git Revision:"
+msgstr "Git felülvizsgálat:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
+msgid "Build Timestamp:"
+msgstr "Összeállítás időbélyege:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:35
+msgid "User Interface Settings"
+msgstr "Felhasználói felület beállításai"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:44
+msgid "Theme"
+msgstr "Téma"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
+msgid "Advanced mode (requires restart)"
+msgstr "Haladó mód (újraindítás szükséges)"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
+msgid "View the scripts’ source repository"
+msgstr "A parancsfájlok forrás adattárolásának megtekintése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:64
+msgid "Scale the user interface"
+msgstr "Felhasználói felület méretezése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:73
+msgid "Restore defaults (requires restart)"
+msgstr "Alapértelmezések visszaállítása (újraindítást igényel)"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:65
+msgid "Settings"
+msgstr "Beállítások"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:59
+msgid "Repository Settings"
+msgstr "Adattárolói beállítások"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
+msgid "Priority"
+msgstr "Sürgősség"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
+msgid "Repository name"
+msgstr "Adattároló neve"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
+msgid "Move the repository up or down to change its priority"
+msgstr "Adattároló felfelé vagy lefelé mozgatása sürgősség megváltoztatás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:239
+msgid "Restore defaults"
+msgstr "Alapértelmezések visszaállítása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
+msgid "Restore default repositories"
+msgstr "Alapértelmezett adattárolók visszaállítása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
+msgid "Are you sure you want to restore the default repositories?"
+msgstr "Biztos, hogy alapértelmezett adattárolók visszaállítása?"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
+msgid "Fetch updates from the repositories to retrieve latest script versions"
+msgstr "Legújabb parancsfájl verziók frissítések lekérése az adattarolótól"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:273
+msgid "Refresh Repositories"
+msgstr "Adattárolók frissítése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
+msgid "Engine tools"
+msgstr "Szolgáltatás eszközök"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:90
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
+msgid "Information"
+msgstr "Tudnivalók"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
+msgid "Engine Settings"
+msgstr "Szolgáltatás beállításai"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
+msgid "Verbs"
+msgstr "Igék"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
+msgid "Tools"
+msgstr "Eszközök"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerSidebarSkin.java:47
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:137
 msgid "Containers"
 msgstr "Tárolók"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
+msgid "Install selected"
+msgstr "Kijelölés telepítése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
+msgid "Install Verbs"
+msgstr "Az igék telepítése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
+msgid "Are you sure you want to install the following Verbs:"
+msgstr "Biztosan szeretné a következő igék feltelepítése:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
+msgid "Error installing Verbs"
+msgstr "Hiba történt az igék telepítése közben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
+msgid "Clear selection"
+msgstr "Kijelölés törlése"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:69
+msgid "Delete container"
+msgstr "Tartály eltávolítása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
+msgid "Change engine version"
+msgstr "Szolgáltatási verzió megváltoztatása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:78
+msgid "Open in file browser"
+msgstr "Megnyitás fájlkezelőben"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:111
+msgid "Path:"
+msgstr "Útvonal:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:129
+msgid "Installed shortcuts:"
+msgstr "Telepített parancsikonok:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:151
+msgid "Wine version:"
+msgstr "Wine verzió:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:170
+msgid "Wine architecture:"
+msgstr "Wine építészet:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:189
+msgid "Wine distribution:"
+msgstr "Wine terjesztés:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:57
+msgid "Run executable"
+msgstr "Végrehajtható fájlfuttatás"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:63
+msgid "Choose executable..."
+msgstr "Végrehajtható fájlválasztás…"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
+#, java-format
+msgid "Delete {0} container"
+msgstr "A(z) {0} tároló eltávolítása"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
+#, java-format
+msgid "Are you sure you want to delete the {0} container?"
+msgstr "Biztosan szeretné a(z) {0} tartály eltávolítása?"
+
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
 msgid "Loading containers failed."
 msgstr "Tárolók betöltése nem sikerült."
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
-msgid "Installations"
-msgstr "Telepítések"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
+msgid "Error during engine version change"
+msgstr ""
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:65
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/SettingsSidebarSkin.java:30
-msgid "Settings"
-msgstr "Beállítások"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
+#, java-format
+msgid "Cannot open container {0} in file browser"
+msgstr "A(z) {0} tároló megnyitása fájlkezelőben nem sikerült"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:74
+msgid "Stack trace:"
+msgstr "Veremkiíratás:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
+msgid "Cancel"
+msgstr "Mégse"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:106
+msgid "Next"
+msgstr "Tovább"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
+msgid "I agree"
+msgstr "Egyetértek"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
+msgid "Click or drag-and-drop file here"
+msgstr "Kattintson vagy húzza át a fájlt ide"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:92
+msgid "Allowed file types"
+msgstr "Engedélyezett fájltípusok"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:62
+msgid "Question"
+msgstr "Kérdés"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:100
 msgid "User Interface"
@@ -120,10 +560,25 @@ msgstr "Fájltársítások"
 msgid "Network"
 msgstr "Hálózat"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/SettingsView.java:108
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:43
-msgid "About"
-msgstr "Névjegy"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
+msgid "Classpath:"
+msgstr "Osztályútvonal:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
+msgid "Choose the location of your classpath repository"
+msgstr "Válassza ki a helyet az osztályútvonal adattárolót"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
+msgid "Please select the repository type you want to add"
+msgstr "Válassza ki az adattároló típus amit szeretne hozzáadni"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
+msgid "Repository type:"
+msgstr "Adattárolók típus:"
+
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
+msgid "Choose repository type..."
+msgstr "Adattároló típus választás…"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/GitRepositoryDetailsPanel.java:51
 msgid "Git-URL:"
@@ -161,66 +616,30 @@ msgstr "Válassza ki a helyet a helyi adattárolót"
 msgid "Add a new Repository"
 msgstr "Új adattároló hozzáadása"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:55
-msgid "Please select the repository type you want to add"
-msgstr "Válassza ki az adattároló típus amit szeretne hozzáadni"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:47
+msgid "Retry"
+msgstr "Újra"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:73
-msgid "Repository type:"
-msgstr "Adattárolók típus:"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/FailurePanel.java:61
+#, java-format
+msgid "Reason: {0}"
+msgstr "Ok: {0}"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ChooseRepositoryTypePanel.java:89
-msgid "Choose repository type..."
-msgstr "Adattároló típus választás…"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:121
+msgid "Library"
+msgstr "Könyvtár"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:38
-msgid "Classpath:"
-msgstr "Osztályútvonal:"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:129
+msgid "Apps"
+msgstr "Alkalmazások"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/settings/addrepository/ClasspathRepositoryDetailsPanel.java:50
-msgid "Choose the location of your classpath repository"
-msgstr "Válassza ki a helyet az osztályútvonal adattárolót"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
+msgid "Installations"
+msgstr "Telepítések"
 
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:58
-msgid "Click or drag-and-drop file here"
-msgstr "Kattintson vagy húzza át a fájlt ide"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationBrowse.java:92
-msgid "Allowed file types"
-msgstr "Engedélyezett fájltípusok"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/StepRepresentationLicence.java:51
-msgid "I agree"
-msgstr "Egyetértek"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/JavaFxUiConfiguration.java:62
-msgid "Question"
-msgstr "Kérdés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:104
-msgid "Cancel"
-msgstr "Mégse"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/scriptui/AbstractStepRepresentation.java:106
-msgid "Next"
-msgstr "Tovább"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:74
-msgid "Stack trace:"
-msgstr "Veremkiíratás:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/dialogs/ErrorDialog.java:153
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:82
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:106
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:132
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/engines/EnginesController.java:235
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:203
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:220
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:140
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:86
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
-msgid "Error"
-msgstr "Hiba"
+#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/console/ConsoleTab.java:46
+msgid "Console"
+msgstr "Vezérlőpult"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/themes/Themes.java:12
 msgid "Standard theme"
@@ -289,423 +708,4 @@ msgstr "Az igék betöltése sikertelen."
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/controller/containers/ContainersController.java:85
 msgid "Loading engine tools failed."
 msgstr "Szolgáltatási eszközök betöltése sikertelen."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:56
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:56
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationSidebarSkin.java:46
-msgid "Categories"
-msgstr "Osztályok"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:63
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:209
-msgid "Testing"
-msgstr "Bevizsgáló"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:64
-msgid "Also show apps in testing state"
-msgstr "Alkalmazások megjelenítése tesztelési állapotban"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:67
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:221
-msgid "Patch required"
-msgstr "Javítás szükséges"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:68
-msgid "Also show apps, where CD patch is necessary"
-msgstr "Alkalmazások megjelenítése ahol CD-javítás szükséges"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:71
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:215
-msgid "Commercial"
-msgstr "Kereskedelmi"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:72
-msgid "Also show apps not free of costs"
-msgstr "Nem ingyenes alkalmazások megjelenítése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:76
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:227
-msgid "All Operating Systems"
-msgstr "Minden operációs rendszer"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:77
-msgid "Also show apps tested on different OS"
-msgstr "Más operációs rendszereken tesztelt alkalmazások megjelenítése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarSkin.java:80
-msgid "Filters"
-msgstr "Szűrők"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:131
-msgid "Installers"
-msgstr "Telepítők"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:187
-#, java-format
-msgid "Source: {0}"
-msgstr "Forrás: {0}"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:191
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:106
-msgid "Install"
-msgstr "Telepítés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:197
-msgid "Error while trying to download the installer"
-msgstr "Hiba történt a telepítő letöltése közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationInformationPanelSkin.java:276
-msgid "The script ended unexpectedly"
-msgstr "A parancsfájlt váratlanul véget ért"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/application/skin/ApplicationSidebarToggleGroupSkin.java:32
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarToggleGroupSkin.java:31
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/installation/skin/InstallationsSidebarToggleGroupSkin.java:31
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainersSidebarToggleGroupSkin.java:31
-msgid "All"
-msgstr "Összes"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:177
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:186
-msgid "Error while creating shortcut"
-msgstr "Hiba történt a parancsikon létrehozása közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:238
-#, java-format
-msgid "Uninstall {0}"
-msgstr "A(z) {0} eltávolítása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:239
-#, java-format
-msgid "Are you sure you want to uninstall {0}?"
-msgstr "Biztosan szeretné a(z) {0} eltávolítása?"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/control/LibraryFeaturePanel.java:244
-#, java-format
-msgid "Error while uninstalling {0}"
-msgstr "Hiba történt a(z) {0} eltávolítása közben."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:92
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:92
-msgid "Environment"
-msgstr "Környezet"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:161
-msgid "Run"
-msgstr "Fut"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:167
-msgid "Close"
-msgstr "Bezárás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:173
-msgid "Uninstall"
-msgstr "Eltávolítás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutInformationPanelSkin.java:180
-msgid "Edit"
-msgstr "Szerkesztés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:101
-msgid "Save"
-msgstr "Mentés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:170
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:199
-msgid "Miniature:"
-msgstr "Kisméretű:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:180
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:206
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:250
-msgid "Browse..."
-msgstr "Tallózás…"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutEditingPanelSkin.java:186
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:216
-msgid "Images"
-msgstr "Képek"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:112
-msgid "My applications"
-msgstr "Alkalmazásaim"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibraryFeaturePanelSkin.java:212
-msgid "Create a new shortcut"
-msgstr "Új parancsikon létrehozása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:51
-msgid "Please specify a name!"
-msgstr "Kérjük, adjon meg egy nevét."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:56
-msgid "Please specify a category!"
-msgstr "Kérjük, adjon meg egy osztályt."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:64
-msgid "Please specify a valid miniature!"
-msgstr "Kérjük, adjon meg egy érvényes kisméretűt."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:69
-msgid "Please specify a valid executable!"
-msgstr "Kérjük, adjon meg egy érvényes végrehajtható fájlt."
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:72
-msgid "Create"
-msgstr "Létrehozás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:136
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:93
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:66
-msgid "Name:"
-msgstr "Név:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:157
-msgid "Category:"
-msgstr "Osztály:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:178
-msgid "Description:"
-msgstr "Leírás:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/ShortcutCreationPanelSkin.java:243
-msgid "Executable:"
-msgstr "Végrehajtható fájl:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:75
-msgid "Create shortcut"
-msgstr "Parancsikon létrehozása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:80
-msgid "Run a script"
-msgstr "Parancsfájl futtatása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:84
-msgid "Open Script..."
-msgstr "Parancsfájl megnyitása…"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:94
-#, java-format
-msgid "{0} console"
-msgstr "A(z) {0} vezérlőpult"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/library/skin/LibrarySidebarSkin.java:99
-msgid "Advanced Tools"
-msgstr "Haladó eszközök"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:116
-msgid "An error occurred while installing the engine"
-msgstr "Hiba történt a szolgáltatás telepítése közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:126
-msgid "Delete"
-msgstr "Törlés"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:136
-msgid "An error occurred while deleting the engine"
-msgstr "Hiba történt a szolgáltatás törlése közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineInformationPanelSkin.java:159
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:77
-msgid "Version:"
-msgstr "Verzió:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:61
-msgid "Installed"
-msgstr "Telepítve"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/engine/skin/EngineSidebarSkin.java:66
-msgid "Not installed"
-msgstr "Nincs telepítve"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:33
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:218
-msgid "Add"
-msgstr "Hozzáadás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:41
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:230
-msgid "Remove"
-msgstr "Eltávolítás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:73
-msgid "Key"
-msgstr "Kulcs"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/common/skin/KeyAttributeListSkin.java:88
-msgid "Attribute"
-msgstr "Tulajdonság"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
-#, java-format
-msgid "Delete {0} container"
-msgstr "A(z) {0} tároló eltávolítása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
-#, java-format
-msgid "Are you sure you want to delete the {0} container?"
-msgstr "Biztosan szeretné a(z) {0} tartály eltávolítása?"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:180
-msgid "Error during engine version change"
-msgstr ""
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:205
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
-#, java-format
-msgid "Cannot open container {0} in file browser"
-msgstr "A(z) {0} tároló megnyitása fájlkezelőben nem sikerült"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:90
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:38
-msgid "Information"
-msgstr "Tudnivalók"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
-msgid "Engine Settings"
-msgstr "Szolgáltatás beállításai"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:117
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:44
-msgid "Verbs"
-msgstr "Igék"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:131
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:71
-msgid "Engine tools"
-msgstr "Szolgáltatás eszközök"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:144
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:37
-msgid "Tools"
-msgstr "Eszközök"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:57
-msgid "Run executable"
-msgstr "Végrehajtható fájlfuttatás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerToolsPanelSkin.java:63
-msgid "Choose executable..."
-msgstr "Végrehajtható fájlválasztás…"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:78
-msgid "Install selected"
-msgstr "Kijelölés telepítése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:98
-msgid "Install Verbs"
-msgstr "Az igék telepítése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:99
-msgid "Are you sure you want to install the following Verbs:"
-msgstr "Biztosan szeretné a következő igék feltelepítése:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:112
-msgid "Error installing Verbs"
-msgstr "Hiba történt az igék telepítése közben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerVerbsPanelSkin.java:127
-msgid "Clear selection"
-msgstr "Kijelölés törlése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:69
-msgid "Delete container"
-msgstr "Tartály eltávolítása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
-msgid "Change engine version"
-msgstr "Szolgáltatási verzió megváltoztatása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:78
-msgid "Open in file browser"
-msgstr "Megnyitás fájlkezelőben"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:111
-msgid "Path:"
-msgstr "Útvonal:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:129
-msgid "Installed shortcuts:"
-msgstr "Telepített parancsikonok:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:151
-msgid "Wine version:"
-msgstr "Wine verzió:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:170
-msgid "Wine architecture:"
-msgstr "Wine építészet:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:189
-msgid "Wine distribution:"
-msgstr "Wine terjesztés:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:59
-msgid "Repository Settings"
-msgstr "Adattárolói beállítások"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:87
-msgid "Priority"
-msgstr "Sürgősség"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:92
-msgid "Repository name"
-msgstr "Adattároló neve"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:99
-msgid "Move the repository up or down to change its priority"
-msgstr "Adattároló felfelé vagy lefelé mozgatása sürgősség megváltoztatás"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:239
-msgid "Restore defaults"
-msgstr "Alapértelmezések visszaállítása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:243
-msgid "Restore default repositories"
-msgstr "Alapértelmezett adattárolók visszaállítása"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:244
-msgid "Are you sure you want to restore the default repositories?"
-msgstr "Biztos, hogy alapértelmezett adattárolók visszaállítása?"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:268
-msgid "Fetch updates from the repositories to retrieve latest script versions"
-msgstr "Legújabb parancsfájl verziók frissítések lekérése az adattarolótól"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/RepositoriesPanelSkin.java:273
-msgid "Refresh Repositories"
-msgstr "Adattárolók frissítése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:35
-msgid "User Interface Settings"
-msgstr "Felhasználói felület beállításai"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:44
-msgid "Theme"
-msgstr "Téma"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:50
-msgid "Advanced mode (requires restart)"
-msgstr "Haladó mód (újraindítás szükséges)"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:57
-msgid "View the scripts’ source repository"
-msgstr "A parancsfájlok forrás adattárolásának megtekintése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:64
-msgid "Scale the user interface"
-msgstr "Felhasználói felület méretezése"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/UserInterfacePanelSkin.java:73
-msgid "Restore defaults (requires restart)"
-msgstr "Alapértelmezések visszaállítása (újraindítást igényel)"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:88
-msgid "Git Revision:"
-msgstr "Git felülvizsgálat:"
-
-#: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/setting/skin/AboutPanelSkin.java:95
-msgid "Build Timestamp:"
-msgstr "Összeállítás időbélyege:"
 
