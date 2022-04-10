@@ -6,3 +6,7 @@ updates:
     interval: daily
     time: "07:00"
   open-pull-requests-limit: 10
+ignore:
+  # ignore all GraalVM updates (stick to 21.1.x)
+  - dependency-name: "graalvm.version"
+    update-types: ["version-update:semver-major", "version-update:semver-minor"]
