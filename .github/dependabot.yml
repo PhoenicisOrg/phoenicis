@@ -8,5 +8,9 @@ updates:
   open-pull-requests-limit: 10
   ignore:
     # ignore all GraalVM updates (stick to 21.1.x)
-    - dependency-name: "graalvm.version"
+    - dependency-name: "org.graalvm.sdk:graal-sdk"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    - dependency-name: "org.graalvm.js:js"
+      update-types: ["version-update:semver-major", "version-update:semver-minor"]
+    - dependency-name: "org.graalvm.js:js-scriptengine"
       update-types: ["version-update:semver-major", "version-update:semver-minor"]
