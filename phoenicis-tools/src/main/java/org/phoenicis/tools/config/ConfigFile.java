@@ -26,7 +26,7 @@ import java.io.IOException;
 public interface ConfigFile {
     /**
      * Write a value in the config file
-     * 
+     *
      * @param key
      *            The key
      * @param value
@@ -38,7 +38,7 @@ public interface ConfigFile {
 
     /**
      * Read the value of the given key
-     * 
+     *
      * @param key
      *            the key to look after
      * @return the value, or null of the value cannot be found
@@ -47,7 +47,7 @@ public interface ConfigFile {
 
     /**
      * Test if the config files contains the given key
-     * 
+     *
      * @param key
      *            The key to test
      * @return true if the config file contains the given key. false in any
@@ -58,7 +58,7 @@ public interface ConfigFile {
     /**
      * Read the value, but provide a default value in the case the value is not
      * found
-     * 
+     *
      * @param key
      *            the key to look after
      * @param defaultValue
@@ -70,7 +70,7 @@ public interface ConfigFile {
 
     /**
      * Delete a (key, value) pair from the config file
-     * 
+     *
      * @param key
      *            the key to delete
      * @throws IOException

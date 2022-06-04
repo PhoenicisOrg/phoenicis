@@ -32,7 +32,7 @@ public class ArchitectureFetcher {
 
     /**
      * Find the current architecture
-     * 
+     *
      * @return The current architecture
      */
     public Architecture fetchCurrentArchitecture() {

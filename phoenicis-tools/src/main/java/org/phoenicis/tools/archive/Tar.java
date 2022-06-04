@@ -94,7 +94,7 @@ public class Tar {
 
     /**
      * Gunzip a file
-     * 
+     *
      * @param inputFile
      *            source file
      * @param outputFile
@@ -119,7 +119,7 @@ public class Tar {
 
     /**
      * Bunzip2 a file
-     * 
+     *
      * @param inputFile
      *            source file
      * @param outputFile

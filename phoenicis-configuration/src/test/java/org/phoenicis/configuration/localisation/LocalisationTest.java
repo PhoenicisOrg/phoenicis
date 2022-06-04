@@ -36,50 +36,50 @@ public class LocalisationTest {
      * PowerMockito.mockStatic(I18nFactory.class);
      * PowerMockito.when(I18nFactory.getI18n(any(), anyString())).thenReturn(mockI18n);
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testTrWithAString() {
      * assertEquals("output", tr("input"));
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testTrWithNull() {
      * assertNull(tr(null));
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testSimpleTranslatableObject() {
      * final SimpleTranslatableObject translatableObject = new SimpleTranslatableObject("input", "input");
      * assertEquals("input", translatableObject.getItemNotToBeTranslated());
      * assertEquals("input", translatableObject.getItemToBeTranslated());
-     * 
+     *
      * final SimpleTranslatableObject translatedObject = tr(translatableObject);
      * assertEquals("input", translatedObject.getItemNotToBeTranslated());
      * assertEquals("output", translatedObject.getItemToBeTranslated());
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testSimpleTranslatableObjectWithBuilder() {
      * final SimpleTranslatableObjectBuilder translatableObject = new SimpleTranslatableObjectBuilder.Builder()
      * .withItemNotToBeTranslated("input").withItemToBeTranslated("input").build();
      * assertEquals("input", translatableObject.getItemNotToBeTranslated());
      * assertEquals("input", translatableObject.getItemToBeTranslated());
-     * 
+     *
      * final SimpleTranslatableObjectBuilder translatedObject = tr(translatableObject);
      * assertEquals("input", translatedObject.getItemNotToBeTranslated());
      * assertEquals("output", translatedObject.getItemToBeTranslated());
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testTreeTranslatableObject() {
      * final TreeTranslatableObject treeTranslatableObject = new TreeTranslatableObject(
@@ -88,22 +88,22 @@ public class LocalisationTest {
      * assertEquals("input", treeTranslatableObject.getItemNotToBeTranslated().getItemNotToBeTranslated());
      * assertEquals("input", treeTranslatableObject.getItemToBeTranslated().getItemToBeTranslated());
      * assertEquals("input", treeTranslatableObject.getItemToBeTranslated().getItemNotToBeTranslated());
-     * 
+     *
      * final TreeTranslatableObject translatedObject = tr(treeTranslatableObject);
      * assertEquals("input", translatedObject.getItemNotToBeTranslated().getItemToBeTranslated());
      * assertEquals("input", translatedObject.getItemNotToBeTranslated().getItemNotToBeTranslated());
      * assertEquals("output", translatedObject.getItemToBeTranslated().getItemToBeTranslated());
      * assertEquals("input", translatedObject.getItemToBeTranslated().getItemNotToBeTranslated());
-     * 
+     *
      * }
-     * 
+     *
      * @PrepareForTest({ I18nFactory.class, I18n.class })
-     * 
+     *
      * @Test
      * public synchronized void testTreeTranslatableCollectionObject() {
      * final CollectionsOfTranslatableObject collectionsOfTranslatableObject = new CollectionsOfTranslatableObject(
      * Arrays.asList("input", "input"), Arrays.asList("input", "input"));
-     * 
+     *
      * final CollectionsOfTranslatableObject translatedObject = tr(collectionsOfTranslatableObject);
      * assertEquals(Arrays.asList("input", "input"), translatedObject.getItemNotToBeTranslated());
      * assertEquals(Arrays.asList("output", "output"), translatedObject.getItemToBeTranslated());

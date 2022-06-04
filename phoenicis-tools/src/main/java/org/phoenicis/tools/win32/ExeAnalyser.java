@@ -37,7 +37,7 @@ public class ExeAnalyser {
 
     /**
      * Checks if the file is a 64bits executable
-     * 
+     *
      * @param file
      *            the file to analyse
      * @return true if the file is a 64bit executable. False otherwise
@@ -48,7 +48,7 @@ public class ExeAnalyser {
 
     /**
      * Checks if the file is a 32bits executable
-     * 
+     *
      * @param file
      *            the file to analyse
      * @return true if the file is a 32bit executable. False otherwise
