@@ -36,19 +36,19 @@ public class CachedRepositoryTest {
         Repository repository = mock(Repository.class);
         when(repository
                 .fetchInstallableApplications())
-                        .thenReturn(
-                                new RepositoryDTO.Builder()
-                                        .withTypes(Collections.singletonList(
-                                                new TypeDTO.Builder()
-                                                        .withId("Type 1")
-                                                        .withCategories(
-                                                                Arrays.asList(
-                                                                        new CategoryDTO.Builder().withId("Category 1")
-                                                                                .build(),
-                                                                        new CategoryDTO.Builder().withId("Category 2")
-                                                                                .build()))
-                                                        .build()))
-                                        .build());
+                .thenReturn(
+                        new RepositoryDTO.Builder()
+                                .withTypes(Collections.singletonList(
+                                        new TypeDTO.Builder()
+                                                .withId("Type 1")
+                                                .withCategories(
+                                                        Arrays.asList(
+                                                                new CategoryDTO.Builder().withId("Category 1")
+                                                                        .build(),
+                                                                new CategoryDTO.Builder().withId("Category 2")
+                                                                        .build()))
+                                                .build()))
+                                .build());
 
         final Repository cachedSource = new CachedRepository(repository);
         cachedSource.fetchInstallableApplications();
