@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: phoenicis\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-03 08:35+0000\n"
-"PO-Revision-Date: 2022-06-04 08:34\n"
+"PO-Revision-Date: 2022-07-01 11:51\n"
 "Last-Translator: \n"
 "Language-Team: Hebrew\n"
 "Language: he_IL\n"
@@ -60,7 +60,7 @@ msgstr "מכלים"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:148
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:152
 msgid "Loading containers failed."
-msgstr "טעינת המכולות נכשלה."
+msgstr "טעינת המכלים נכשלה."
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/views/mainwindow/ui/MainWindow.java:160
 msgid "Installations"
@@ -208,12 +208,12 @@ msgstr "קטגוריות"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:132
 #, java-format
 msgid "Delete {0} container"
-msgstr "מחיקת המכולה {0}"
+msgstr "מחיקת המכל {0}"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:133
 #, java-format
 msgid "Are you sure you want to delete the {0} container?"
-msgstr "למחוק את מכולת {0}?"
+msgstr "למחוק את המכל {0}?"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:140
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineToolsPanelSkin.java:54
@@ -236,7 +236,7 @@ msgstr "שגיאה במהלך שינוי גרסת המנוע"
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/control/ContainersFeaturePanel.java:217
 #, java-format
 msgid "Cannot open container {0} in file browser"
-msgstr "לא ניתן לפתוח את המכולה {0} בסייר הקבצים"
+msgstr "לא ניתן לפתוח את המכל {0} בסייר הקבצים"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerEngineSettingsPanelSkin.java:43
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerInformationPanelSkin.java:103
@@ -293,7 +293,7 @@ msgstr "ניקוי הבחירה"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:69
 msgid "Delete container"
-msgstr "מחיקת המכולה"
+msgstr "מחיקת המכל"
 
 #: phoenicis-javafx/src/main/java/org/phoenicis/javafx/components/container/skin/ContainerOverviewPanelSkin.java:73
 msgid "Change engine version"
