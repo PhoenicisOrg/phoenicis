@@ -79,6 +79,10 @@ public class Zip {
         final long compressedSize = entry.getCompressedSize();
 
         final Path targetPath = targetDirectory.resolve(fileName);
+
+        if (!targetPath.normalize().startsWith(targetDirectory.normalize())) {
+            throw new RuntimeException("Bad zip entry");
+        }
         try {
             if (entry.isDirectory()) {
                 LOGGER.info(String.format("Attempting to create output directory %s.", targetPath.toString()));
