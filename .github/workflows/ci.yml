@@ -58,12 +58,12 @@ jobs:
         run: |
           sudo apt-get install -y flatpak flatpak-builder elfutils
           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak --user -y install flathub org.freedesktop.Platform/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Compat.i386/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Platform/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Compat.i386/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/22.08
           flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-460-39/x86_64/1.4
       - name: Build flatpak
         run: |
