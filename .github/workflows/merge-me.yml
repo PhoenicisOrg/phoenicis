@@ -6,7 +6,6 @@ on:
       - completed
     workflows:
       - 'CI'
-      - 'Lint .java files'
 
 jobs:
   merge-me:
