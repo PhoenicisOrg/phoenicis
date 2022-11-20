@@ -1,7 +1,7 @@
 ---
 app-id: org.phoenicis.playonlinux
 runtime: org.freedesktop.Platform
-runtime-version: '20.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Compat.i386
@@ -11,17 +11,17 @@ add-extensions:
   # support 32-bit apps
   org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
-    version: '20.08'
+    version: '22.08'
 
   org.freedesktop.Platform.Compat.i386.Debug:
     directory: lib/debug/lib/i386-linux-gnu
-    version: '20.08'
+    version: '22.08'
     no-autodownload: true
 
   org.freedesktop.Platform.GL32:
     directory: lib/i386-linux-gnu/GL
     version: '1.4'
-    versions: '20.08;1.4'
+    versions: '22.08;1.4'
     subdirectories: true
     no-autodownload: true
     autodelete: false
