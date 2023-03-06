@@ -17,6 +17,8 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
       - name: Create package
@@ -39,6 +41,8 @@ jobs:
           distribution: 'zulu'
           java-version: '15'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
   flatpak:
@@ -52,9 +56,11 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package -DskipTests # no need to run tests again
-      - name: Install dependencies
+      - name: Install Flatpak dependencies
         run: |
           sudo apt-get install -y flatpak flatpak-builder elfutils
           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -80,6 +86,8 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
       - name: Create package
