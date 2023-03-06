@@ -56,11 +56,12 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package -DskipTests # no need to run tests again
-      - name: Install dependencies
+      - name: Install Flatpak dependencies
         run: |
-          sudo npm install -g less
           sudo apt-get install -y flatpak flatpak-builder elfutils
           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
           flatpak --user -y install flathub org.freedesktop.Platform/x86_64/22.08
