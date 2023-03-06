@@ -147,8 +147,53 @@
                 <configuration>
                     <lessConfigs>
                         <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/breezeDark/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
                             <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/breezeDark/main.less</lesscMain>
                             <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/dark/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/dark</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/dark/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/dark</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/mint-x/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/mint-x</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/mint-x/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/mint-x</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/standard/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/standard</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/standard/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/standard</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/unity/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/unity</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/unity/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/unity</targetDirectory>
                             <targetFileName>main.css</targetFileName>
                         </lessConfig>
                     </lessConfigs>
