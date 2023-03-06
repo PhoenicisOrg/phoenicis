@@ -141,18 +141,24 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>biz.gabrys.maven.plugins</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <groupId>org.javalite</groupId>
+                <artifactId>activeweb-lessc-maven-plugin</artifactId>
+                <version>3.4-j11</version>
+                <configuration>
+                    <lessConfigs>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>src/main/resources/org/phoenicis/javafx/themes/breezeDark/main.less</lesscMain>
+                            <targetDirectory>target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                            <lesscArguments/>
+                        </lessConfig>
+                    </lessConfigs>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirectory>src/main/resources</sourceDirectory>
-                            <outputDirectory>target/classes</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
