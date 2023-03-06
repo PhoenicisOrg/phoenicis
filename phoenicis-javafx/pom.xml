@@ -150,7 +150,6 @@
                             <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/breezeDark/main.less</lesscMain>
                             <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
                             <targetFileName>main.css</targetFileName>
-                            <lesscArguments/>
                         </lessConfig>
                     </lessConfigs>
                 </configuration>
