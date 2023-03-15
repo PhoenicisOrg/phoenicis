@@ -49,7 +49,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
         <slf4j.version>2.0.6</slf4j.version>
-        <surefire.version>3.0.0-M9</surefire.version>
+        <surefire.version>3.0.0</surefire.version>
         <logback.version>1.4.5</logback.version>
         <junit.version>4.13.2</junit.version>
         <mockito.version>5.2.0</mockito.version>
