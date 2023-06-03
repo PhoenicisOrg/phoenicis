@@ -38,6 +38,7 @@ For more information, visit http://www.playonlinux.com
 Dependencies:
 * Java 11+
 * Maven
+* less (`sudo npm install -g less`)
 
 Build
 ```

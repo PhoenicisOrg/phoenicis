@@ -26,7 +26,7 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.root>${project.basedir}/../</project.root>
-        <openjfx.version>19</openjfx.version>
+        <openjfx.version>19.0.2.1</openjfx.version>
         <testfx.version>4.0.15-alpha</testfx.version>
     </properties>
     <dependencies>
@@ -141,18 +141,68 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>biz.gabrys.maven.plugins</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.2.1</version>
+                <groupId>org.javalite</groupId>
+                <artifactId>activeweb-lessc-maven-plugin</artifactId>
+                <version>3.4-j11</version>
+                <configuration>
+                    <lessConfigs>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/breezeDark/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/breezeDark/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/breezeDark</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/dark/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/dark</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/dark/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/dark</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/mint-x/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/mint-x</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/mint-x/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/mint-x</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/standard/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/standard</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/standard/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/standard</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/unity/description.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/unity</targetDirectory>
+                            <targetFileName>description.css</targetFileName>
+                        </lessConfig>
+                        <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
+                            <lesscMain>${project.basedir}/src/main/resources/org/phoenicis/javafx/themes/unity/main.less</lesscMain>
+                            <targetDirectory>${project.basedir}/target/classes/org/phoenicis/javafx/themes/unity</targetDirectory>
+                            <targetFileName>main.css</targetFileName>
+                        </lessConfig>
+                    </lessConfigs>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <sourceDirectory>src/main/resources</sourceDirectory>
-                            <outputDirectory>target/classes</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>

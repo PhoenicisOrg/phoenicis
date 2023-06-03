@@ -10,13 +10,15 @@ jobs:
     name: Ubuntu (Java 17)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
       - name: Create package
@@ -32,38 +34,42 @@ jobs:
     name: Ubuntu (Java 19)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK 19
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '19'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
   flatpak:
     name: Flatpak
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package -DskipTests # no need to run tests again
-      - name: Install dependencies
+      - name: Install Flatpak dependencies
         run: |
           sudo apt-get install -y flatpak flatpak-builder elfutils
           flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-          flatpak --user -y install flathub org.freedesktop.Platform/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Compat.i386/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk17/x86_64/20.08
-          flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/20.08
+          flatpak --user -y install flathub org.freedesktop.Platform/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Compat.i386/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.toolchain-i386/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Sdk.Extension.openjdk11/x86_64/22.08
+          flatpak --user -y install flathub org.freedesktop.Platform.Compat.i386/x86_64/22.08
           flatpak --user -y install flathub org.freedesktop.Platform.GL32.nvidia-460-39/x86_64/1.4
       - name: Build flatpak
         run: |
@@ -73,13 +79,15 @@ jobs:
     name: Mac OS (Java 17)
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
           cache: 'maven'
+      - name: Install dependencies
+        run: sudo npm install -g less
       - name: Build with Maven
         run: mvn clean package
       - name: Create package
