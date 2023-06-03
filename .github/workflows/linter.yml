@@ -20,7 +20,7 @@ jobs:
         run: mvn formatter:format
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v6
+        uses: EndBug/add-and-commit@v9
         with:
           author_name: PhoenicisBot
           author_email: git@phoenicis.org
