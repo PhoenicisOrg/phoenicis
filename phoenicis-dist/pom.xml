@@ -46,10 +46,10 @@
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy-dependencies</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
                             <excludeArtifactIds>bcprov-jdk16, bcmail-jdk16, bcpg-jdk16, commons-logging, xml-apis, xmlParserAPIs, xercesImpl, truffle-api, graal-sdk</excludeArtifactIds>
@@ -61,14 +61,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>copy-graal-dependencies</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <artifactItems>
                                 <artifactItem>
@@ -104,14 +104,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>distribution</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <finalName>phoenicis-flatpak</finalName>

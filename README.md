@@ -1,5 +1,5 @@
 # Phoenicis PlayOnLinux and PlayOnMac 5
-[![Build Status](https://travis-ci.com/PhoenicisOrg/phoenicis.svg?branch=master)](https://travis-ci.com/PhoenicisOrg/phoenicis)
+[![CI](https://github.com/PhoenicisOrg/phoenicis/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/PhoenicisOrg/phoenicis/actions/workflows/ci.yml)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/b667020df53c4b80a22d7e5a73f2b1b3)](https://www.codacy.com/app/PhoenicisOrg/phoenicis?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PhoenicisOrg/phoenicis&amp;utm_campaign=Badge_Grade)
 [![Crowdin Badge](https://d322cqt584bo4o.cloudfront.net/phoenicis/localized.svg)](https://crowdin.com/project/phoenicis)
 
@@ -38,6 +38,7 @@ For more information, visit http://www.playonlinux.com
 Dependencies:
 * Java 11+
 * Maven
+* less (`sudo npm install -g less`)
 
 Build
 ```
