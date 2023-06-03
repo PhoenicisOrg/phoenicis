@@ -30,16 +30,16 @@ jobs:
           name: Ubuntu
           path: phoenicis-dist/target/*.deb
           if-no-files-found: error
-  ubuntu-java-19:
-    name: Ubuntu (Java 19)
+  ubuntu-java-20:
+    name: Ubuntu (Java 20)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up JDK 19
+      - name: Set up JDK 20
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '19'
+          java-version: '20'
           cache: 'maven'
       - name: Install dependencies
         run: sudo npm install -g less
