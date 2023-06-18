@@ -1,0 +1,20 @@
+name: Merge me!
+
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - 'CI'
+
+jobs:
+  merge-me:
+    name: Merge me!
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        name: Merge me!
+        uses: ridedott/merge-me-action@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.DEPENDABOT_AUTO_MERGE }}
+          ENABLE_GITHUB_API_PREVIEW: true

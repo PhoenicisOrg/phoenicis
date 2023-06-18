@@ -55,6 +55,7 @@ public class MainWindow extends Stage {
     private Tab enginesTab;
     private Tab installationsTab;
     private Tab settingsTab;
+    private JavaFxSettingsManager javaFxSettingsManager;
 
     public MainWindow(String applicationName,
             LibraryFeaturePanel library,
@@ -71,21 +72,35 @@ public class MainWindow extends Stage {
         this.tabPane.setId("menuPane");
         this.tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        this.libraryTab = createLibraryTab(library);
-        this.applicationsTab = createApplicationsTab(apps);
-        this.containersTab = createContainersTab(containers);
-        this.enginesTab = engines;
-        this.installationsTab = createInstallationsTab(installations);
-        this.settingsTab = settings;
-        this.tabPane.getTabs().addAll(
-                this.libraryTab,
-                this.applicationsTab,
-                this.containersTab,
-                this.enginesTab,
-                this.installationsTab,
-                this.settingsTab);
+        this.javaFxSettingsManager = javaFxSettingsManager;
 
-        final Scene scene = new PhoenicisScene(this.tabPane, themeManager, javaFxSettingsManager);
+        if (this.javaFxSettingsManager.isAdvancedMode()) {
+            this.libraryTab = createLibraryTab(library);
+            this.applicationsTab = createApplicationsTab(apps);
+            this.containersTab = createContainersTab(containers);
+            this.enginesTab = engines;
+            this.installationsTab = createInstallationsTab(installations);
+            this.settingsTab = settings;
+            this.tabPane.getTabs().addAll(
+                    this.libraryTab,
+                    this.applicationsTab,
+                    this.containersTab,
+                    this.enginesTab,
+                    this.installationsTab,
+                    this.settingsTab);
+        } else {
+            this.libraryTab = createLibraryTab(library);
+            this.applicationsTab = createApplicationsTab(apps);
+            this.installationsTab = createInstallationsTab(installations);
+            this.settingsTab = settings;
+            this.tabPane.getTabs().addAll(
+                    this.libraryTab,
+                    this.applicationsTab,
+                    this.installationsTab,
+                    this.settingsTab);
+        }
+
+        final Scene scene = new PhoenicisScene(this.tabPane, themeManager, this.javaFxSettingsManager);
 
         this.getIcons().add(new Image(
                 JavaFXApplication.class.getResourceAsStream("/org/phoenicis/javafx/views/common/phoenicis.png")));
@@ -94,9 +109,9 @@ public class MainWindow extends Stage {
         this.setMinHeight(200);
         this.setMinWidth(200);
         this.setResizable(true);
-        this.setHeight(javaFxSettingsManager.getWindowHeight());
-        this.setWidth(javaFxSettingsManager.getWindowWidth());
-        this.setMaximized(javaFxSettingsManager.isWindowMaximized());
+        this.setHeight(this.javaFxSettingsManager.getWindowHeight());
+        this.setWidth(this.javaFxSettingsManager.getWindowWidth());
+        this.setMaximized(this.javaFxSettingsManager.isWindowMaximized());
         this.setScene(scene);
         this.setTitle(applicationName);
         this.show();
@@ -171,7 +186,11 @@ public class MainWindow extends Stage {
     }
 
     public void showInstallations() {
-        this.tabPane.getSelectionModel().select(4);
+        if (this.javaFxSettingsManager.isAdvancedMode()) {
+            this.tabPane.getSelectionModel().select(4);
+        } else {
+            this.tabPane.getSelectionModel().select(2);
+        }
     }
 
     public Tab getLibraryTab() {

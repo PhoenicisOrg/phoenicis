@@ -35,7 +35,11 @@ public class LibrarySidebarSkin
      */
     @Override
     protected ScrollPane createMainContent() {
-        return createScrollPane(createSidebarToggleGroup(), createSpacer(), createAdvancedToolsGroup());
+        if (getControl().getJavaFxSettingsManager().isAdvancedMode()) {
+            return createScrollPane(createSidebarToggleGroup(), createSpacer(), createAdvancedToolsGroup());
+        } else {
+            return createScrollPane(createSidebarToggleGroup());
+        }
     }
 
     /**

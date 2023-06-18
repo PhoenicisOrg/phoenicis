@@ -13,6 +13,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.graalvm.polyglot.Value;
@@ -23,6 +25,8 @@ import org.phoenicis.javafx.dialogs.ErrorDialog;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.Installer;
+import org.phoenicis.tools.system.OperatingSystemFetcher;
+import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
 
@@ -198,7 +202,37 @@ public class ApplicationInformationPanelSkin
                 }
             });
 
-            scriptGrid.addRow(i, scriptName, installButton);
+            OperatingSystem curOs = new OperatingSystemFetcher().fetchCurrentOperationSystem();
+            Label lTesting = new Label();
+            if (script.getTestingOperatingSystems().contains(curOs)) {
+                lTesting.getStyleClass().add("testingIcon");
+                lTesting.setTooltip(new Tooltip(tr("Testing")));
+                lTesting.setMinSize(30, 30);
+            }
+            Label lCommercial = new Label();
+            if (!script.isFree()) {
+                lCommercial.getStyleClass().add("commercialIcon");
+                lCommercial.setTooltip(new Tooltip(tr("Commercial")));
+                lCommercial.setMinSize(30, 30);
+            }
+            Label lPatch = new Label();
+            if (script.isRequiresPatch()) {
+                lPatch.getStyleClass().add("patchIcon");
+                lPatch.setTooltip(new Tooltip(tr("Patch required")));
+                lPatch.setMinSize(30, 30);
+            }
+            Label lOs = new Label();
+            if (!script.getCompatibleOperatingSystems().contains(curOs)) {
+                lOs.getStyleClass().add("osIcon");
+                lOs.setTooltip(new Tooltip(tr("All Operating Systems")));
+                lOs.setMinSize(30, 30);
+            }
+            Label lSpace = new Label();
+            lSpace.setPrefSize(30, 30);
+
+            HBox iconBox = new HBox(lTesting, lCommercial, lPatch, lOs, lSpace);
+
+            scriptGrid.addRow(i, scriptName, iconBox, installButton);
         }
     }
 

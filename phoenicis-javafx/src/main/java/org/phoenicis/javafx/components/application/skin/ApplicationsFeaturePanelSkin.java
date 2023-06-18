@@ -1,9 +1,6 @@
 package org.phoenicis.javafx.components.application.skin;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.binding.ObjectExpression;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -13,23 +10,26 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.Node;
 import org.phoenicis.javafx.collections.ConcatenatedList;
 import org.phoenicis.javafx.collections.MappedList;
+import org.phoenicis.javafx.components.application.panelstates.ApplicationInformation;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.application.control.ApplicationSidebar;
 import org.phoenicis.javafx.components.application.control.ApplicationsFeaturePanel;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.DetailsPanel;
 import org.phoenicis.javafx.components.common.control.SidebarBase;
 import org.phoenicis.javafx.components.common.skin.FeaturePanelSkin;
 import org.phoenicis.javafx.components.common.widgets.control.CombinedListWidget;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
-import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetType;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.utils.ObjectBindings;
 import org.phoenicis.javafx.utils.StringBindings;
+import org.phoenicis.javafx.utils.SwitchBinding;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
 
 import java.util.Comparator;
+import java.util.Optional;
 
 /**
  * A skin implementation for the {@link ApplicationsFeaturePanel} component
@@ -42,16 +42,6 @@ public class ApplicationsFeaturePanelSkin
     private final ObjectProperty<ListWidgetType> selectedListWidget;
 
     /**
-     * The current list widget selection containing the selected {@link ApplicationDTO} object
-     */
-    private final ObjectProperty<ListWidgetSelection<ApplicationDTO>> listWidgetSelection;
-
-    /**
-     * The currently selected application
-     */
-    private final ObjectBinding<ApplicationDTO> selectedApplication;
-
-    /**
      * Constructor
      *
      * @param control The control belonging to the skin
@@ -59,40 +49,7 @@ public class ApplicationsFeaturePanelSkin
     public ApplicationsFeaturePanelSkin(ApplicationsFeaturePanel control) {
         super(control);
 
-        this.listWidgetSelection = new SimpleObjectProperty<>();
-        this.selectedApplication = ObjectBindings.map(this.listWidgetSelection, ListWidgetSelection::getItem);
-        this.selectedListWidget = createSelectedListWidget();
-    }
-
-    private ObjectProperty<ListWidgetType> createSelectedListWidget() {
-        final ObjectProperty<ListWidgetType> selectedListWidget = new SimpleObjectProperty<>();
-
-        final InvalidationListener listener = (Observable invalidation) -> {
-            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
-
-            if (javaFxSettingsManager != null) {
-                selectedListWidget.setValue(javaFxSettingsManager.getAppsListType());
-            } else {
-                selectedListWidget.set(ListWidgetType.ICONS_LIST);
-            }
-        };
-
-        // set the default selection
-        getControl().javaFxSettingsManagerProperty().addListener(listener);
-
-        listener.invalidated(getControl().javaFxSettingsManagerProperty());
-
-        // save changes to the list widget selection to the hard drive
-        selectedListWidget.addListener((observable, oldValue, newValue) -> {
-            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
-
-            if (newValue != null) {
-                javaFxSettingsManager.setAppsListType(newValue);
-                javaFxSettingsManager.save();
-            }
-        });
-
-        return selectedListWidget;
+        this.selectedListWidget = new SimpleObjectProperty<>();
     }
 
     /**
@@ -109,7 +66,7 @@ public class ApplicationsFeaturePanelSkin
                 .filtered(category -> category.getType() == CategoryDTO.CategoryType.INSTALLERS)
                 .sorted(Comparator.comparing(CategoryDTO::getName));
 
-        final ApplicationSidebar sidebar = new ApplicationSidebar(sortedCategories);
+        final ApplicationSidebar sidebar = new ApplicationSidebar(sortedCategories, this.selectedListWidget);
 
         sidebar.operatingSystemProperty().bind(getControl().operatingSystemProperty());
         sidebar.fuzzySearchRatioProperty().bind(getControl().fuzzySearchRatioProperty());
@@ -123,7 +80,21 @@ public class ApplicationsFeaturePanelSkin
         getControl().containAllOSCompatibleApplicationsProperty()
                 .bind(sidebar.containAllOSCompatibleApplicationsProperty());
 
-        sidebar.selectedListWidgetProperty().bindBidirectional(this.selectedListWidget);
+        // set the default selection
+        sidebar.setSelectedListWidget(Optional
+                .ofNullable(getControl().getJavaFxSettingsManager())
+                .map(JavaFxSettingsManager::getAppsListType)
+                .orElse(ListWidgetType.ICONS_LIST));
+
+        // save changes to the list widget selection to the hard drive
+        sidebar.selectedListWidgetProperty().addListener((observable, oldValue, newValue) -> {
+            final JavaFxSettingsManager javaFxSettingsManager = getControl().getJavaFxSettingsManager();
+
+            if (newValue != null) {
+                javaFxSettingsManager.setAppsListType(newValue);
+                javaFxSettingsManager.save();
+            }
+        });
 
         return new SimpleObjectProperty<>(sidebar);
     }
@@ -159,12 +130,32 @@ public class ApplicationsFeaturePanelSkin
         final ObservableList<ListWidgetElement<ApplicationDTO>> listWidgetEntries = new MappedList<>(
                 filteredApplications, ListWidgetElement::create);
 
-        final CombinedListWidget<ApplicationDTO> listWidget = new CombinedListWidget<>(listWidgetEntries,
+        final CombinedListWidget<ApplicationDTO> combinedListWidget = new CombinedListWidget<>(listWidgetEntries,
                 this.selectedListWidget);
 
-        listWidget.selectedElementProperty().bindBidirectional(this.listWidgetSelection);
+        // bind direction: controller property -> skin property
+        getControl().selectedApplicationProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                combinedListWidget.select(newValue);
+            } else {
+                combinedListWidget.deselect();
+            }
+        });
 
-        return new SimpleObjectProperty<>(listWidget);
+        // bind direction: skin property -> controller properties
+        combinedListWidget.selectedElementProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                final ApplicationDTO selectedItem = newValue.getItem();
+
+                getControl().setSelectedApplication(selectedItem);
+                getControl().setOpenedDetailsPanel(new ApplicationInformation(selectedItem));
+            } else {
+                getControl().setSelectedApplication(null);
+                getControl().setOpenedDetailsPanel(new None());
+            }
+        });
+
+        return new SimpleObjectProperty<>(combinedListWidget);
     }
 
     /**
@@ -172,10 +163,18 @@ public class ApplicationsFeaturePanelSkin
      */
     @Override
     public ObjectExpression<DetailsPanel> createDetailsPanel() {
+        return SwitchBinding
+                .<OpenDetailsPanel, DetailsPanel> builder(getControl().openedDetailsPanelProperty())
+                .withCase(ApplicationInformation.class, this::createApplicationInformationDetailsPanel)
+                .withCase(None.class, action -> null)
+                .build();
+    }
+
+    private DetailsPanel createApplicationInformationDetailsPanel(ApplicationInformation action) {
         final ApplicationInformationPanel applicationPanel = new ApplicationInformationPanel();
 
         applicationPanel.scriptInterpreterProperty().bind(getControl().scriptInterpreterProperty());
-        applicationPanel.applicationProperty().bind(this.selectedApplication);
+        applicationPanel.setApplication(action.getApplication());
 
         applicationPanel.operatingSystemProperty().bind(getControl().operatingSystemProperty());
         applicationPanel.containCommercialApplicationsProperty()
@@ -195,13 +194,13 @@ public class ApplicationsFeaturePanelSkin
 
         final DetailsPanel detailsPanel = new DetailsPanel();
 
-        detailsPanel.titleProperty().bind(StringBindings.map(this.selectedApplication, ApplicationDTO::getName));
+        detailsPanel.titleProperty().bind(
+                StringBindings.map(getControl().selectedApplicationProperty(), ApplicationDTO::getName));
         detailsPanel.setContent(applicationPanel);
-        detailsPanel.setOnClose(() -> this.listWidgetSelection.setValue(null));
+        detailsPanel.setOnClose(getControl()::closeDetailsPanel);
 
         detailsPanel.prefWidthProperty().bind(getControl().widthProperty().divide(3));
 
-        return Bindings.when(Bindings.isNotNull(this.selectedApplication))
-                .then(detailsPanel).otherwise(new SimpleObjectProperty<>());
+        return detailsPanel;
     }
 }

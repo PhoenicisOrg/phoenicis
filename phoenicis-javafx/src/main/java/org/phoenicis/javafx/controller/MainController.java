@@ -26,13 +26,10 @@ import org.phoenicis.javafx.controller.containers.ContainersController;
 import org.phoenicis.javafx.controller.engines.EnginesController;
 import org.phoenicis.javafx.controller.library.LibraryController;
 import org.phoenicis.javafx.controller.settings.SettingsController;
-import org.phoenicis.javafx.dialogs.SimpleConfirmDialog;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindow;
 import org.phoenicis.repository.RepositoryManager;
-
-import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainController {
     private final MainWindow mainWindow;
@@ -82,7 +79,9 @@ public class MainController {
             }
         };
         this.mainWindow.getApplicationsTab().selectedProperty().addListener(tabSelectedListener);
-        this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
+        if (javaFxSettingsManager.isAdvancedMode()) {
+            this.mainWindow.getContainersTab().selectedProperty().addListener(tabSelectedListener);
+        }
     }
 
     public void show() {
@@ -91,25 +90,14 @@ public class MainController {
 
     public void setOnClose(Runnable onClose) {
         this.mainWindow.setOnCloseRequest(event -> {
-            final SimpleConfirmDialog confirmDialog = SimpleConfirmDialog.builder()
-                    .withTitle(this.applicationName)
-                    .withMessage(tr("Are you sure you want to close all {0} windows?", this.applicationName))
-                    .withOwner(this.mainWindow)
-                    .withResizable(true)
-                    .withYesCallback(() -> {
-                        this.javaFxSettingsManager.setWindowHeight(this.mainWindow.getHeight());
-                        this.javaFxSettingsManager.setWindowWidth(this.mainWindow.getWidth());
-                        this.javaFxSettingsManager.setWindowMaximized(this.mainWindow.isMaximized());
-                        this.javaFxSettingsManager.save();
+            this.javaFxSettingsManager.setWindowHeight(this.mainWindow.getHeight());
+            this.javaFxSettingsManager.setWindowWidth(this.mainWindow.getWidth());
+            this.javaFxSettingsManager.setWindowMaximized(this.mainWindow.isMaximized());
+            this.javaFxSettingsManager.save();
 
-                        Platform.exit();
+            Platform.exit();
 
-                        onClose.run();
-                    })
-                    .withNoCallback(event::consume)
-                    .build();
-
-            confirmDialog.showAndCallback();
+            onClose.run();
         });
     }
 }

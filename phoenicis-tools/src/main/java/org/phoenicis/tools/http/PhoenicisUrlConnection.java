@@ -11,7 +11,7 @@ import java.util.Map;
  */
 class PhoenicisUrlConnection {
     private Integer responseCode;
-    private HttpURLConnection delegateUrlConnexion;
+    private HttpURLConnection delegateUrlConnection;
     private URL url;
     private Map<String, String> headers;
 
@@ -23,7 +23,7 @@ class PhoenicisUrlConnection {
      * @see #fromURL(URL) to build
      */
     private PhoenicisUrlConnection(HttpURLConnection urlConnection, URL url) {
-        this.delegateUrlConnexion = urlConnection;
+        this.delegateUrlConnection = urlConnection;
         this.url = url;
         this.responseCode = null;
     }
@@ -54,12 +54,19 @@ class PhoenicisUrlConnection {
     }
 
     /**
+     * Disconnect the connection
+     */
+    void disconnect() {
+        this.delegateUrlConnection.disconnect();
+    }
+
+    /**
      * Get last modified header
      *
      * @return last modified
      */
     long getLastModified() {
-        return delegateUrlConnexion.getLastModified();
+        return delegateUrlConnection.getLastModified();
     }
 
     /**
@@ -69,7 +76,7 @@ class PhoenicisUrlConnection {
      * @throws IOException if any IO error happens
      */
     InputStream getInputStream() throws IOException {
-        return delegateUrlConnexion.getInputStream();
+        return delegateUrlConnection.getInputStream();
     }
 
     /**
@@ -78,7 +85,7 @@ class PhoenicisUrlConnection {
      * @return the content-length of the resource
      */
     long getContentLengthLong() {
-        return delegateUrlConnexion.getContentLengthLong();
+        return delegateUrlConnection.getContentLengthLong();
     }
 
     /**
@@ -93,7 +100,7 @@ class PhoenicisUrlConnection {
         int responseCode = this.getReponseCode();
 
         if (responseCode == 200) {
-            final String disposition = delegateUrlConnexion.getHeaderField("Content-Disposition");
+            final String disposition = delegateUrlConnection.getHeaderField("Content-Disposition");
             if (disposition != null) {
                 int index = disposition.indexOf("filename=");
                 if (index > 0) {
@@ -129,14 +136,14 @@ class PhoenicisUrlConnection {
      */
     private int followRedirectsAndGetResponseCode() throws IOException {
         if (responseCode == null) {
-            responseCode = delegateUrlConnexion.getResponseCode();
+            responseCode = delegateUrlConnection.getResponseCode();
         }
 
         if (responseCode == 302 || responseCode == 301) {
-            final String redirectLocation = delegateUrlConnexion.getHeaderField("Location");
+            final String redirectLocation = delegateUrlConnection.getHeaderField("Location");
             this.url = new URL(redirectLocation);
-            this.delegateUrlConnexion = (HttpURLConnection) url.openConnection();
-            this.delegateUrlConnexion.setInstanceFollowRedirects(false);
+            this.delegateUrlConnection = (HttpURLConnection) url.openConnection();
+            this.delegateUrlConnection.setInstanceFollowRedirects(false);
             this.responseCode = null;
             if (this.headers != null) {
                 setHeaders(headers);
@@ -153,6 +160,6 @@ class PhoenicisUrlConnection {
      */
     void setHeaders(Map<String, String> headers) {
         this.headers = headers;
-        headers.forEach(delegateUrlConnexion::setRequestProperty);
+        headers.forEach(delegateUrlConnection::setRequestProperty);
     }
 }

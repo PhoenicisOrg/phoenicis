@@ -159,6 +159,8 @@ public class Downloader {
                     localFile)) {
                 saveConnectionToStream(url, connection, fileOutputStream, onChange);
                 return new File(directory, fileName);
+            } finally {
+                connection.disconnect();
             }
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
@@ -258,6 +260,7 @@ public class Downloader {
 
             connection.connect();
             saveConnectionToStream(url, connection, outputStream, onChange);
+            connection.disconnect();
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }
@@ -362,11 +365,12 @@ public class Downloader {
             connection.connect();
             long fileLastModified = localFile.lastModified();
             long urlLastModified = connection.getLastModified();
+            connection.disconnect();
             if (fileLastModified == 0 || urlLastModified == 0) {
                 // we know nothing
                 return true;
             }
-            return localFile.lastModified() <= connection.getLastModified();
+            return fileLastModified <= urlLastModified;
         } catch (IOException e) {
             throw new DownloadException(String.format(EXCEPTION_ITEM_DOWNLOAD_FAILED, url), e);
         }

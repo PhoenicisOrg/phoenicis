@@ -48,14 +48,15 @@
         <project.settings>${project.root}/settings</project.settings>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <org.bouncycastle.version>1.46</org.bouncycastle.version>
-        <slf4j.version>1.7.30</slf4j.version>
-        <surefire.version>3.0.0-M4</surefire.version>
-        <logback.version>1.2.3</logback.version>
-        <junit.version>4.13</junit.version>
-        <mockito.version>3.2.4</mockito.version>
-        <spring.version>5.2.3.RELEASE</spring.version>
-        <formatter-maven-plugin.version>2.11.0</formatter-maven-plugin.version>
-        <graalvm.version>19.3.1</graalvm.version>
+        <slf4j.version>2.0.7</slf4j.version>
+        <surefire.version>3.1.2</surefire.version>
+        <logback.version>1.4.8</logback.version>
+        <junit.version>4.13.2</junit.version>
+        <mockito.version>5.3.1</mockito.version>
+        <spring.version>5.3.23</spring.version>
+        <formatter-maven-plugin.version>2.23.0</formatter-maven-plugin.version>
+        <graalvm.version>21.1.0</graalvm.version>
+        <buildnumber.version>3.2.0</buildnumber.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -74,7 +75,7 @@
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
-                <version>2.9.10.1</version>
+                <version>2.15.2</version>
             </dependency>
             <dependency>
                 <groupId>com.googlecode.gettext-commons</groupId>
@@ -120,7 +121,7 @@
                                     <pluginExecutionFilter>
                                         <groupId>org.codehaus.mojo</groupId>
                                         <artifactId>buildnumber-maven-plugin</artifactId>
-                                        <versionRange>[1.4,)</versionRange>
+                                        <version>${buildnumber.version}</version>
                                         <goals>
                                             <goal>create</goal>
                                         </goals>
@@ -144,24 +145,24 @@
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
-                <version>2.11.0</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>sort</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>3.2.0</version>
                 <configuration>
                     <nrOfIndentSpace>4</nrOfIndentSpace>
                     <createBackupFile>false</createBackupFile>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>sort</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
-                <version>2.7</version>
+                <version>2.14.1</version>
                 <configuration>
                     <rulesUri>file:///${project.settings}/version-rules.xml</rulesUri>
                 </configuration>
@@ -169,27 +170,29 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>${buildnumber.version}</version>
                 <configuration>
                     <revisionOnScmFailure>unknown</revisionOnScmFailure>
                     <getRevisionOnlyOnce>true</getRevisionOnlyOnce>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
-                    <timestampFormat>{0, date, yyyy-MM-dd HH:mm}</timestampFormat>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>net.revelc.code.formatter</groupId>
                 <artifactId>formatter-maven-plugin</artifactId>
                 <version>${formatter-maven-plugin.version}</version>
+                <configuration>
+                    <configFile>../settings/POL_Formatter_Settings.xml</configFile>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>
@@ -197,14 +200,17 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <configFile>../settings/POL_Formatter_Settings.xml</configFile>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.10</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/org/phoenicis/javafx/**</exclude>
+                        <exclude>**/org/phoenicis/app/**</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>agent</id>
@@ -213,17 +219,11 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <excludes>
-                        <exclude>**/org/phoenicis/javafx/**</exclude>
-                        <exclude>**/org/phoenicis/app/**</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <release>11</release>
                 </configuration>
@@ -250,13 +250,16 @@
                         <groupId>net.revelc.code.formatter</groupId>
                         <artifactId>formatter-maven-plugin</artifactId>
                         <version>${formatter-maven-plugin.version}</version>
+                        <configuration>
+                            <configFile>../settings/POL_Formatter_Settings.xml</configFile>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>validate</id>
-                                <phase>validate</phase>
                                 <goals>
                                     <goal>validate</goal>
                                 </goals>
+                                <phase>validate</phase>
                             </execution>
                             <execution>
                                 <id>format</id>
@@ -265,9 +268,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <configFile>../settings/POL_Formatter_Settings.xml</configFile>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>

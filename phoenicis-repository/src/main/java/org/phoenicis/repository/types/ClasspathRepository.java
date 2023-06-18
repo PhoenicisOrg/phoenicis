@@ -325,11 +325,11 @@ public class ClasspathRepository implements Repository {
 
             ScriptDTO.Builder scriptDTOBuilder = new ScriptDTO.Builder(
                     objectMapper.readValue(scriptJsonInputStream, ScriptDTO.class))
-                            .withTypeId(typeId)
-                            .withCategoryId(categoryId)
-                            .withApplicationId(applicationId)
-                            .withScript(new String(IOUtils.toByteArray(scriptFile)))
-                            .withIcon(icon);
+                    .withTypeId(typeId)
+                    .withCategoryId(categoryId)
+                    .withApplicationId(applicationId)
+                    .withScript(new String(IOUtils.toByteArray(scriptFile)))
+                    .withIcon(icon);
 
             if (StringUtils.isBlank(scriptDTOBuilder.getId())) {
                 if (!StringUtils.isBlank(scriptDTOBuilder.getScriptName())) {

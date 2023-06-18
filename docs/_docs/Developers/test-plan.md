@@ -12,6 +12,8 @@ Before you start, ensure that you are in a clean environment:
 * checkout and pull the desired branch/revision from upstream `phoenicis`
 * do a clean build (`mvn clean package`)
 
+The test plan should be executed in the advanced mode.
+
 ## Applications
 * open "Applications" tab
 * check that several categories are shown

@@ -87,4 +87,11 @@ public abstract class ListWidgetBase<E, C extends ListWidgetBase<E, C, S>, S ext
 
         select(innerElement, event);
     }
+
+    /**
+     * Deselects the currently selected element
+     */
+    public void deselect() {
+        setSelectedElement(null);
+    }
 }

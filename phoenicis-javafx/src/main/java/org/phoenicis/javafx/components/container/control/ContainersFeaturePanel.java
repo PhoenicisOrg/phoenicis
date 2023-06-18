@@ -13,6 +13,8 @@ import org.phoenicis.engines.EngineSetting;
 import org.phoenicis.engines.EngineToolsManager;
 import org.phoenicis.engines.EnginesManager;
 import org.phoenicis.engines.VerbsManager;
+import org.phoenicis.javafx.components.common.panelstates.None;
+import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
 import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.container.skin.ContainersFeaturePanelSkin;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -88,6 +90,11 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
     private final ObjectProperty<ContainerDTO> selectedContainer;
 
     /**
+     * The currently opened details panel
+     */
+    private final ObjectProperty<OpenDetailsPanel> openedDetailsPanel;
+
+    /**
      * Constructor
      */
     public ContainersFeaturePanel() {
@@ -104,6 +111,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
         this.verbs = FXCollections.observableHashMap();
         this.engineTools = FXCollections.observableHashMap();
         this.selectedContainer = new SimpleObjectProperty<>();
+        this.openedDetailsPanel = new SimpleObjectProperty<>(new None());
     }
 
     /**
@@ -169,7 +177,7 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
                     engine -> engine.changeVersion(container.getName()),
                     exception -> Platform.runLater(() -> {
                         final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("Error during engine engine version change"))
+                                .withMessage(tr("Error during engine version change"))
                                 .withException(exception)
                                 .withOwner(getScene().getWindow())
                                 .build();
@@ -314,5 +322,28 @@ public class ContainersFeaturePanel extends FeaturePanel<ContainersFeaturePanel,
 
     public void setSelectedContainer(ContainerDTO selectedContainer) {
         this.selectedContainer.set(selectedContainer);
+    }
+
+    public OpenDetailsPanel getOpenedDetailsPanel() {
+        return this.openedDetailsPanel.get();
+    }
+
+    public ObjectProperty<OpenDetailsPanel> openedDetailsPanelProperty() {
+        return this.openedDetailsPanel;
+    }
+
+    public void setOpenedDetailsPanel(OpenDetailsPanel action) {
+        this.openedDetailsPanel.setValue(action);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void closeDetailsPanel() {
+        // deselect the currently selected container
+        setSelectedContainer(null);
+        // close the details panel
+        setOpenedDetailsPanel(new None());
     }
 }

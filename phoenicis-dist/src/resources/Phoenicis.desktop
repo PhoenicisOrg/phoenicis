@@ -5,6 +5,6 @@ Name=Phoenicis PlayOnLinux
 GenericName=Phoenicis PlayOnLinux
 Comment=Phoenicis
 Type=Application
-Exec=phoenicis %F
+Exec=env GTK_CSD=0 phoenicis %F
 Icon=phoenicis
 Categories=Game;Utility;

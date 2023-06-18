@@ -48,6 +48,12 @@ public abstract class FeaturePanel<C extends FeaturePanel<C, S>, S extends Featu
         this(new SimpleBooleanProperty(false));
     }
 
+    /**
+     * Closes the currently opened details panel.
+     * If no details panel has been opened nothing happens
+     */
+    public abstract void closeDetailsPanel();
+
     public boolean isInitialized() {
         return this.initialized.get();
     }

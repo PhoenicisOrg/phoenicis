@@ -37,6 +37,9 @@ public class JavaFxSettingsManager {
     @Value("${application.scale}")
     private double scale;
 
+    @Value("${application.advancedMode}")
+    private boolean advancedMode;
+
     @Value("${application.viewsource}")
     private boolean viewScriptSource;
 
@@ -99,6 +102,7 @@ public class JavaFxSettingsManager {
 
         javaFxSettings.set(JavaFxSetting.THEME, theme);
         javaFxSettings.set(JavaFxSetting.SCALE, scale);
+        javaFxSettings.set(JavaFxSetting.ADVANCED_MODE, String.valueOf(advancedMode));
         javaFxSettings.set(JavaFxSetting.VIEW_SOURCE, String.valueOf(viewScriptSource));
         javaFxSettings.set(JavaFxSetting.WINDOW_HEIGHT, this.windowHeight);
         javaFxSettings.set(JavaFxSetting.WINDOW_WIDTH, this.windowWidth);
@@ -134,6 +138,14 @@ public class JavaFxSettingsManager {
 
     public void setScale(double scale) {
         this.scale = scale;
+    }
+
+    public boolean isAdvancedMode() {
+        return advancedMode;
+    }
+
+    public void setAdvancedMode(boolean advancedMode) {
+        this.advancedMode = advancedMode;
     }
 
     public boolean isViewScriptSource() {

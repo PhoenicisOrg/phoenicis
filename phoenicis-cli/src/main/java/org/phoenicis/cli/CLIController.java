@@ -22,11 +22,15 @@ import com.github.jankroken.commandline.annotations.AllAvailableArguments;
 import com.github.jankroken.commandline.annotations.LongSwitch;
 import com.github.jankroken.commandline.annotations.Option;
 import com.github.jankroken.commandline.annotations.ShortSwitch;
-import org.phoenicis.repository.RepositoryManager;
-import org.phoenicis.repository.dto.ScriptDTO;
+import org.graalvm.polyglot.Value;
 import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
+import org.phoenicis.repository.RepositoryManager;
+import org.phoenicis.repository.dto.ScriptDTO;
+import org.phoenicis.scripts.Installer;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -35,6 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CLIController implements AutoCloseable {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CLIController.class);
     private final ConfigurableApplicationContext applicationContext;
     private final RepositoryManager repositoryManager;
     private final ScriptInterpreter scriptInterpreter;
@@ -54,6 +59,12 @@ public class CLIController implements AutoCloseable {
         arguments.remove(0);
 
         final ShortcutRunner shortcutRunner = applicationContext.getBean(ShortcutRunner.class);
+
+        if (!shortcutRunner.shortcutExists(shortcutName)) {
+            LOGGER.error("Requested shortcut does not exist: " + shortcutName);
+            return;
+        }
+
         shortcutRunner.run(shortcutName, arguments, e -> {
             throw new IllegalStateException(e);
         });
@@ -79,13 +90,37 @@ public class CLIController implements AutoCloseable {
     @AllAvailableArguments
     public void installApp(List<String> arguments) {
         final String typeName = arguments.get(0);
+        final String typeId = typeName;
         final String categoryName = arguments.get(1);
+        final String categoryId = typeId + "." + categoryName;
         final String appName = arguments.get(2);
+        final String appId = categoryId + "." + appName;
         final String scriptName = arguments.get(3);
+        final String scriptId = appId + "." + scriptName;
 
         final ScriptDTO scriptDTO = repositoryManager
-                .getScript(Arrays.asList(typeName, categoryName, appName, scriptName));
-        scriptInterpreter.runScript(scriptDTO.getScript(), Throwable::printStackTrace);
+                .getScript(Arrays.asList(typeId, categoryId, appId, scriptId));
+
+        if (scriptDTO == null) {
+            LOGGER.error("Requested app does not exist: " + arguments);
+            return;
+        }
+
+        final StringBuilder executeBuilder = new StringBuilder();
+        executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", scriptDTO.getTypeId()));
+        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";\n", scriptDTO.getCategoryId()));
+        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";\n", scriptDTO.getApplicationId()));
+        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";\n", scriptDTO.getId()));
+
+        executeBuilder.append(scriptDTO.getScript());
+        executeBuilder.append("\n");
+
+        scriptInterpreter.createInteractiveSession()
+                .eval(executeBuilder.toString(), result -> {
+                    Value installer = (Value) result;
+
+                    installer.as(Installer.class).go();
+                }, Throwable::printStackTrace);
     }
 
     @Override

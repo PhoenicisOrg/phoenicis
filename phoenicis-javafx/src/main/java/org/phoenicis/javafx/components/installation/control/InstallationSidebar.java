@@ -26,30 +26,6 @@ public class InstallationSidebar
     private final ObjectProperty<InstallationsFilter> filter;
 
     /**
-     * The JavaFX settings manager
-     */
-    private final ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager;
-
-    /**
-     * Constructor
-     *
-     * @param filter The installations filter
-     * @param items The items shown inside a toggle button group in the sidebar
-     * @param selectedListWidget The currently selected {@link ListWidgetType} by the user
-     * @param javaFxSettingsManager The JavaFX settings manager
-     */
-    private InstallationSidebar(InstallationsFilter filter, ObservableList<InstallationCategoryDTO> items,
-            ObjectProperty<ListWidgetType> selectedListWidget,
-            ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager) {
-        super(items, filter.searchTermProperty(), selectedListWidget);
-
-        this.javaFxSettingsManager = javaFxSettingsManager;
-        this.filter = new SimpleObjectProperty<>(filter);
-
-        this.selectedInstallationCategory = filter.selectedInstallationCategoryProperty();
-    }
-
-    /**
      * Constructor
      *
      * @param filter The installations filter
@@ -58,7 +34,11 @@ public class InstallationSidebar
      */
     public InstallationSidebar(InstallationsFilter filter, ObservableList<InstallationCategoryDTO> items,
             ObjectProperty<ListWidgetType> selectedListWidget) {
-        this(filter, items, selectedListWidget, new SimpleObjectProperty<>());
+        super(items, filter.searchTermProperty(), selectedListWidget);
+
+        this.filter = new SimpleObjectProperty<>(filter);
+
+        this.selectedInstallationCategory = filter.selectedInstallationCategoryProperty();
     }
 
     /**
@@ -91,17 +71,5 @@ public class InstallationSidebar
 
     public void setFilter(InstallationsFilter filter) {
         this.filter.set(filter);
-    }
-
-    public JavaFxSettingsManager getJavaFxSettingsManager() {
-        return this.javaFxSettingsManager.get();
-    }
-
-    public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
-        return this.javaFxSettingsManager;
-    }
-
-    public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {
-        this.javaFxSettingsManager.set(javaFxSettingsManager);
     }
 }

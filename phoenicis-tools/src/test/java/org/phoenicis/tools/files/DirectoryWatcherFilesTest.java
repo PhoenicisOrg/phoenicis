@@ -31,7 +31,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")

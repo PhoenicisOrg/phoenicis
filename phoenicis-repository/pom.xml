@@ -78,7 +78,7 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>2.6</version>
+            <version>2.13.0</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -87,19 +87,19 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>5.6.0.201912101111-r</version>
+            <version>6.6.0.202305301015-r</version>
             <exclusions>
                 <exclusion>
+                    <groupId>org.bouncycastle</groupId>
                     <artifactId>bcprov-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
                 </exclusion>
                 <exclusion>
+                    <groupId>org.bouncycastle</groupId>
                     <artifactId>bcpg-jdk15on</artifactId>
-                    <groupId>org.bouncycastle</groupId>
                 </exclusion>
                 <exclusion>
-                    <artifactId>bcpkix-jdk15on</artifactId>
                     <groupId>org.bouncycastle</groupId>
+                    <artifactId>bcpkix-jdk15on</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

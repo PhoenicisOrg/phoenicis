@@ -42,7 +42,9 @@ file://${application.user.repository}
 ```
 It is also possible to combine multiple repositories:
 ```
-git+https://github.com/PlayOnLiPoL can be configured via properties. 
+git+https://github.com/PlayOnLiPoL
+```
+can be configured via properties. 
 
 You find the default properties in `phoenicis-configuration/src/main/resources/OS.properties`. 
 

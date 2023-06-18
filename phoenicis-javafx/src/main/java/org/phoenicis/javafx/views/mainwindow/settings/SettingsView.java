@@ -138,6 +138,7 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
         userInterfacePanel.setScaling(javaFxSettingsManager.getScale());
         userInterfacePanel.setSelectedTheme(
                 Themes.fromShortName(javaFxSettingsManager.getTheme()).orElse(Themes.STANDARD));
+        userInterfacePanel.setAdvancedMode(javaFxSettingsManager.isAdvancedMode());
         userInterfacePanel.setShowScriptSource(javaFxSettingsManager.isViewScriptSource());
 
         userInterfacePanel.setOnRestoreSettings(javaFxSettingsManager::restoreDefault);
@@ -162,6 +163,13 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
             themeManager.setCurrentTheme(selectedTheme);
 
             javaFxSettingsManager.setTheme(selectedTheme.getShortName());
+            javaFxSettingsManager.save();
+        });
+
+        userInterfacePanel.advancedModeProperty().addListener((Observable invalidation) -> {
+            final boolean advancedMode = userInterfacePanel.isAdvancedMode();
+
+            javaFxSettingsManager.setAdvancedMode(advancedMode);
             javaFxSettingsManager.save();
         });
 

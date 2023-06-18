@@ -1,29 +1,32 @@
 ---
 app-id: org.phoenicis.playonlinux
 runtime: org.freedesktop.Platform
-runtime-version: '19.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
+  - org.freedesktop.Sdk.Compat.i386
+  - org.freedesktop.Sdk.Extension.toolchain-i386
   - org.freedesktop.Sdk.Extension.openjdk11
 add-extensions:
   # support 32-bit apps
   org.freedesktop.Platform.Compat.i386:
     directory: lib/i386-linux-gnu
-    version: '19.08'
+    version: '22.08'
 
   org.freedesktop.Platform.Compat.i386.Debug:
     directory: lib/debug/lib/i386-linux-gnu
-    version: '19.08'
+    version: '22.08'
     no-autodownload: true
 
   org.freedesktop.Platform.GL32:
     directory: lib/i386-linux-gnu/GL
-    version: '19.08'
+    version: '1.4'
+    versions: '22.08;1.4'
     subdirectories: true
     no-autodownload: true
     autodelete: false
     add-ld-path: lib
-    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d
+    merge-dirs: vulkan/icd.d;glvnd/egl_vendor.d;OpenCL/vendors;lib/dri;lib/d3d;vulkan/explicit_layer.d
     download-if: active-gl-driver
     enable-if: active-gl-driver
 command: phoenicis-playonlinux
@@ -40,6 +43,14 @@ finish-args:
   - --socket=pulseaudio
   - --share=network
   - --device=all
+x-compat-i386-opts: &compat_i386_opts
+  prepend-pkg-config-path: /app/lib32/pkgconfig:/usr/lib/i386-linux-gnu/pkgconfig
+  ldflags: -L/app/lib32
+  append-path: /usr/lib/sdk/toolchain-i386/bin
+  env:
+    CC: i686-unknown-linux-gnu-gcc
+    CXX: i686-unknown-linux-gnu-g++
+  libdir: /app/lib32
 modules:
   - name: openjdk
     buildsystem: simple
@@ -51,6 +62,39 @@ modules:
       - type: archive
         url: https://www.cabextract.org.uk/cabextract-1.6.tar.gz
         sha256: cee661b56555350d26943c5e127fc75dd290b7f75689d5ebc1f04957c4af55fb
+  - name: openldap
+    config-opts: &openldap_config_opts
+      - --disable-static
+      - --disable-slapd
+      - --disable-slurpd
+      - --disable-bdb
+      - --disable-hdb
+    cleanup: &openldap_cleanup
+      - /bin
+    sources: &openldap_sources
+      - type: archive
+        url: https://www.openldap.org/software/download/OpenLDAP/openldap-release/openldap-2.4.50.tgz
+        sha256: 5cb57d958bf5c55a678c6a0f06821e0e5504d5a92e6a33240841fbca1db586b8
+  - name: openldap-32bit
+    build-options:
+      arch:
+        x86_64: *compat_i386_opts
+    config-opts: *openldap_config_opts
+    cleanup: *openldap_cleanup
+    sources: *openldap_sources
+  # terminal emulator for "Open Terminal" in engine tools (containers)
+  - name: terminal-emu-source
+    sources:
+      - type: archive
+        url: https://sourceforge.net/projects/rxvt/files/rxvt-dev/2.7.10/rxvt-2.7.10.tar.gz
+        sha256: 616ad56502820264e6933d07bc4eb752aa6940ec14add6e780ffccf15f38d449
+  - name: terminal-emu-script
+    buildsystem: simple
+    build-commands:
+      - echo "#!/bin/bash" > /app/bin/x-terminal-emulator
+      - echo "MY_ARGS=\$(echo \$@)" >> /app/bin/x-terminal-emulator
+      - echo "/app/bin/rxvt -e \$MY_ARGS" >> /app/bin/x-terminal-emulator
+      - chmod 755 /app/bin/x-terminal-emulator
   - name: playonlinux
     buildsystem: simple
     build-commands:
@@ -70,4 +114,5 @@ modules:
       - type: script
         dest-filename: phoenicis-playonlinux
         commands:
-          - /app/jre/bin/java --module-path /app/phoenicis/lib/ --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -cp "/app/phoenicis/lib/*" --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"
+          # do not use Wine runtime (e.g. Notepad++ crashes otherwise)
+          - /app/jre/bin/java -Dapplication.environment.wineRuntime=false --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path /app/phoenicis/lib/ -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -cp "/app/phoenicis/lib/*" --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"

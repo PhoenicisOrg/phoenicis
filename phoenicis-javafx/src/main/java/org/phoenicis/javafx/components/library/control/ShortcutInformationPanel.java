@@ -5,6 +5,7 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import org.phoenicis.javafx.components.common.control.ControlBase;
 import org.phoenicis.javafx.components.library.skin.ShortcutInformationPanelSkin;
+import org.phoenicis.javafx.settings.JavaFxSettingsManager;
 import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.function.Consumer;
@@ -13,6 +14,11 @@ import java.util.function.Consumer;
  * A details panel for the library tab used to show the details for a selected shortcut
  */
 public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPanel, ShortcutInformationPanelSkin> {
+    /**
+     * The JavaFX settings manager
+     */
+    private final ObjectProperty<JavaFxSettingsManager> javaFxSettingsManager;
+
     /**
      * The {@link ObjectMapper} used to load the properties from a {@link ShortcutDTO}
      */
@@ -49,6 +55,7 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     public ShortcutInformationPanel() {
         super();
 
+        this.javaFxSettingsManager = new SimpleObjectProperty<>();
         this.objectMapper = new SimpleObjectProperty<>();
         this.shortcut = new SimpleObjectProperty<>();
         this.onShortcutRun = new SimpleObjectProperty<>();
@@ -63,6 +70,18 @@ public class ShortcutInformationPanel extends ControlBase<ShortcutInformationPan
     @Override
     public ShortcutInformationPanelSkin createSkin() {
         return new ShortcutInformationPanelSkin(this);
+    }
+
+    public JavaFxSettingsManager getJavaFxSettingsManager() {
+        return this.javaFxSettingsManager.get();
+    }
+
+    public ObjectProperty<JavaFxSettingsManager> javaFxSettingsManagerProperty() {
+        return this.javaFxSettingsManager;
+    }
+
+    public void setJavaFxSettingsManager(JavaFxSettingsManager javaFxSettingsManager) {
+        this.javaFxSettingsManager.set(javaFxSettingsManager);
     }
 
     public ObjectMapper getObjectMapper() {
