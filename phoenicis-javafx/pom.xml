@@ -27,7 +27,7 @@
     <properties>
         <project.root>${project.basedir}/../</project.root>
         <openjfx.version>19.0.2.1</openjfx.version>
-        <testfx.version>4.0.15-alpha</testfx.version>
+        <testfx.version>4.0.17</testfx.version>
     </properties>
     <dependencies>
         <dependency>
