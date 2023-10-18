@@ -26,7 +26,7 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.root>${project.basedir}/../</project.root>
-        <openjfx.version>19.0.2.1</openjfx.version>
+        <openjfx.version>21.0.1</openjfx.version>
         <testfx.version>4.0.15-alpha</testfx.version>
     </properties>
     <dependencies>
