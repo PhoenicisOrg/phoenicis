@@ -143,7 +143,7 @@
             <plugin>
                 <groupId>org.javalite</groupId>
                 <artifactId>activeweb-lessc-maven-plugin</artifactId>
-                <version>3.4-j11</version>
+                <version>3.5-j11</version>
                 <configuration>
                     <lessConfigs>
                         <lessConfig implementation="org.javalite.lessc.maven.LessConfig">
