@@ -233,7 +233,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
-                    <argLine>--add-exports javafx.graphics/com.sun.javafx.application=org.testfx</argLine>
+                    <argLine>--add-exports javafx.graphics/com.sun.javafx.application=org.testfx --add-opens java.base/java.lang=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
         </plugins>
