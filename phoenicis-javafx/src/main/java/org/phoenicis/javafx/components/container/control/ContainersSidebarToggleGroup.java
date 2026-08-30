@@ -2,8 +2,8 @@ package org.phoenicis.javafx.components.container.control;
 
 import javafx.collections.ObservableList;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
-import org.phoenicis.javafx.components.container.skin.ContainersSidebarToggleGroupSkin;
 import org.phoenicis.javafx.components.common.control.SidebarToggleGroupBase;
+import org.phoenicis.javafx.components.container.skin.ContainersSidebarToggleGroupSkin;
 
 /**
  * A toggle group component used inside the {@link ContainerSidebar}

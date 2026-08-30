@@ -107,10 +107,10 @@ public class CLIController implements AutoCloseable {
         }
 
         final StringBuilder executeBuilder = new StringBuilder();
-        executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", scriptDTO.getTypeId()));
-        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";\n", scriptDTO.getCategoryId()));
-        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";\n", scriptDTO.getApplicationId()));
-        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";\n", scriptDTO.getId()));
+        executeBuilder.append(String.format("TYPE_ID=\"%s\";%n", scriptDTO.getTypeId()));
+        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";%n", scriptDTO.getCategoryId()));
+        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";%n", scriptDTO.getApplicationId()));
+        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";%n", scriptDTO.getId()));
 
         executeBuilder.append(scriptDTO.getScript());
         executeBuilder.append("\n");

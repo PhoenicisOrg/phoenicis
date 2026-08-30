@@ -191,7 +191,7 @@ public class GenericContainersManager implements ContainersManager {
                                 return toAdd;
                             }).collect(Collectors.toList());
 
-                    if (directory.getName().equals("wineprefix")) {
+                    if ("wineprefix".equals(directory.getName())) {
                         containers.add(new WinePrefixContainerDTO.Builder().withName(containerDirectory.getName())
                                 .withPath(containerPath).withInstalledShortcuts(shortcutDTOS)
                                 .withArchitecture(configFile.readValue("wineArchitecture", ""))

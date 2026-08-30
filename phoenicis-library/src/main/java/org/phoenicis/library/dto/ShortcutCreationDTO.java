@@ -28,7 +28,7 @@ import java.net.URI;
 import java.util.Comparator;
 
 @JsonDeserialize(builder = ShortcutCreationDTO.Builder.class)
-public class ShortcutCreationDTO {
+public final class ShortcutCreationDTO {
     private final String name;
     private final String category;
     private final String description;

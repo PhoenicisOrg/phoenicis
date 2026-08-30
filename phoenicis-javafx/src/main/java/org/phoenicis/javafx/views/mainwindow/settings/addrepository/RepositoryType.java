@@ -45,7 +45,7 @@ public enum RepositoryType {
     /**
      * The translated name of the repository type
      */
-    private String label;
+    private final String label;
 
     /**
      * Constructor

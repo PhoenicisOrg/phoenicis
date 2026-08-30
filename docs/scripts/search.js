@@ -5,9 +5,10 @@ layout: null
 	function getQueryVariable(variable) {
 		var query = window.location.search.substring(1),
 			vars = query.split("&");
+		var i;
 
-		for (var i = 0; i < vars.length; i++) {
-			var pair = vars[i].split("=");
+		for (i = 0; i < vars.length; i++) {
+			const pair = vars[i].split("=");
 
 			if (pair[0] === variable) {
 				return decodeURIComponent(pair[1].replace(/\+/g, '%20')).trim();
@@ -22,9 +23,10 @@ layout: null
 			match = content.toLowerCase().indexOf(query.toLowerCase()),
 			matchLength = query.length,
 			preview;
+		var i;
 
 		// Find a relevant location in content
-		for (var i = 0; i < parts.length; i++) {
+		for (i = 0; i < parts.length; i++) {
 			if (match >= 0) {
 				break;
 			}
@@ -35,7 +37,7 @@ layout: null
 
 		// Create preview
 		if (match >= 0) {
-			var start = match - (previewLength / 2),
+			const start = match - (previewLength / 2),
 				end = start > 0 ? match + matchLength + (previewLength / 2) : previewLength;
 
 			preview = content.substring(start, end).trim();
@@ -49,7 +51,7 @@ layout: null
 			}
 
 			// Highlight query parts
-			preview = preview.replace(new RegExp("(" + parts.join("|") + ")", "gi"), "<strong>$1</strong>");
+			// Highlight intentionally disabled to avoid dynamic RegExp construction.
 		} else {
 			// Use start of content if no match found
 			preview = content.substring(0, previewLength).trim() + (content.length > previewLength ? "..." : "");
@@ -59,20 +61,34 @@ layout: null
 	}
 
 	function displaySearchResults(results, query) {
-		var searchResultsEl = document.getElementById("search-results"),
+		const searchResultsEl = document.getElementById("search-results"),
 			searchProcessEl = document.getElementById("search-process");
 
 		if (results.length) {
-			var resultsHTML = "";
+			searchResultsEl.textContent = "";
+			const listEl = document.createElement("ul");
 			results.forEach(function (result) {
-				var item = window.data[result.ref],
+				const item = window.data[result.ref],
 					contentPreview = getPreview(query, item.content, 170),
 					titlePreview = getPreview(query, item.title);
 
-				resultsHTML += "<li><h4><a href='{{ site.baseurl }}" + item.url.trim() + "'>" + titlePreview + "</a></h4><p><small>" + contentPreview + "</small></p></li>";
+				const li = document.createElement("li");
+				const h4 = document.createElement("h4");
+				const a = document.createElement("a");
+				a.href = "{{ site.baseurl }}" + item.url.trim();
+				a.textContent = titlePreview;
+				h4.appendChild(a);
+
+				const p = document.createElement("p");
+				const small = document.createElement("small");
+				small.textContent = contentPreview;
+				p.appendChild(small);
+				li.appendChild(h4);
+				li.appendChild(p);
+				listEl.appendChild(li);
 			});
 
-			searchResultsEl.innerHTML = resultsHTML;
+			searchResultsEl.appendChild(listEl);
 			searchProcessEl.innerText = "Showing";
 		} else {
 			searchResultsEl.style.display = "none";

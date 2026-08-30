@@ -21,7 +21,7 @@ package org.phoenicis.settings;
 import java.util.Properties;
 
 public class Settings {
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     public String get(Setting setting) {
         return properties.getProperty(setting.toString());

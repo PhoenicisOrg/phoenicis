@@ -27,7 +27,7 @@ import java.util.List;
 class CommandHistory {
 
     private final List<Item> history = new ArrayList<>();
-    private int historyPosition = 0;
+    private int historyPosition;
 
     public void add(Item item) {
         this.history.add(item);

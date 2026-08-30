@@ -2,8 +2,8 @@ package org.phoenicis.javafx.components.common.widgets.details.control;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.components.common.widgets.details.skin.DetailsListWidgetSkin;
 import org.phoenicis.javafx.components.common.widgets.control.ListWidgetBase;
+import org.phoenicis.javafx.components.common.widgets.details.skin.DetailsListWidgetSkin;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetElement;
 import org.phoenicis.javafx.components.common.widgets.utils.ListWidgetSelection;
 

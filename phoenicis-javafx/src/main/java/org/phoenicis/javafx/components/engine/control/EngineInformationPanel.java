@@ -30,6 +30,11 @@ public class EngineInformationPanel extends ControlBase<EngineInformationPanel, 
     private final ObjectProperty<Consumer<EngineDTO>> onEngineInstall;
 
     /**
+     * The callback for install from URL button clicks
+     */
+    private final ObjectProperty<Consumer<EngineDTO>> onEngineInstallFromUrl;
+
+    /**
      * The callback for delete/uninstall button clicks
      */
     private final ObjectProperty<Consumer<EngineDTO>> onEngineDelete;
@@ -44,12 +49,14 @@ public class EngineInformationPanel extends ControlBase<EngineInformationPanel, 
      */
     private EngineInformationPanel(ObjectProperty<Engine> engine, ObjectProperty<EngineDTO> engineDTO,
             ObjectProperty<Consumer<EngineDTO>> onEngineInstall,
+            ObjectProperty<Consumer<EngineDTO>> onEngineInstallFromUrl,
             ObjectProperty<Consumer<EngineDTO>> onEngineDelete) {
         super();
 
         this.engine = engine;
         this.engineDTO = engineDTO;
         this.onEngineInstall = onEngineInstall;
+        this.onEngineInstallFromUrl = onEngineInstallFromUrl;
         this.onEngineDelete = onEngineDelete;
     }
 
@@ -58,6 +65,7 @@ public class EngineInformationPanel extends ControlBase<EngineInformationPanel, 
      */
     public EngineInformationPanel() {
         this(new SimpleObjectProperty<>(), new SimpleObjectProperty<>(), new SimpleObjectProperty<>(),
+                new SimpleObjectProperty<>(),
                 new SimpleObjectProperty<>());
     }
 
@@ -107,6 +115,18 @@ public class EngineInformationPanel extends ControlBase<EngineInformationPanel, 
 
     public Consumer<EngineDTO> getOnEngineDelete() {
         return onEngineDelete.get();
+    }
+
+    public Consumer<EngineDTO> getOnEngineInstallFromUrl() {
+        return onEngineInstallFromUrl.get();
+    }
+
+    public ObjectProperty<Consumer<EngineDTO>> onEngineInstallFromUrlProperty() {
+        return onEngineInstallFromUrl;
+    }
+
+    public void setOnEngineInstallFromUrl(Consumer<EngineDTO> onEngineInstallFromUrl) {
+        this.onEngineInstallFromUrl.set(onEngineInstallFromUrl);
     }
 
     public ObjectProperty<Consumer<EngineDTO>> onEngineDeleteProperty() {

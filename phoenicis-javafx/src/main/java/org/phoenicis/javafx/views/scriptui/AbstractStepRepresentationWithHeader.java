@@ -18,16 +18,16 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.Message;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.phoenicis.scripts.ui.Message;
 
 abstract class AbstractStepRepresentationWithHeader extends AbstractStepRepresentation {
-    private Pane contentPane;
+    private final Pane contentPane;
 
     AbstractStepRepresentationWithHeader(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse) {
         super(parent, messageWaitingForResponse);

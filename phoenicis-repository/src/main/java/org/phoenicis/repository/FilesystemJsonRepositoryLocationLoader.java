@@ -61,7 +61,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
 
         if (repositoryListFile.exists()) {
             try {
-                result = this.objectMapper.readValue(new File(repositoryListPath),
+                result = this.objectMapper.readValue(repositoryListFile,
                         TypeFactory.defaultInstance().constructParametricType(List.class, RepositoryLocation.class));
             } catch (IOException e) {
                 LOGGER.error("Couldn't load repository location list", e);
@@ -76,7 +76,7 @@ public class FilesystemJsonRepositoryLocationLoader implements RepositoryLocatio
     @Override
     public void saveRepositories(List<RepositoryLocation<? extends Repository>> repositoryLocations) {
         try {
-            objectMapper.writeValue(new File(repositoryListPath), repositoryLocations);
+            objectMapper.writeValue(new File(repositoryListPath).getAbsoluteFile(), repositoryLocations);
         } catch (IOException e) {
             LOGGER.error("Couldn't save repository location list", e);
         }

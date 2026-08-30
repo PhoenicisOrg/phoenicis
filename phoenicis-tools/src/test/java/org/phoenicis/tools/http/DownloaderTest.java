@@ -18,47 +18,62 @@
 
 package org.phoenicis.tools.http;
 
-import org.phoenicis.tools.files.FileSizeUtilities;
 import org.apache.commons.io.IOUtils;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockserver.integration.ClientAndServer;
-import org.mockserver.model.Header;
+import org.phoenicis.tools.files.FileSizeUtilities;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 
 import java.io.File;
 import java.io.FileReader;
-import java.net.MalformedURLException;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockserver.model.HttpRequest.request;
-import static org.mockserver.model.HttpResponse.response;
 
 public class DownloaderTest {
     private static URL mockServerURL;
     private static URL mockServerURLFile2;
 
-    private static ClientAndServer mockServer;
-    private static int MOCKSERVER_PORT = 3343;
+    private static HttpServer httpServer;
 
     @BeforeClass
-    public static void setUp() throws MalformedURLException {
-        mockServer = new ClientAndServer(MOCKSERVER_PORT);
-        mockServerURL = new URL("http://localhost:" + MOCKSERVER_PORT + "/test.txt");
-        mockServerURLFile2 = new URL("http://localhost:" + MOCKSERVER_PORT + "/test2.txt");
+    public static void setUp() throws IOException {
+        InetAddress loopbackAddress = InetAddress.getLoopbackAddress();
+        httpServer = HttpServer.create(new InetSocketAddress(loopbackAddress, 0), 0);
+        httpServer.createContext("/test.txt", exchange -> respond(exchange, "Content file to download"));
+        httpServer.createContext("/test2.txt", exchange -> respond(exchange, "Content file to download 2"));
+        httpServer.start();
+
+        int port = httpServer.getAddress().getPort();
+        String loopbackHost = loopbackAddress.getHostAddress();
+        mockServerURL = new URL("http", loopbackHost, port, "/test.txt");
+        mockServerURLFile2 = new URL("http", loopbackHost, port, "/test2.txt");
     }
 
     @AfterClass
     public static void tearDown() {
-        mockServer.stop();
+        if (httpServer != null) {
+            httpServer.stop(0);
+        }
+    }
+
+    private static void respond(HttpExchange exchange, String body) throws IOException {
+        byte[] response = body.getBytes(StandardCharsets.UTF_8);
+        exchange.getResponseHeaders().set("Content-Type", "application/config");
+        exchange.sendResponseHeaders(200, response.length);
+        exchange.getResponseBody().write(response);
+        exchange.close();
     }
 
     @Test
     public void testGetDownloadFileFileIsDownloaded() throws Exception {
-        mockServer.when(request().withMethod("GET").withPath("/test.txt")).respond(response().withStatusCode(200)
-                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download"));
-
         File temporaryFile = File.createTempFile("test", "txt");
         temporaryFile.deleteOnExit();
         new Downloader(new FileSizeUtilities()).get(mockServerURL, temporaryFile, e -> {
@@ -71,9 +86,6 @@ public class DownloaderTest {
 
     @Test
     public void testGetDownloadFileInAStringFileIsDownloaded() throws Exception {
-        mockServer.when(request().withMethod("GET").withPath("/test2.txt")).respond(response().withStatusCode(200)
-                .withHeaders(new Header("Content-Type", "application/config")).withBody("Content file to download 2"));
-
         String result = new Downloader(new FileSizeUtilities()).get(mockServerURLFile2, e -> {
         });
 

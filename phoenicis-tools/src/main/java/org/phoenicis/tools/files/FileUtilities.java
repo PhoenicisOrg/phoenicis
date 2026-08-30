@@ -304,15 +304,15 @@ public class FileUtilities extends FilesManipulator {
     private Set<PosixFilePermission> singleIntToFilePermission(Integer mode, String groupType) {
         Set<PosixFilePermission> permissions = new HashSet<>(9);
 
-        if (Arrays.asList(new Integer[] { 1, 3, 5, 7 }).contains(mode)) {
+        if (Arrays.asList(1, 3, 5, 7).contains(mode)) {
             permissions.add(PosixFilePermission.valueOf(groupType + "_EXECUTE"));
         }
 
-        if (Arrays.asList(new Integer[] { 2, 3, 6, 7 }).contains(mode)) {
+        if (Arrays.asList(2, 3, 6, 7).contains(mode)) {
             permissions.add(PosixFilePermission.valueOf(groupType + "_WRITE"));
         }
 
-        if (Arrays.asList(new Integer[] { 4, 5, 6, 7 }).contains(mode)) {
+        if (Arrays.asList(4, 5, 6, 7).contains(mode)) {
             permissions.add(PosixFilePermission.valueOf(groupType + "_READ"));
         }
 

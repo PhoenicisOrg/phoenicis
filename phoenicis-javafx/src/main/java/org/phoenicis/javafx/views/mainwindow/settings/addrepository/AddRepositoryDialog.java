@@ -25,7 +25,7 @@ public class AddRepositoryDialog extends Dialog<RepositoryLocation<? extends Rep
     /**
      * The repository type selection step
      */
-    private ChooseRepositoryTypePanel chooseRepositoryTypePanel;
+    private final ChooseRepositoryTypePanel chooseRepositoryTypePanel;
 
     /**
      * The repository details selection step

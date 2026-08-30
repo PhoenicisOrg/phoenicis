@@ -40,7 +40,7 @@ import java.util.List;
  */
 @JsonDeserialize(builder = CategoryDTO.Builder.class)
 @Translatable
-public class CategoryDTO {
+public final class CategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryDTO.class);
     private final String typeId;
     private final CategoryType type;

@@ -32,7 +32,7 @@ import java.util.List;
  * Represents a category of container
  */
 @JsonDeserialize(builder = ContainerCategoryDTO.Builder.class)
-public class ContainerCategoryDTO {
+public final class ContainerCategoryDTO {
     private final String name;
     private final String description;
     private final List<ContainerDTO> containers;

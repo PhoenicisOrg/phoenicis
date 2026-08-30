@@ -29,63 +29,81 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MultipleRepository extends MergeableRepository {
-    private final static Logger LOGGER = LoggerFactory.getLogger(MultipleRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultipleRepository.class);
 
-    private List<Repository> repositories;
+    private final List<Repository> repositories;
 
     public MultipleRepository(Repository... repositories) {
         this.repositories = new ArrayList<>(Arrays.asList(repositories));
     }
 
     public MultipleRepository(List<Repository> repositories) {
-        this.repositories = repositories;
+        this.repositories = new ArrayList<>(repositories);
     }
 
     @Override
     public RepositoryDTO fetchInstallableApplications() {
         LOGGER.info(String.format("Fetching applications for: %s", this.toString()));
 
+        final List<Repository> repositoriesSnapshot = getRepositoriesSnapshot();
+
         /*
          * This step is needed because we need a mapping between the CategoryDTO
          * list and its application source, to preserve the order in the
          * reduction step
          */
-        final Map<Repository, RepositoryDTO> repositoriesMap = this.repositories.stream().parallel()
+        final Map<Repository, RepositoryDTO> repositoriesMap = repositoriesSnapshot.stream().parallel()
                 .collect(Collectors.toConcurrentMap(source -> source, Repository::fetchInstallableApplications));
 
-        return mergeRepositories(repositoriesMap, repositories);
+        return mergeRepositories(repositoriesMap, repositoriesSnapshot);
     }
 
     @Override
     public void onDelete() {
-        repositories.stream().forEach(Repository::onDelete);
+        getRepositoriesSnapshot().forEach(Repository::onDelete);
     }
 
     public int size() {
-        return this.repositories.size();
+        synchronized (this.repositories) {
+            return this.repositories.size();
+        }
     }
 
     public void moveRepository(Repository repository, int toIndex) {
-        int oldIndex = this.repositories.indexOf(repository);
+        synchronized (this.repositories) {
+            int oldIndex = this.repositories.indexOf(repository);
 
-        Collections.swap(this.repositories, oldIndex, toIndex);
+            Collections.swap(this.repositories, oldIndex, toIndex);
+        }
     }
 
     public void addRepository(Repository repository) {
-        this.repositories.add(repository);
+        synchronized (this.repositories) {
+            this.repositories.add(repository);
+        }
     }
 
     public void addRepository(int index, Repository repository) {
-        this.repositories.add(index, repository);
+        synchronized (this.repositories) {
+            this.repositories.add(index, repository);
+        }
     }
 
     public void removeRepository(Repository repository) {
-        this.repositories.remove(repository);
+        synchronized (this.repositories) {
+            this.repositories.remove(repository);
+        }
+    }
+
+    private List<Repository> getRepositoriesSnapshot() {
+        synchronized (this.repositories) {
+            return new ArrayList<>(this.repositories);
+        }
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("repositories", repositories).toString();
+        return new ToStringBuilder(this).append("repositories", getRepositoriesSnapshot()).toString();
     }
 
     @Override
@@ -101,14 +119,14 @@ public class MultipleRepository extends MergeableRepository {
         MultipleRepository that = (MultipleRepository) o;
 
         return new EqualsBuilder()
-                .append(repositories, that.repositories)
+                .append(getRepositoriesSnapshot(), that.getRepositoriesSnapshot())
                 .isEquals();
     }
 
     @Override
     public int hashCode() {
         return new HashCodeBuilder()
-                .append(repositories)
+                .append(getRepositoriesSnapshot())
                 .toHashCode();
     }
 }

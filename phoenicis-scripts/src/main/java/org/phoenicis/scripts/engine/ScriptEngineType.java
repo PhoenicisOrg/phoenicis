@@ -14,7 +14,8 @@ public enum ScriptEngineType {
         public PhoenicisScriptEngine createScriptEngine() {
             return new PolyglotScriptEngine("js",
                     Map.of("js.nashorn-compat", "true",
-                            "js.experimental-foreign-object-prototype", "true"));
+                            "js.foreign-object-prototype", "true",
+                            "js.ecmascript-version", "2021"));
         }
     };
 

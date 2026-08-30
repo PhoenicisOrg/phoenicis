@@ -9,7 +9,12 @@ import java.util.Map;
 /**
  * Wrapper around {@link HttpURLConnection class} that follows correctly HTTP redirects
  */
-class PhoenicisUrlConnection {
+final class PhoenicisUrlConnection {
+    static final String CONNECT_TIMEOUT_PROPERTY = "phoenicis.http.connectTimeout.ms";
+    static final String READ_TIMEOUT_PROPERTY = "phoenicis.http.readTimeout.ms";
+    static final int DEFAULT_CONNECT_TIMEOUT_MS = 10000;
+    static final int DEFAULT_READ_TIMEOUT_MS = 30000;
+
     private Integer responseCode;
     private HttpURLConnection delegateUrlConnection;
     private URL url;
@@ -36,12 +41,34 @@ class PhoenicisUrlConnection {
      * @throws IOException if any IO Error happens
      */
     static PhoenicisUrlConnection fromURL(URL url) throws IOException {
-        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setInstanceFollowRedirects(false);
+        final HttpURLConnection connection = openConnection(url);
 
         return new PhoenicisUrlConnection(
                 connection,
                 url);
+    }
+
+    private static HttpURLConnection openConnection(URL url) throws IOException {
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setInstanceFollowRedirects(false);
+        connection.setConnectTimeout(resolveTimeout(CONNECT_TIMEOUT_PROPERTY, DEFAULT_CONNECT_TIMEOUT_MS));
+        connection.setReadTimeout(resolveTimeout(READ_TIMEOUT_PROPERTY, DEFAULT_READ_TIMEOUT_MS));
+        return connection;
+    }
+
+    static int resolveTimeout(String propertyName, int defaultValue) {
+        final String configuredValue = System.getProperty(propertyName);
+
+        if (configuredValue == null || configuredValue.trim().isEmpty()) {
+            return defaultValue;
+        }
+
+        try {
+            final int timeout = Integer.parseInt(configuredValue.trim());
+            return timeout > 0 ? timeout : defaultValue;
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     /**
@@ -142,8 +169,7 @@ class PhoenicisUrlConnection {
         if (responseCode == 302 || responseCode == 301) {
             final String redirectLocation = delegateUrlConnection.getHeaderField("Location");
             this.url = new URL(redirectLocation);
-            this.delegateUrlConnection = (HttpURLConnection) url.openConnection();
-            this.delegateUrlConnection.setInstanceFollowRedirects(false);
+            this.delegateUrlConnection = openConnection(url);
             this.responseCode = null;
             if (this.headers != null) {
                 setHeaders(headers);

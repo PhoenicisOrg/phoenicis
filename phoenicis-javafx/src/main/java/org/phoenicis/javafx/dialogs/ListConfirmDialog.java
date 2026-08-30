@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * A list confirmation dialog, showing a list with items the user can confirm
  */
-public class ListConfirmDialog extends ConfirmDialog {
+public final class ListConfirmDialog extends ConfirmDialog {
     /**
      * A list of items to confirm
      */

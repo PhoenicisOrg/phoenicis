@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -41,7 +40,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 @Safe
 public class LibraryManager {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LibraryManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LibraryManager.class);
 
     private final String shortcutDirectory;
     private ObjectMapper objectMapper;
@@ -144,7 +143,7 @@ public class LibraryManager {
             return new ShortcutDTO.Builder()
                     .withId(baseName)
                     .withInfo(shortcutInfoDTO)
-                    .withScript(IOUtils.toString(new FileInputStream(file), "UTF-8"))
+                    .withScript(IOUtils.toString(file.toURI(), "UTF-8"))
                     .withIcon(icon)
                     .withCategoryIcon(categoryIcon)
                     .withMiniature(miniature)

@@ -22,7 +22,7 @@ package org.phoenicis.entities;
  * Represent a progress state that will be sent to the UI. The UI will be able
  * to represent this progress state (progressbar, etc...)
  */
-public class ProgressEntity {
+public final class ProgressEntity {
     private final ProgressState state;
     private final double percent;
 

@@ -30,6 +30,8 @@ import org.phoenicis.javafx.themes.ThemeConfiguration;
 import org.phoenicis.javafx.views.ViewsConfiguration;
 import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.repository.RepositoryConfiguration;
+import org.phoenicis.tools.archive.Extractor;
+import org.phoenicis.tools.http.Downloader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +64,12 @@ public class ControllerConfiguration {
     @Autowired
     private JavaFxSettingsConfiguration javaFxSettingsConfiguration;
 
+    @Autowired
+    private Downloader downloader;
+
+    @Autowired
+    private Extractor extractor;
+
     @Bean
     public MainController mainController() {
         return new MainController(applicationName,
@@ -92,7 +100,9 @@ public class ControllerConfiguration {
         return new EnginesController(viewsConfiguration.viewEngines(),
                 repositoryConfiguration.repositoryManager(),
                 enginesConfiguration.enginesSource(),
-                themeConfiguration.themeManager());
+                themeConfiguration.themeManager(),
+                downloader,
+                extractor);
     }
 
     @Bean

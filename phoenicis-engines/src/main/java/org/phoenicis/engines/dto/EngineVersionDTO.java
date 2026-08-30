@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 @JsonDeserialize(builder = EngineVersionDTO.Builder.class)
-public class EngineVersionDTO {
+public final class EngineVersionDTO {
     private final String version;
     private final String url;
     private final String sha1sum;

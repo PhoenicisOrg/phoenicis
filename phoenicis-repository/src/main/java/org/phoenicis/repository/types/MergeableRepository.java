@@ -3,21 +3,15 @@
  */
 package org.phoenicis.repository.types;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.phoenicis.configuration.localisation.Localisation;
 import org.phoenicis.configuration.localisation.PropertiesResourceBundle;
 import org.phoenicis.repository.dto.*;
-import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 import java.util.*;
 import java.util.function.Function;
 
 abstract class MergeableRepository implements Repository {
-    private final static org.slf4j.Logger LOGGER = LoggerFactory.getLogger(MergeableRepository.class);
-
     /**
      * This method merges multiple application sources into a single list of
      * category dtos. For this it receives a map, containing a binding between
@@ -81,10 +75,8 @@ abstract class MergeableRepository implements Repository {
             }
         }
 
-        RepositoryDTO mergedRepositoryDTO = repositoryDTOBuilder
+        return repositoryDTOBuilder
                 .withTypes(new ArrayList<>(mergedTypes.values())).build();
-
-        return mergedRepositoryDTO;
 
     }
 
@@ -178,7 +170,7 @@ abstract class MergeableRepository implements Repository {
      *         <code>rightMiniatures</code>
      */
     protected List<URI> mergeMiniatures(List<URI> leftMiniatures, List<URI> rightMiniatures) {
-        HashMap<String, URI> mergedMiniatures = new HashMap<>();
+        final Map<String, URI> mergedMiniatures = new LinkedHashMap<>();
 
         /*
          * Concatenate the both lists with the left list in front of the right one
@@ -190,13 +182,8 @@ abstract class MergeableRepository implements Repository {
          * Remove duplicates
          */
         for (URI miniatureUri : miniatures) {
-            try (InputStream inputStream = miniatureUri.toURL().openStream()) {
-                String checksum = DigestUtils.md5Hex(inputStream);
-                if (!mergedMiniatures.containsKey(checksum)) {
-                    mergedMiniatures.put(checksum, miniatureUri);
-                }
-            } catch (IOException e) {
-                LOGGER.error(String.format("Couldn't merge miniatures at %s", miniatureUri.toString()), e);
+            if (miniatureUri != null) {
+                mergedMiniatures.putIfAbsent(miniatureUri.normalize().toString(), miniatureUri);
             }
         }
 

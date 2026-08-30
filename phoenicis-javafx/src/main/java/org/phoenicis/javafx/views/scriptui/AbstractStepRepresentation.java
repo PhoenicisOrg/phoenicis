@@ -18,7 +18,6 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.Message;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +30,7 @@ import javafx.scene.paint.RadialGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.phoenicis.scripts.ui.Message;
 
 import java.net.URL;
 

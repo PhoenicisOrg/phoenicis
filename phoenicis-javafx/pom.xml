@@ -26,7 +26,6 @@
     <artifactId>phoenicis-javafx</artifactId>
     <properties>
         <project.root>${project.basedir}/../</project.root>
-        <openjfx.version>19.0.2.1</openjfx.version>
         <testfx.version>4.0.18</testfx.version>
     </properties>
     <dependencies>
@@ -110,6 +109,16 @@
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>${openjfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>${openjfx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${openjfx.version}</version>
         </dependency>
@@ -123,11 +132,6 @@
             <artifactId>openjfx-monocle</artifactId>
             <version>jdk-12.0.1+2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.PhoenicisOrg</groupId>
-            <artifactId>javafx-collections</artifactId>
-            <version>1.2.5</version>
         </dependency>
     </dependencies>
     <build>
@@ -209,19 +213,26 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.6.3</version>
                 <configuration>
-                    <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                    <mainClass>org.phoenicis.javafx.PhoenicisLauncher</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>@{argLine} --add-exports javafx.graphics/com.sun.javafx.application=org.testfx</argLine>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.5.1</version>
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>org.phoenicis.javafx.JavaFXApplication</mainClass>
+                            <mainClass>org.phoenicis.javafx.PhoenicisLauncher</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

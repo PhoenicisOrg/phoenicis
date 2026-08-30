@@ -19,10 +19,10 @@
 package org.phoenicis.tools.archive;
 
 import com.google.common.io.Files;
-import org.phoenicis.tools.files.FileAnalyser;
-import org.phoenicis.tools.files.FileUtilities;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import org.phoenicis.tools.files.FileAnalyser;
+import org.phoenicis.tools.files.FileUtilities;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,10 +36,10 @@ import static org.junit.Assert.assertTrue;
 
 public class ExtractorTest {
     final URL inputUrl = ExtractorTest.class.getResource(".");
-    private Tar tar = new Tar(new FileUtilities());
-    private Zip zip = new Zip();
+    private final Tar tar = new Tar(new FileUtilities());
+    private final Zip zip = new Zip();
 
-    private Extractor extractor = new Extractor(new FileAnalyser(), tar, zip);
+    private final Extractor extractor = new Extractor(new FileAnalyser(), tar, zip);
 
     @Test
     public void testUncompressTarFile() throws IOException, URISyntaxException {

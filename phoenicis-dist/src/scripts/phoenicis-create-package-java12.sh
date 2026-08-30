@@ -83,7 +83,7 @@ Version: $VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl
+Depends: openjdk-25-jdk, unzip, wget, xterm | x-terminal-emulator, python3 | python, imagemagick, cabextract, icoutils, p7zip-full, curl
 Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
 Description: This program is a front-end for wine.
  It permits you to install Windows Games and softwares
@@ -99,6 +99,15 @@ EOF
     cp -a packages/phoenicis $packageName/usr/share/
     cp -a "$SCRIPT_PATH/../launchers/phoenicis" $packageName/usr/bin/phoenicis
     chmod +x $packageName/usr/bin/phoenicis
+
+    launcherCompatibilityDir="$packageName/usr/share/phoenicis/bin"
+    mkdir -p "$launcherCompatibilityDir"
+    cat << 'EOF_LAUNCHER' > "$launcherCompatibilityDir/Phoenicis PlayOnLinux"
+#!/bin/sh
+
+exec /usr/bin/phoenicis "$@"
+EOF_LAUNCHER
+    chmod +x "$launcherCompatibilityDir/Phoenicis PlayOnLinux"
 
     cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "$packageName/usr/share/applications"
     cp "$SCRIPT_PATH/../resources/phoenicis.png" "$packageName/usr/share/pixmaps"

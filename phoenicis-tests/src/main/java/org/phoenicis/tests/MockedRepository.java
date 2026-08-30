@@ -18,11 +18,11 @@
 
 package org.phoenicis.tests;
 
+import org.apache.commons.io.IOUtils;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.repository.dto.*;
 import org.phoenicis.repository.types.Repository;
-import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.repository.types.TeeRepository;
-import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.util.Arrays;

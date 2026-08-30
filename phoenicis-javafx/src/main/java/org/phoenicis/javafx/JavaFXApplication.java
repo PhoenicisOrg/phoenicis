@@ -18,53 +18,64 @@
 
 package org.phoenicis.javafx;
 
-import javafx.application.Application;
-import javafx.scene.image.Image;
+import javafx.application.Platform;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import org.phoenicis.javafx.controller.MainController;
 import org.phoenicis.multithreading.ControlledThreadPoolExecutorServiceCloser;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-public class JavaFXApplication extends Application {
-    private final static Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
+public final class JavaFXApplication {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaFXApplication.class);
+
+    private JavaFXApplication() {
+        // utility class
+    }
 
     public static void main(String[] args) {
+        launchApplication();
+    }
+
+    private static void launchApplication() {
+        final Runnable startup = () -> {
+            try {
+                loadFonts();
+                final ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
+                        AppConfiguration.class);
+
+                final MainController mainController = applicationContext.getBean(MainController.class);
+                mainController.show();
+                mainController.setOnClose(() -> {
+                    try {
+                        applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class)
+                                .setCloseImmediately(true);
+                        applicationContext.close();
+                    } catch (Exception e) {
+                        LOGGER.warn("Exception while closing the application.", e);
+                    }
+                });
+            } catch (Exception e) {
+                LOGGER.error("Unable to start Phoenicis JavaFX application.", e);
+            }
+        };
+
         try {
-            Application.launch(JavaFXApplication.class);
-        } catch (Exception e) {
-            e.printStackTrace();
+            Platform.startup(startup);
+        } catch (IllegalStateException e) {
+            Platform.runLater(startup);
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("views/common/phoenicis.png")));
-        primaryStage.setTitle("Phoenicis");
-        loadFonts();
-        ConfigurableApplicationContext applicationContext = new AnnotationConfigApplicationContext(
-                AppConfiguration.class);
-
-        final MainController mainController = applicationContext.getBean(MainController.class);
-        mainController.show();
-        mainController.setOnClose(() -> {
-            try {
-                applicationContext.getBean(ControlledThreadPoolExecutorServiceCloser.class).setCloseImmediately(true);
-                applicationContext.close();
-            } catch (Exception e) {
-                LOGGER.warn("Exception while closing the application.", e);
-            }
-        });
+    private static void loadFonts() {
+        Font.loadFont(JavaFXApplication.class.getResource("views/common/mavenpro/MavenPro-Medium.ttf").toExternalForm(),
+                12);
+        Font.loadFont(JavaFXApplication.class.getResource("views/common/roboto/Roboto-Medium.ttf").toExternalForm(),
+                12);
+        Font.loadFont(JavaFXApplication.class.getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(),
+                12);
+        Font.loadFont(JavaFXApplication.class.getResource("views/common/roboto/Roboto-Bold.ttf").toExternalForm(),
+                12);
     }
-
-    private void loadFonts() {
-        Font.loadFont(getClass().getResource("views/common/mavenpro/MavenPro-Medium.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Medium.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Light.ttf").toExternalForm(), 12);
-        Font.loadFont(getClass().getResource("views/common/roboto/Roboto-Bold.ttf").toExternalForm(), 12);
-    }
-
 }

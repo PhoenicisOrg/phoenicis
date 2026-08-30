@@ -1,8 +1,8 @@
 package org.phoenicis.javafx.components.library.skin;
 
 import javafx.scene.control.ToggleButton;
-import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
+import org.phoenicis.javafx.components.library.control.LibrarySidebarToggleGroup;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 
 import java.util.Optional;

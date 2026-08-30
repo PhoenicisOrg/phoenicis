@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Locale;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -97,13 +98,13 @@ class SetupUiCliImplementation implements SetupUi {
             @Override
             public void setProgressPercentage(double value) {
                 percentage = min(100, max(0, value));
-                printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
+                printIfVerbose("[" + String.format(Locale.ROOT, "%.2f", percentage) + "] " + textToShow + " : " + text);
             }
 
             @Override
             public void setText(String text) {
                 this.text = text;
-                printIfVerbose("[" + String.format("%.2f", percentage) + "] " + textToShow + " : " + text);
+                printIfVerbose("[" + String.format(Locale.ROOT, "%.2f", percentage) + "] " + textToShow + " : " + text);
             }
         });
     }

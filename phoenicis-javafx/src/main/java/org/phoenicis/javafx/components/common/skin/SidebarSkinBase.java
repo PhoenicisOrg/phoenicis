@@ -21,7 +21,7 @@ public abstract class SidebarSkinBase<E, C extends SidebarBase<E, C, S>, S exten
      *
      * @param control The control belonging to the skin
      */
-    public SidebarSkinBase(C control) {
+    protected SidebarSkinBase(C control) {
         super(control);
     }
 

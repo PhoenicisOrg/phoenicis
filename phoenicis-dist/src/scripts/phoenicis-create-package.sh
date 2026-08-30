@@ -47,7 +47,6 @@ _download_jpackager() {
     unzip jdk.packager-$JPACKAGER_OS.zip
 }
 
-
 jpackager() {
     if [ ! -e "$PHOENICIS_JPACKAGER/jpackager" ]; then
         _download_jpackager
@@ -56,45 +55,105 @@ jpackager() {
     "$PHOENICIS_JPACKAGER/jpackager" "$@"
 }
 
-cd "$PHOENICIS_TARGET"
+package_image() {
+    if command -v jpackage >/dev/null 2>&1; then
+        JPACKAGE_ARGUMENTS=(
+            "--type" "app-image"
+            "--input" "$PHOENICIS_TARGET/lib"
+            "--main-jar" "phoenicis-javafx-$VERSION.jar"
+            "--name" "$PHOENICIS_APPTITLE"
+            "--dest" "$PHOENICIS_TARGET/packages/"
+            "--add-modules" "$PHOENICIS_MODULES"
+            "--module-path" "$PHOENICIS_TARGET/lib/"
+            "--app-version" "$VERSION"
+            "--java-options" "$PHOENICIS_RUNTIME_OPTIONS"
+        )
 
-if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
-    jpackager create-image --icon "$PHOENICIS_RESOURCES/Phoenicis PlayOnMac.icns" "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"
-fi
+        if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
+            JPACKAGE_ARGUMENTS+=("--icon" "$PHOENICIS_RESOURCES/Phoenicis PlayOnMac.icns")
+        fi
+
+        jpackage "${JPACKAGE_ARGUMENTS[@]}"
+    else
+        if [ "$PHOENICIS_OPERATING_SYSTEM" == "Darwin" ]; then
+            jpackager create-image --icon "$PHOENICIS_RESOURCES/Phoenicis PlayOnMac.icns" "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"
+        fi
+
+        if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
+            jpackager create-image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}" --linux-bundle-name "phoenicis-playonlinux"
+        fi
+    fi
+}
+
+find_linux_app_image_dir() {
+    local candidates=(
+        "$PHOENICIS_TARGET/packages/$PHOENICIS_APPTITLE"
+        "$PHOENICIS_TARGET/packages/${PHOENICIS_APPTITLE// /}"
+        "$PHOENICIS_TARGET/packages/Phoenicis PlayOnLinux"
+        "$PHOENICIS_TARGET/packages/PhoenicisPlayOnLinux"
+    )
+
+    for candidate in "${candidates[@]}"; do
+        if [ -d "$candidate" ]; then
+            echo "$candidate"
+            return 0
+        fi
+    done
+
+    find "$PHOENICIS_TARGET/packages" -mindepth 1 -maxdepth 1 -type d | head -n 1
+}
+
+cd "$PHOENICIS_TARGET"
+package_image
 
 if [ "$PHOENICIS_OPERATING_SYSTEM" == "Linux" ]; then
-    jpackager create-image "${PHOENICIS_JPACKAGER_ARGUMENTS[@]}"  --linux-bundle-name "phoenicis-playonlinux"
-
     packageName="Phoenicis_$VERSION"
     cd "$PHOENICIS_TARGET"
-    rmdir packages/PhoenicisPlayOnLinux/
-    rm -rf "packages/phoenicis" 2> /dev/null
-    mv packages/Phoenicis\ PlayOnLinux/ packages/phoenicis
+
+    appImageDir="$(find_linux_app_image_dir)"
+
+    if [ -z "$appImageDir" ]; then
+        echo "Unable to locate generated app image directory in $PHOENICIS_TARGET/packages"
+        exit 1
+    fi
+
+    rm -rf "$PHOENICIS_TARGET/packages/phoenicis" 2> /dev/null
+    mv "$appImageDir" "$PHOENICIS_TARGET/packages/phoenicis"
+
     rm -rf "$packageName" 2> /dev/null
     mkdir -p "$packageName/DEBIAN/"
 
-    cat << EOF > "$packageName/DEBIAN/control"
+    cat << EOF_CONTROL > "$packageName/DEBIAN/control"
 Package: phoenicis-playonlinux
 Version: $VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: unzip, wget, xterm | x-terminal-emulator, python, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind, libc6:i386
+Depends: openjdk-25-jdk, unzip, wget, xterm | x-terminal-emulator, python3 | python, imagemagick, cabextract, icoutils, p7zip-full, curl, winbind, libc6:i386
 Maintainer: PlayOnLinux Packaging <packages@playonlinux.com>
 Description: This program is a front-end for wine.
  It permits you to install Windows Games and softwares
  on Linux. It allows you to manage differents virtual hard drive,
  and several wine versions.
  Copyright 2011-2019 PlayOnLinux team <contact@playonlinux.com>
-EOF
+EOF_CONTROL
 
-    mkdir -p $packageName/usr/share/applications
-    mkdir -p $packageName/usr/share/pixmaps
-    mkdir -p $packageName/usr/bin
+    mkdir -p "$packageName/usr/share/applications"
+    mkdir -p "$packageName/usr/share/pixmaps"
+    mkdir -p "$packageName/usr/bin"
 
-    cp -a packages/phoenicis $packageName/usr/share/
-    cp -a "$SCRIPT_PATH/../launchers/phoenicis" $packageName/usr/bin/phoenicis
-    chmod +x $packageName/usr/bin/phoenicis
+    cp -a "$PHOENICIS_TARGET/packages/phoenicis" "$packageName/usr/share/"
+    cp -a "$SCRIPT_PATH/../launchers/phoenicis" "$packageName/usr/bin/phoenicis"
+    chmod +x "$packageName/usr/bin/phoenicis"
+
+    launcherCompatibilityDir="$packageName/usr/share/phoenicis/bin"
+    mkdir -p "$launcherCompatibilityDir"
+    cat << 'EOF_LAUNCHER' > "$launcherCompatibilityDir/Phoenicis PlayOnLinux"
+#!/bin/sh
+
+exec /usr/bin/phoenicis "$@"
+EOF_LAUNCHER
+    chmod +x "$launcherCompatibilityDir/Phoenicis PlayOnLinux"
 
     cp "$SCRIPT_PATH/../resources/Phoenicis.desktop" "$packageName/usr/share/applications"
     cp "$SCRIPT_PATH/../resources/phoenicis.png" "$packageName/usr/share/pixmaps"

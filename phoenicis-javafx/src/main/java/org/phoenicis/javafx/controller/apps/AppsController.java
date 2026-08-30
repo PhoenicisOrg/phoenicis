@@ -89,13 +89,13 @@ public class AppsController {
             try {
                 StringBuilder cssBuilder = new StringBuilder();
                 for (CategoryDTO category : categories) {
-                    cssBuilder.append(
-                            "#" + ApplicationSidebarToggleGroupSkin.getToggleButtonId(category.getId()) + "{\n");
+                    cssBuilder.append("#").append(ApplicationSidebarToggleGroupSkin.getToggleButtonId(category.getId()))
+                            .append("{\n");
                     final String categoryIconPath = Optional.ofNullable(category.getIcon())
                             .map(categoryIcon -> categoryIcon.toString())
                             .orElse("/org/phoenicis/javafx/views/common/phoenicis.png");
 
-                    cssBuilder.append(String.format("-fx-background-image: url('%s');\n", categoryIconPath));
+                    cssBuilder.append(String.format("-fx-background-image: url('%s');%n", categoryIconPath));
                     cssBuilder.append("}\n");
                 }
 

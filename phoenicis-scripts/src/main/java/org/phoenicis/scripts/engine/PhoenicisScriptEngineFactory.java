@@ -18,8 +18,8 @@
 
 package org.phoenicis.scripts.engine;
 
-import org.phoenicis.scripts.engine.injectors.EngineInjector;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
+import org.phoenicis.scripts.engine.injectors.EngineInjector;
 
 import java.util.List;
 

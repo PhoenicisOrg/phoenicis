@@ -1,0 +1,57 @@
+name: Cleanup workflow runs
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+    inputs:
+      runs_to_delete:
+        description: Number of completed workflow runs to delete (manual runs only)
+        required: true
+        default: '25'
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete completed workflow runs
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const isManualRun = context.eventName === 'workflow_dispatch';
+            const runsToDeleteInput = Number.parseInt(context.payload.inputs?.runs_to_delete || '0', 10);
+
+            if (isManualRun && (!Number.isInteger(runsToDeleteInput) || runsToDeleteInput < 1)) {
+              core.setFailed('runs_to_delete must be a positive integer.');
+              return;
+            }
+
+            const runs = await github.paginate(
+              github.rest.actions.listWorkflowRunsForRepo,
+              {
+                owner,
+                repo,
+                status: 'completed',
+                per_page: 100
+              }
+            );
+
+            const runsToDelete = isManualRun ? runs.slice(0, runsToDeleteInput) : runs;
+
+            core.info(`Found ${runs.length} completed workflow run(s).`);
+            core.info(`Deleting ${runsToDelete.length} workflow run(s).`);
+
+            for (const run of runsToDelete) {
+              await github.rest.actions.deleteWorkflowRun({
+                owner,
+                repo,
+                run_id: run.id
+              });
+
+              core.info(`Deleted run #${run.run_number} (${run.name})`);
+            }

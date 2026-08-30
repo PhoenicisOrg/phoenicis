@@ -1,11 +1,11 @@
 package org.phoenicis.multithreading.debug;
 
+import jakarta.annotation.PreDestroy;
 import org.apache.commons.lang.mutable.MutableBoolean;
 import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.PreDestroy;
 import java.util.concurrent.ExecutorService;
 
 /**

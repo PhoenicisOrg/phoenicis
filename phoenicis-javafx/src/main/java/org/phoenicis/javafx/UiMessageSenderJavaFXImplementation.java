@@ -18,9 +18,9 @@
 
 package org.phoenicis.javafx;
 
-import org.phoenicis.scripts.ui.UiMessageSender;
 import javafx.application.Platform;
 import org.apache.commons.lang.mutable.MutableObject;
+import org.phoenicis.scripts.ui.UiMessageSender;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Supplier;

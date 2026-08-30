@@ -21,23 +21,47 @@ package org.phoenicis.tools.system.opener;
 import org.phoenicis.configuration.security.Safe;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @Safe
 public class OpenerProcessImplementation implements Opener {
+    private static final Set<String> ALLOWED_COMMANDS = new HashSet<>(Arrays.asList("xdg-open", "open", "gio"));
     private final String commandName;
 
     public OpenerProcessImplementation(String commandName) {
+        if (!ALLOWED_COMMANDS.contains(commandName)) {
+            throw new IllegalArgumentException("Unsupported opener command: " + commandName);
+        }
+
         this.commandName = commandName;
     }
 
     @Override
     public void open(String file) {
-        final ProcessBuilder processBuilder = new ProcessBuilder(Arrays.asList(commandName, file));
+        final String sanitizedPath = sanitizePath(file);
+        final ProcessBuilder processBuilder = new ProcessBuilder(commandName, sanitizedPath);
         try {
             processBuilder.start().waitFor();
         } catch (InterruptedException | IOException e) {
             throw new IllegalStateException(e);
+        }
+    }
+
+    private String sanitizePath(String file) {
+        try {
+            final Path candidate = Paths.get(file).toAbsolutePath().normalize();
+            if (!Files.exists(candidate)) {
+                throw new IllegalArgumentException("File does not exist: " + candidate);
+            }
+            return candidate.toString();
+        } catch (InvalidPathException e) {
+            throw new IllegalArgumentException("Invalid file path", e);
         }
     }
 

@@ -35,7 +35,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 public class UiSetupWizardImplementation implements SetupWizard {
     private final String title;
     private final InstallationType installationType;
-    private Optional<URI> miniature;
+    private final Optional<URI> miniature;
     private final UiMessageSender messageSender;
     private final SetupUiFactory setupUiFactory;
 

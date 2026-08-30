@@ -36,7 +36,7 @@ add: CLIApplication with:
 Run → Edit Configurations
 add: JavaFXApplication with:
 * Name: `JavaFXApplication`
-* Main class: `org.phoenicis.javafx.JavaFXApplication`
+* Main class: `org.phoenicis.javafx.PhoenicisLauncher`
 * VM options: 
 ```
 --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path phoenicis-dist/target/lib -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI --upgrade-module-path=phoenicis-dist/target/lib/compiler.jar

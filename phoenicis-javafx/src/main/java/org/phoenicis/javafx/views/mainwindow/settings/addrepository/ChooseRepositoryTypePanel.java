@@ -24,7 +24,7 @@ public class ChooseRepositoryTypePanel extends BorderPane {
     /**
      * A list containing all possible repository types to be added with this dialog
      */
-    private ObservableList<RepositoryType> repositoryChoices;
+    private final ObservableList<RepositoryType> repositoryChoices;
 
     /**
      * The choice box containing, which repository type the user wants to add

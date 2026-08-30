@@ -82,7 +82,7 @@ public class ContainerInformationPanelSkin extends SkinBase<ContainerInformation
         final ContainerOverviewPanel containerOverviewPanel = new ContainerOverviewPanel();
 
         containerOverviewPanel.containerProperty().bind(
-                ObjectBindings.map(getControl().containerProperty(), container -> (WinePrefixContainerDTO) container));
+                ObjectBindings.map(getControl().containerProperty(), WinePrefixContainerDTO.class::cast));
         containerOverviewPanel.onDeleteContainerProperty().bind(getControl().onDeleteContainerProperty());
         containerOverviewPanel.onChangeEngineVersionProperty().bind(getControl().onChangeEngineVersionProperty());
         containerOverviewPanel.onOpenFileBrowserProperty().bind(getControl().onOpenFileBrowserProperty());

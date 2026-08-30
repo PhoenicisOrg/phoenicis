@@ -47,7 +47,7 @@ public abstract class ExtendedSidebarBase<E, C extends ExtendedSidebarBase<E, C,
      *
      * @param items The items shown inside a toggle button group in the sidebar
      */
-    public ExtendedSidebarBase(ObservableList<E> items) {
+    protected ExtendedSidebarBase(ObservableList<E> items) {
         super(items);
 
         this.searchTerm = new SimpleStringProperty();

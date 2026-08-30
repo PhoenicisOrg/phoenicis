@@ -36,7 +36,7 @@ public class DefaultRepositoryManager implements RepositoryManager {
 
     private List<CallbackPair> callbacks;
 
-    private boolean isRepositoryLoaded = false;
+    private boolean isRepositoryLoaded;
 
     public DefaultRepositoryManager(ExecutorService executorService, String cacheDirectoryPath,
             LocalRepository.Factory localRepositoryFactory, ClasspathRepository.Factory classPathRepositoryFactory,
@@ -175,9 +175,10 @@ public class DefaultRepositoryManager implements RepositoryManager {
     @Override
     public synchronized void triggerCallbacks() {
         if (!this.callbacks.isEmpty()) {
-            this.backgroundRepository.fetchInstallableApplications(repositoryDTO -> {
-                this.callbacks.forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO)));
-            }, exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
+            this.backgroundRepository.fetchInstallableApplications(
+                    repositoryDTO -> this.callbacks
+                            .forEach(callbackPair -> callbackPair.getOnRepositoryChange().accept(tr(repositoryDTO))),
+                    exception -> this.callbacks.forEach(callbackPair -> callbackPair.getOnError().accept(exception)));
             // do not set this in triggerRepositoryChange()
             // if no callbacks are registered, fetchInstallableApplications is not called and the repository is not
             // loaded

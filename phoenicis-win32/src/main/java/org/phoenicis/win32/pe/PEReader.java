@@ -18,8 +18,8 @@
 
 package org.phoenicis.win32.pe;
 
-import org.phoenicis.win32.pe.rsrc.RsrcSection;
 import org.apache.commons.io.input.CountingInputStream;
+import org.phoenicis.win32.pe.rsrc.RsrcSection;
 
 import java.io.IOException;
 import java.io.InputStream;

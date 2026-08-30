@@ -34,7 +34,7 @@ import java.util.List;
  * Represents a category of engines
  */
 @JsonDeserialize(builder = EngineCategoryDTO.Builder.class)
-public class EngineCategoryDTO {
+public final class EngineCategoryDTO {
     private final String name;
     private final String description;
     private final List<EngineSubCategoryDTO> subCategories;

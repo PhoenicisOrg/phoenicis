@@ -98,12 +98,13 @@ public class LibraryController {
             try {
                 StringBuilder cssBuilder = new StringBuilder();
                 for (ShortcutCategoryDTO category : categories) {
-                    cssBuilder.append("#" + LibrarySidebarToggleGroupSkin.getToggleButtonId(category.getId()) + "{\n");
+                    cssBuilder.append("#").append(LibrarySidebarToggleGroupSkin.getToggleButtonId(category.getId()))
+                            .append("{\n");
                     final String categoryIconPath = Optional.ofNullable(category.getIcon())
                             .map(categoryIcon -> categoryIcon.toString())
                             .orElse("/org/phoenicis/javafx/views/common/phoenicis.png");
 
-                    cssBuilder.append(String.format("-fx-background-image: url('%s');\n", categoryIconPath));
+                    cssBuilder.append(String.format("-fx-background-image: url('%s');%n", categoryIconPath));
                     cssBuilder.append("}\n");
                 }
                 String css = cssBuilder.toString();

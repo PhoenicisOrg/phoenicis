@@ -6,7 +6,7 @@ sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Compat.i386
   - org.freedesktop.Sdk.Extension.toolchain-i386
-  - org.freedesktop.Sdk.Extension.openjdk11
+  - org.freedesktop.Sdk.Extension.openjdk17
 add-extensions:
   # support 32-bit apps
   org.freedesktop.Platform.Compat.i386:
@@ -55,7 +55,7 @@ modules:
   - name: openjdk
     buildsystem: simple
     build-commands:
-      - /usr/lib/sdk/openjdk11/install.sh
+      - /usr/lib/sdk/openjdk17/install.sh
   - name: cabextract
     buildsystem: autotools
     sources:
@@ -115,4 +115,4 @@ modules:
         dest-filename: phoenicis-playonlinux
         commands:
           # do not use Wine runtime (e.g. Notepad++ crashes otherwise)
-          - /app/jre/bin/java -Dapplication.environment.wineRuntime=false --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --module-path /app/phoenicis/lib/ -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -cp "/app/phoenicis/lib/*" --upgrade-module-path=/app/phoenicis/lib/compiler.jar org.phoenicis.javafx.JavaFXApplication "$@"
+          - /app/jre/bin/java -Dapplication.environment.wineRuntime=false --add-modules=jdk.crypto.ec,java.base,javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls,java.naming,java.sql,java.scripting,jdk.internal.vm.ci,jdk.internal.vm.compiler,org.graalvm.truffle,jdk.jsobject,jdk.xml.dom --enable-native-access=javafx.graphics,javafx.web --module-path /app/phoenicis/lib/ -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -cp "/app/phoenicis/lib/app/*:/app/phoenicis/lib/*" --upgrade-module-path=/app/phoenicis/lib/compiler.jar:/app/phoenicis/lib/app/compiler.jar org.phoenicis.javafx.PhoenicisLauncher "$@"

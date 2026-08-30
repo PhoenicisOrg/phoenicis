@@ -19,13 +19,13 @@ public class ContainersFilter {
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private StringProperty searchTerm;
+    private final StringProperty searchTerm;
 
     /**
      * The selected container category.
      * If no container category has been selected, this value is {@link Optional#empty()}.
      */
-    private ObjectProperty<ContainerCategoryDTO> selectedContainerCategory;
+    private final ObjectProperty<ContainerCategoryDTO> selectedContainerCategory;
 
     /**
      * Constructor

@@ -50,7 +50,7 @@ public class MainWindowView<S extends Node> extends Tab {
 
     protected S sidebar;
 
-    private HBox waitPanel;
+    private final HBox waitPanel;
     private FailurePanel failurePanel;
 
     /**

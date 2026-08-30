@@ -18,9 +18,9 @@
 
 package org.phoenicis.repository.types;
 
+import org.junit.Test;
 import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.CategoryDTO;
-import org.junit.Test;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.repository.dto.TypeDTO;
 

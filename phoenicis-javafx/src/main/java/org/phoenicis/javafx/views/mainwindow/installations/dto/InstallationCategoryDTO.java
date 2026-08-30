@@ -40,7 +40,7 @@ import java.util.List;
  */
 @JsonDeserialize(builder = InstallationCategoryDTO.Builder.class)
 @Translatable
-public class InstallationCategoryDTO {
+public final class InstallationCategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstallationCategoryDTO.class);
     private final String id;
     private final String name;

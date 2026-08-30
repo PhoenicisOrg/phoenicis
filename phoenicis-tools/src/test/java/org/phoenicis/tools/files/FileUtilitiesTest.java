@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class FileUtilitiesTest {
-    private FileUtilities fileUtilities = new FileUtilities();
+    private final FileUtilities fileUtilities = new FileUtilities();
 
     @Test(expected = IllegalArgumentException.class)
     public void testIntToPosixFilePermissionInvalidMode() {
@@ -57,7 +57,7 @@ public class FileUtilitiesTest {
 
     @Test
     public void testIntToPosixFilePermissionNoAccess() {
-        testOneCaseIntToPosixFilePermission(000);
+        testOneCaseIntToPosixFilePermission(0);
     }
 
     private void testOneCaseIntToPosixFilePermission(int mode, PosixFilePermission... permissions) {

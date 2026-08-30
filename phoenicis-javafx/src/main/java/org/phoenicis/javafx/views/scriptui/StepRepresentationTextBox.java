@@ -18,9 +18,9 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
+import javafx.scene.control.TextField;
 import org.apache.commons.lang.StringUtils;
 import org.phoenicis.scripts.ui.Message;
-import javafx.scene.control.TextField;
 
 public class StepRepresentationTextBox extends StepRepresentationMessage {
     private final String defaultValue;

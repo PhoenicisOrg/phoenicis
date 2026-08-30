@@ -18,7 +18,7 @@ public class InstallationSidebar
     /**
      * The selected installation category
      */
-    private ObjectProperty<InstallationCategoryDTO> selectedInstallationCategory;
+    private final ObjectProperty<InstallationCategoryDTO> selectedInstallationCategory;
 
     /**
      * The installations filter

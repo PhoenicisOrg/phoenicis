@@ -213,7 +213,7 @@ public class ShortcutInformationPanelSkin extends SkinBase<ShortcutInformationPa
         for (Map.Entry<String, Object> entry : shortcutProperties.entrySet()) {
             final int row = propertiesGrid.getRowCount();
 
-            if (!entry.getKey().equals("environment")) {
+            if (!"environment".equals(entry.getKey())) {
                 final Label keyLabel = new Label(tr(decamelize(entry.getKey())) + ":");
                 keyLabel.getStyleClass().add("captionTitle");
                 GridPane.setValignment(keyLabel, VPos.TOP);

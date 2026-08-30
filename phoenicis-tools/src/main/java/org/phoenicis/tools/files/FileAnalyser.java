@@ -24,7 +24,6 @@ import org.phoenicis.configuration.security.Safe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.activation.MimetypesFileTypeMap;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -89,9 +88,21 @@ public class FileAnalyser {
             return mimeType;
         } catch (MagicMatchNotFoundException e) {
             LOGGER.debug("Failed to get Mime Type", e);
-            final MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
-            return mimeTypesMap.getContentType(inputFile);
+            return probeMimeType(inputFile);
         }
+    }
+
+    private String probeMimeType(File inputFile) {
+        try {
+            final String mimeType = Files.probeContentType(inputFile.toPath());
+            if (mimeType != null) {
+                return mimeType;
+            }
+        } catch (IOException ioException) {
+            LOGGER.debug("Unable to probe Mime Type from file system metadata", ioException);
+        }
+
+        return "application/octet-stream";
     }
 
     private String guessMimeTypeFromDescription(MagicMatch match) {

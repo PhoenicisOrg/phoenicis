@@ -18,9 +18,9 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
+import org.phoenicis.scripts.ui.Message;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 

@@ -19,12 +19,14 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.concurrent.Worker;
 import javafx.scene.web.WebView;
 import org.phoenicis.scripts.ui.BrowserControl;
 import org.phoenicis.scripts.ui.Message;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * This step will present a browser to the user
@@ -61,12 +63,25 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     public void waitForUrl(String urlMatch) {
         final Semaphore lock = new Semaphore(0);
 
-        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty()
-                .addListener(((observableValue, oldState, newState) -> {
-                    if (newState == Worker.State.SUCCEEDED && urlMatches(getCurrentUrl(), urlMatch)) {
-                        lock.release();
-                    }
-                })));
+        Platform.runLater(() -> {
+            final AtomicReference<ChangeListener<Worker.State>> listenerReference = new AtomicReference<>();
+
+            final ChangeListener<Worker.State> listener = (observableValue, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED && urlMatches(getCurrentUrl(), urlMatch)) {
+                    webView.getEngine().getLoadWorker().stateProperty().removeListener(listenerReference.get());
+                    lock.release();
+                }
+            };
+            listenerReference.set(listener);
+
+            webView.getEngine().getLoadWorker().stateProperty().addListener(listener);
+
+            if (webView.getEngine().getLoadWorker().getState() == Worker.State.SUCCEEDED
+                    && urlMatches(getCurrentUrl(), urlMatch)) {
+                webView.getEngine().getLoadWorker().stateProperty().removeListener(listenerReference.get());
+                lock.release();
+            }
+        });
 
         try {
             lock.acquire();
@@ -94,12 +109,24 @@ public class StepRepresentationBrowser extends StepRepresentationMessage impleme
     public void waitForBeingLoaded() {
         final Semaphore lock = new Semaphore(0);
 
-        Platform.runLater(() -> webView.getEngine().getLoadWorker().stateProperty()
-                .addListener(((observableValue, oldState, newState) -> {
-                    if (newState == Worker.State.SUCCEEDED) {
-                        lock.release();
-                    }
-                })));
+        Platform.runLater(() -> {
+            final AtomicReference<ChangeListener<Worker.State>> listenerReference = new AtomicReference<>();
+
+            final ChangeListener<Worker.State> listener = (observableValue, oldState, newState) -> {
+                if (newState == Worker.State.SUCCEEDED) {
+                    webView.getEngine().getLoadWorker().stateProperty().removeListener(listenerReference.get());
+                    lock.release();
+                }
+            };
+            listenerReference.set(listener);
+
+            webView.getEngine().getLoadWorker().stateProperty().addListener(listener);
+
+            if (webView.getEngine().getLoadWorker().getState() == Worker.State.SUCCEEDED) {
+                webView.getEngine().getLoadWorker().stateProperty().removeListener(listenerReference.get());
+                lock.release();
+            }
+        });
 
         try {
             lock.acquire();

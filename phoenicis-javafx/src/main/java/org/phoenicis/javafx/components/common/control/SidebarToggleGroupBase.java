@@ -76,7 +76,7 @@ public abstract class SidebarToggleGroupBase<E, C extends SidebarToggleGroupBase
      *
      * @param elements The elements to be shown inside the sidebar toggle group
      */
-    public SidebarToggleGroupBase(ObservableList<E> elements) {
+    protected SidebarToggleGroupBase(ObservableList<E> elements) {
         super();
 
         this.title = new SimpleStringProperty();

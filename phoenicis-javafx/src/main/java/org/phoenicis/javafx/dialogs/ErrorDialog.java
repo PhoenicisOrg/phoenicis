@@ -18,7 +18,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
 /**
  * An error callback used to display a thrown exception
  */
-public class ErrorDialog extends Alert {
+public final class ErrorDialog extends Alert {
     /**
      * The thrown exception
      */

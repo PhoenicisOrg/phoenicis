@@ -45,6 +45,10 @@ public class Extractor {
         return uncompress(new File(inputFile), new File(outputDir), onChange);
     }
 
+    public void uncompressWithoutTracking(String inputFile, String outputDir, Consumer<ProgressEntity> onChange) {
+        uncompress(new File(inputFile), new File(outputDir), onChange, false);
+    }
+
     /**
      * Uncompress a .tar file
      *
@@ -53,21 +57,30 @@ public class Extractor {
      * @return list of uncompressed files
      */
     public List<File> uncompress(File inputFile, File outputDir, Consumer<ProgressEntity> onChange) {
+        return uncompress(inputFile, outputDir, onChange, true);
+    }
+
+    public void uncompressWithoutTracking(File inputFile, File outputDir, Consumer<ProgressEntity> onChange) {
+        uncompress(inputFile, outputDir, onChange, false);
+    }
+
+    private List<File> uncompress(File inputFile, File outputDir, Consumer<ProgressEntity> onChange,
+            boolean trackExtractedFiles) {
         LOGGER.info(
                 String.format("Uncompressing %s to dir %s.", inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
         switch (fileAnalyser.getMimetype(inputFile)) {
             case "application/x-bzip2":
-                return tar.uncompressTarBz2File(inputFile, outputDir, onChange);
+                return tar.uncompressTarBz2File(inputFile, outputDir, onChange, trackExtractedFiles);
             case "application/x-gzip":
-                return tar.uncompressTarGzFile(inputFile, outputDir, onChange);
+                return tar.uncompressTarGzFile(inputFile, outputDir, onChange, trackExtractedFiles);
             case "application/x-xz":
-                return tar.uncompressTarXzFile(inputFile, outputDir, onChange);
+                return tar.uncompressTarXzFile(inputFile, outputDir, onChange, trackExtractedFiles);
             case "application/zip":
             case "application/x-dosexec":
-                return zip.uncompressZipFile(inputFile, outputDir, onChange);
+                return zip.uncompressZipFile(inputFile, outputDir, onChange, trackExtractedFiles);
             default:
-                return tar.uncompressTarFile(inputFile, outputDir, onChange);
+                return tar.uncompressTarFile(inputFile, outputDir, onChange, trackExtractedFiles);
         }
 
     }

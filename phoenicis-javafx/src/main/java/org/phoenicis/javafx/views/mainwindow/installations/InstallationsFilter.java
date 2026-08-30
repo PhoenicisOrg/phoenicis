@@ -19,13 +19,13 @@ public class InstallationsFilter {
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private StringProperty searchTerm;
+    private final StringProperty searchTerm;
 
     /**
      * The selected installation category.
      * If no installation category has been selected, this value is {@link Optional#empty()}.
      */
-    private ObjectProperty<InstallationCategoryDTO> selectedInstallationCategory;
+    private final ObjectProperty<InstallationCategoryDTO> selectedInstallationCategory;
 
     /**
      * Constructor

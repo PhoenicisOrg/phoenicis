@@ -35,7 +35,7 @@ public class MainController {
     private final MainWindow mainWindow;
     private final JavaFxSettingsManager javaFxSettingsManager;
 
-    private String applicationName;
+    private final String applicationName;
 
     public MainController(String applicationName,
             LibraryController libraryController,

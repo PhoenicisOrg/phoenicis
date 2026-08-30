@@ -15,7 +15,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * An utility class for {@link InstallationDTO} objects
  */
 public final class InstallationsUtils {
-    private final static Logger LOGGER = LoggerFactory.getLogger(InstallationsUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InstallationsUtils.class);
 
     /**
      * Constructor

@@ -48,14 +48,14 @@ import org.phoenicis.javafx.views.mainwindow.settings.SettingsView;
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
 public class MainWindow extends Stage {
-    private TabPane tabPane;
+    private final TabPane tabPane;
     private Tab libraryTab;
     private Tab applicationsTab;
     private Tab containersTab;
     private Tab enginesTab;
     private Tab installationsTab;
     private Tab settingsTab;
-    private JavaFxSettingsManager javaFxSettingsManager;
+    private final JavaFxSettingsManager javaFxSettingsManager;
 
     public MainWindow(String applicationName,
             LibraryFeaturePanel library,

@@ -23,7 +23,7 @@ public abstract class FeaturePanelSkin<C extends FeaturePanel<C, S>, S extends F
      *
      * @param control The control belonging to the skin
      */
-    public FeaturePanelSkin(C control) {
+    protected FeaturePanelSkin(C control) {
         super(control);
     }
 

@@ -1,6 +1,6 @@
 # Phoenicis PlayOnLinux and PlayOnMac 5
 [![CI](https://github.com/PhoenicisOrg/phoenicis/actions/workflows/ci.yml/badge.svg?branch=master&event=push)](https://github.com/PhoenicisOrg/phoenicis/actions/workflows/ci.yml)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/b667020df53c4b80a22d7e5a73f2b1b3)](https://www.codacy.com/app/PhoenicisOrg/phoenicis?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PhoenicisOrg/phoenicis&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8960a72ea5d94f2496801091e79ce699)](https://app.codacy.com/gh/ahmedmoselhi/phoenicis/dashboard)
 [![Crowdin Badge](https://d322cqt584bo4o.cloudfront.net/phoenicis/localized.svg)](https://crowdin.com/project/phoenicis)
 
 Phoenicis is the designated successor of [PlayOnLinux and PlayOnMac 4](https://github.com/PlayOnLinux/POL-POM-4). It allows you to install and use non-native applications on your favorite operating system.

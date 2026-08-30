@@ -32,29 +32,29 @@ public class EnginesFilter {
     /**
      * The path to the installed engines
      */
-    private String enginesPath;
+    private final String enginesPath;
 
     /**
      * The entered search term.
      * If no search term has been entered, this value is {@link Optional#empty()}.
      */
-    private StringProperty searchTerm;
+    private final StringProperty searchTerm;
 
     /**
      * The selected engine category.
      * If no engine category has been selected, this value is {@link Optional#empty()}.
      */
-    private ObjectProperty<EngineCategoryDTO> selectedEngineCategory;
+    private final ObjectProperty<EngineCategoryDTO> selectedEngineCategory;
 
     /**
      * Are installed engines searched
      */
-    private BooleanProperty showInstalled;
+    private final BooleanProperty showInstalled;
 
     /**
      * Are not installed engines searched
      */
-    private BooleanProperty showNotInstalled;
+    private final BooleanProperty showNotInstalled;
 
     /**
      * Constructor

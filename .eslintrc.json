@@ -1,0 +1,36 @@
+{
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "include": "readonly",
+    "Bean": "readonly",
+    "java": "readonly",
+    "Java": "readonly",
+    "print": "readonly",
+    "mkdir": "readonly",
+    "Downloader": "readonly",
+    "Extractor": "readonly",
+    "Resource": "readonly",
+    "fileExists": "readonly",
+    "LATEST_STABLE_VERSION": "writable",
+    "org": "readonly",
+    "that": "writable",
+    "lns": "readonly",
+    "createTempFile": "readonly",
+    "writeToFile": "readonly",
+    "Wine": "writable",
+    "console": "readonly",
+    "define": "readonly",
+    "module": "readonly"
+  },
+  "rules": {
+    "no-undef": "off",
+    "no-useless-escape": "off",
+    "no-redeclare": "off",
+    "no-global-assign": "off",
+    "no-unused-vars": "off"
+  }
+}

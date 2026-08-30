@@ -19,12 +19,12 @@
 package org.phoenicis.javafx.views.scriptui;
 
 import javafx.scene.control.Label;
-import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import org.phoenicis.scripts.ui.Message;
 
 public class StepRepresentationPresentation extends AbstractStepRepresentation {
     private final String textToShow;

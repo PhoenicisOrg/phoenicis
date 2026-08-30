@@ -29,7 +29,7 @@ import java.util.Comparator;
  * contains general information about a shortcut
  */
 @JsonDeserialize(builder = ShortcutInfoDTO.Builder.class)
-public class ShortcutInfoDTO {
+public final class ShortcutInfoDTO {
     private final String name;
     private final String category;
     private final String description;

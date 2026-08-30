@@ -24,8 +24,8 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.phoenicis.configuration.localisation.Translatable;
-import org.phoenicis.configuration.localisation.Translate;
 import org.phoenicis.configuration.localisation.TranslatableBuilder;
+import org.phoenicis.configuration.localisation.Translate;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +37,7 @@ import java.util.List;
  */
 @JsonDeserialize(builder = RepositoryDTO.Builder.class)
 @Translatable
-public class RepositoryDTO {
+public final class RepositoryDTO {
     private final String name;
     private final List<TypeDTO> types;
     private final TranslationDTO translations;

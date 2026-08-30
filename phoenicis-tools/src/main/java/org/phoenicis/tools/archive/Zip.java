@@ -32,11 +32,11 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import static org.phoenicis.configuration.localisation.Localisation.tr;
 
@@ -46,6 +46,11 @@ public class Zip {
     private final Logger LOGGER = LoggerFactory.getLogger(Zip.class);
 
     public List<File> uncompressZipFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback) {
+        return uncompressZipFile(inputFile, outputDir, stateCallback, true);
+    }
+
+    List<File> uncompressZipFile(File inputFile, File outputDir, Consumer<ProgressEntity> stateCallback,
+            boolean trackExtractedFiles) {
         LOGGER.info(String.format("Attempting to unzip file \"%s\" to directory \"%s\".",
                 inputFile.getAbsolutePath(), outputDir.getAbsolutePath()));
 
@@ -65,9 +70,17 @@ public class Zip {
                                 .withProgressText(tr("Extracted {0}", zipExtractionResult.getFileName())).build());
             };
 
-            return Collections.list(zipFile.getEntries()).stream()
-                    .map(entry -> unzipEntry(zipFile, entry, targetDirPath, unzipCallback))
-                    .collect(Collectors.toList());
+            final List<File> extractedFiles = new ArrayList<>();
+
+            for (ZipArchiveEntry entry : Collections.list(zipFile.getEntries())) {
+                final File extractedFile = unzipEntry(zipFile, entry, targetDirPath, unzipCallback);
+
+                if (trackExtractedFiles) {
+                    extractedFiles.add(extractedFile);
+                }
+            }
+
+            return extractedFiles;
         } catch (IOException e) {
             throw new ArchiveException(ZIP_ERROR_MESSAGE, e);
         }
@@ -107,7 +120,7 @@ public class Zip {
         }
     }
 
-    private static class ZipExtractionResult {
+    private static final class ZipExtractionResult {
         private final long extractedBytes;
 
         private final String fileName;

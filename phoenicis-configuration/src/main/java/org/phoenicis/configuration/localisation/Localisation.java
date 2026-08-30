@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
 public final class Localisation {
     private static final Logger LOGGER = LoggerFactory.getLogger(Localisation.class);
     private static final LocalisationHelper localisationHelper = new LocalisationHelper();
-    private static I18n i18n = null;
+    private static I18n i18n;
 
     // This is a static class
     private Localisation() {
@@ -227,7 +227,7 @@ public final class Localisation {
             final List<Class<?>> parameterTypes = Arrays.stream(constructor.getParameterTypes())
                     .filter(s -> s.getName().contains("Builder")).collect(Collectors.toList());
 
-            if (parameterTypes.size() > 0) {
+            if (!parameterTypes.isEmpty()) {
                 final Annotation[] annotations = parameterTypes.get(0).getAnnotations();
 
                 for (Annotation annotation : annotations) {

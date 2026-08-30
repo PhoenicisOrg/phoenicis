@@ -6,7 +6,7 @@ package org.phoenicis.scripts.ui;
 public enum InstallationType {
     APPS("Apps"), ENGINES("Engines"), VERBS("Verbs");
 
-    private String displayName;
+    private final String displayName;
 
     InstallationType(String displayName) {
         this.displayName = displayName;

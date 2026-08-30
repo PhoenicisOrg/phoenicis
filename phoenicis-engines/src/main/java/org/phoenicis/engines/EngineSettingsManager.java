@@ -24,9 +24,11 @@ import org.phoenicis.repository.dto.CategoryDTO;
 import org.phoenicis.repository.dto.RepositoryDTO;
 import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
 import org.phoenicis.scripts.engine.implementation.PhoenicisScriptEngine;
+import org.phoenicis.scripts.exceptions.IncludeException;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -70,18 +72,53 @@ public class EngineSettingsManager {
             final Map<String, List<EngineSetting>> result = configurations.stream()
                     .collect(Collectors.groupingBy(
                             configuration -> configuration.engineId,
-                            Collectors.mapping(configuration -> {
-                                final String include = String.format("include(\"engines.%s.settings.%s\");",
-                                        configuration.engineId, configuration.settingId);
-
-                                final Value settingClass = (Value) phoenicisScriptEngine.evalAndReturn(include,
-                                        errorCallback);
-
-                                return settingClass.newInstance().as(EngineSetting.class);
-                            }, Collectors.toList())));
+                            Collectors.flatMapping(
+                                    configuration -> fetchSetting(phoenicisScriptEngine, configuration,
+                                            errorCallback).stream(),
+                                    Collectors.toList())));
 
             callback.accept(result);
         });
+    }
+
+    private Optional<EngineSetting> fetchSetting(PhoenicisScriptEngine phoenicisScriptEngine,
+            SettingConfig configuration, Consumer<Exception> errorCallback) {
+        final String include = String.format("include(\"engines.%s.settings.%s\");",
+                configuration.engineId, configuration.settingId);
+
+        final Exception[] fetchException = new Exception[1];
+
+        final Object value = phoenicisScriptEngine.evalAndReturn(include, exception -> fetchException[0] = exception);
+
+        if (fetchException[0] != null) {
+            if (!isMissingSettingInclude(fetchException[0])) {
+                errorCallback.accept(fetchException[0]);
+            }
+
+            return Optional.empty();
+        }
+
+        if (!(value instanceof Value)) {
+            return Optional.empty();
+        }
+
+        final Value settingClass = (Value) value;
+
+        return Optional.of(settingClass.newInstance().as(EngineSetting.class));
+    }
+
+    private boolean isMissingSettingInclude(Throwable throwable) {
+        Throwable current = throwable;
+
+        while (current != null) {
+            if (current instanceof IncludeException) {
+                return true;
+            }
+
+            current = current.getCause();
+        }
+
+        return false;
     }
 
     /**
@@ -93,7 +130,7 @@ public class EngineSettingsManager {
     private List<SettingConfig> fetchSettingConfigurations(RepositoryDTO repositoryDTO) {
         // get engine CategoryDTOs
         List<CategoryDTO> categoryDTOs = repositoryDTO.getTypes().stream()
-                .filter(typeDTO -> typeDTO.getId().equals("engines"))
+                .filter(typeDTO -> "engines".equals(typeDTO.getId()))
                 .flatMap(typeDTO -> typeDTO.getCategories().stream())
                 .collect(Collectors.toList());
 
@@ -122,7 +159,7 @@ public class EngineSettingsManager {
                 .collect(Collectors.toList());
     }
 
-    private class EngineInformation {
+    private final class EngineInformation {
         public final String engineId;
 
         public final ApplicationDTO application;

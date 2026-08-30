@@ -212,10 +212,15 @@ public class ClasspathRepository implements Repository {
         try {
             final String applicationDirectory = packagePath + "/" + typeFileName + "/" + categoryFileName + "/"
                     + applicationFileName;
-            File applicationJson = new File(applicationDirectory, "application.json");
+            final String applicationJsonPath = applicationDirectory + "/application.json";
 
-            final ApplicationDTO applicationDTO = objectMapper
-                    .readValue(getClass().getResourceAsStream(applicationJson.getAbsolutePath()), ApplicationDTO.class);
+            final InputStream applicationJsonInputStream = getClass().getResourceAsStream(applicationJsonPath);
+            if (applicationJsonInputStream == null) {
+                throw new RepositoryException("Could not load application metadata: " + applicationJsonPath);
+            }
+
+            final ApplicationDTO applicationDTO = objectMapper.readValue(applicationJsonInputStream,
+                    ApplicationDTO.class);
 
             ApplicationDTO.Builder applicationDTOBuilder = new ApplicationDTO.Builder(applicationDTO)
                     .withTypeId(typeId)

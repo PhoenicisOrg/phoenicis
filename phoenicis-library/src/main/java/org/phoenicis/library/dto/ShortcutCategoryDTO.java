@@ -40,7 +40,7 @@ import java.util.List;
  */
 @JsonDeserialize(builder = ShortcutCategoryDTO.Builder.class)
 @Translatable
-public class ShortcutCategoryDTO {
+public final class ShortcutCategoryDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutCategoryDTO.class);
     private final String id;
     private final String name;

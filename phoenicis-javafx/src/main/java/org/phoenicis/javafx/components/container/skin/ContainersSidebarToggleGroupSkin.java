@@ -2,8 +2,8 @@ package org.phoenicis.javafx.components.container.skin;
 
 import javafx.scene.control.ToggleButton;
 import org.phoenicis.containers.dto.ContainerCategoryDTO;
-import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 import org.phoenicis.javafx.components.common.skin.SidebarToggleGroupBaseSkin;
+import org.phoenicis.javafx.components.container.control.ContainersSidebarToggleGroup;
 
 import java.util.Optional;
 

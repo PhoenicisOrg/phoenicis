@@ -18,12 +18,12 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.entities.ProgressEntity;
-import org.phoenicis.scripts.ui.Message;
-import org.phoenicis.scripts.ui.ProgressControl;
 import javafx.application.Platform;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.text.Text;
+import org.phoenicis.entities.ProgressEntity;
+import org.phoenicis.scripts.ui.Message;
+import org.phoenicis.scripts.ui.ProgressControl;
 
 public class StepRepresentationProgressBar extends StepRepresentationMessage implements ProgressControl {
     private final ProgressBar progressBar = new ProgressBar();

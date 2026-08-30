@@ -22,7 +22,7 @@ import static org.phoenicis.configuration.localisation.Localisation.isTranslatab
 
 @RunWith(Parameterized.class)
 public class TranslatableContractTest {
-    private final static int DEFAULT_MAX_DEPTH = 5;
+    private static final int DEFAULT_MAX_DEPTH = 5;
 
     private TranslatableContainer<?> translatableContainer;
 
@@ -51,7 +51,7 @@ public class TranslatableContractTest {
             final List<Class<?>> parameterTypes = Arrays.stream(constructor.getParameterTypes())
                     .filter(s -> s.getName().contains("Builder")).collect(Collectors.toList());
 
-            if (parameterTypes.size() > 0) {
+            if (!parameterTypes.isEmpty()) {
                 final Annotation[] annotations = parameterTypes.get(0).getAnnotations();
 
                 for (Annotation annotation : annotations) {
@@ -103,7 +103,7 @@ public class TranslatableContractTest {
     public void testEqualsTrivialCases() throws ReflectiveOperationException, URISyntaxException {
         final Object translatable = newTranslatableInstance(translatableContainer.getClazz());
         assertTrue(translatable.equals(translatable));
-        assertFalse(translatable.equals(null));
+        assertNotEquals(null, translatable);
         assertFalse(translatable.equals(new Object()));
     }
 
@@ -141,7 +141,7 @@ public class TranslatableContractTest {
                 final Object result = method.invoke(builderInstance,
                         createInstanceOfParameter(method.getParameterTypes()[0], DEFAULT_MAX_DEPTH));
 
-                if (result != builderInstance) {
+                if (!result.equals(builderInstance)) {
                     throw new IllegalStateException("*with methods should return the current instance");
                 }
             }
@@ -220,7 +220,7 @@ public class TranslatableContractTest {
      *
      * @param <C> The class the
      */
-    private static class TranslatableContainer<C> {
+    private static final class TranslatableContainer<C> {
         private final Class<C> clazz;
 
         private TranslatableContainer(Class<C> clazz) {

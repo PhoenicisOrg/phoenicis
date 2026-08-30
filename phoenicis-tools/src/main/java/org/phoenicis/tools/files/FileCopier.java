@@ -49,8 +49,6 @@ public class FileCopier {
                     throw new InterruptedException("The copy process was interrupted");
                 }
             }
-            inputStream.close();
-            outputStream.close();
         }
     }
 

@@ -20,7 +20,7 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  * @since 19.06.17
  */
 public class GitRepositoryDetailsPanel extends RepositoryDetailsPanel<GitRepositoryLocation> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(GitRepositoryDetailsPanel.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GitRepositoryDetailsPanel.class);
 
     /**
      * The url to the git repository

@@ -14,11 +14,11 @@ import java.io.InputStream;
 public class CursorFinderInputStream extends InputStream {
     private final byte[] cursor;
     private final InputStream inputStream;
-    private int cursorPosition = 0;
+    private int cursorPosition;
     /**
      * Once the cursor is found, we need to send it through the input stream.
      */
-    private int readPosition = 0;
+    private int readPosition;
 
     /**
      * @param inputStream The input stream source

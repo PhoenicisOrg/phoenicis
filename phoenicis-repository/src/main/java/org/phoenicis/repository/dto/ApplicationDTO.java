@@ -37,7 +37,7 @@ import java.util.*;
  */
 @JsonDeserialize(builder = ApplicationDTO.Builder.class)
 @Translatable
-public class ApplicationDTO {
+public final class ApplicationDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationDTO.class);
     private final String typeId;
     private final String categoryId;

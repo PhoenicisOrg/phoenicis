@@ -129,8 +129,8 @@ public class ContainerVerbsPanelSkin extends SkinBase<ContainerVerbsPanel, Conta
 
         clearButton.setOnAction(event -> verbs.getChildren().stream()
                 // filter all checkboxes
-                .filter(element -> element instanceof CheckBox)
-                .map(element -> (CheckBox) element)
+                .filter(CheckBox.class::isInstance)
+                .map(CheckBox.class::cast)
                 // deselect the checkboxes
                 .forEach(verbCheckBox -> verbCheckBox.setSelected(false)));
 

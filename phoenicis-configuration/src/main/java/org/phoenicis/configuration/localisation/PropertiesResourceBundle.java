@@ -5,7 +5,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class PropertiesResourceBundle extends ResourceBundle {
-    private Properties properties;
+    private final Properties properties;
 
     public PropertiesResourceBundle(Properties properties) {
         this.properties = properties;

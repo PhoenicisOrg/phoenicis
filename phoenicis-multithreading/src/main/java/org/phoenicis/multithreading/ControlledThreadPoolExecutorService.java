@@ -36,7 +36,7 @@ public class ControlledThreadPoolExecutorService extends ThreadPoolExecutor {
     private final AtomicLong processed = new AtomicLong(0);
     private final AtomicLong remainingTasks = new AtomicLong(0);
     private final int numberOfThreads;
-    private boolean shouldShutdown = false;
+    private boolean shouldShutdown;
 
     public ControlledThreadPoolExecutorService(String name, int numberOfThread, int queueSize) {
         super(numberOfThread, numberOfThread, 0, TimeUnit.SECONDS, new LinkedBlockingDeque<>(queueSize));

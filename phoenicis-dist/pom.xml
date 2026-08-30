@@ -42,7 +42,9 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.11.0</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -52,17 +54,9 @@
                         <phase>package</phase>
                         <configuration>
                             <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <excludeArtifactIds>bcprov-jdk16, bcmail-jdk16, bcpg-jdk16, commons-logging, xml-apis, xmlParserAPIs, xercesImpl, truffle-api, graal-sdk</excludeArtifactIds>
+                            <excludeArtifactIds>bcprov-jdk16, bcmail-jdk16, bcpg-jdk16, xml-apis, xmlParserAPIs, xercesImpl, truffle-api, graal-sdk</excludeArtifactIds>
                         </configuration>
                     </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.8.1</version>
-                <executions>
                     <execution>
                         <id>copy-graal-dependencies</id>
                         <goals>
@@ -104,7 +98,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.7.1</version>
+                <version>3.8.0</version>
                 <executions>
                     <execution>
                         <id>distribution</id>

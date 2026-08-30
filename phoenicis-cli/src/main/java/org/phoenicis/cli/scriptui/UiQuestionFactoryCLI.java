@@ -41,13 +41,10 @@ public class UiQuestionFactoryCLI implements UiQuestionFactory {
             Scanner input = new Scanner(System.in);
             answer = input.nextLine();
 
-            switch (answer) {
-                case "yes":
-                    yesCallback.run();
-                    break;
-                case "no":
-                    noCallback.run();
-                    break;
+            if ("yes".equals(answer)) {
+                yesCallback.run();
+            } else if ("no".equals(answer)) {
+                noCallback.run();
             }
         }
     }

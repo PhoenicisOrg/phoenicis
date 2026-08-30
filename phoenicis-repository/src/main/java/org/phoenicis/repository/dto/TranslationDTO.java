@@ -30,7 +30,7 @@ import java.util.*;
  * Represents a translation file
  */
 @JsonDeserialize(builder = TranslationDTO.Builder.class)
-public class TranslationDTO {
+public final class TranslationDTO {
     private final String language;
     private final Properties properties;
 

@@ -147,7 +147,7 @@ public class EnginesManager {
     public void fetchAvailableEngines(RepositoryDTO repositoryDTO, Consumer<Map<String, Engine>> callback,
             Consumer<Exception> errorCallback) {
         final List<String> engineIds = repositoryDTO.getTypes().stream()
-                .filter(type -> type.getId().equals("engines"))
+                .filter(type -> "engines".equals(type.getId()))
                 .flatMap(type -> type.getCategories().stream())
                 .map(engine -> engine.getId().replaceAll("^.*\\.", ""))
                 .collect(Collectors.toList());

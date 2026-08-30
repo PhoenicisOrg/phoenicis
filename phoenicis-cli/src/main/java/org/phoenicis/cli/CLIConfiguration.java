@@ -18,12 +18,12 @@
 
 package org.phoenicis.cli;
 
-import org.phoenicis.library.LibraryConfiguration;
-import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.cli.scriptui.CliUiConfiguration;
 import org.phoenicis.configuration.PhoenicisGlobalConfiguration;
 import org.phoenicis.engines.EnginesConfiguration;
+import org.phoenicis.library.LibraryConfiguration;
 import org.phoenicis.multithreading.MultithreadingConfiguration;
+import org.phoenicis.repository.RepositoryConfiguration;
 import org.phoenicis.scripts.ScriptsConfiguration;
 import org.phoenicis.tools.ToolsConfiguration;
 import org.phoenicis.win32.Win32Configuration;

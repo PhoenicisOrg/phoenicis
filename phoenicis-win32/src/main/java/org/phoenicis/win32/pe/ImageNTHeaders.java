@@ -18,8 +18,8 @@
 
 package org.phoenicis.win32.pe;
 
-import org.phoenicis.win32.DWord;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.phoenicis.win32.DWord;
 
 /**
  * PE Executable ImageNTHeaders

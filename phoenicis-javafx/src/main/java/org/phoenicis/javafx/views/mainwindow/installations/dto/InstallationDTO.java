@@ -35,7 +35,7 @@ import java.util.Comparator;
  * e.g. of an app or an engine
  */
 @JsonDeserialize(builder = InstallationDTO.Builder.class)
-public class InstallationDTO {
+public final class InstallationDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstallationDTO.class);
 
     private final String id;

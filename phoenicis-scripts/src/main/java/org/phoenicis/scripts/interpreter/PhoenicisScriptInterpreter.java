@@ -18,9 +18,9 @@
 
 package org.phoenicis.scripts.interpreter;
 
-import org.phoenicis.scripts.session.PhoenicisInteractiveScriptSession;
 import org.phoenicis.scripts.engine.PhoenicisScriptEngineFactory;
 import org.phoenicis.scripts.session.InteractiveScriptSession;
+import org.phoenicis.scripts.session.PhoenicisInteractiveScriptSession;
 
 import java.util.function.Consumer;
 

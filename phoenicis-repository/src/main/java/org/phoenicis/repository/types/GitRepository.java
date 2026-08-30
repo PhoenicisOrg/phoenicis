@@ -35,7 +35,7 @@ import java.net.URI;
 import java.nio.channels.FileLock;
 
 public class GitRepository implements Repository {
-    private final static Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GitRepository.class);
 
     private final URI repositoryUri;
     private final String branch;
@@ -154,11 +154,9 @@ public class GitRepository implements Repository {
         try {
             cloneOrUpdateWithLock();
 
-            final RepositoryDTO result = this.localRepositoryFactory
+            return this.localRepositoryFactory
                     .createInstance(this.localFolder, this.repositoryUri)
                     .fetchInstallableApplications();
-
-            return result;
         } catch (RepositoryException e) {
             final String message = String.format("Could not fetch installable applications for git-repository %s",
                     this.toString());

@@ -29,7 +29,7 @@ import java.net.URI;
 import java.util.Comparator;
 
 @JsonDeserialize(builder = ShortcutDTO.Builder.class)
-public class ShortcutDTO {
+public final class ShortcutDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ShortcutDTO.class);
     private final String id;
     private final ShortcutInfoDTO info;

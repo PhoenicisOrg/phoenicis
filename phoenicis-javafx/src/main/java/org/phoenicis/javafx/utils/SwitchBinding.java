@@ -16,7 +16,7 @@ import java.util.function.Function;
  * @param <V> The type of the analysed {@link ObjectProperty}
  * @param <C> The target type
  */
-public class SwitchBinding<V, C> extends ObjectBinding<C> {
+public final class SwitchBinding<V, C> extends ObjectBinding<C> {
     /**
      * The analysed {@link ObjectProperty}
      */

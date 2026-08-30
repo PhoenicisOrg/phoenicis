@@ -66,7 +66,7 @@ class LinuxTerminalOpener implements TerminalOpener {
         scriptBuilder.append("cd \"").append(workingDirectory).append("\"\n");
 
         for (Map.Entry<String, String> entry : environmentVariables.entrySet()) {
-            scriptBuilder.append(String.format("export %s=\"%s\"\n", entry.getKey(), entry.getValue()));
+            scriptBuilder.append(String.format("export %s=\"%s\"%n", entry.getKey(), entry.getValue()));
         }
         return scriptBuilder.append("exec $SHELL").toString();
     }

@@ -22,7 +22,6 @@ import org.apache.commons.io.IOUtils;
 import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.function.Consumer;
 
 public interface ScriptInterpreter {
@@ -35,7 +34,7 @@ public interface ScriptInterpreter {
 
     default void runScript(File scriptFile, Consumer<Exception> errorCallback) {
         try {
-            runScript(IOUtils.toString(new FileInputStream(scriptFile), "UTF-8"), errorCallback);
+            runScript(IOUtils.toString(scriptFile.toURI(), "UTF-8"), errorCallback);
         } catch (Exception e) {
             errorCallback.accept(e);
         }

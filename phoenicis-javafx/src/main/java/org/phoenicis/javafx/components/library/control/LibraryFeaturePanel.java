@@ -11,9 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Tab;
 import org.apache.commons.lang.StringUtils;
 import org.graalvm.polyglot.Value;
+import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.common.panelstates.None;
 import org.phoenicis.javafx.components.common.panelstates.OpenDetailsPanel;
-import org.phoenicis.javafx.components.common.control.FeaturePanel;
 import org.phoenicis.javafx.components.library.skin.LibraryFeaturePanelSkin;
 import org.phoenicis.javafx.controller.library.console.ConsoleController;
 import org.phoenicis.javafx.dialogs.ErrorDialog;
@@ -26,8 +26,8 @@ import org.phoenicis.library.ShortcutRunner;
 import org.phoenicis.library.dto.ShortcutCategoryDTO;
 import org.phoenicis.library.dto.ShortcutCreationDTO;
 import org.phoenicis.library.dto.ShortcutDTO;
-import org.phoenicis.scripts.session.InteractiveScriptSession;
 import org.phoenicis.scripts.interpreter.ScriptInterpreter;
+import org.phoenicis.scripts.session.InteractiveScriptSession;
 
 import java.util.Collections;
 

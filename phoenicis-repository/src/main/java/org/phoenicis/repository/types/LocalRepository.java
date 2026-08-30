@@ -34,12 +34,16 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class LocalRepository implements Repository {
-    private final static Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
+public final class LocalRepository implements Repository {
+    private static final Logger LOGGER = LoggerFactory.getLogger(LocalRepository.class);
     // file name of the icon for a type or category
     private static final String ICON_NAME = "icon.png";
 
@@ -258,7 +262,7 @@ public class LocalRepository implements Repository {
             if (!resourceFile.isDirectory() && !resourceFile.getName().startsWith(".")) {
                 try {
                     results.add(new ResourceDTO(resourceFile.getName(),
-                            IOUtils.toByteArray(new FileInputStream(resourceFile))));
+                            readFileBytes(resourceFile)));
                 } catch (IOException ignored) {
 
                 }
@@ -312,7 +316,7 @@ public class LocalRepository implements Repository {
 
                 if (scriptFile.exists()) {
                     try {
-                        scriptDTOBuilder.withScript(new String(IOUtils.toByteArray(new FileInputStream(scriptFile))));
+                        scriptDTOBuilder.withScript(new String(readFileBytes(scriptFile)));
                     } catch (IOException e) {
                         LOGGER.warn("Script not found", e);
                     }
@@ -331,6 +335,17 @@ public class LocalRepository implements Repository {
         }
 
         return results;
+    }
+
+    private byte[] readFileBytes(File file) throws IOException {
+        final Path repositoryPath = repositoryDirectory.toPath().toAbsolutePath().normalize();
+        final Path candidatePath = file.toPath().toAbsolutePath().normalize();
+
+        if (!candidatePath.startsWith(repositoryPath) || !Files.isRegularFile(candidatePath)) {
+            throw new IOException("Refusing to read file outside repository directory: " + candidatePath);
+        }
+
+        return Files.readAllBytes(candidatePath);
     }
 
     private TypeDTO unSerializeType(File jsonFile) {

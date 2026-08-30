@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 import java.util.Map;
 
 @JsonDeserialize(builder = EngineDTO.Builder.class)
-public class EngineDTO {
+public final class EngineDTO {
     private final String category;
     private final String subCategory;
     private final String version;

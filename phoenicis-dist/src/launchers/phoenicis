@@ -1,3 +1,134 @@
 #!/bin/bash
 
-/usr/share/phoenicis/PhoenicisPlayOnLinux "$@"
+set -e
+
+APP_HOMES=("/usr/share/phoenicis" "/usr/lib/phoenicis")
+
+APP_HOME=""
+for candidate_home in "${APP_HOMES[@]}"; do
+    if [ -d "$candidate_home" ]; then
+        APP_HOME="$candidate_home"
+        break
+    fi
+done
+
+APP_HOME="${APP_HOME:-/usr/share/phoenicis}"
+
+SELF_PATH="$(readlink -f "$0")"
+
+for launcher in \
+    "$APP_HOME/phoenicis-playonlinux" \
+    "$APP_HOME/bin/phoenicis-playonlinux" \
+    "$APP_HOME/PhoenicisPlayOnLinux"; do
+    if [ -x "$launcher" ]; then
+        launcher_path="$(readlink -f "$launcher")"
+
+        # Some distro packages ship /usr/share/phoenicis/bin/Phoenicis PlayOnLinux
+        # as a compatibility wrapper which executes /usr/bin/phoenicis again.
+        # Running that wrapper from here causes a recursive fork loop.
+        if [ "$launcher_path" = "$SELF_PATH" ] || grep -q "exec /usr/bin/phoenicis" "$launcher" 2>/dev/null; then
+            continue
+        fi
+
+        if "$launcher" "$@"; then
+            exit 0
+        fi
+
+        echo "Bundled launcher failed ($launcher), trying Java fallback." >&2
+    fi
+done
+
+for candidate in \
+    "$APP_HOME/lib/runtime/bin/java" \
+    "$APP_HOME/runtime/bin/java"; do
+    if [ -x "$candidate" ]; then
+        JAVA_BIN="$candidate"
+        break
+    fi
+done
+
+JAVA_BIN="${JAVA_BIN:-java}"
+
+JVM_OPTS=("-Dpolyglot.engine.WarnInterpreterOnly=false")
+if "$JAVA_BIN" -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -version >/dev/null 2>&1; then
+    JVM_OPTS+=("-XX:+UnlockExperimentalVMOptions" "-XX:+EnableJVMCI")
+fi
+
+NATIVE_ACCESS_OPTS=()
+if "$JAVA_BIN" "${JVM_OPTS[@]}" --enable-native-access=org.graalvm.truffle --enable-native-access=javafx.graphics,javafx.web -version >/dev/null 2>&1; then
+    NATIVE_ACCESS_OPTS+=("--enable-native-access=org.graalvm.truffle" "--enable-native-access=javafx.graphics,javafx.web")
+else
+    echo "Skipping native-access flags: JVM does not support --enable-native-access." >&2
+fi
+
+LIB_DIR="$APP_HOME/lib"
+APP_DIR="$APP_HOME/app"
+
+# Newer packages store application jars in /usr/share/phoenicis/lib/app
+# while distro-specific packages still use /usr/share/phoenicis/app.
+if [ -d "$LIB_DIR/app" ]; then
+    APP_DIR="$LIB_DIR/app"
+fi
+
+MODULE_PATH="$LIB_DIR"
+if [ -d "$APP_DIR" ]; then
+    MODULE_PATH="$MODULE_PATH:$APP_DIR"
+fi
+
+JAVA_FX_MODULE_OPTS=(
+    --add-modules=javafx.base,javafx.web,javafx.media,javafx.graphics,javafx.controls
+    --module-path "$MODULE_PATH"
+)
+
+if ! "$JAVA_BIN" "${JVM_OPTS[@]}" "${JAVA_FX_MODULE_OPTS[@]}" -version >/dev/null 2>&1; then
+    echo "Skipping JavaFX module-path startup: incompatible Java/JavaFX module set detected." >&2
+    JAVA_FX_MODULE_OPTS=()
+fi
+
+COMPILER_UPGRADE_PATH="$LIB_DIR/compiler.jar"
+if [ -f "$APP_DIR/compiler.jar" ]; then
+    COMPILER_UPGRADE_PATH="$COMPILER_UPGRADE_PATH:$APP_DIR/compiler.jar"
+fi
+
+COMPILER_OPTS=()
+if [ -f "$LIB_DIR/compiler.jar" ] || [ -f "$APP_DIR/compiler.jar" ]; then
+    if "$JAVA_BIN" "${JVM_OPTS[@]}" "--upgrade-module-path=$COMPILER_UPGRADE_PATH" -version >/dev/null 2>&1; then
+        COMPILER_OPTS+=("--upgrade-module-path=$COMPILER_UPGRADE_PATH")
+    else
+        echo "Skipping compiler module upgrade path: incompatible Java/Graal module set detected." >&2
+    fi
+fi
+
+if compgen -G "$APP_DIR/phoenicis-javafx-*.jar" > /dev/null || compgen -G "$LIB_DIR/phoenicis-javafx-*.jar" > /dev/null; then
+    launch_args=(
+        "${JVM_OPTS[@]}"
+        "${NATIVE_ACCESS_OPTS[@]}"
+        "${JAVA_FX_MODULE_OPTS[@]}"
+        "${COMPILER_OPTS[@]}"
+        -cp "$APP_DIR/*:$LIB_DIR/*"
+        org.phoenicis.javafx.PhoenicisLauncher
+        "$@"
+    )
+
+    if "$JAVA_BIN" "${launch_args[@]}"; then
+        exit 0
+    fi
+
+    if [ "${#JAVA_FX_MODULE_OPTS[@]}" -gt 0 ]; then
+        echo "JavaFX modular startup failed, retrying with classpath-only JavaFX fallback." >&2
+
+        fallback_log="$(mktemp)"
+        if "$JAVA_BIN" "${JVM_OPTS[@]}" "${NATIVE_ACCESS_OPTS[@]}" "${COMPILER_OPTS[@]}" -cp "$APP_DIR/*:$LIB_DIR/*" org.phoenicis.javafx.PhoenicisLauncher "$@" 2>"$fallback_log"; then
+            rm -f "$fallback_log"
+            exit 0
+        fi
+
+        cat "$fallback_log" >&2
+        rm -f "$fallback_log"
+    fi
+
+    exit 1
+fi
+
+echo "Unable to find a runnable Phoenicis launcher or JavaFX application jars in $APP_HOME" >&2
+exit 1

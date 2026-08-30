@@ -22,7 +22,7 @@ import org.phoenicis.library.dto.ShortcutDTO;
 
 import java.util.List;
 
-public class WinePrefixContainerDTO extends ContainerDTO {
+public final class WinePrefixContainerDTO extends ContainerDTO {
     private final String architecture;
     private final String distribution;
     private final String version;

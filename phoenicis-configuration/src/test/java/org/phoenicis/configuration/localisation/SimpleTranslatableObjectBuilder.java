@@ -1,7 +1,7 @@
 package org.phoenicis.configuration.localisation;
 
 @Translatable
-public class SimpleTranslatableObjectBuilder {
+public final class SimpleTranslatableObjectBuilder {
     private final String itemToBeTranslated;
     private final String itemNotToBeTranslated;
 

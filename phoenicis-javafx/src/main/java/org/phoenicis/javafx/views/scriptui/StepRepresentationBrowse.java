@@ -18,13 +18,13 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.Message;
 import javafx.scene.Node;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import org.phoenicis.scripts.ui.Message;
 
 import java.io.File;
 import java.util.List;
@@ -35,7 +35,7 @@ public class StepRepresentationBrowse extends AbstractStepRepresentationWithHead
     private final File browseDirectory;
     private final Message<String> message;
     private final String textToShow;
-    private List<String> extensions;
+    private final List<String> extensions;
     private File selectedFile;
 
     public StepRepresentationBrowse(SetupUiJavaFXImplementation parent, Message<String> message, String textToShow,

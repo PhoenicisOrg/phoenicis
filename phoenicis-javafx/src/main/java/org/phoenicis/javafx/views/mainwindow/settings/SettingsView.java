@@ -28,8 +28,8 @@ import org.phoenicis.javafx.components.setting.control.*;
 import org.phoenicis.javafx.components.setting.utils.ApplicationBuildInformation;
 import org.phoenicis.javafx.components.setting.utils.SettingsSidebarItem;
 import org.phoenicis.javafx.settings.JavaFxSettingsManager;
-import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.themes.Theme;
+import org.phoenicis.javafx.themes.ThemeManager;
 import org.phoenicis.javafx.themes.Themes;
 import org.phoenicis.javafx.views.mainwindow.ui.MainWindowView;
 import org.phoenicis.repository.RepositoryLocationLoader;
@@ -52,9 +52,9 @@ public class SettingsView extends MainWindowView<SettingsSidebar> {
 
     private final RepositoryLocationLoader repositoryLocationLoader;
 
-    private SettingsManager settingsManager;
-    private JavaFxSettingsManager javaFxSettingsManager;
-    private RepositoryManager repositoryManager;
+    private final SettingsManager settingsManager;
+    private final JavaFxSettingsManager javaFxSettingsManager;
+    private final RepositoryManager repositoryManager;
 
     private ObservableList<SettingsSidebarItem> settingsItems;
 

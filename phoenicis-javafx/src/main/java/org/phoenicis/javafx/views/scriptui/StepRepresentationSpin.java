@@ -18,11 +18,11 @@
 
 package org.phoenicis.javafx.views.scriptui;
 
-import org.phoenicis.scripts.ui.Message;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import org.phoenicis.scripts.ui.Message;
 
 public class StepRepresentationSpin extends StepRepresentationMessage {
     public StepRepresentationSpin(SetupUiJavaFXImplementation parent, Message<?> messageWaitingForResponse,

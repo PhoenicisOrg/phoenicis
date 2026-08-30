@@ -37,7 +37,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonDeserialize(builder = ScriptDTO.Builder.class)
 @Translatable
-public class ScriptDTO {
+public final class ScriptDTO {
     private static final Logger LOGGER = LoggerFactory.getLogger(ScriptDTO.class);
     private final String typeId;
     private final String categoryId;

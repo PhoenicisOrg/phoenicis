@@ -6,7 +6,7 @@ import javafx.stage.Window;
 /**
  * A simple confirm dialog with two callbacks
  */
-public class SimpleConfirmDialog extends ConfirmDialog {
+public final class SimpleConfirmDialog extends ConfirmDialog {
     /**
      * Constructor
      */

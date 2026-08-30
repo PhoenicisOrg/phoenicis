@@ -7,7 +7,7 @@ import javafx.stage.Window;
 /**
  * An information dialog
  */
-public class InformationDialog extends Alert {
+public final class InformationDialog extends Alert {
 
     /**
      * Constructor

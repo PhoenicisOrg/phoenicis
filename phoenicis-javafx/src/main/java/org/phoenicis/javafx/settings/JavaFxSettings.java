@@ -21,7 +21,7 @@ package org.phoenicis.javafx.settings;
 import java.util.Properties;
 
 public class JavaFxSettings {
-    private Properties properties = new Properties();
+    private final Properties properties = new Properties();
 
     public String get(JavaFxSetting javaFxSetting) {
         return properties.getProperty(javaFxSetting.toString());

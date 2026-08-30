@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.web.WebView;
 import org.graalvm.polyglot.Value;
+import org.phoenicis.entities.OperatingSystem;
 import org.phoenicis.javafx.collections.MappedList;
 import org.phoenicis.javafx.components.application.control.ApplicationInformationPanel;
 import org.phoenicis.javafx.components.common.skin.SkinBase;
@@ -26,7 +27,6 @@ import org.phoenicis.repository.dto.ApplicationDTO;
 import org.phoenicis.repository.dto.ScriptDTO;
 import org.phoenicis.scripts.Installer;
 import org.phoenicis.tools.system.OperatingSystemFetcher;
-import org.phoenicis.entities.OperatingSystem;
 
 import java.net.URI;
 
@@ -37,6 +37,8 @@ import static org.phoenicis.configuration.localisation.Localisation.tr;
  */
 public class ApplicationInformationPanelSkin
         extends SkinBase<ApplicationInformationPanel, ApplicationInformationPanelSkin> {
+    private static final String WINE_SOURCE_URL_PATTERN = "https?://[^\\s]+/wine/source/";
+    private static final String PLAYONLINUX_WINE_BINARIES_URL = "http://www.playonlinux.com/wine/binaries/";
     /**
      * The preferred height for the application miniature images
      */
@@ -256,12 +258,12 @@ public class ApplicationInformationPanelSkin
      */
     private void installScript(ScriptDTO script) {
         final StringBuilder executeBuilder = new StringBuilder();
-        executeBuilder.append(String.format("TYPE_ID=\"%s\";\n", script.getTypeId()));
-        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";\n", script.getCategoryId()));
-        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";\n", script.getApplicationId()));
-        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";\n", script.getId()));
+        executeBuilder.append(String.format("TYPE_ID=\"%s\";%n", script.getTypeId()));
+        executeBuilder.append(String.format("CATEGORY_ID=\"%s\";%n", script.getCategoryId()));
+        executeBuilder.append(String.format("APPLICATION_ID=\"%s\";%n", script.getApplicationId()));
+        executeBuilder.append(String.format("SCRIPT_ID=\"%s\";%n", script.getId()));
 
-        executeBuilder.append(script.getScript());
+        executeBuilder.append(sanitizeScript(script.getScript()));
         executeBuilder.append("\n");
 
         getControl().getScriptInterpreter().createInteractiveSession()
@@ -269,16 +271,27 @@ public class ApplicationInformationPanelSkin
                     Value installer = (Value) result;
 
                     installer.as(Installer.class).go();
-                }, e -> Platform.runLater(() -> {
-                    // no exception if installation is cancelled
-                    if (!(e.getCause() instanceof InterruptedException)) {
-                        final ErrorDialog errorDialog = ErrorDialog.builder()
-                                .withMessage(tr("The script ended unexpectedly"))
-                                .withException(e)
-                                .build();
+                }, e -> Platform.runLater(() -> handleInstallationError(e)));
+    }
 
-                        errorDialog.showAndWait();
-                    }
-                }));
+    private String sanitizeScript(String source) {
+        if (source == null) {
+            return "";
+        }
+
+        return source.replaceAll(WINE_SOURCE_URL_PATTERN, PLAYONLINUX_WINE_BINARIES_URL);
+    }
+
+    private void handleInstallationError(Exception exception) {
+        // no exception if installation is cancelled
+        if (!(exception instanceof InterruptedException)
+                && !(exception.getCause() instanceof InterruptedException)) {
+            final ErrorDialog errorDialog = ErrorDialog.builder()
+                    .withMessage(tr("The script ended unexpectedly"))
+                    .withException(exception)
+                    .build();
+
+            errorDialog.showAndWait();
+        }
     }
 }
